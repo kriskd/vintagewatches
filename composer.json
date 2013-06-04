@@ -1,0 +1,75 @@
+{
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "cakephp/debug_kit",
+                "version": "2.0",
+                "source": {
+                    "url": "https://github.com/cakephp/debug_kit",
+                    "type": "git",
+                    "reference": "origin/2.0"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "loadsys/twitter-bootstrap-helper",
+                "version": "2.1",
+                "source": {
+                    "url": "https://github.com/loadsys/twitter-bootstrap-helper",
+                    "type": "git",
+                    "reference": "origin/2.1"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "chronon/CakePHP-StripeComponent-Plugin",
+                "version": "master",
+                "source": {
+                    "url": "https://github.com/chronon/CakePHP-StripeComponent-Plugin",
+                    "type": "git",
+                    "reference": "origin/master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "stripe/stripe-php",
+                "version": "master",
+                "source": {
+                    "url": "https://github.com/stripe/stripe-php",
+                    "type": "git",
+                    "reference": "origin/master"
+                }
+            }
+        }
+    ],
+    "require": {
+        "loadsys/twitter-bootstrap-helper": "2.1.*",
+        "cakephp/debug_kit": "2.0",
+        "chronon/stripe": "*",
+        "stripe/stripe-php": "*"
+    },
+    "config": {
+        "vendor-dir": "Vendor/"
+    },
+    "autoload": {
+        "psr-0": {
+            "DebugKit": "/cakephp/debug_kit/",
+            "TwitterBootstrap" : "/loadsys/twitter-bootstrap-helper"
+        }
+    },
+    "extra": {
+        "installer-paths": {
+            "Plugin/DebugKit": ["cakephp/debug_kit"],
+            "Plugin/TwitterBootstrap": ["loadsys/twitter-bootstrap-helper"],
+            "Plugin/Stripe": ["chronon/stripe"],
+            "Plugin/Stripe/Vendor/Stripe": ["stripe/stripe-php"]
+        }
+    }
+}
