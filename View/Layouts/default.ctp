@@ -35,7 +35,13 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
+		
+		echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js');
+		echo $this->Html->script('https://js.stripe.com/v2/');
+		echo '<script type="text/javascript">Stripe.setPublishableKey("' . Configure::read('Stripe.TestPublishable') . '");</script>';
+		echo $this->Html->script('/js/script');
 	?>
+	
 </head>
 <body>
 	<div id="container">

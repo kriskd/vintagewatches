@@ -33,5 +33,8 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
     
-    public $helpers = array('TwitterBootstrap.TwitterBootstrap' => array('className' => 'TwitterBootstrap.TwitterBootstrap'));
+    public $helpers = array('TwitterBootstrap' =>
+                            array('className' => 'TwitterBootstrap.TwitterBootstrap'));
+    
+    public $components = array('Stripe' => array('className' => 'Stripe.Stripe'));
 }
