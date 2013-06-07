@@ -5193,3 +5193,10 @@ a.badge:focus {
 .affix {
   position: fixed;
 }
+.watches.index {
+  text-align: center;
+}
+.watches.index table .description {
+  width: 550px;
+  text-align: left;
+}

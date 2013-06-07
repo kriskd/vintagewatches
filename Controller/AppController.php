@@ -34,10 +34,11 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
     
     public $helpers = array('TwitterBootstrap' =>
-                            array('className' => 'TwitterBootstrap.TwitterBootstrap'));
+                            array('className' => 'TwitterBootstrap.TwitterBootstrap'),
+                            'Number');
     
     public $components = array('Stripe' => array('className' => 'Stripe.Stripe'),
-                               'DebugKit.Toolbar');
+                               'DebugKit.Toolbar', 'Session');
     
     public function beforeRender()
     {
