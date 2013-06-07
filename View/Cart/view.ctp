@@ -15,8 +15,9 @@
     <tr><td></td><td>Total</td><td><?php echo $this->Number->currency($total, 'USD'); ?></td></tr>
 </table>
 
-<?php echo $this->Form->create(false, array('id' => 'payment-form', 'url' => array('controller' => 'checkout', 'action' => 'index'))); ?>
+<?php echo $this->Form->create(false, array('id' => 'payment-form', 'action' => 'checkout')); ?>
     <div class="payment-errors"></div>
+    <?php echo $this->Form->input('Cart.total', array('type' => 'hidden', 'value' => $total)); ?>
     <?php echo $this->Form->input('Cart', array('name' => false,
                                             'size' => 20,
                                             'data-stripe' => 'number',

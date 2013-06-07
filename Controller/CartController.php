@@ -39,6 +39,23 @@ class CartController extends AppController
         $this->set(compact('watches', 'total'));
     }
     
+    public function checkout()
+    {
+        if($this->request->is('post')){
+            $amount = $this->request->data['Cart']['total'];
+            $stripeToken = $this->request->data['stripeToken'];
+            $data = array('amount' => $amount,
+                          'stripeToken' => $stripeToken);
+            $result = $this->Stripe->charge($data);
+            if($result['stripe_paid'] == true){
+                $this->Session->delete('Cart.items');
+                $this->Session->setFlash('Payment Received');
+                $this->redirect(array('controller' => 'Watches', 'action' => 'index'));
+            }
+        }
+        
+    }
+    
     protected function _getTotal($watches = null)
     {   
         if(empty($watches)){
