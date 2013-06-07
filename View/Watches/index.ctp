@@ -1,3 +1,4 @@
+
 <div class="watches index">
     <?php echo $this->Html->link('Cart', array('controller' => 'cart', 'action' => 'view')); ?>
 	<h2><?php echo __('Watches'); ?></h2>
@@ -15,7 +16,14 @@
             <td><?php echo h($watch['Watch']['stock_id']); ?>&nbsp;</td>
             <td><?php echo h($this->Number->currency($watch['Watch']['price'], 'USD')); ?>&nbsp;</td>
             <td><?php echo h($watch['Watch']['name']); ?>&nbsp;</td>
-            <td class="description"><?php echo h($watch['Watch']['description']); ?>&nbsp;</td>
+            <?php $description = $watch['Watch']['description']; ?>
+            <?php $words = str_word_count($description, 1); ?>
+            <?php if(count($words)> 50): ?>
+                <?php $slice = array_slice($words, 0, 50); ?>
+                <?php $more = $this->Html->link('More details', array('action' => 'view', $watch['Watch']['id']), array()); ?>
+                <?php $description = h(implode(' ', $slice)) . '... ' . $more; ?>
+            <?php endif; ?>
+            <td class="description"><?php echo $description; ?>&nbsp;</td>
         </tr>
     <?php endforeach; ?>
 	</table>

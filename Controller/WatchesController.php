@@ -6,6 +6,9 @@ App::uses('AppController', 'Controller');
  * @property Watch $Watch
  */
 class WatchesController extends AppController {
+	
+	public $paginate = array('limit' => 10,
+				 'conditions' => array('active' => 1));
 
 /**
  * index method

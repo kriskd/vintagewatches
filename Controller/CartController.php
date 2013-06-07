@@ -48,6 +48,11 @@ class CartController extends AppController
                           'stripeToken' => $stripeToken);
             $result = $this->Stripe->charge($data);
             if($result['stripe_paid'] == true){
+                $items = $this->Session->read('Cart.items');
+                foreach($items as $id){
+                    $this->Watch->id = $id;
+                    $this->Watch->saveField('active', 0);
+                }
                 $this->Session->delete('Cart.items');
                 $this->Session->setFlash('Payment Received');
                 $this->redirect(array('controller' => 'Watches', 'action' => 'index'));

@@ -2,8 +2,32 @@
 
 .watches.index {
     text-align: center;
-    table .description {
-        width: 550px;
-        text-align: left;
+    table {
+        .description {
+            width: 500px;
+            text-align: left;
+        }
+        td, th {
+            padding: 10px;
+        }
     }
+}
+#payment-form {
+    .control-label {
+        margin-right: 5px; 
+    }
+    input {
+        margin: 5px;
+    }
+    span {
+        float: left;
+    }
+    .card-expiry-month {
+        float: left;
+        width: 100px;
+    }
+    .card-expiry-year, .card-cvc {
+        width: 50px;
+    }
+
 }
