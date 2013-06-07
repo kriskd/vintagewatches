@@ -47,29 +47,51 @@
                     "reference": "origin/master"
                 }
             }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "twitter/bootstrap",
+                "version": "master",
+                "source": {
+                    "url": "https://github.com/twitter/bootstrap",
+                    "type": "git",
+                    "reference": "origin/master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "leafo/lessphp",
+                "version": "master",
+                "source": {
+                    "url": "https://github.com/leafo/lessphp",
+                    "type": "git",
+                    "reference": "origin/master"
+                }
+            }
         }
     ],
     "require": {
         "loadsys/twitter-bootstrap-helper": "2.1.*",
         "cakephp/debug_kit": "2.0",
         "chronon/stripe": "*",
-        "stripe/stripe-php": "*"
+        "stripe/stripe-php": "*",
+        "twitter/bootstrap": "*",
+        "leafo/lessphp": "*"
     },
     "config": {
         "vendor-dir": "Vendor/"
-    },
-    "autoload": {
-        "psr-0": {
-            "DebugKit": "/cakephp/debug_kit/",
-            "TwitterBootstrap" : "/loadsys/twitter-bootstrap-helper"
-        }
     },
     "extra": {
         "installer-paths": {
             "Plugin/DebugKit": ["cakephp/debug_kit"],
             "Plugin/TwitterBootstrap": ["loadsys/twitter-bootstrap-helper"],
             "Plugin/Stripe": ["chronon/stripe"],
-            "Plugin/Stripe/Vendor/Stripe": ["stripe/stripe-php"]
+            "Plugin/Stripe/Vendor/Stripe": ["stripe/stripe-php"],
+            "webroot/bootstrap": ["twitter/bootstrap"],
+            "Vendor": ["leafo/lessphp"]
         }
     }
 }

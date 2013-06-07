@@ -36,5 +36,18 @@ class AppController extends Controller {
     public $helpers = array('TwitterBootstrap' =>
                             array('className' => 'TwitterBootstrap.TwitterBootstrap'));
     
-    public $components = array('Stripe' => array('className' => 'Stripe.Stripe'));
+    public $components = array('Stripe' => array('className' => 'Stripe.Stripe'),
+                               'DebugKit.Toolbar');
+    
+    public function beforeRender()
+    {
+        if(Configure::read('debug') > 0){
+            App::import('Vendor', 'leafo/lessphp/lessc.inc');
+            $lessc = new lessc();
+            $less = getcwd() . DS . 'css' . DS . 'styles.less'; 
+            $css = getcwd() . DS . 'css' . DS . 'styles.css'; 
+            $lessc->checkedCompile($less,$css);
+        }
+        parent::beforeRender();
+    }
 }

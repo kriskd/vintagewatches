@@ -1,7 +1,7 @@
 $(document).ready(function(){
     
     $('#payment-form').submit(function(){ 
-        //$('button[type=submit]').attr('disabled', 'disabled');
+        $('button[type=submit]').attr('disabled', 'disabled');
         var form = $(this);
         var error = false;
  
@@ -43,7 +43,7 @@ $(document).ready(function(){
     function reportError(msg) {
  
         // Show the error in the form:
-        $('#payment-errors').text(msg).addClass('error');
+        $('.payment-errors').text(msg).addClass('error');
      
         // Re-enable the submit button:
         $('button[type=submit]').prop('disabled', false);

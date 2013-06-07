@@ -1,7 +1,9 @@
 <?php
 
-class CheckoutsController extends AppController
+class CheckoutController extends AppController
 {
+    public $uses = array();
+    
     public function index()
     {
         if($this->request->is('post')){
