@@ -36,68 +36,6 @@ class WatchesController extends AppController {
 	}
 
 /**
- * add method
- *
- * @return void
- */
-	public function add() {
-		if ($this->request->is('post')) {
-			$this->Watch->create();
-			if ($this->Watch->save($this->request->data)) {
-				$this->Session->setFlash(__('The watch has been saved'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The watch could not be saved. Please, try again.'));
-			}
-		}
-	}
-
-/**
- * edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function edit($id = null) {
-		if (!$this->Watch->exists($id)) {
-			throw new NotFoundException(__('Invalid watch'));
-		}
-		if ($this->request->is('post') || $this->request->is('put')) {
-			if ($this->Watch->save($this->request->data)) {
-				$this->Session->setFlash(__('The watch has been saved'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The watch could not be saved. Please, try again.'));
-			}
-		} else {
-			$options = array('conditions' => array('Watch.' . $this->Watch->primaryKey => $id));
-			$this->request->data = $this->Watch->find('first', $options);
-		}
-	}
-
-/**
- * delete method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function delete($id = null) {
-		$this->Watch->id = $id;
-		if (!$this->Watch->exists()) {
-			throw new NotFoundException(__('Invalid watch'));
-		}
-		$this->request->onlyAllow('post', 'delete');
-		if ($this->Watch->delete()) {
-			$this->Session->setFlash(__('Watch deleted'));
-			$this->redirect(array('action' => 'index'));
-		}
-		$this->Session->setFlash(__('Watch was not deleted'));
-		$this->redirect(array('action' => 'index'));
-	}
-
-/**
  * admin_index method
  *
  * @return void
