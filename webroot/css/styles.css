@@ -5193,6 +5193,9 @@ a.badge:focus {
 .affix {
   position: fixed;
 }
+body {
+  color: #0064cd;
+}
 .watches.index {
   text-align: center;
 }
@@ -5204,20 +5207,74 @@ a.badge:focus {
 .watches.index table th {
   padding: 10px;
 }
+.cart.index {
+  width: 450px;
+}
+.cart.index table {
+  width: 500px;
+  background: #eee;
+  border: 1px solid #555;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+.cart.index table td,
+.cart.index table th {
+  padding: 10px;
+}
+.cart.index table th {
+  border-bottom: 1px solid #999;
+}
+.cart.index table .total-row td {
+  border-top: 1px solid #999;
+}
+.cart.index h3 {
+  color: #fff;
+  background: #049cdb;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  padding: 0 10px;
+}
+.cart.index section {
+  margin-bottom: 25px;
+}
+#payment-form {
+  padding: 5px;
+  background: #eee;
+  border: 1px solid #555;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
 #payment-form .control-label {
   margin-right: 5px;
 }
 #payment-form input {
   margin: 5px;
 }
-#payment-form span {
-  float: left;
+#payment-form .input {
+  line-height: 20px;
 }
 #payment-form .card-expiry-month {
   float: left;
-  width: 100px;
+  width: 50px;
 }
 #payment-form .card-expiry-year,
 #payment-form .card-cvc {
-  width: 50px;
+  width: 100px;
+}
+#payment-form label {
+  font-size: 90%;
+  font-weight: bold;
+}
+#payment-form label[for=CartCvc],
+#payment-form label[for=CartMonth] {
+  padding-top: 10px;
+}
+#payment-form .card-number-div {
+  height: 52px;
+}
+#payment-form .submit {
+  text-align: center;
 }

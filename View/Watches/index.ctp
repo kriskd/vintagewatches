@@ -1,6 +1,4 @@
-
 <div class="watches index">
-    <?php echo $this->Html->link('Cart', array('controller' => 'cart', 'action' => 'view')); ?>
 	<h2><?php echo __('Watches'); ?></h2>
 	<table class="table-striped">
 	<tr>

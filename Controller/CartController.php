@@ -3,6 +3,20 @@
 class CartController extends AppController
 {
     public $uses = array('Watch');
+        
+    public function index()
+    {
+        if($this->cartEmpty() == true){
+            $this->redirect(array('controller' => 'watches', 'action' => 'index'));
+        }
+        $items = $this->Session->read('Cart.items'); 
+        $watches = $this->Watch->find('all', array('conditions' => array('id' => $items),
+                                                   'fields' => array('id', 'stock_id', 'price', 'name')
+                                                   )
+                                      );
+        $total = $this->_getTotal($watches); 
+        $this->set(compact('watches', 'total'));
+    }
     
     public function add($id = null)
     {   
@@ -21,22 +35,7 @@ class CartController extends AppController
         $items[] = $id; 
         $this->Session->write('Cart.items', $items);
         
-        $this->redirect(array('action' => 'view'));
-    }
-    
-    public function view()
-    {
-        if($this->Session->check('Cart.items') == false){
-            $this->Session->setFlash('Your cart is empty.');
-            $this->redirect(array('controller' => 'watches', 'action' => 'index'));
-        }
-        $items = $this->Session->read('Cart.items'); 
-        $watches = $this->Watch->find('all', array('conditions' => array('id' => $items),
-                                                   'fields' => array('stock_id', 'price', 'name')
-                                                   )
-                                      );
-        $total = $this->_getTotal($watches); 
-        $this->set(compact('watches', 'total'));
+        $this->redirect(array('action' => 'index'));
     }
     
     public function checkout()
@@ -59,6 +58,34 @@ class CartController extends AppController
             }
         }
         
+    }
+    
+    public function remove($id = null)
+    {
+        if (!$this->Watch->exists($id)) {
+            throw new NotFoundException(__('Invalid watch'));
+        }
+
+        if($this->Session->check('Cart.items') == true){
+            $items = $this->Session->read('Cart.items'); 
+            if(in_array($id, $items)){
+                $key = array_search($id, $items);
+                unset($items[$key]); 
+                $this->Session->write('Cart.items', $items);
+                $this->redirect(array('action' => 'index'));
+            }
+        }
+    }
+    
+    public function cartEmpty()
+    {
+        if($this->Session->check('Cart.items') == true){
+            $items = $this->Session->read('Cart.items'); 
+            if(!empty($items)){
+                return false;
+            }
+        }
+        return true;
     }
     
     protected function _getTotal($watches = null)

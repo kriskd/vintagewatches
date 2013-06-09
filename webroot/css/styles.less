@@ -1,5 +1,9 @@
 @import "less/bootstrap.less";
 
+body {
+    
+    color: @blueDark;
+}
 .watches.index {
     text-align: center;
     table {
@@ -12,22 +16,66 @@
         }
     }
 }
+
+.cart.index {
+    width: 450px;
+    table {
+        width: 500px;
+        background: @grayLighter;
+        border: 1px solid @gray;
+        .border-radius(5px);
+        td, th {
+            padding: 10px;
+        }
+        th {
+            border-bottom: 1px solid @grayLight;
+        }
+        .total-row td {
+            border-top: 1px solid @grayLight;
+        }
+    }
+    h3 {
+        color: @white;
+        background: @blue;
+        .border-radius(5px);
+        padding: 0 10px;
+    }
+    section {
+        margin-bottom: 25px; 
+    }
+}
 #payment-form {
+    padding: 5px;
+    background: @grayLighter;
+    border: 1px solid @gray;
+    .border-radius(5px);
     .control-label {
         margin-right: 5px; 
     }
     input {
         margin: 5px;
     }
-    span {
-        float: left;
+    .input {
+        line-height: 20px;
     }
     .card-expiry-month {
         float: left;
-        width: 100px;
-    }
-    .card-expiry-year, .card-cvc {
         width: 50px;
     }
-
+    .card-expiry-year, .card-cvc {
+        width: 100px;
+    }
+    label {
+        font-size: 90%;
+        font-weight: bold; 
+    }
+    label[for=CartCvc], label[for=CartMonth] {
+        padding-top: 10px;
+    }
+    .card-number-div {
+        height: 52px;
+    }
+    .submit {
+        text-align: center;
+    }
 }
