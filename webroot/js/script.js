@@ -1,5 +1,7 @@
 $(document).ready(function(){
     
+    $('.payment-errors').hide();
+    
     $('#payment-form').submit(function(){ 
         $('button[type=submit]').attr('disabled', 'disabled');
         var form = $(this);
@@ -9,7 +11,7 @@ $(document).ready(function(){
         var ccNum = $('.card-number').val(),
             cvcNum = $('.card-cvc').val(),
             expMonth = $('.card-expiry-month').val(),
-            expYear = $('.card-expiry-year').val();
+            expYear = $('.card-expiry-year').val(); 
         
         // Validate the number:
         if (!Stripe.validateCardNumber(ccNum)) {
@@ -43,7 +45,7 @@ $(document).ready(function(){
     function reportError(msg) {
  
         // Show the error in the form:
-        $('.payment-errors').text(msg).addClass('error');
+        $('.payment-errors').show().text(msg).addClass('error');
      
         // Re-enable the submit button:
         $('button[type=submit]').prop('disabled', false);
