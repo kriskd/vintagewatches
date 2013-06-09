@@ -1,24 +1,46 @@
 <div class="cart index">
     <h2>Checkout</h2>
     <section>
-            <h3>Review Cart</h3>
-            <table class="table-bordered">
+        <h3>Review Cart</h3>
+        <table class="table-bordered">
+            <tr>
+                <th></th>
+                <th>Stock ID</th>
+                <th>Name</th>
+                <th>Price</th>
+            </tr>
+            <?php foreach($watches as $watch): ?>
                 <tr>
-                    <th></th>
-                    <th>Stock ID</th>
-                    <th>Name</th>
-                    <th>Price</th>
+                    <td><?php echo $this->Html->link('<i class="icon-trash"></i>', array('action' => 'remove', $watch['Watch']['id']), array('escape' => false)); ?></td>
+                    <td><?php echo h($watch['Watch']['stock_id']); ?></td>
+                    <td><?php echo $this->Html->link(h($watch['Watch']['name']), array('controller' => 'watches', 'action' => 'view', $watch['Watch']['id'])); ?></td>
+                    <td class="text-right"><?php echo h($this->Number->currency($watch['Watch']['price'], 'USD')); ?></td>
                 </tr>
-                <?php foreach($watches as $watch): ?>
-                    <tr>
-                        <td><?php echo $this->Html->link('<i class="icon-trash"></i>', array('action' => 'remove', $watch['Watch']['id']), array('escape' => false)); ?></td>
-                        <td><?php echo h($watch['Watch']['stock_id']); ?></td>
-                        <td><?php echo h($watch['Watch']['name']); ?></td>
-                        <td class="text-right"><?php echo h($this->Number->currency($watch['Watch']['price'], 'USD')); ?></td>
-                    </tr>
-                <?php endforeach; ?>
-                <tr class="total-row"><td></td><td></td><td class="text-right">Total</td><td class="text-right"><?php echo $this->Number->currency($total, 'USD'); ?></td></tr>
-            </table>
+            <?php endforeach; ?>
+            <tr class="total-row"><td></td><td></td><td class="text-right">Total</td><td class="text-right"><?php echo $this->Number->currency($total, 'USD'); ?></td></tr>
+        </table>
+    </section>
+    <section class="address">
+        <h3>Address</h3>
+        <h4>Choose Country</h4>
+        <?php echo $this->Form->create('false', array('class' => 'select-country')); ?>
+            <?php echo $this->Form->input('Address.country', array('type' => 'radio',
+                                                                 'options' => array('us' => 'U.S.', 'ca' => 'Canada', 'other' => 'Other'),
+                                                                 'legend' => false,
+                                                                 //'hiddenField' => false,
+                                                                 'div' => "radio inline",
+                                                                 'separator' => '</div><div class="radio inline">',
+                                                                    )); ?>
+        <?php echo $this->Form->end(); ?>
+        <?php echo $this->Form->create('Address', array('class' => 'us address-form')); ?>
+            <label>This is the US Form</label>
+        <?php echo $this->Form->end(); ?>
+        <?php echo $this->Form->create('Address', array('class' => 'ca address-form')); ?>
+            <label>This is the Canada Form</label>
+        <?php echo $this->Form->end(); ?>
+        <?php echo $this->Form->create('Address', array('class' => 'other address-form')); ?>
+            <label>This is the Other Country Form</label>
+        <?php echo $this->Form->end(); ?>
     </section>
     <section>
         <h3>Credit Card</h3>

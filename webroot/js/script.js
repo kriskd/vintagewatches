@@ -1,5 +1,13 @@
 $(document).ready(function(){
     
+    $('.address-form').hide();
+    
+    $('.select-country input').change(function(){
+        $('.address-form').hide();
+        var country = $(this).val();
+        $('.address-form.' + country).show();
+    });
+    
     $('.payment-errors').hide();
     
     $('#payment-form').submit(function(){ 

@@ -5282,3 +5282,6 @@ table th {
 #payment-form .submit {
   text-align: center;
 }
+.address .radio.inline {
+  margin-right: 30px;
+}
