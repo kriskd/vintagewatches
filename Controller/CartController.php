@@ -3,10 +3,12 @@
 class CartController extends AppController
 {
     public $uses = array('Watch');
+    
+    public $components = array('Cart');
         
     public function index()
     {
-        if($this->cartEmpty() == true){
+        if($this->Cart->cartEmpty() == true){
             $this->redirect(array('controller' => 'watches', 'action' => 'index'));
         }
         $items = $this->Session->read('Cart.items'); 
@@ -75,17 +77,6 @@ class CartController extends AppController
                 $this->redirect(array('action' => 'index'));
             }
         }
-    }
-    
-    public function cartEmpty()
-    {
-        if($this->Session->check('Cart.items') == true){
-            $items = $this->Session->read('Cart.items'); 
-            if(!empty($items)){
-                return false;
-            }
-        }
-        return true;
     }
     
     protected function _getTotal($watches = null)

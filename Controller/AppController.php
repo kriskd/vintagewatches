@@ -36,7 +36,8 @@ class AppController extends Controller {
     public $helpers = array('TwitterBootstrap' =>
                             array('className' => 'TwitterBootstrap.TwitterBootstrap'),
                             'Number',
-                            'Session');
+                            'Session',
+                            'Html' => array('className' => 'MyHtml'));
     
     public $components = array('Stripe' => array('className' => 'Stripe.Stripe'),
                                'DebugKit.Toolbar', 'Session');
