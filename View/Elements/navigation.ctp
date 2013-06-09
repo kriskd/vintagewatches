@@ -5,7 +5,7 @@
                 <?php echo $this->Html->link('Store', array('controller' => 'watches', 'action' => 'index')); ?>
             </li>
             <li>
-                <?php echo $this->Html->cartLink('Cart', array('controller' => 'cart', 'action' => 'index')); ?>
+                <?php echo $this->Html->cartLink('<i class="icon-shopping-cart"></i> ' . $this->Cart->cartCount('(', ')'), array('controller' => 'cart', 'action' => 'index'), array('escape' => false)); ?>
             </li>
         </ul>
     </div>

@@ -3,8 +3,6 @@
 class CartController extends AppController
 {
     public $uses = array('Watch');
-    
-    public $components = array('Cart');
         
     public function index()
     {
@@ -16,8 +14,14 @@ class CartController extends AppController
                                                    'fields' => array('id', 'stock_id', 'price', 'name')
                                                    )
                                       );
-        $total = $this->_getTotal($watches); 
-        $this->set(compact('watches', 'total'));
+        $total = $this->Cart->getTotal($watches);
+        $months = array_combine(range(1,12), range(1,12));
+        $year = date('Y'); 
+        for($i=date('Y'); $i<=date('Y')+10; $i++){
+            $years[$i] = $i;
+        }
+        
+        $this->set(compact('watches', 'total', 'months', 'years'));
     }
     
     public function add($id = null)
@@ -42,7 +46,7 @@ class CartController extends AppController
     
     public function checkout()
     {
-        if($this->request->is('post')){
+        if($this->request->is('post')){ 
             $amount = $this->request->data['Cart']['total'];
             $stripeToken = $this->request->data['stripeToken'];
             $data = array('amount' => $amount,
@@ -77,18 +81,5 @@ class CartController extends AppController
                 $this->redirect(array('action' => 'index'));
             }
         }
-    }
-    
-    protected function _getTotal($watches = null)
-    {   
-        if(empty($watches)){
-            return null;
-        } 
-        return  array_reduce($watches, function($return, $item){ 
-                                    if(isset($item['Watch']['price'])){
-                                        $return += $item['Watch']['price'];
-                                        return $return;
-                                    }
-                            });
     }
 }

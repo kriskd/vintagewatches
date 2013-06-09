@@ -37,10 +37,11 @@ class AppController extends Controller {
                             array('className' => 'TwitterBootstrap.TwitterBootstrap'),
                             'Number',
                             'Session',
-                            'Html' => array('className' => 'MyHtml'));
+                            'Html' => array('className' => 'MyHtml'),
+                            'Cart');
     
     public $components = array('Stripe' => array('className' => 'Stripe.Stripe'),
-                               'DebugKit.Toolbar', 'Session');
+                               'DebugKit.Toolbar', 'Session', 'Cart');
     
     public function beforeRender()
     {
@@ -51,6 +52,8 @@ class AppController extends Controller {
             $css = getcwd() . DS . 'css' . DS . 'styles.css'; 
             $lessc->checkedCompile($less,$css);
         }
+        
+        $this->set(array('cartCount' => $this->Cart->cartItemCount()));
         parent::beforeRender();
     }
 }

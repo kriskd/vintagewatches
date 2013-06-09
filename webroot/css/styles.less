@@ -1,8 +1,12 @@
 @import "less/bootstrap.less";
 
 body {
-    
-    color: @blueDark;
+    color: @navbarText;
+}
+table {
+    th {
+        color: @blueDark;
+    }
 }
 .watches.index {
     text-align: center;
@@ -28,7 +32,7 @@ body {
             padding: 10px;
         }
         th {
-            border-bottom: 1px solid @grayLight;
+            border-bottom: 1px solid @grayLight;  
         }
         .total-row td {
             border-top: 1px solid @grayLight;
@@ -60,17 +64,20 @@ body {
     }
     .card-expiry-month {
         float: left;
-        width: 50px;
-    }
-    .card-expiry-year, .card-cvc {
-        width: 100px;
     }
     label {
         font-size: 90%;
         font-weight: bold; 
     }
-    label[for=CartCvc], label[for=CartMonth] {
+    label[for=CartCvc] {
         padding-top: 10px;
+    }
+    label[for=CartMonth]  {
+        padding-top: 5px;
+        margin-right: 10px;
+    }
+    select option {
+        color: #555;
     }
     .card-number-div {
         height: 52px;

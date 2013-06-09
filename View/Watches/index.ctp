@@ -10,7 +10,13 @@
 	</tr>
 	<?php foreach ($watches as $watch): ?>
         <tr>
-            <td><?php echo $this->Html->link('Add to Cart', array('controller' => 'cart', 'action' => 'add', $watch['Watch']['id']), array('class' => 'btn btn-primary')); ?></td>
+            <td>
+                <?php if($this->Cart->inCart($watch['Watch']['id'])): ?>
+                    <span class="label label-important">This item is in your cart</span>
+                <?php else: ?>
+                    <?php echo $this->Html->link('Add to Cart', array('controller' => 'cart', 'action' => 'add', $watch['Watch']['id']), array('class' => 'btn btn-primary')); ?>
+                <?php endif; ?>
+            </td>
             <td><?php echo h($watch['Watch']['stock_id']); ?>&nbsp;</td>
             <td><?php echo h($this->Number->currency($watch['Watch']['price'], 'USD')); ?>&nbsp;</td>
             <td><?php echo h($watch['Watch']['name']); ?>&nbsp;</td>

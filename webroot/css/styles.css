@@ -5194,6 +5194,9 @@ a.badge:focus {
   position: fixed;
 }
 body {
+  color: #777;
+}
+table th {
   color: #0064cd;
 }
 .watches.index {
@@ -5258,19 +5261,20 @@ body {
 }
 #payment-form .card-expiry-month {
   float: left;
-  width: 50px;
-}
-#payment-form .card-expiry-year,
-#payment-form .card-cvc {
-  width: 100px;
 }
 #payment-form label {
   font-size: 90%;
   font-weight: bold;
 }
-#payment-form label[for=CartCvc],
-#payment-form label[for=CartMonth] {
+#payment-form label[for=CartCvc] {
   padding-top: 10px;
+}
+#payment-form label[for=CartMonth] {
+  padding-top: 5px;
+  margin-right: 10px;
+}
+#payment-form select option {
+  color: #555;
 }
 #payment-form .card-number-div {
   height: 52px;

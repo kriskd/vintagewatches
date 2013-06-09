@@ -20,5 +20,4 @@ class MyHtmlHelper extends HtmlHelper
         }
         return parent::link($title, $url, $options, $confirmMessage);
     }
-    
 }
