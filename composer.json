@@ -71,6 +71,18 @@
                     "reference": "origin/master"
                 }
             }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "malikov/cakephp2.0-image-upload",
+                "version": "master",
+                "source": {
+                    "url": "git://github.com/malikov/cakephp2.0-image-upload.git",
+                    "type": "git",
+                    "reference": "origin/master"
+                }
+            }
         }
     ],
     "require": {
@@ -79,7 +91,8 @@
         "chronon/stripe": "*",
         "stripe/stripe-php": "*",
         "twitter/bootstrap": "*",
-        "leafo/lessphp": "*"
+        "leafo/lessphp": "*",
+        "malikov/cakephp2.0-image-upload": "dev-master"
     },
     "config": {
         "vendor-dir": "Vendor/"
@@ -91,7 +104,8 @@
             "Plugin/Stripe": ["chronon/stripe"],
             "Plugin/Stripe/Vendor/Stripe": ["stripe/stripe-php"],
             "webroot/bootstrap": ["twitter/bootstrap"],
-            "Vendor": ["leafo/lessphp"]
+            "Vendor": ["leafo/lessphp"],
+            "Controller/Component": ["malikov/cakephp2.0-image-upload"]
         }
     }
 }

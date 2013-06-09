@@ -1,0 +1,1 @@
+../../Vendor/malikov/cakephp2.0-image-upload/ImageUploaderComponent.php
