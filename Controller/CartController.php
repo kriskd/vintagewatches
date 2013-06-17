@@ -14,14 +14,14 @@ class CartController extends AppController
                                                    'fields' => array('id', 'stock_id', 'price', 'name')
                                                    )
                                       );
-        $total = $this->Cart->getTotal($watches);
+	$total = 0;
         $months = array_combine(range(1,12), range(1,12));
         $year = date('Y'); 
         for($i=date('Y'); $i<=date('Y')+10; $i++){
             $years[$i] = $i;
         }
         
-        $this->set(compact('watches', 'total', 'months', 'years'));
+        $this->set(compact('watches', 'months', 'years', 'total'));
     }
     
     public function add($id = null)
@@ -46,22 +46,26 @@ class CartController extends AppController
     
     public function checkout()
     {
-        if($this->request->is('post')){ 
-            $amount = $this->request->data['Cart']['total'];
-            $stripeToken = $this->request->data['stripeToken'];
-            $data = array('amount' => $amount,
-                          'stripeToken' => $stripeToken);
-            $result = $this->Stripe->charge($data);
-            if($result['stripe_paid'] == true){
-                $items = $this->Session->read('Cart.items');
-                foreach($items as $id){
-                    $this->Watch->id = $id;
-                    $this->Watch->saveField('active', 0);
-                }
-                $this->Session->delete('Cart.items');
-                $this->Session->setFlash('Payment Received');
-                $this->redirect(array('controller' => 'Watches', 'action' => 'index'));
-            }
+        if($this->request->is('post')){
+	    $amount = $this->request->data['Cart']['total']; 
+	    if($amount > 0){ 
+		$stripeToken = $this->request->data['stripeToken'];
+		$data = array('amount' => $amount,
+			      'stripeToken' => $stripeToken);
+		$result = $this->Stripe->charge($data);
+		if($result['stripe_paid'] == true){
+		    $items = $this->Session->read('Cart.items');
+		    foreach($items as $id){
+			$this->Watch->id = $id;
+			$this->Watch->saveField('active', 0);
+		    }
+		    $this->Session->delete('Cart.items');
+		    $this->Session->setFlash('Payment Received');
+		    $this->redirect(array('controller' => 'watches', 'action' => 'index'));
+		}
+	    } 
+	    $this->Session->setFlash('Please select your country.');
+	    $this->redirect(array('action' => 'index')); 
         }
         
     }
@@ -81,6 +85,34 @@ class CartController extends AppController
                 $this->redirect(array('action' => 'index'));
             }
         }
+    }
+    
+    public function getTotal($country = null)
+    {
+	$shipping = null;
+	if($this->request->is('ajax')){
+	    switch($country){
+		case 'us':
+		    $shipping = '8';
+		    break;
+		case 'ca':
+		    $shipping = '38';
+		    break;
+		case 'other';
+		    $shipping = '45';
+		    break;
+	    }
+	    $items = $this->Session->read('Cart.items'); 
+	    $watches = $this->Watch->find('all', array('conditions' => array('id' => $items),
+						       'fields' => array('id', 'stock_id', 'price', 'name')
+						       )
+					 );
+	    $subTotal = $this->Cart->getSubTotal($watches);
+	    $total = $subTotal + $shipping;
+	}
+	
+	$this->set(array('data' => compact('shipping', 'total')));
+	$this->layout = 'ajax';
     }
     
     protected function _getStates()
