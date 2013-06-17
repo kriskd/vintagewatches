@@ -89,7 +89,7 @@ class CartController extends AppController
     public function getTotal($country = null)
     {
 	$shipping = null;
-	//if($this->request->is('ajax')){
+	if($this->request->is('ajax')){
 	    switch($country){
 		case 'us':
 		    $shipping = '8';
@@ -105,7 +105,7 @@ class CartController extends AppController
 	    $subTotal = $this->Cart->getCartSubTotal(); 
 	    $total = $subTotal + $shipping; 
 	    $this->Session->write('Cart.total', $total);
-	//}
+	}
 	
 	$this->set(array('data' => compact('shipping', 'total')));
 	$this->layout = 'ajax';
