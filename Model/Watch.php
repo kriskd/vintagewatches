@@ -70,4 +70,12 @@ class Watch extends AppModel {
 			),
 		),
 	);
+        
+        public function getCartWatches($ids)
+        {
+            return $this->find('all', array('conditions' => array('id' => $ids),
+                                                   'fields' => array('id', 'stock_id', 'price', 'name')
+                                                   )
+                                      );
+        }
 }

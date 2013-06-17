@@ -12,9 +12,10 @@ class MyHtmlHelper extends HtmlHelper
     /**
      * Create cart link only if items in the cart
      */
-    public function cartLink($title, $url = null, $options = array(), $confirmMessage = false)
+    public function cartLink($title, $url = null, $options = array(), $confirmMessage = false, $controller = null)
     {
         $cart = new CartComponent(new ComponentCollection());
+        $cart->initialize($controller);
         if($cart->cartEmpty() == true){
             return null;
         }

@@ -3,17 +3,14 @@
 class CartController extends AppController
 {
     public $uses = array('Watch');
-        
+    
     public function index()
     {
         if($this->Cart->cartEmpty() == true){
             $this->redirect(array('controller' => 'watches', 'action' => 'index'));
         }
-        $items = $this->Session->read('Cart.items'); 
-        $watches = $this->Watch->find('all', array('conditions' => array('id' => $items),
-                                                   'fields' => array('id', 'stock_id', 'price', 'name')
-                                                   )
-                                      );
+	
+        $watches = $this->Cart->getCartItems(); 
 	$total = 0;
         $months = array_combine(range(1,12), range(1,12));
         $year = date('Y'); 
@@ -92,7 +89,7 @@ class CartController extends AppController
     public function getTotal($country = null)
     {
 	$shipping = null;
-	if($this->request->is('ajax')){
+	//if($this->request->is('ajax')){
 	    switch($country){
 		case 'us':
 		    $shipping = '8';
@@ -104,15 +101,11 @@ class CartController extends AppController
 		    $shipping = '45';
 		    break;
 	    }
-	    $items = $this->Session->read('Cart.items'); 
-	    $watches = $this->Watch->find('all', array('conditions' => array('id' => $items),
-						       'fields' => array('id', 'stock_id', 'price', 'name')
-						       )
-					 );
-	    $subTotal = $this->Cart->getSubTotal($watches);
-	    $total = $subTotal + $shipping;
+
+	    $subTotal = $this->Cart->getSubTotal(); 
+	    $total = $subTotal + $shipping; 
 	    $this->Session->write('Cart.total', $total);
-	}
+	//}
 	
 	$this->set(array('data' => compact('shipping', 'total')));
 	$this->layout = 'ajax';
