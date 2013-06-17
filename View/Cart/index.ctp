@@ -54,8 +54,7 @@
         <h3>Credit Card</h3>
         <?php echo $this->Form->create(false, array('id' => 'payment-form', 'action' => 'checkout', 'class' => 'form-horizontal')); ?>
             <div class="payment-errors alert alert-error"></div>
-            <?php echo $this->Form->input('Cart.total', array('class' => 'total-amount', 'type' => 'hidden', 'value' => $total)); ?>
-            <?php echo $this->Form->input('Cart.number', array('name' => false,
+            <?php echo $this->Form->input('Card.number', array('name' => false,
                                                     'size' => 20,
                                                     'data-stripe' => 'number',
                                                     'autocomplete' => 'off',
@@ -66,7 +65,7 @@
                                                     'div' => array('class' => 'card-number-div')
                                                 )
                                             ); ?>
-            <?php echo $this->Form->input('Cart.cvc', array('name' => false,
+            <?php echo $this->Form->input('Card.cvc', array('name' => false,
                                                     'size' => 4,
                                                     'data-stripe' => 'cvc',
                                                     'autocomplete' => 'off',
@@ -74,19 +73,19 @@
                                                     'class' => 'card-cvc input-small',
                                                     'label' => array('text' => 'CVC', 'class' => 'control-label'))); ?>
             <label for="CartMonth" class="control-label">Expiration (MM/YYYY)</label>
-            <?php echo $this->Form->input('Cart.month', array('name' => false,
+            <?php echo $this->Form->input('Card.month', array('name' => false,
                                                     'empty' => 'MM',
                                                     'options' => $months,
                                                     'data-stripe' => 'exp-month',
                                                     'class' => 'card-expiry-month input-mini',
                                                     'label' => false)); ?>
-            <?php echo $this->Form->input('Cart.year', array('name' => false,
+            <?php echo $this->Form->input('Card.year', array('name' => false,
                                                     'empty' => 'Year',
                                                     'options' => $years,
                                                     'data-stripe' => 'exp-year',
                                                     'placeHolder' => 'Year',
                                                     'class' => 'card-expiry-year input-small',
                                                     'label' => false)); ?>
-        <?php echo $this->Form->end(array('class' => 'btn btn-primary', 'label' => 'Submit Payment')); ?>
+        <?php echo $this->Form->end(array('class' => 'btn btn-primary submit-payment', 'label' => 'Submit Payment')); ?>
     </section>
 </div>

@@ -1,29 +1,46 @@
 $(document).ready(function(){
     
     $('.address-form').hide();
+    if ($('.select-country input:radio').is(':checked')) {
+        //Enable submit button if country selected
+        $('.submit-payment').prop('disabled', false);
+        var country = $('.select-country input:radio:checked').val();
+        computeTotal(country);
+    }
+    else {
+        //Disable submit if no country selected
+        $('.submit-payment').attr('disabled', 'disabled');
+    }
     
     $('.select-country input').change(function(){
+        $('.submit-payment').prop('disabled', false);
         $('.address-form').hide();
         var country = $(this).val();
+        computeTotal(country);
+    });
+    
+    /**
+     * Show the address form based on the country
+     * Compute shipping and total based on country
+     */
+    function computeTotal(country) {
         $('.address-form.' + country).show();
         $.ajax({
             url: '/cart/getTotal/' + country,
             dataType: 'json',
             success: function(data){
                 var shipping = data.shipping;
-                var total = data.total;
                 var totalFormatted = data.totalFormatted;
                 $('.shipping-amount').empty().append(shipping);
                 $('.total-formatted-amount').empty().append(totalFormatted);
-                $('.total-amount').val(total);
             }
         });
-    });
+    }
     
     $('.payment-errors').hide();
     
     $('#payment-form').submit(function(){ 
-        $('button[type=submit]').attr('disabled', 'disabled');
+        $('.submit-payment').attr('disabled', 'disabled');
         var form = $(this);
         var error = false;
  
@@ -68,7 +85,7 @@ $(document).ready(function(){
         $('.payment-errors').show().text(msg).addClass('error');
      
         // Re-enable the submit button:
-        $('button[type=submit]').prop('disabled', false);
+        $('.submit-payment').prop('disabled', false);
      
         return false;
  
