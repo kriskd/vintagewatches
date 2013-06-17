@@ -5239,6 +5239,9 @@ table th {
   border-radius: 5px;
   padding: 0 10px;
 }
+.cart.index h6 {
+  margin-bottom: 0;
+}
 .cart.index section {
   margin-bottom: 25px;
 }

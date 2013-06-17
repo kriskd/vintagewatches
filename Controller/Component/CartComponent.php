@@ -38,7 +38,7 @@ class CartComponent extends Component
         return false;
     }
     
-    public function getTotal($watches = null)
+    public function getSubTotal($watches = null)
     {   
         if(empty($watches)){
             return null;

@@ -17,21 +17,29 @@
                     <td class="text-right"><?php echo h($this->Number->currency($watch['Watch']['price'], 'USD')); ?></td>
                 </tr>
             <?php endforeach; ?>
-            <tr class="total-row"><td></td><td></td><td class="text-right">Total</td><td class="text-right"><?php echo $this->Number->currency($total, 'USD'); ?></td></tr>
+            <tr class="shipping">
+                <td></td>
+                <td><h5>Shipping</h5></td>
+                <td>
+                    <h6 class="text-left">Choose Country</h6>
+                    <?php echo $this->Form->create('false', array('class' => 'select-country')); ?>
+                        <?php echo $this->Form->input('Address.country', array('type' => 'radio',
+                                                                             'options' => array('us' => 'U.S.', 'ca' => 'Canada', 'other' => 'Other'),
+                                                                             'legend' => false,
+                                                                             //'hiddenField' => false,
+                                                                             'div' => "radio inline",
+                                                                             'separator' => '</div><div class="radio inline">',
+                                                                                )); ?>
+                    <?php echo $this->Form->end(); ?>
+                </td>
+                <td class="shipping-amount text-right"></td>
+            </tr>
+            <tr class="total-row"><td></td><td></td><td class="text-right">Total</td><td class="total-formatted-amount text-right"></td></tr>
         </table>
     </section>
     <section class="address">
         <h3>Address</h3>
-        <h4>Choose Country</h4>
-        <?php echo $this->Form->create('false', array('class' => 'select-country')); ?>
-            <?php echo $this->Form->input('Address.country', array('type' => 'radio',
-                                                                 'options' => array('us' => 'U.S.', 'ca' => 'Canada', 'other' => 'Other'),
-                                                                 'legend' => false,
-                                                                 //'hiddenField' => false,
-                                                                 'div' => "radio inline",
-                                                                 'separator' => '</div><div class="radio inline">',
-                                                                    )); ?>
-        <?php echo $this->Form->end(); ?>
+
         <?php echo $this->Form->create('Address', array('class' => 'us address-form')); ?>
             <label>This is the US Form</label>
         <?php echo $this->Form->end(); ?>
@@ -46,7 +54,7 @@
         <h3>Credit Card</h3>
         <?php echo $this->Form->create(false, array('id' => 'payment-form', 'action' => 'checkout', 'class' => 'form-horizontal')); ?>
             <div class="payment-errors alert alert-error"></div>
-            <?php echo $this->Form->input('Cart.total', array('type' => 'hidden', 'value' => $total)); ?>
+            <?php echo $this->Form->input('Cart.total', array('class' => 'total-amount', 'type' => 'hidden', 'value' => $total)); ?>
             <?php echo $this->Form->input('Cart.number', array('name' => false,
                                                     'size' => 20,
                                                     'data-stripe' => 'number',

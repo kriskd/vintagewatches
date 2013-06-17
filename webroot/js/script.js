@@ -6,6 +6,18 @@ $(document).ready(function(){
         $('.address-form').hide();
         var country = $(this).val();
         $('.address-form.' + country).show();
+        $.ajax({
+            url: '/cart/getTotal/' + country,
+            dataType: 'json',
+            success: function(data){
+                var shipping = data.shipping;
+                var total = data.total;
+                var totalFormatted = data.totalFormatted;
+                $('.shipping-amount').empty().append(shipping);
+                $('.total-formatted-amount').empty().append(totalFormatted);
+                $('.total-amount').val(total);
+            }
+        });
     });
     
     $('.payment-errors').hide();
