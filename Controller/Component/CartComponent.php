@@ -43,17 +43,8 @@ class CartComponent extends Component
         return ClassRegistry::init('Watch')->getCartWatches($this->items);
     }
     
-    public function getSubTotal()
+    public function getCartSubTotal()
     {
-        $cartItems = $this->getCartItems(); 
-        if(!empty($cartItems)){
-            return  array_reduce($cartItems, function($return, $item){ 
-                        if(isset($item['Watch']['price'])){
-                            $return += $item['Watch']['price'];
-                            return $return;
-                        }
-                });
-        }
-        return null;
+        return ClassRegistry::init('Cart')->getSubTotal($this->getCartItems());
     }
 }

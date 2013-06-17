@@ -2,7 +2,7 @@
 
 class CartController extends AppController
 {
-    public $uses = array('Watch');
+    public $uses = array('Cart', 'Watch');
     
     public function index()
     {
@@ -102,7 +102,7 @@ class CartController extends AppController
 		    break;
 	    }
 
-	    $subTotal = $this->Cart->getSubTotal(); 
+	    $subTotal = $this->Cart->getCartSubTotal(); 
 	    $total = $subTotal + $shipping; 
 	    $this->Session->write('Cart.total', $total);
 	//}
