@@ -71,6 +71,9 @@ class Watch extends AppModel {
 		),
 	);
         
+        /**
+         * $ids array Array of watch Ids
+         */
         public function getCartWatches($ids)
         {
             return $this->find('all', array('conditions' => array('id' => $ids),
