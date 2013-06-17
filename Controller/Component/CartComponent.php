@@ -5,49 +5,55 @@ class CartComponent extends Component
 {
     public $components = array('Session');
     
-    public function cartEmpty()
+    protected $items = null;
+    
+    public function initialize(Controller $controller)
     {
         if($this->Session->check('Cart.items') == true){
-            $items = $this->Session->read('Cart.items'); 
-            if(!empty($items)){
-                return false;
-            }
+            $this->items = $this->Session->read('Cart.items');  
+        }
+    }
+    
+    public function cartEmpty()
+    {
+        if(!empty($this->items)){
+            return false;
         }
         return true;
     }
     
     public function cartItemCount()
     {
-        if($this->Session->check('Cart.items') == true){
-            $items = $this->Session->read('Cart.items'); 
-            if(!empty($items)){
-                return count($items);
-            }
+        if(!empty($this->items)){
+            return count($this->items);
         }
         return null;
     }
     
     public function inCart($id = null)
     {
-        if($this->Session->check('Cart.items') == true && $id != null){
-            $items = $this->Session->read('Cart.items'); 
-            if(in_array($id, $items)){
-                return true;
-            }
+        if(is_array($this->items) && in_array($id, $this->items)){
+            return true;
         }
         return false;
     }
     
-    public function getSubTotal($watches = null)
+    public function getCartItems()
     {   
-        if(empty($watches)){
-            return null;
-        } 
-        return  array_reduce($watches, function($return, $item){ 
-                                    if(isset($item['Watch']['price'])){
-                                        $return += $item['Watch']['price'];
-                                        return $return;
-                                    }
-                            });
+        return ClassRegistry::init('Watch')->getCartWatches($this->items);
+    }
+    
+    public function getSubTotal()
+    {
+        $cartItems = $this->getCartItems(); 
+        if(!empty($cartItems)){
+            return  array_reduce($cartItems, function($return, $item){ 
+                        if(isset($item['Watch']['price'])){
+                            $return += $item['Watch']['price'];
+                            return $return;
+                        }
+                });
+        }
+        return null;
     }
 }

@@ -11,7 +11,7 @@
 	<?php foreach ($watches as $watch): ?>
         <tr>
             <td>
-                <?php if($this->Cart->inCart($watch['Watch']['id'])): ?>
+                <?php if($this->Cart->inCart($watch['Watch']['id'], $controller)): ?>
                     <span class="label label-important">This item is in your cart</span>
                 <?php else: ?>
                     <?php echo $this->Html->link('Add to Cart', array('controller' => 'cart', 'action' => 'add', $watch['Watch']['id']), array('class' => 'btn btn-primary')); ?>

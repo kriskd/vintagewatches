@@ -43,8 +43,12 @@ class AppController extends Controller {
     public $components = array('Stripe' => array('className' => 'Stripe.Stripe'),
                                'DebugKit.Toolbar', 'Session', 'Cart');
     
+    /**
+     * Compile LESS
+     * Send the Controller object to the View so Helpers can initialize a Component with it
+     */
     public function beforeRender()
-    {
+    {   
         if(Configure::read('debug') > 0){
             App::import('Vendor', 'leafo/lessphp/lessc.inc');
             $lessc = new lessc();
@@ -53,7 +57,7 @@ class AppController extends Controller {
             $lessc->checkedCompile($less,$css);
         }
         
-        $this->set(array('cartCount' => $this->Cart->cartItemCount()));
+        $this->set(array('controller' => $this));
         parent::beforeRender();
     }
 }
