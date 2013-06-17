@@ -47,21 +47,23 @@ class CartController extends AppController
     public function checkout()
     {
         if($this->request->is('post')){
-	    $amount = $this->request->data['Cart']['total']; 
-	    if($amount > 0){ 
-		$stripeToken = $this->request->data['stripeToken'];
-		$data = array('amount' => $amount,
-			      'stripeToken' => $stripeToken);
-		$result = $this->Stripe->charge($data);
-		if($result['stripe_paid'] == true){
-		    $items = $this->Session->read('Cart.items');
-		    foreach($items as $id){
-			$this->Watch->id = $id;
-			$this->Watch->saveField('active', 0);
+	    if($this->Session->check('Cart.total') == true){
+		$amount = $this->Session->read('Cart.total'); 
+		if($amount > 0){
+		    $stripeToken = $this->request->data['stripeToken'];
+		    $data = array('amount' => $amount,
+				  'stripeToken' => $stripeToken);
+		    $result = $this->Stripe->charge($data);
+		    if($result['stripe_paid'] == true){
+			$items = $this->Session->read('Cart.items');
+			foreach($items as $id){
+			    $this->Watch->id = $id;
+			    $this->Watch->saveField('active', 0);
+			}
+			$this->Session->delete('Cart');
+			$this->Session->setFlash('Payment Received');
+			$this->redirect(array('controller' => 'watches', 'action' => 'index'));
 		    }
-		    $this->Session->delete('Cart.items');
-		    $this->Session->setFlash('Payment Received');
-		    $this->redirect(array('controller' => 'watches', 'action' => 'index'));
 		}
 	    } 
 	    $this->Session->setFlash('Please select your country.');
@@ -109,6 +111,7 @@ class CartController extends AppController
 					 );
 	    $subTotal = $this->Cart->getSubTotal($watches);
 	    $total = $subTotal + $shipping;
+	    $this->Session->write('Cart.total', $total);
 	}
 	
 	$this->set(array('data' => compact('shipping', 'total')));
