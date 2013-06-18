@@ -5245,7 +5245,10 @@ table th {
 .cart.index section {
   margin-bottom: 25px;
 }
-#payment-form {
+.cart.index .control-label {
+  margin-right: 5px;
+}
+.cart.index form {
   padding: 5px;
   background: #eee;
   border: 1px solid #555;
@@ -5253,38 +5256,45 @@ table th {
   -moz-border-radius: 5px;
   border-radius: 5px;
 }
-#payment-form .control-label {
-  margin-right: 5px;
-}
-#payment-form input {
-  margin: 5px;
-}
-#payment-form .input {
-  line-height: 20px;
-}
-#payment-form .card-expiry-month {
-  float: left;
-}
-#payment-form label {
+.cart.index label {
   font-size: 90%;
   font-weight: bold;
 }
-#payment-form label[for=CartCvc] {
+.cart.index .review-cart form {
+  border: none;
+}
+.cart.index .review-cart label {
+  font-weight: normal;
+}
+.cart.index .address .radio.inline {
+  margin-right: 30px;
+}
+.cart.index .address input,
+.cart.index .address select {
+  margin: 5px;
+}
+.cart.index .payment-form input {
+  margin: 5px;
+}
+.cart.index .payment-form .input {
+  line-height: 20px;
+}
+.cart.index .payment-form .card-expiry-month {
+  float: left;
+}
+.cart.index .payment-form label[for=CartCvc] {
   padding-top: 10px;
 }
-#payment-form label[for=CartMonth] {
+.cart.index .payment-form label[for=CartMonth] {
   padding-top: 5px;
   margin-right: 10px;
 }
-#payment-form select option {
+.cart.index .payment-form select option {
   color: #555;
 }
-#payment-form .card-number-div {
+.cart.index .payment-form .card-number-div {
   height: 52px;
 }
-#payment-form .submit {
+.cart.index .payment-form .submit {
   text-align: center;
-}
-.address .radio.inline {
-  margin-right: 30px;
 }

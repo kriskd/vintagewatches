@@ -1,6 +1,6 @@
 <div class="cart index">
     <h2>Checkout</h2>
-    <section>
+    <section class="review-cart">
         <h3>Review Cart</h3>
         <table class="table-bordered">
             <tr>
@@ -38,21 +38,11 @@
         </table>
     </section>
     <section class="address">
-        <h3>Address</h3>
-
-        <?php echo $this->Form->create('Address', array('class' => 'us address-form')); ?>
-            <label>This is the US Form</label>
-        <?php echo $this->Form->end(); ?>
-        <?php echo $this->Form->create('Address', array('class' => 'ca address-form')); ?>
-            <label>This is the Canada Form</label>
-        <?php echo $this->Form->end(); ?>
-        <?php echo $this->Form->create('Address', array('class' => 'other address-form')); ?>
-            <label>This is the Other Country Form</label>
-        <?php echo $this->Form->end(); ?>
+        <?php echo $this->Element('address'); ?>
     </section>
     <section>
         <h3>Credit Card</h3>
-        <?php echo $this->Form->create(false, array('id' => 'payment-form', 'action' => 'checkout', 'class' => 'form-horizontal')); ?>
+        <?php echo $this->Form->create(false, array('action' => 'checkout', 'class' => 'form-horizontal payment-form')); ?>
             <div class="payment-errors alert alert-error"></div>
             <?php echo $this->Form->input('Card.number', array('name' => false,
                                                     'size' => 20,
