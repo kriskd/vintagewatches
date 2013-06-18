@@ -39,7 +39,7 @@ $(document).ready(function(){
     
     $('.payment-errors').hide();
     
-    $('#payment-form').submit(function(){ 
+    $('.payment-form').submit(function(){ 
         $('.submit-payment').attr('disabled', 'disabled');
         var form = $(this);
         var error = false;
