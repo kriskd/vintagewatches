@@ -18,7 +18,10 @@ class CartController extends AppController
             $years[$i] = $i;
         }
         
-        $this->set(compact('watches', 'months', 'years', 'total'));
+	$states = $this->_getStates();
+	$provinces = $this->_getCanadianProvinces();
+	
+        $this->set(compact('watches', 'months', 'years', 'total', 'states', 'provinces'));
     }
     
     public function add($id = null)
@@ -166,21 +169,21 @@ class CartController extends AppController
                 'WY'=>'Wyoming');
     }
     
-    protected function _getCanadianStates()
+    protected function _getCanadianProvinces()
     {
-        return array( 
-            'BC'=>'British Columbia', 
+        return array(
+	    'AB'=>'Alberta', 
+            'BC'=>'British Columbia',
+	    'MB'=>'Manitoba',
+	    'NB'=>'New Brunswick',
+	    'NL'=>'Newfoundland and Labrador',
+	    'NT'=>'Northwest Territories',
+	    'NS'=>'Nova Scotia',
+	    'NU'=>'Nunavut',
             'ON'=>'Ontario', 
-            'NL'=>'Newfoundland and Labrador', 
-            'NS'=>'Nova Scotia', 
             'PE'=>'Prince Edward Island', 
-            'NB'=>'New Brunswick', 
             'QC'=>'Quebec', 
-            'MB'=>'Manitoba', 
             'SK'=>'Saskatchewan', 
-            'AB'=>'Alberta', 
-            'NT'=>'Northwest Territories', 
-            'NU'=>'Nunavut',
             'YT'=>'Yukon Territory');
     }
 }
