@@ -5248,7 +5248,8 @@ table th {
 .cart.index .control-label {
   margin-right: 5px;
 }
-.cart.index form {
+.cart.index .checkout-form,
+.cart.index .address-form {
   padding: 5px;
   background: #eee;
   border: 1px solid #555;
