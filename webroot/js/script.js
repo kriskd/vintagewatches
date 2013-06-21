@@ -1,6 +1,7 @@
 $(document).ready(function(){
     
     $('.address-form').hide();
+    //$('.us').show();
     if ($('.select-country input:radio').is(':checked')) {
         //Enable submit button if country selected
         $('.submit-payment').prop('disabled', false);

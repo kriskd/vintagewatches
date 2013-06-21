@@ -37,45 +37,15 @@
             <tr class="total-row"><td></td><td></td><td class="text-right">Total</td><td class="total-formatted-amount text-right"></td></tr>
         </table>
     </section>
+    
+    <?php echo $this->Form->create(false, array('action' => 'checkout', 'class' => 'form-horizontal payment-form')); ?>
     <section class="address">
+        <h3>Address</h3>
         <?php echo $this->Element('address'); ?>
     </section>
     <section>
         <h3>Credit Card</h3>
-        <?php echo $this->Form->create(false, array('action' => 'checkout', 'class' => 'form-horizontal payment-form')); ?>
-            <div class="payment-errors alert alert-error"></div>
-            <?php echo $this->Form->input('Card.number', array('name' => false,
-                                                    'size' => 20,
-                                                    'data-stripe' => 'number',
-                                                    'autocomplete' => 'off',
-                                                    'placeHolder' => 'Card Number',
-                                                    'class' => 'card-number input-large',
-                                                    'label' => array('text' => '<span>Card Number</span><br /><small>(no spaces or hypens)</small>',
-                                                                     'class' => 'control-label'),
-                                                    'div' => array('class' => 'card-number-div')
-                                                )
-                                            ); ?>
-            <?php echo $this->Form->input('Card.cvc', array('name' => false,
-                                                    'size' => 4,
-                                                    'data-stripe' => 'cvc',
-                                                    'autocomplete' => 'off',
-                                                    'placeHolder' => 'CVC',
-                                                    'class' => 'card-cvc input-small',
-                                                    'label' => array('text' => 'CVC', 'class' => 'control-label'))); ?>
-            <label for="CartMonth" class="control-label">Expiration (MM/YYYY)</label>
-            <?php echo $this->Form->input('Card.month', array('name' => false,
-                                                    'empty' => 'MM',
-                                                    'options' => $months,
-                                                    'data-stripe' => 'exp-month',
-                                                    'class' => 'card-expiry-month input-mini',
-                                                    'label' => false)); ?>
-            <?php echo $this->Form->input('Card.year', array('name' => false,
-                                                    'empty' => 'Year',
-                                                    'options' => $years,
-                                                    'data-stripe' => 'exp-year',
-                                                    'placeHolder' => 'Year',
-                                                    'class' => 'card-expiry-year input-small',
-                                                    'label' => false)); ?>
-        <?php echo $this->Form->end(array('class' => 'btn btn-primary submit-payment', 'label' => 'Submit Payment')); ?>
+        <?php echo $this->Element('credit_card'); ?>
     </section>
+    
 </div>
