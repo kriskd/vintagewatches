@@ -1,12 +1,12 @@
 $(document).ready(function(){
     
-    $('#CartCountryName').keyup(function(){
-        $('#CartCountryName').autocomplete({
+    $(document).on('keyup', '#countryName', function(){
+        $('#countryName').autocomplete({
             source: '/cart/index.json',
             minLength: 3,
             select: function(event,ui){
                 $(this).val(ui.item.value);
-                $('#CartCountry').attr('value', ui.item.id);
+                $('#country').attr('value', ui.item.id);
             }
         });
     });
@@ -34,16 +34,17 @@ $(document).ready(function(){
      * Compute shipping and total based on country
      */
     function computeTotal(country) {
-        $('.address-form.' + country).show();
         $.ajax({
-            url: '/cart/getTotal.json',
+            url: '/cart/getCountry.json',
             data: {"country" : country},
             dataType: 'json',
             success: function(data){
                 var shipping = data.shipping;
                 var totalFormatted = data.totalFormatted;
+                var form = data.form;
                 $('.shipping-amount').empty().append(shipping);
                 $('.total-formatted-amount').empty().append(totalFormatted);
+                $('.address-form').empty().append(form).show();
             }
         });
     }
