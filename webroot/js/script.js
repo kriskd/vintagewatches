@@ -1,7 +1,16 @@
 $(document).ready(function(){
     
-    $('.address-form').hide();
-    //$('.us').show();
+    $('#CartCountryName').keyup(function(){
+        $('#CartCountryName').autocomplete({
+            source: '/cart/index.json',
+            minLength: 3,
+            select: function(event,ui){
+                $(this).val(ui.item.value); 
+                $('#CartCountry').attr('value', ui.item.id);
+            }
+        });
+    });
+        
     if ($('.select-country input:radio').is(':checked')) {
         //Enable submit button if country selected
         $('.submit-payment').prop('disabled', false);
@@ -27,7 +36,8 @@ $(document).ready(function(){
     function computeTotal(country) {
         $('.address-form.' + country).show();
         $.ajax({
-            url: '/cart/getTotal/' + country,
+            url: '/cart/getTotal.json',
+            data: {"country" : country},
             dataType: 'json',
             success: function(data){
                 var shipping = data.shipping;
@@ -38,11 +48,9 @@ $(document).ready(function(){
         });
     }
     
-    $('.payment-errors').hide();
-    
     $('.payment-form').submit(function(){ 
         $('.submit-payment').attr('disabled', 'disabled');
-        var form = $(this);
+        var form = $(this); 
         var error = false;
  
         // Get the values:
