@@ -29,6 +29,7 @@
 		echo $this->Html->meta('icon');
 
 		//echo $this->Html->css('cake.generic');
+		echo $this->Html->css('//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css');
 		echo $this->Html->css('styles');
 		
 		echo $this->fetch('meta');
