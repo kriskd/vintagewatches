@@ -24,7 +24,7 @@ class CartController extends AppController
 	//Handle ajax request for autocomplete
         if($this->request->is('ajax')){
             $query = $this->request->query; 
-            $search = $query['term'];
+            $search = $query['term']; 
             if(!$search){ 
                 throw new NotFoundException('Search term required');
             }
@@ -32,8 +32,8 @@ class CartController extends AppController
 	    $filtered = array();
 	    $countries = $this->_getCountries();
 	    foreach($countries as $key => $country){
-		if(stripos($country, $search) !== false){
-		    $filtered[] = array('id' => $key, 'value' => $country);
+		if(stripos($country, htmlentities($search)) !== false){
+		    $filtered[] = array('id' => $key, 'value' => html_entity_decode($country));
 		}
 	    }
 	    
@@ -73,7 +73,7 @@ class CartController extends AppController
 		    $stripeToken = $this->request->data['stripeToken'];
 		    $data = array('amount' => $amount,
 				  'stripeToken' => $stripeToken);
-		    $result = $this->Stripe->charge($data);
+		    $result = $this->Stripe->charge($data); 
 		    if($result['stripe_paid'] == true){
 			$items = $this->Session->read('Cart.items');
 			foreach($items as $id){
@@ -87,9 +87,8 @@ class CartController extends AppController
 		}
 	    } 
 	    $this->Session->setFlash('Please select your country.');
-	    $this->redirect(array('action' => 'index')); 
         }
-        
+        $this->redirect(array('action' => 'index')); 
     }
     
     public function remove($id = null)
@@ -109,8 +108,11 @@ class CartController extends AppController
         }
     }
     
-    public function getTotal($country = null)
-    {
+    /**
+     * Get country specific data
+     */
+    public function getCountry()
+    {	
 	$shipping = null;
 	if($this->request->is('ajax')){
 	    $query = $this->request->query; 
@@ -118,9 +120,13 @@ class CartController extends AppController
 	    switch($country){
 		case 'us':
 		    $shipping = '8';
+		    $states = $this->_getStates();
+		    $this->set(compact('states'));
 		    break;
 		case 'ca':
 		    $shipping = '38';
+		    $provinces = $this->_getCanadianProvinces();
+		    $this->set(compact('provinces'));
 		    break;
 		case 'other';
 		    $shipping = '45';
@@ -132,7 +138,7 @@ class CartController extends AppController
 	    $this->Session->write('Cart.total', $total);
 	}
 	
-	$this->set(array('data' => compact('shipping', 'total')));
+	$this->set(array('data' => compact('shipping', 'total', 'country')));
 	$this->layout = 'ajax';
     }
     
@@ -213,7 +219,7 @@ class CartController extends AppController
     {
 	return array(
 	    'AF' => 'Afghanistan',
-	    'AX' => 'Åland Islands',
+	    'AX' => '&Aring;land Islands',
 	    'AL' => 'Albania',
 	    'DZ' => 'Algeria',
 	    'AS' => 'American Samoa',
@@ -266,10 +272,10 @@ class CartController extends AppController
 	    'CD' => 'Congo, the Democratic Republic of the',
 	    'CK' => 'Cook Islands',
 	    'CR' => 'Costa Rica',
-	    'CI' => 'Côte d\'Ivoire',
+	    'CI' => 'C&ocirc;te d\'Ivoire',
 	    'HR' => 'Croatia',
 	    'CU' => 'Cuba',
-	    'CW' => 'Curaçao',
+	    'CW' => 'Cura&ccedil;ao',
 	    'CY' => 'Cyprus',
 	    'CZ' => 'Czech Republic',
 	    'DK' => 'Denmark',
@@ -392,11 +398,11 @@ class CartController extends AppController
 	    'PT' => 'Portugal',
 	    'PR' => 'Puerto Rico',
 	    'QA' => 'Qatar',
-	    'RE' => "R&#201;union",
+	    'RE' => 'R&eacute;union',
 	    'RO' => 'Romania',
 	    'RU' => 'Russian Federation',
 	    'RW' => 'Rwanda',
-	    'BL' => 'Saint Barthélemy',
+	    'BL' => 'Saint Barth&eacute;lemy',
 	    'SH' => 'Saint Helena, Ascension and Tristan da Cunha',
 	    'KN' => 'Saint Kitts and Nevis',
 	    'LC' => 'Saint Lucia',
