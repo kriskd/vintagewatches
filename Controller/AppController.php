@@ -41,7 +41,7 @@ class AppController extends Controller {
                             'Cart');
     
     public $components = array('Stripe' => array('className' => 'Stripe.Stripe'),
-                               'DebugKit.Toolbar', 'Session', 'Cart');
+                               'DebugKit.Toolbar', 'Session', 'Cart', 'RequestHandler');
     
     /**
      * Compile LESS
