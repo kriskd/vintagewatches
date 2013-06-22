@@ -36,7 +36,7 @@
 		echo $this->fetch('script');
 		
 		echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js');
-		//echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js');
+		echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js');
 		echo $this->Html->script('https://js.stripe.com/v2/');
 		echo '<script type="text/javascript">Stripe.setPublishableKey("' . Configure::read('Stripe.TestPublishable') . '");</script>';
 		echo $this->Html->script('/js/script');
