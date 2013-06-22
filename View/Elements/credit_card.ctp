@@ -24,13 +24,15 @@
                                             'options' => $months,
                                             'data-stripe' => 'exp-month',
                                             'class' => 'card-expiry-month input-mini',
-                                            'label' => false)); ?>
+                                            'label' => false,
+                                            'multiple' => false)); ?>
     <?php echo $this->Form->input('Card.year', array('name' => false,
                                             'empty' => 'Year',
                                             'options' => $years,
                                             'data-stripe' => 'exp-year',
                                             'placeHolder' => 'Year',
                                             'class' => 'card-expiry-year input-small',
-                                            'label' => false)); ?>
+                                            'label' => false,
+                                            'multiple' => false)); ?>
     <?php echo $this->Form->end(array('class' => 'btn btn-primary submit-payment', 'label' => 'Submit Payment')); ?>
 </div>
