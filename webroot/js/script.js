@@ -5,7 +5,7 @@ $(document).ready(function(){
             source: '/cart/index.json',
             minLength: 3,
             select: function(event,ui){
-                $(this).val(ui.item.value); 
+                $(this).val(ui.item.value);
                 $('#CartCountry').attr('value', ui.item.id);
             }
         });

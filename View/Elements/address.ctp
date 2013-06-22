@@ -54,6 +54,6 @@
     <?php echo $this->Form->input('address_city', array('label' => array('class' => 'control-label', 'text' => 'City/Locality'))); ?>
     <?php echo $this->Form->input('address_zip', array('label' => array('class' => 'control-label', 'text' => 'Postal Code'), 'class' => 'input-small')); ?>
     <?php echo $this->Form->input('countryName', array('label' => array('class' => 'control-label', 'text' => 'Country'))); ?>
-    <?php echo $this->Form->input('country', array('type' => 'hidden', 'value' => 'CA',
+    <?php echo $this->Form->input('country', array('type' => 'hidden', 'value' => '',
                                                        'data-stripe' => 'address_country')); ?>
 </div>

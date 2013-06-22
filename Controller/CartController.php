@@ -24,15 +24,21 @@ class CartController extends AppController
 	//Handle ajax request for autocomplete
         if($this->request->is('ajax')){
             $query = $this->request->query; 
-            $search = $query['term']; 
+            $search = $query['term'];
             if(!$search){ 
                 throw new NotFoundException('Search term required');
             }
 	    
-	    //Make an array of matched options
+	    $filtered = array();
+	    $countries = $this->_getCountries();
+	    foreach($countries as $key => $country){
+		if(stripos($country, $search) !== false){
+		    $filtered[] = array('id' => $key, 'value' => $country);
+		}
+	    }
 	    
-	    //Send to view
-	    
+	    $this->set(compact('filtered'));
+	    $this->layout = 'ajax';
         }
 	
         $this->set(compact('watches', 'months', 'years', 'total', 'states', 'provinces'));
@@ -386,7 +392,7 @@ class CartController extends AppController
 	    'PT' => 'Portugal',
 	    'PR' => 'Puerto Rico',
 	    'QA' => 'Qatar',
-	    'RE' => 'Réunion',
+	    'RE' => "R&#201;union",
 	    'RO' => 'Romania',
 	    'RU' => 'Russian Federation',
 	    'RW' => 'Rwanda',
