@@ -17,14 +17,11 @@ class CartController extends AppController
         for($i=date('Y'); $i<=date('Y')+10; $i++){
             $years[$i] = $i;
         }
-        
-	$states = $this->_getStates();
-	$provinces = $this->_getCanadianProvinces();
 	
 	//Handle ajax request for autocomplete
         if($this->request->is('ajax')){
             $query = $this->request->query; 
-            $search = $query['term']; 
+            $search = $query['term'];
             if(!$search){ 
                 throw new NotFoundException('Search term required');
             }
@@ -33,15 +30,15 @@ class CartController extends AppController
 	    $countries = $this->_getCountries();
 	    foreach($countries as $key => $country){
 		if(stripos($country, htmlentities($search)) !== false){
-		    $filtered[] = array('id' => $key, 'value' => html_entity_decode($country));
+		    $filtered[] = array('id' => $key, 'value' => html_entity_decode($country, ENT_COMPAT, 'UTF-8'));
 		}
 	    }
-	    
+
 	    $this->set(compact('filtered'));
 	    $this->layout = 'ajax';
         }
 	
-        $this->set(compact('watches', 'months', 'years', 'total', 'states', 'provinces'));
+        $this->set(compact('watches', 'months', 'years', 'total'));
     }
     
     public function add($id = null)
