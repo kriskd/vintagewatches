@@ -5248,6 +5248,10 @@ table th {
 .cart.index .control-label {
   margin-right: 5px;
 }
+.cart.index .address-form,
+.cart.index .payment-errors {
+  display: none;
+}
 .cart.index .checkout-form,
 .cart.index .address-form {
   padding: 5px;
