@@ -11,7 +11,7 @@
             </tr>
             <?php foreach($watches as $watch): ?>
                 <tr>
-                    <td><?php echo $this->Html->link('<i class="icon-trash"></i>', array('action' => 'remove', $watch['Watch']['id']), array('escape' => false)); ?></td>
+                    <td><?php echo $this->Html->link('<i class="icon-trash icon-large"></i>', array('action' => 'remove', $watch['Watch']['id']), array('escape' => false)); ?></td>
                     <td><?php echo h($watch['Watch']['stock_id']); ?></td>
                     <td><?php echo $this->Html->link(h($watch['Watch']['name']), array('controller' => 'watches', 'action' => 'view', $watch['Watch']['id'])); ?></td>
                     <td class="text-right"><?php echo h($this->Number->currency($watch['Watch']['price'], 'USD')); ?></td>
