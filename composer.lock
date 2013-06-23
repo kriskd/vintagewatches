@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "ffa2eeb01dd04aacd1e24b4a96c195a4",
+    "hash": "ce63b2166e98f31eb06bdc9d38295e4f",
     "packages": [
         {
             "name": "cakephp/debug_kit",
@@ -61,16 +61,16 @@
         },
         {
             "name": "composer/installers",
-            "version": "v1.0.3",
+            "version": "v1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "v1.0.3"
+                "reference": "v1.0.4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/v1.0.3",
-                "reference": "v1.0.3",
+                "url": "https://api.github.com/repos/composer/installers/zipball/v1.0.4",
+                "reference": "v1.0.4",
                 "shasum": ""
             },
             "replace": {
@@ -121,15 +121,25 @@
                 "li3",
                 "lithium",
                 "mako",
+                "modulework",
                 "phpbb",
                 "ppi",
                 "silverstripe",
                 "symfony",
                 "wordpress",
-                "yii",
                 "zend"
             ],
-            "time": "2013-03-02 22:45:58"
+            "time": "2013-06-20 02:36:19"
+        },
+        {
+            "name": "font-awesome",
+            "version": "3.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FortAwesome/Font-Awesome/",
+                "reference": "origin/master"
+            },
+            "type": "library"
         },
         {
             "name": "leafo/lessphp",

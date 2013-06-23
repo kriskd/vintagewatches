@@ -52,7 +52,7 @@
             "type": "package",
             "package": {
                 "name": "twitter/bootstrap",
-                "version": "master",
+                "version": "2.3.2",
                 "source": {
                     "url": "https://github.com/twitter/bootstrap",
                     "type": "git",
@@ -83,6 +83,18 @@
                     "reference": "origin/master"
                 }
             }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "font-awesome",
+                "version": "3.2.1",
+                "source": {
+                    "url": "https://github.com/FortAwesome/Font-Awesome/",
+                    "type": "git",
+                    "reference": "origin/master"
+                }
+            }
         }
     ],
     "require": {
@@ -90,9 +102,10 @@
         "cakephp/debug_kit": "2.0",
         "chronon/stripe": "*",
         "stripe/stripe-php": "*",
-        "twitter/bootstrap": "*",
+        "twitter/bootstrap": "2.3.2",
         "leafo/lessphp": "*",
-        "malikov/cakephp2.0-image-upload": "dev-master"
+        "malikov/cakephp2.0-image-upload": "dev-master",
+        "font-awesome": "3.2.1"
     },
     "config": {
         "vendor-dir": "Vendor"
@@ -103,9 +116,10 @@
             "Plugin/TwitterBootstrap": ["loadsys/twitter-bootstrap-helper"],
             "Plugin/Stripe": ["chronon/stripe"],
             "Plugin/Stripe/Vendor/Stripe": ["stripe/stripe-php"],
-            "webroot/bootstrap": ["twitter/bootstrap"],
+            "webroot/css/less": ["twitter/bootstrap"],
             "Vendor": ["leafo/lessphp"],
-            "Controller/Component": ["malikov/cakephp2.0-image-upload"]
+            "Controller/Component": ["malikov/cakephp2.0-image-upload"],
+            "webroot/css/less/font-awesome": ["font-awesome"]
         }
     }
 }
