@@ -21,4 +21,19 @@ class MyHtmlHelper extends HtmlHelper
         }
         return parent::link($title, $url, $options, $confirmMessage);
     }
+    
+    /**
+     * Create nav link only when not on that page
+     */
+    public function navLink($title, $url = null, $options = array(), $confirmMessage = false, $controller = null)
+    {
+        if(is_string($url)){
+            $url = Router::parse($this->url($url));
+        }
+        $urlController = isset($url['controller']) ? $url['controller'] : null;
+        if(strcasecmp($controller->name, $urlController)==0){
+            return null;
+        }
+        return '<li>' . parent::link($title, $url, $options, $confirmMessage) . '</li>';
+    }
 }
