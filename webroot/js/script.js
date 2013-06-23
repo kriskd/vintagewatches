@@ -29,6 +29,8 @@ $(document).ready(function(){
         computeTotal(country);
     });
     
+    $('.launch-tooltip').tooltip();
+
     /**
      * Show the address form based on the country
      * Compute shipping and total based on country
@@ -44,7 +46,8 @@ $(document).ready(function(){
                 var form = data.form;
                 $('.shipping-amount').empty().append(shipping);
                 $('.total-formatted-amount').empty().append(totalFormatted);
-                $('.address-form').empty().append(form).show();
+                $('.address-form').show();
+                $('.country-address-form').empty().append(form);
             }
         });
     }

@@ -6398,6 +6398,14 @@ a.badge:focus {
 .affix {
   position: fixed;
 }
+.launch-tooltip,
+.launch-tooltip:hover {
+  text-decoration: none;
+  color: #333;
+}
+.icon-question-sign {
+  color: #9d261d;
+}
 table th {
   color: #0064cd;
 }
@@ -6448,7 +6456,7 @@ table th {
   padding: 0 10px;
 }
 .cart.index h6 {
-  margin-bottom: 0;
+  margin: 0;
 }
 .cart.index section {
   margin-bottom: 25px;
@@ -6456,12 +6464,15 @@ table th {
 .cart.index .control-label {
   margin-right: 5px;
 }
+.cart.index .address-form .checkbox {
+  padding: 10px 0 0 0;
+}
 .cart.index .address-form,
 .cart.index .payment-errors {
   display: none;
 }
 .cart.index .checkout-form,
-.cart.index .address-form {
+.cart.index .country-address-form {
   padding: 5px;
   background: #eee;
   border: 1px solid #555;

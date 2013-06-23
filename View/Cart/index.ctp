@@ -11,7 +11,14 @@
             </tr>
             <?php foreach($watches as $watch): ?>
                 <tr>
-                    <td><?php echo $this->Html->link('<i class="icon-trash icon-large"></i>', array('action' => 'remove', $watch['Watch']['id']), array('escape' => false)); ?></td>
+                    <td class="text-center"><?php echo $this->Html->link('<i class="icon-trash icon-large"></i>',
+                                                                         array('action' => 'remove', $watch['Watch']['id']),
+                                                                         array('escape' => false, 'class' => 'launch-tooltip',
+                                                                               'data-toggle' => 'tooltip',
+                                                                               'data-placement' => 'top',
+                                                                               'title' => 'Remove from Cart')
+                                                                         ); ?>
+                    </td>
                     <td><?php echo h($watch['Watch']['stock_id']); ?></td>
                     <td><?php echo $this->Html->link(h($watch['Watch']['name']), array('controller' => 'watches', 'action' => 'view', $watch['Watch']['id'])); ?></td>
                     <td class="text-right"><?php echo h($this->Number->currency($watch['Watch']['price'], 'USD')); ?></td>
@@ -21,7 +28,12 @@
                 <td></td>
                 <td><h5>Shipping</h5></td>
                 <td>
-                    <h6 class="text-left">Choose Country</h6>
+                    <h6 class="text-left"><a class="launch-tooltip"
+                                             data-toggle="tooltip"
+                                             data-placement="top"
+                                             title="Once you choose your country, the appropriate shipping charge will be added, and the address bar below will expand so that you can enter your address.">
+                                             Choose Country <i class="icon-question-sign icon-large"></i>
+                                          </a></h6>
                     <?php echo $this->Form->create('false', array('class' => 'select-country')); ?>
                         <?php echo $this->Form->input('Address.country', array('type' => 'radio',
                                                                              'options' => array('us' => 'U.S.', 'ca' => 'Canada', 'other' => 'Other'),
