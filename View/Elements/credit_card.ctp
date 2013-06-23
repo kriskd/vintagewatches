@@ -6,7 +6,7 @@
                                             'autocomplete' => 'off',
                                             'placeHolder' => 'Card Number',
                                             'class' => 'card-number input-large',
-                                            'label' => array('text' => '<span>Card Number</span><br /><small>(no spaces or hypens)</small>',
+                                            'label' => array('text' => 'Card Number<br /><small>(no spaces or hypens)</small>',
                                                              'class' => 'control-label'),
                                             'div' => array('class' => 'card-number-div')
                                         )
@@ -17,7 +17,17 @@
                                             'autocomplete' => 'off',
                                             'placeHolder' => 'CVC',
                                             'class' => 'card-cvc input-small',
-                                            'label' => array('text' => 'CVC', 'class' => 'control-label'))); ?>
+                                            'label' => array('text' => '<a class="launch-tooltip"
+                                                                        data-toggle="tooltip" data-placement="top"
+                                                                        title="The CVC is the three-digit number
+                                                                        that appears on the reverse side of your
+                                                                        credit/debit card.">CVC
+                                                                        <i class="icon-question-sign icon-large"></i>
+                                                                        </a>',
+                                                             'class' => 'control-label'),
+                                            'div' => array('class' => 'cvc-div')
+                                        )
+                                    ); ?>
     <label for="CartMonth" class="control-label">Expiration (MM/YYYY)</label>
     <?php echo $this->Form->input('Card.month', array('name' => false,
                                             'empty' => 'MM',
