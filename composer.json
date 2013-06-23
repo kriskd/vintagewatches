@@ -4,11 +4,11 @@
             "type": "package",
             "package": {
                 "name": "cakephp/debug_kit",
-                "version": "master",
+                "version": "2.0",
                 "source": {
                     "url": "https://github.com/cakephp/debug_kit",
                     "type": "git",
-                    "reference": "origin/master"
+                    "reference": "origin/2.0"
                 }
             }
         },
@@ -99,7 +99,7 @@
     ],
     "require": {
         "loadsys/twitter-bootstrap-helper": "2.1.*",
-        "cakephp/debug_kit": "2.2.*@dev",
+        "cakephp/debug_kit": "2.0",
         "chronon/stripe": "*",
         "stripe/stripe-php": "*",
         "twitter/bootstrap": "2.3.2",
