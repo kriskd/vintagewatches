@@ -4,11 +4,11 @@
             "type": "package",
             "package": {
                 "name": "cakephp/debug_kit",
-                "version": "2.0",
+                "version": "master",
                 "source": {
                     "url": "https://github.com/cakephp/debug_kit",
                     "type": "git",
-                    "reference": "origin/2.0"
+                    "reference": "origin/master"
                 }
             }
         },
@@ -99,27 +99,27 @@
     ],
     "require": {
         "loadsys/twitter-bootstrap-helper": "2.1.*",
-        "cakephp/debug_kit": "2.0",
+        "cakephp/debug_kit": "2.2.*@dev",
         "chronon/stripe": "*",
         "stripe/stripe-php": "*",
         "twitter/bootstrap": "2.3.2",
         "leafo/lessphp": "*",
         "malikov/cakephp2.0-image-upload": "dev-master",
-        "font-awesome": "3.2.1"
+        "font-awesome": "v3.2.1"
     },
     "config": {
         "vendor-dir": "Vendor"
     },
     "extra": {
         "installer-paths": {
-            "Plugin/DebugKit": ["cakephp/debug_kit"],
+            "Plugin/{$name}": ["cakephp/debug_kit"],
             "Plugin/TwitterBootstrap": ["loadsys/twitter-bootstrap-helper"],
             "Plugin/Stripe": ["chronon/stripe"],
             "Plugin/Stripe/Vendor/Stripe": ["stripe/stripe-php"],
             "webroot/css/less": ["twitter/bootstrap"],
             "Vendor": ["leafo/lessphp"],
             "Controller/Component": ["malikov/cakephp2.0-image-upload"],
-            "webroot/css/less/font-awesome": ["font-awesome"]
+            "Vendor/twitter/bootstrap/less/font-awesome": ["font-awesome"]
         }
     }
 }
