@@ -1,18 +1,19 @@
 <div class="navbar">
     <div class="navbar-inner">
         <ul class="nav">
-            <li>
+            <li class="<?php echo strcasecmp($controller->name, 'cart')==0 ? 'active' : '' ?>">
                 <?php echo $this->Html->cartLink('<i class="icon-shopping-cart icon-large"></i> ' . $this->Cart->cartCount('Items in Your Cart: ', '', $controller),
                                                  array('controller' => 'cart', 'action' => 'index'),
                                                  array('escape' => false),
                                                  false,
                                                  $controller); ?>
             </li>
-            <li>
-                <?php echo $this->Html->link('<i class="icon-tags icon-large"></i> Go Back to Store',
+            <?php //Wrapped in <li> in Component ?>
+                <?php echo $this->Html->navLink('<i class="icon-tags icon-large"></i> Go Back to Store',
                                              array('controller' => 'watches', 'action' => 'index'),
-                                             array('escape' => false)); ?>
-            </li>
+                                             array('escape' => false),
+                                             false,
+                                             $controller); ?>
         </ul>
     </div>
 </div>
