@@ -6472,7 +6472,7 @@ table th {
   display: none;
 }
 .cart.index .checkout-form,
-.cart.index .country-address-form {
+.cart.index .billing-country-address-form {
   padding: 5px;
   background: #eee;
   border: 1px solid #555;
