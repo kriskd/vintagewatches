@@ -47,7 +47,7 @@ $(document).ready(function(){
                 $('.shipping-amount').empty().append(shipping);
                 $('.total-formatted-amount').empty().append(totalFormatted);
                 $('.address-form').show();
-                $('.country-address-form').empty().append(form);
+                $('.billing-country-address-form').empty().append(form);
             }
         });
     }
