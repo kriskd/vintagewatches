@@ -36,7 +36,7 @@ class MyFormHelper extends FormHelper
         return parent::_parseOptions($options);
     }
     
-    public function addressForm($prefix, $country, $states = null, $provinces = null)
+    public function addressForm($prefix, $country)
     {   
         $this->inputDefaults(array('label' => array('class' => 'control-label'))); 
         $form = $this->input($prefix . 'FirstName', array('label' => array('text' =>'First Name'))); 
@@ -49,7 +49,8 @@ class MyFormHelper extends FormHelper
         $form .= $this->input($prefix . 'City', array('label' => array('text' => 'City'),
                                                            'data-stripe' => 'address_city')); 
         switch ($country){
-            case 'us': 
+            case 'us':
+                $states = $this->_getStates();
                 $form .= $this->input($prefix . 'State', array('label' => array('text' => 'State'),
                                                                 'data-stripe' => 'address_state',
                                                                    'options' => $states, 'empty' => 'Choose One')); 
@@ -59,7 +60,8 @@ class MyFormHelper extends FormHelper
                 $form .= $this->input($prefix . 'Country', array('type' => 'hidden', 'value' => 'US',
                                                                      'data-stripe' => 'address_country')); 
                 break; 
-            case 'ca': 
+            case 'ca':
+                $provinces = $this->_getCanadianProvinces();
                 $form .= $this->input($prefix . 'State', array('label' => array('text' => 'Province'),
                                                                 'data-stripe' => 'address_state',
                                                                 'options' => $provinces, 'empty' => 'Choose One')); 
@@ -80,5 +82,78 @@ class MyFormHelper extends FormHelper
             break; 
         } 
         return $form;
+    }
+        
+    protected function _getStates()
+    {
+        return array('AL'=>'Alabama',  
+		'AK'=>'Alaska',  
+                'AZ'=>'Arizona',  
+                'AR'=>'Arkansas',  
+                'CA'=>'California',  
+                'CO'=>'Colorado',  
+                'CT'=>'Connecticut',  
+                'DE'=>'Delaware',  
+                'DC'=>'District Of Columbia',  
+                'FL'=>'Florida',  
+                'GA'=>'Georgia',  
+                'HI'=>'Hawaii',  
+                'ID'=>'Idaho',  
+                'IL'=>'Illinois',  
+                'IN'=>'Indiana',  
+                'IA'=>'Iowa',  
+                'KS'=>'Kansas',  
+                'KY'=>'Kentucky',  
+                'LA'=>'Louisiana',  
+                'ME'=>'Maine',  
+                'MD'=>'Maryland',  
+                'MA'=>'Massachusetts',  
+                'MI'=>'Michigan',  
+                'MN'=>'Minnesota',  
+                'MS'=>'Mississippi',  
+                'MO'=>'Missouri',  
+                'MT'=>'Montana',
+                'NE'=>'Nebraska',
+                'NV'=>'Nevada',
+                'NH'=>'New Hampshire',
+                'NJ'=>'New Jersey',
+                'NM'=>'New Mexico',
+                'NY'=>'New York',
+                'NC'=>'North Carolina',
+                'ND'=>'North Dakota',
+                'OH'=>'Ohio',  
+                'OK'=>'Oklahoma',  
+                'OR'=>'Oregon',  
+                'PA'=>'Pennsylvania',  
+                'RI'=>'Rhode Island',  
+                'SC'=>'South Carolina',  
+                'SD'=>'South Dakota',
+                'TN'=>'Tennessee',  
+                'TX'=>'Texas',  
+                'UT'=>'Utah',  
+                'VT'=>'Vermont',  
+                'VA'=>'Virginia',  
+                'WA'=>'Washington',  
+                'WV'=>'West Virginia',  
+                'WI'=>'Wisconsin',  
+                'WY'=>'Wyoming');
+    }
+    
+    protected function _getCanadianProvinces()
+    {
+        return array(
+	    'AB'=>'Alberta', 
+            'BC'=>'British Columbia',
+	    'MB'=>'Manitoba',
+	    'NB'=>'New Brunswick',
+	    'NL'=>'Newfoundland and Labrador',
+	    'NT'=>'Northwest Territories',
+	    'NS'=>'Nova Scotia',
+	    'NU'=>'Nunavut',
+            'ON'=>'Ontario', 
+            'PE'=>'Prince Edward Island', 
+            'QC'=>'Quebec', 
+            'SK'=>'Saskatchewan', 
+            'YT'=>'Yukon Territory');
     }
 }
