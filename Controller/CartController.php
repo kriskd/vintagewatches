@@ -112,18 +112,14 @@ class CartController extends AppController
     {	
 	if($this->request->is('ajax')){
 	    $shipping = null;
-	    $states = null;
-	    $provinces = null;
 	    $query = $this->request->query; 
 	    $country = $query['country'];
 	    switch($country){
 		case 'us':
 		    $shipping = '8';
-		    $states = $this->_getStates();
 		    break;
 		case 'ca':
 		    $shipping = '38';
-		    $provinces = $this->_getCanadianProvinces();
 		    break;
 		case 'other';
 		    $shipping = '45';
@@ -134,82 +130,9 @@ class CartController extends AppController
 	    $total = $subTotal + $shipping; 
 	    $this->Session->write('Cart.total', $total);
 	    
-	    $this->set(array('data' => compact('shipping', 'total', 'country', 'states', 'provinces')));
+	    $this->set(array('data' => compact('shipping', 'total', 'country')));
 	    $this->layout = 'ajax';
 	}
-    }
-    
-    protected function _getStates()
-    {
-        return array('AL'=>'Alabama',  
-		'AK'=>'Alaska',  
-                'AZ'=>'Arizona',  
-                'AR'=>'Arkansas',  
-                'CA'=>'California',  
-                'CO'=>'Colorado',  
-                'CT'=>'Connecticut',  
-                'DE'=>'Delaware',  
-                'DC'=>'District Of Columbia',  
-                'FL'=>'Florida',  
-                'GA'=>'Georgia',  
-                'HI'=>'Hawaii',  
-                'ID'=>'Idaho',  
-                'IL'=>'Illinois',  
-                'IN'=>'Indiana',  
-                'IA'=>'Iowa',  
-                'KS'=>'Kansas',  
-                'KY'=>'Kentucky',  
-                'LA'=>'Louisiana',  
-                'ME'=>'Maine',  
-                'MD'=>'Maryland',  
-                'MA'=>'Massachusetts',  
-                'MI'=>'Michigan',  
-                'MN'=>'Minnesota',  
-                'MS'=>'Mississippi',  
-                'MO'=>'Missouri',  
-                'MT'=>'Montana',
-                'NE'=>'Nebraska',
-                'NV'=>'Nevada',
-                'NH'=>'New Hampshire',
-                'NJ'=>'New Jersey',
-                'NM'=>'New Mexico',
-                'NY'=>'New York',
-                'NC'=>'North Carolina',
-                'ND'=>'North Dakota',
-                'OH'=>'Ohio',  
-                'OK'=>'Oklahoma',  
-                'OR'=>'Oregon',  
-                'PA'=>'Pennsylvania',  
-                'RI'=>'Rhode Island',  
-                'SC'=>'South Carolina',  
-                'SD'=>'South Dakota',
-                'TN'=>'Tennessee',  
-                'TX'=>'Texas',  
-                'UT'=>'Utah',  
-                'VT'=>'Vermont',  
-                'VA'=>'Virginia',  
-                'WA'=>'Washington',  
-                'WV'=>'West Virginia',  
-                'WI'=>'Wisconsin',  
-                'WY'=>'Wyoming');
-    }
-    
-    protected function _getCanadianProvinces()
-    {
-        return array(
-	    'AB'=>'Alberta', 
-            'BC'=>'British Columbia',
-	    'MB'=>'Manitoba',
-	    'NB'=>'New Brunswick',
-	    'NL'=>'Newfoundland and Labrador',
-	    'NT'=>'Northwest Territories',
-	    'NS'=>'Nova Scotia',
-	    'NU'=>'Nunavut',
-            'ON'=>'Ontario', 
-            'PE'=>'Prince Edward Island', 
-            'QC'=>'Quebec', 
-            'SK'=>'Saskatchewan', 
-            'YT'=>'Yukon Territory');
     }
     
     protected function _getCountries()
