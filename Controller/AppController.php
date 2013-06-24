@@ -38,6 +38,7 @@ class AppController extends Controller {
                             'Number',
                             'Session',
                             'Html' => array('className' => 'MyHtml'),
+                            'Form' => array('className' => 'MyForm'),
                             'Cart');
     
     public $components = array('Stripe' => array('className' => 'Stripe.Stripe'),
