@@ -110,20 +110,20 @@ class CartController extends AppController
      */
     public function getCountry()
     {	
-	$shipping = null;
 	if($this->request->is('ajax')){
+	    $shipping = null;
+	    $states = null;
+	    $provinces = null;
 	    $query = $this->request->query; 
 	    $country = $query['country'];
 	    switch($country){
 		case 'us':
 		    $shipping = '8';
 		    $states = $this->_getStates();
-		    $this->set(compact('states'));
 		    break;
 		case 'ca':
 		    $shipping = '38';
 		    $provinces = $this->_getCanadianProvinces();
-		    $this->set(compact('provinces'));
 		    break;
 		case 'other';
 		    $shipping = '45';
@@ -133,10 +133,10 @@ class CartController extends AppController
 	    $subTotal = $this->Cart->getCartSubTotal(); 
 	    $total = $subTotal + $shipping; 
 	    $this->Session->write('Cart.total', $total);
+	    
+	    $this->set(array('data' => compact('shipping', 'total', 'country', 'states', 'provinces')));
+	    $this->layout = 'ajax';
 	}
-	
-	$this->set(array('data' => compact('shipping', 'total', 'country')));
-	$this->layout = 'ajax';
     }
     
     protected function _getStates()
