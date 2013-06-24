@@ -1,12 +1,12 @@
 $(document).ready(function(){
     
-    $(document).on('keyup', '#countryName', function(){
-        $('#countryName').autocomplete({
+    $(document).on('keyup', '.country-autocomplete', function(){
+        $('.country-autocomplete').autocomplete({
             source: '/cart/index.json',
             minLength: 3,
             select: function(event,ui){
                 $(this).val(ui.item.value);
-                $('#country').attr('value', ui.item.id);
+                $('#billingCountry').attr('value', ui.item.id);
             }
         });
     });
