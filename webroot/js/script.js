@@ -1,5 +1,8 @@
 $(document).ready(function(){
     
+    /**
+     * Country autocomplete
+     */
     $(document).on('keyup', '.country-autocomplete', function(){
         $('.country-autocomplete').autocomplete({
             source: '/cart/index.json',
@@ -10,7 +13,19 @@ $(document).ready(function(){
             }
         });
     });
-        
+    
+    /**
+     * Show shipping address form when ship to different address is selected
+     */
+    $(document).on('click', '#CartShipping-address', function(){
+        $('.address-form-shipping').toggle(this.checked);
+    });
+    
+    /**
+     * Check if a country is selected
+     * Enable/disable submit button
+     * Get shipping amount and appropriate address form
+     */
     if ($('.select-country input:radio').is(':checked')) {
         //Enable submit button if country selected
         $('.submit-payment').prop('disabled', false);
@@ -22,9 +37,19 @@ $(document).ready(function(){
         $('.submit-payment').attr('disabled', 'disabled');
     }
     
+    /**
+     * Action for selecting a country
+     */
     $('.select-country input').change(function(){
+        //Uncheck the shipping address box
+        $('#CartShipping-address').prop('checked', false);
+        //Hide the shipping address
+        $('.address-form-shipping').hide();
+        //Enable the submit button
         $('.submit-payment').prop('disabled', false);
+        //Hide the current address form that is showing
         $('.address-form').hide();
+        //Display correcting address form and shipping amount based on country
         var country = $(this).val();
         computeTotal(country);
     });
@@ -43,11 +68,13 @@ $(document).ready(function(){
             success: function(data){
                 var shipping = data.shipping;
                 var totalFormatted = data.totalFormatted;
-                var form = data.form;
+                var billingForm = data.billingForm;
+                var shippingForm = data.shippingForm;
                 $('.shipping-amount').empty().append(shipping);
                 $('.total-formatted-amount').empty().append(totalFormatted);
-                $('.address-form').show();
-                $('.billing-country-address-form').empty().append(form);
+                $('.address-form-billing').show();
+                $('.billing-country-address-form').empty().append(billingForm);
+                $('.shipping-country-address-form').empty().append(shippingForm);
             }
         });
     }
