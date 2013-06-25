@@ -6464,15 +6464,17 @@ table th {
 .cart.index .control-label {
   margin-right: 5px;
 }
-.cart.index .address-form .checkbox {
+.cart.index .address-form-billing .checkbox {
   padding: 10px 0 0 0;
 }
-.cart.index .address-form,
+.cart.index .address-form-billing,
+.cart.index .address-form-shipping,
 .cart.index .payment-errors {
   display: none;
 }
 .cart.index .checkout-form,
-.cart.index .billing-country-address-form {
+.cart.index .billing-country-address-form,
+.cart.index .shipping-country-address-form {
   padding: 5px;
   background: #eee;
   border: 1px solid #555;
