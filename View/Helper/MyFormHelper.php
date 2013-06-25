@@ -40,8 +40,8 @@ class MyFormHelper extends FormHelper
     {   
         $this->inputDefaults(array('label' => array('class' => 'control-label'))); 
         $form = $this->input($prefix . 'FirstName', array('label' => array('text' =>'First Name'))); 
-        $form .= $this->input($prefix . 'LastName', array('label' => array('text' =>'Last Name',
-                                                                                   'data-stripe' => 'name'))); 
+        $form .= $this->input($prefix . 'LastName', array('label' => array('text' =>'Last Name'),
+                                                                     'data-stripe' => 'name')); 
         $form .= $this->input($prefix . 'Address1', array('label' => array('text' => 'Address 1'),
                                                             'data-stripe' => 'address_line1'));                                       
         $form .= $this->input($prefix . 'Address2', array('label' => array('text' => 'Address 2'),
