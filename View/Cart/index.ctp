@@ -1,5 +1,4 @@
 <div class="cart index">
-    <h2>Checkout</h2>
     <section class="review-cart">
         <h3>Review Cart</h3>
         <table class="table-bordered">
