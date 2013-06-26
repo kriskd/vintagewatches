@@ -1,15 +1,30 @@
 $(document).ready(function(){
     
     /**
-     * Country autocomplete
+     * Billing country autocomplete
      */
-    $(document).on('keyup', '.country-autocomplete', function(){
-        $('.country-autocomplete').autocomplete({
+    $(document).on('keyup', '#billingCountryName', function(){
+        $('#billingCountryName').autocomplete({
             source: '/cart/index.json',
             minLength: 3,
             select: function(event,ui){
                 $(this).val(ui.item.value);
                 $('#billingCountry').attr('value', ui.item.id);
+            }
+        });
+    });
+    
+    /**
+     * Shipping country autocomplete
+     * There should be a way to do both of these in one method
+     */
+    $(document).on('keyup', '#shippingCountryName', function(){
+        $('#shippingCountryName').autocomplete({
+            source: '/cart/index.json',
+            minLength: 3,
+            select: function(event,ui){
+                $(this).val(ui.item.value);
+                $('#shippingCountry').attr('value', ui.item.id);
             }
         });
     });

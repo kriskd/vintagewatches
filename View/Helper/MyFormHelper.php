@@ -36,51 +36,56 @@ class MyFormHelper extends FormHelper
         return parent::_parseOptions($options);
     }
     
-    public function addressForm($prefix, $country)
+    public function addressForm($prefix, $country, $stripe = false)
     {   
-        $this->inputDefaults(array('label' => array('class' => 'control-label'))); 
-        $form = $this->input($prefix . 'FirstName', array('label' => array('text' =>'First Name'))); 
-        $form .= $this->input($prefix . 'LastName', array('label' => array('text' =>'Last Name'),
-                                                                     'data-stripe' => 'name')); 
-        $form .= $this->input($prefix . 'Address1', array('label' => array('text' => 'Address 1'),
-                                                            'data-stripe' => 'address_line1'));                                       
-        $form .= $this->input($prefix . 'Address2', array('label' => array('text' => 'Address 2'),
-                                                            'data-stripe' => 'address_line2')); 
-        $form .= $this->input($prefix . 'City', array('label' => array('text' => 'City'),
-                                                           'data-stripe' => 'address_city')); 
+        $this->inputDefaults(array('label' => array('class' => 'control-label')));
+        $nameToOptionsMap = array('FirstName' => array('label' => 'First Name'),
+                                  'LastName' => array('label' => 'Last Name', 'stripe' => 'name'),
+                                  'Address1' => array('label' => 'Address 1', 'stripe' => 'address_line1'),
+                                  'Address2' => array('label' => 'Address 2', 'stripe' =>'address_line2'),
+                                  'City' => array('label' => 'City', 'stripe' => 'address_city'),
+                                 );
         switch ($country){
             case 'us':
                 $states = $this->_getStates();
-                $form .= $this->input($prefix . 'State', array('label' => array('text' => 'State'),
-                                                                'data-stripe' => 'address_state',
-                                                                   'options' => $states, 'empty' => 'Choose One')); 
-                $form .= $this->input($prefix . 'PostalCode', array('label' => array('text' => 'Zip Code'),
-                                                                 'class' => 'input-small', 'size' => '5',
-                                                                 'data-stripe' => 'address_zip')); 
-                $form .= $this->input($prefix . 'Country', array('type' => 'hidden', 'value' => 'US',
-                                                                     'data-stripe' => 'address_country')); 
-                break; 
+                $nameToOptionsMap['State'] = array('label' => 'State', 'stripe' => 'address_state', 'options' => $states, 'empty' => 'Choose One');
+                $nameToOptionsMap['PostalCode'] = array('label' => 'Zip Code', 'stripe' => 'address_zip', 'class' => 'input-small', 'size' => '5');
+                $nameToOptionsMap['Country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => 'US');
+                break;
             case 'ca':
                 $provinces = $this->_getCanadianProvinces();
-                $form .= $this->input($prefix . 'State', array('label' => array('text' => 'Province'),
-                                                                'data-stripe' => 'address_state',
-                                                                'options' => $provinces, 'empty' => 'Choose One')); 
-                $form .= $this->input($prefix . 'PostalCode', array('label' => array('text' => 'Postal Code'),
-                                                                  'class' => 'input-small', 'size' => '7',
-                                                                  'data-stripe' => 'address_zip')); 
-                $form .= $this->input($prefix . 'Country', array('type' => 'hidden', 'value' => 'CA',
-                                                                      'data-stripe' => 'address_country')); 
-                break; 
-            case 'other': 
-                $form .= $this->input($prefix . 'PostalCode', array('label' => array('text' => 'Postal Code'),
-                                                              'class' => 'input-small', 'size' => '7',
-                                                              'data-stripe' => 'address_zip')); 
-                $form .= $this->input($prefix . 'CountryName', array('label' => array('text' => 'Country'),
-                                                                     'class' => 'country-autocomplete')); 
-                $form .= $this->input($prefix . 'Country', array('type' => 'hidden', 'value' => '',
-                                                                  'data-stripe' => 'address_country')); 
-            break; 
-        } 
+                $nameToOptionsMap['State'] = array('label' => 'Province', 'stripe' => 'address_state', 'options' => $provinces, 'empty' => 'Choose One');
+                $nameToOptionsMap['PostalCode'] = array('label' => 'Postal Code', 'stripe' => 'address_zip', 'class' => 'input-small', 'size' => '7',);
+                $nameToOptionsMap['Country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => 'CA');
+                break;
+            case 'other':
+                $nameToOptionsMap['PostalCode'] = array('label' => 'Postal Code', 'stripe' => 'address_zip', 'class' => 'input-small', 'size' => '7');
+                $nameToOptionsMap['CountryName'] = array('label' => 'Country', 'stripe' => 'address_country');
+                $nameToOptionsMap['Country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => '');
+                break;
+        }
+        
+        $form = '';
+        foreach($nameToOptionsMap as $name => $attrs){
+            //Label
+            if(isset($attrs['label'])){
+                $options = array('label' => array('text' => $attrs['label']));
+            }
+            //Stripe
+            if(isset($attrs['stripe']) && $stripe == true){
+                $options['data-stripe'] = $attrs['stripe'];
+            }
+            //All others
+            $common = array('options', 'empty', 'class', 'size', 'value', 'type');
+            foreach($common as $item){
+                if(isset($attrs[$item])){
+                    $options[$item] = $attrs[$item];
+                }
+            }
+
+            $form .= $this->input($prefix . $name, $options);
+        }
+ 
         return $form;
     }
         
