@@ -7,3 +7,7 @@
     <h5>Shipping Address</h5>
     <div class="shipping-country-address-form"></div>
 </div>
+<div class="shipping-instructions">
+    <h5>Additional Shipping Instructions</h5>
+    <?php echo $this->form->textarea('shipping-instructions'); ?>
+</div>
