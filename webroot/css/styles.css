@@ -6502,6 +6502,13 @@ table th {
 .cart.index .address select {
   margin: 5px;
 }
+.cart.index .shipping-instructions {
+  display: none;
+}
+.cart.index .shipping-instructions textarea {
+  width: 440px;
+  height: 200px;
+}
 .cart.index .payment-form input {
   margin: 5px;
 }

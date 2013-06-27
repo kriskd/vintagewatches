@@ -87,7 +87,7 @@ $(document).ready(function(){
                 var shippingForm = data.shippingForm;
                 $('.shipping-amount').empty().append(shipping);
                 $('.total-formatted-amount').empty().append(totalFormatted);
-                $('.address-form-billing').show();
+                $('.address-form-billing, .shipping-instructions').show();
                 $('.billing-country-address-form').empty().append(billingForm);
                 $('.shipping-country-address-form').empty().append(shippingForm);
             }
