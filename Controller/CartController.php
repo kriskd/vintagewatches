@@ -2,7 +2,7 @@
 
 class CartController extends AppController
 {
-    public $uses = array('Cart', 'Watch');
+    public $uses = array('Cart', 'Watch', 'Address');
     
     public function index()
     {
@@ -64,7 +64,9 @@ class CartController extends AppController
     public function checkout()
     {
         if($this->request->is('post')){
-	    if($this->Session->check('Cart.total') == true){
+	    $address = $this->request->data['Address'];
+	    var_dump($this->request->data);
+	    /*if($this->Session->check('Cart.total') == true){
 		$amount = $this->Session->read('Cart.total'); 
 		if($amount > 0){
 		    $stripeToken = $this->request->data['stripeToken'];
@@ -82,10 +84,10 @@ class CartController extends AppController
 			$this->redirect(array('controller' => 'watches', 'action' => 'index'));
 		    }
 		}
-	    } 
-	    $this->Session->setFlash('Please select your country.');
+	    } */
+	    //$this->Session->setFlash('Please select your country.');
         }
-        $this->redirect(array('action' => 'index')); 
+        //$this->redirect(array('action' => 'index')); 
     }
     
     public function remove($id = null)

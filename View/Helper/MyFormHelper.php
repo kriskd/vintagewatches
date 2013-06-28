@@ -36,32 +36,33 @@ class MyFormHelper extends FormHelper
         return parent::_parseOptions($options);
     }
     
-    public function addressForm($prefix, $country, $stripe = false)
-    {   
+    public function addressForm($prefix, $country, $stripe = false, $required = false)
+    {
+        $requiredAttrs = array('firstName', 'lastName', 'address1', 'city', 'state', 'postalCode', 'countryName', 'country');
         $this->inputDefaults(array('label' => array('class' => 'control-label')));
-        $nameToOptionsMap = array('FirstName' => array('label' => 'First Name'),
-                                  'LastName' => array('label' => 'Last Name', 'stripe' => 'name'),
-                                  'Address1' => array('label' => 'Address 1', 'stripe' => 'address_line1'),
-                                  'Address2' => array('label' => 'Address 2', 'stripe' =>'address_line2'),
-                                  'City' => array('label' => 'City', 'stripe' => 'address_city'),
+        $nameToOptionsMap = array('firstName' => array('label' => 'First Name'),
+                                  'lastName' => array('label' => 'Last Name', 'stripe' => 'name'),
+                                  'address1' => array('label' => 'Address 1', 'stripe' => 'address_line1'),
+                                  'address2' => array('label' => 'Address 2', 'stripe' =>'address_line2'),
+                                  'city' => array('label' => 'City', 'stripe' => 'address_city'),
                                  );
         switch ($country){
             case 'us':
                 $states = $this->_getStates();
-                $nameToOptionsMap['State'] = array('label' => 'State', 'stripe' => 'address_state', 'options' => $states, 'empty' => 'Choose One');
-                $nameToOptionsMap['PostalCode'] = array('label' => 'Zip Code', 'stripe' => 'address_zip', 'class' => 'input-small', 'size' => '5');
-                $nameToOptionsMap['Country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => 'US');
+                $nameToOptionsMap['state'] = array('label' => 'State', 'stripe' => 'address_state', 'options' => $states, 'empty' => 'Choose One');
+                $nameToOptionsMap['postalCode'] = array('label' => 'Zip Code', 'stripe' => 'address_zip', 'class' => 'input-small', 'size' => '5');
+                $nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => 'US');
                 break;
             case 'ca':
                 $provinces = $this->_getCanadianProvinces();
-                $nameToOptionsMap['State'] = array('label' => 'Province', 'stripe' => 'address_state', 'options' => $provinces, 'empty' => 'Choose One');
-                $nameToOptionsMap['PostalCode'] = array('label' => 'Postal Code', 'stripe' => 'address_zip', 'class' => 'input-small', 'size' => '7',);
-                $nameToOptionsMap['Country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => 'CA');
+                $nameToOptionsMap['state'] = array('label' => 'Province', 'stripe' => 'address_state', 'options' => $provinces, 'empty' => 'Choose One');
+                $nameToOptionsMap['postalCode'] = array('label' => 'Postal Code', 'stripe' => 'address_zip', 'class' => 'input-small', 'size' => '7',);
+                $nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => 'CA');
                 break;
             case 'other':
-                $nameToOptionsMap['PostalCode'] = array('label' => 'Postal Code', 'stripe' => 'address_zip', 'class' => 'input-small', 'size' => '7');
-                $nameToOptionsMap['CountryName'] = array('label' => 'Country', 'stripe' => 'address_country');
-                $nameToOptionsMap['Country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => '');
+                $nameToOptionsMap['postalCode'] = array('label' => 'Postal Code', 'stripe' => 'address_zip', 'class' => 'input-small', 'size' => '7');
+                $nameToOptionsMap['countryName'] = array('label' => 'Country', 'stripe' => 'address_country');
+                $nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => '');
                 break;
         }
         
@@ -74,6 +75,10 @@ class MyFormHelper extends FormHelper
             //Stripe
             if(isset($attrs['stripe']) && $stripe == true){
                 $options['data-stripe'] = $attrs['stripe'];
+            }
+            //Required
+            if(in_array($name, $requiredAttrs) && $required == false){
+                $options['required'] = false;
             }
             //All others
             $common = array('options', 'empty', 'class', 'size', 'value', 'type');
