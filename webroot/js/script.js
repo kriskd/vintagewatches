@@ -1,15 +1,17 @@
 $(document).ready(function(){
     
+    $('.launch-tooltip').tooltip();
+
     /**
      * Billing country autocomplete
      */
-    $(document).on('keyup', '#billingCountryName', function(){
-        $('#billingCountryName').autocomplete({
+    $(document).on('keyup', '#AddressBillingCountryName', function(){
+        $('#AddressBillingCountryName').autocomplete({
             source: '/cart/index.json',
             minLength: 3,
             select: function(event,ui){
                 $(this).val(ui.item.value);
-                $('#billingCountry').attr('value', ui.item.id);
+                $('#AddressBillingCountry').attr('value', ui.item.id);
             }
         });
     });
@@ -18,13 +20,13 @@ $(document).ready(function(){
      * Shipping country autocomplete
      * There should be a way to do both of these in one method
      */
-    $(document).on('keyup', '#shippingCountryName', function(){
-        $('#shippingCountryName').autocomplete({
+    $(document).on('keyup', '#AddressShippingCountryName', function(){
+        $('#AddressShippingCountryName').autocomplete({
             source: '/cart/index.json',
             minLength: 3,
             select: function(event,ui){
                 $(this).val(ui.item.value);
-                $('#shippingCountry').attr('value', ui.item.id);
+                $('#AddressShippingCountry').attr('value', ui.item.id);
             }
         });
     });
@@ -32,7 +34,7 @@ $(document).ready(function(){
     /**
      * Show shipping address form when ship to different address is selected
      */
-    $(document).on('click', '#CartShipping-address', function(){
+    $(document).on('click', '#AddressShipping-address', function(){
         $('.address-form-shipping').toggle(this.checked);
     });
     
@@ -41,6 +43,7 @@ $(document).ready(function(){
      * Enable/disable submit button
      * Get shipping amount and appropriate address form
      */
+    //TODO: Need to do something similar for "Ship to a Different Address"
     if ($('.select-country input:radio').is(':checked')) {
         //Enable submit button if country selected
         $('.submit-payment').prop('disabled', false);
@@ -68,8 +71,6 @@ $(document).ready(function(){
         var country = $(this).val();
         computeTotal(country);
     });
-    
-    $('.launch-tooltip').tooltip();
 
     /**
      * Show the address form based on the country

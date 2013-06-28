@@ -49,7 +49,7 @@
         </table>
     </section>
     
-    <?php echo $this->Form->create('Cart', array('url' => '/cart/checkout', 'class' => 'form-horizontal payment-form')); ?>
+    <?php echo $this->Form->create('Order', array('url' => '/cart/checkout', 'class' => 'form-horizontal payment-form')); ?>
     <section class="address">
         <h3>Address</h3>
         <?php echo $this->Element('address'); ?>
