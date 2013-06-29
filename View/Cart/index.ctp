@@ -67,7 +67,6 @@
     </section>
     <section class="address">
         <h3>Address</h3>
-        <?php //echo $this->Element('address'); ?>
         <div class="address-forms"></div>
     </section>
     <section>
