@@ -6492,7 +6492,7 @@ table th {
 }
 .cart.index .shipping textarea {
   width: 440px;
-  height: 200px;
+  height: 150px;
 }
 .cart.index .address .address-form-billing .checkbox {
   padding: 10px 0 0 0;
@@ -6504,14 +6504,15 @@ table th {
 .cart.index .address select {
   margin: 5px;
 }
-.cart.index .address .change-billing {
-  float: right;
-}
 .cart.index .address .navbar-inner {
-  padding-right: 10px;
+  padding: 0 10px;
 }
 .cart.index .address .navbar .brand {
   font-size: 16px;
+  font-weight: bold;
+}
+.cart.index .address .navbar ul {
+  margin: 0;
 }
 .cart.index .checkout-form input {
   margin: 5px;
