@@ -43,7 +43,6 @@ $(document).ready(function(){
      * Enable/disable submit button
      * Get shipping amount and appropriate address form
      */
-    //TODO: Need to do something similar for "Ship to a Different Address"
     if ($('.select-country input:radio').is(':checked')) {
         //Enable submit button if country selected
         $('.submit-payment').prop('disabled', false);
@@ -59,10 +58,10 @@ $(document).ready(function(){
      * Action for selecting a country
      */
     $('.select-country input').change(function(){
-        //Uncheck the shipping address box
-        $('#CartShipping-address').prop('checked', false);
-        //Hide the shipping address
-        $('.address-form-shipping').hide();
+        //Uncheck the shipping option radios
+        $('.shipping .radio input').prop('checked', false);
+        //Remove shipping forms
+        $('.address-forms').empty();
         //Enable the submit button
         $('.submit-payment').prop('disabled', false);
         //Hide the current address form that is showing
@@ -73,24 +72,42 @@ $(document).ready(function(){
     });
 
     /**
-     * Show the address form based on the country
      * Compute shipping and total based on country
      */
     function computeTotal(country) {
         $.ajax({
-            url: '/cart/getCountry.json',
+            url: '/cart/getShipping.json',
             data: {"country" : country},
             dataType: 'json',
             success: function(data){
                 var shipping = data.shipping;
                 var totalFormatted = data.totalFormatted;
-                var billingForm = data.billingForm;
-                var shippingForm = data.shippingForm;
                 $('.shipping-amount').empty().append(shipping);
                 $('.total-formatted-amount').empty().append(totalFormatted);
-                $('.address-form-billing, .shipping-instructions').show();
-                $('.billing-country-address-form').empty().append(billingForm);
-                $('.shipping-country-address-form').empty().append(shippingForm);
+                $('.shipping-inner').show();
+            }
+        });
+    }
+    
+    $('.shipping .radio input').change(function(){
+        var country = $('.select-country input:radio:checked').val();
+        var shippingOption = $(this).val(); 
+        getAddressForm(country, shippingOption);
+    });
+    
+    if ($('.shipping .radio input').is(':checked')) {
+        var country = $('.select-country input:radio:checked').val();
+        var shippingOption = $('.shipping .radio input:radio:checked').val();
+        getAddressForm(country, shippingOption);
+    }
+    
+    function getAddressForm(country, shippingOption) {
+        $.ajax({
+            url: '/cart/getAddress.json',
+            data: {"country" : country, "shipping" : shippingOption},
+            dataType: 'html',
+            success: function(data){
+                $('.address-forms').empty().append(data);
             }
         });
     }

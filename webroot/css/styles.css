@@ -6464,14 +6464,6 @@ table th {
 .cart.index .control-label {
   margin-right: 5px;
 }
-.cart.index .address-form-billing .checkbox {
-  padding: 10px 0 0 0;
-}
-.cart.index .address-form-billing,
-.cart.index .address-form-shipping,
-.cart.index .payment-errors {
-  display: none;
-}
 .cart.index .checkout-form,
 .cart.index .billing-country-address-form,
 .cart.index .shipping-country-address-form {
@@ -6495,6 +6487,16 @@ table th {
 .cart.index .review-cart label {
   font-weight: normal;
 }
+.cart.index .shipping .shipping-inner {
+  display: none;
+}
+.cart.index .shipping textarea {
+  width: 440px;
+  height: 200px;
+}
+.cart.index .address .address-form-billing .checkbox {
+  padding: 10px 0 0 0;
+}
 .cart.index .address .radio.inline {
   margin-right: 30px;
 }
@@ -6502,35 +6504,40 @@ table th {
 .cart.index .address select {
   margin: 5px;
 }
-.cart.index .shipping-instructions {
-  display: none;
+.cart.index .address .change-billing {
+  float: right;
 }
-.cart.index .shipping-instructions textarea {
-  width: 440px;
-  height: 200px;
+.cart.index .address .navbar-inner {
+  padding-right: 10px;
 }
-.cart.index .payment-form input {
+.cart.index .address .navbar .brand {
+  font-size: 16px;
+}
+.cart.index .checkout-form input {
   margin: 5px;
 }
-.cart.index .payment-form .input {
+.cart.index .checkout-form .input {
   line-height: 20px;
 }
-.cart.index .payment-form .card-expiry-month {
+.cart.index .checkout-form .card-expiry-month {
   float: left;
 }
-.cart.index .payment-form label[for=CartCvc] {
+.cart.index .checkout-form label[for=CartCvc] {
   padding-top: 10px;
 }
-.cart.index .payment-form label[for=CartMonth] {
+.cart.index .checkout-form label[for=CartMonth] {
   padding-top: 5px;
   margin-right: 10px;
 }
-.cart.index .payment-form select option {
+.cart.index .checkout-form select option {
   color: #555;
 }
-.cart.index .payment-form .card-number-div {
+.cart.index .checkout-form .payment-errors {
+  display: none;
+}
+.cart.index .checkout-form .card-number-div {
   height: 52px;
 }
-.cart.index .payment-form .submit {
+.cart.index .checkout-form .submit {
   text-align: center;
 }

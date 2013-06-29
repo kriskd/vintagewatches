@@ -23,7 +23,7 @@
                     <td class="text-right"><?php echo h($this->Number->currency($watch['Watch']['price'], 'USD')); ?></td>
                 </tr>
             <?php endforeach; ?>
-            <tr class="shipping">
+            <tr>
                 <td></td>
                 <td><h5>Shipping</h5></td>
                 <td>
@@ -31,9 +31,9 @@
                                              data-toggle="tooltip"
                                              data-placement="top"
                                              title="Once you choose your country, the appropriate shipping charge will be added, and the address bar below will expand so that you can enter your address.">
-                                             Choose Country <i class="icon-question-sign icon-large"></i>
+                                             Choose Shipping Country <i class="icon-question-sign icon-large"></i>
                                           </a></h6>
-                    <?php echo $this->Form->create('false', array('class' => 'select-country')); ?>
+                    <?php echo $this->Form->create(false, array('class' => 'select-country')); ?>
                         <?php echo $this->Form->input('Address.country', array('type' => 'radio',
                                                                              'options' => array('us' => 'U.S.', 'ca' => 'Canada', 'other' => 'Other'),
                                                                              'legend' => false,
@@ -45,14 +45,30 @@
                 </td>
                 <td class="shipping-amount text-right"></td>
             </tr>
-            <tr class="total-row"><td></td><td></td><td class="text-right">Total</td><td class="total-formatted-amount text-right"></td></tr>
+             <tr class="total-row"><td></td><td></td><td class="text-right">Total</td><td class="total-formatted-amount text-right"></td></tr>
         </table>
     </section>
-    
     <?php echo $this->Form->create('Order', array('url' => '/cart/checkout', 'class' => 'form-horizontal payment-form')); ?>
+    <section class="shipping">
+        <h3>Shipping</h3>
+            <div class="shipping-inner">
+            <?php echo $this->Form->input('Address.shipping', array('type' => 'radio',
+                                                         'options' => array('billing' => 'Ship to my Billing Address', 'shipping' => 'Ship to a Different Address'),
+                                                         'legend' => false,
+                                                         //'hiddenField' => false,
+                                                         //'div' => "radio inline",
+                                                         //'separator' => '</div><div class="radio inline">',
+                                                            )); ?>
+            <div class="shipping-instructions">
+                <h5>Special Shipping Instructions</h5>
+                <?php echo $this->Form->textarea('Order.shipping-instructions'); ?>
+            </div>
+        </div>
+    </section>
     <section class="address">
         <h3>Address</h3>
-        <?php echo $this->Element('address'); ?>
+        <?php //echo $this->Element('address'); ?>
+        <div class="address-forms"></div>
     </section>
     <section>
         <h3>Credit Card</h3>

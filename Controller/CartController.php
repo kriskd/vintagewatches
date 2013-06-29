@@ -110,7 +110,7 @@ class CartController extends AppController
     /**
      * Get country specific data
      */
-    public function getCountry()
+    public function getShipping()
     {	
 	if($this->request->is('ajax')){
 	    $shipping = null;
@@ -132,7 +132,19 @@ class CartController extends AppController
 	    $total = $subTotal + $shipping; 
 	    $this->Session->write('Cart.total', $total);
 	    
-	    $this->set(array('data' => compact('shipping', 'total', 'country')));
+	    $this->set(array('data' => compact('shipping', 'total')));
+	    $this->layout = 'ajax';
+	}
+    }
+    
+    public function getAddress()
+    {
+	if($this->request->is('ajax')){
+	    $query = $this->request->query; 
+	    $country = $query['country'];
+	    $shipping = $query['shipping'];
+	    
+	    $this->set(array('data' => compact('shipping', 'country')));
 	    $this->layout = 'ajax';
 	}
     }

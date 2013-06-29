@@ -57,14 +57,6 @@ table {
     .control-label {
         margin-right: 5px; 
     }
-    .address-form-billing {
-        .checkbox {
-            padding: 10px 0 0 0;
-        }
-    }
-    .address-form-billing, .address-form-shipping, .payment-errors {
-        display: none;
-    }
     .checkout-form, .billing-country-address-form, .shipping-country-address-form {
         padding: 5px;
         background: @grayLighter;
@@ -83,22 +75,38 @@ table {
             font-weight: normal;
         }
     }
-    .address {
-        .radio.inline {
-            margin-right: 30px;
+    .shipping {
+        .shipping-inner {
+            display: none;
         }
-        input, select {
-            margin: 5px;
-        } 
-    }
-    .shipping-instructions {
-        display: none; 
         textarea {
             width: 440px;
             height: 200px
         }
     }
-    .payment-form {
+    .address {
+        .address-form-billing {
+            .checkbox {
+                padding: 10px 0 0 0;
+            }
+        }
+        .radio.inline {
+            margin-right: 30px;
+        }
+        input, select {
+            margin: 5px;
+        }
+        .change-billing {
+            float: right;
+        }
+        .navbar-inner {
+            padding-right: 10px;
+        }
+        .navbar .brand {
+            font-size: 16px;
+        }
+    }
+    .checkout-form {
         input {
             margin: 5px;
         }
@@ -117,6 +125,9 @@ table {
         }
         select option {
             color: #555;
+        }
+        .payment-errors {
+            display: none;
         }
         .card-number-div {
             height: 52px;
