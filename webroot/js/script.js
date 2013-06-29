@@ -101,6 +101,20 @@ $(document).ready(function(){
         getAddressForm(country, shippingOption);
     }
     
+    $(document).on('click', '.address-form-billing .navbar li', function(){
+        $(this).parent().find('li').removeClass('active');
+        $(this).addClass('active');
+        var href = $(this).find('a').attr('href');
+        $.ajax({
+            url: href,
+            dataType: 'html',
+            success: function(data){
+                $('.billing-country-address-form').empty().append(data);
+            }
+        });
+        return false;
+    });
+    
     function getAddressForm(country, shippingOption) {
         $.ajax({
             url: '/cart/getAddress.json',

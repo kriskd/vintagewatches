@@ -1,3 +1,6 @@
+<?php if($data['shipping'] == 'billing-change'): ?>
+    <?php echo $this->Form->addressForm('Address.billing.', $data['country'], true, true); ?>
+<?php endif; ?>
 <?php if($data['shipping'] == 'billing'): ?>
     <div class="address-form-billing">
         <h5>Billing and Shipping Address</h5>
@@ -8,23 +11,23 @@
 <?php endif; ?>
 <?php if($data['shipping'] == 'shipping'): ?>
     <div class="address-form-billing">
-        <h5>Billing Address</h5>
         <div class="navbar">
             <div class="navbar-inner">
             <span class="brand" href="#">Choose Billing Country <i class="icon-angle-right"></i></span>
                 <ul class="nav">
                     <li class="<?php echo $data['country'] == 'us' ? 'active' : ''; ?>">
-                        <?php echo $this->Html->link('U.S.', '#'); ?>
+                        <?php echo $this->Html->link('U.S.', array('controller' => 'cart', 'action' => 'getAddress.json', '?' => array('shipping' => 'billing-change', 'country' => 'us'))); ?>
                     </li>
                     <li class="<?php echo $data['country'] == 'ca' ? 'active' : ''; ?>">
-                        <?php echo $this->Html->link('Canada', '#'); ?>
+                        <?php echo $this->Html->link('Canada', array('controller' => 'cart', 'action' => 'getAddress.json', '?' => array('shipping' => 'billing-change', 'country' => 'ca'))); ?>
                     </li>
                     <li class="<?php echo $data['country'] == 'other' ? 'active' : ''; ?>">
-                        <?php echo $this->Html->link('Other', '#'); ?>
+                        <?php echo $this->Html->link('Other', array('controller' => 'cart', 'action' => 'getAddress.json', '?' => array('shipping' => 'billing-change', 'country' => 'other'))); ?>
                     </li>
                 </ul>
             </div>
         </div>
+        <h5>Billing Address</h5>
         <div class="billing-country-address-form">
             <?php echo $this->Form->addressForm('Address.billing.', $data['country'], true, true); ?>
         </div>
