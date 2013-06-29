@@ -30,7 +30,9 @@
                     <h6 class="text-left"><a class="launch-tooltip"
                                              data-toggle="tooltip"
                                              data-placement="top"
-                                             title="Once you choose your country, the appropriate shipping charge will be added, and the address bar below will expand so that you can enter your address.">
+                                             title="Once you choose your country, the appropriate shipping charge will be added, 
+                                             then the shipping bar below will expand where you indicate shipping
+                                             options which will expand the address bar to enter you address.">
                                              Choose Shipping Country <i class="icon-question-sign icon-large"></i>
                                           </a></h6>
                     <?php echo $this->Form->create(false, array('class' => 'select-country')); ?>
@@ -60,7 +62,14 @@
                                                          //'separator' => '</div><div class="radio inline">',
                                                             )); ?>
             <div class="shipping-instructions">
-                <h5>Special Shipping Instructions</h5>
+                <h5><a class="launch-tooltip"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Please add any special instructions here or information
+                        you need to pass along to me.">
+                        Special Shipping Instructions
+                        <i class="icon-question-sign icon-large"></i>
+                     </a></h5>
                 <?php echo $this->Form->textarea('Order.shipping-instructions'); ?>
             </div>
         </div>
