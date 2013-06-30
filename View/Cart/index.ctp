@@ -33,7 +33,7 @@
                                              title="Once you choose your country, the appropriate shipping charge will be added, 
                                              then the shipping bar below will expand where you indicate shipping
                                              options which will expand the address bar to enter you address.">
-                                             Choose Shipping Country <i class="icon-question-sign icon-large"></i>
+                                             Choose Your Country <i class="icon-question-sign icon-large"></i>
                                           </a></h6>
                     <?php echo $this->Form->create(false, array('class' => 'select-country')); ?>
                         <?php echo $this->Form->input('Address.country', array('type' => 'radio',
@@ -54,29 +54,31 @@
     <section class="shipping">
         <h3>Shipping</h3>
             <div class="shipping-inner">
-            <?php echo $this->Form->input('Address.shipping', array('type' => 'radio',
-                                                         'options' => array('billing' => 'Ship to my Billing Address', 'shipping' => 'Ship to a Different Address'),
+            <h4>Choose one of the following shipping options:</h4>
+            <?php echo $this->Form->input('Shipping.option', array('type' => 'radio',
+                                                         'options' => array('billing' => 'Shipping Address Will be the Same as my Billing Address',
+                                                                            'shipping' => 'Shipping Address Will be Different From my Billing Address'),
                                                          'legend' => false,
                                                          //'hiddenField' => false,
                                                          //'div' => "radio inline",
                                                          //'separator' => '</div><div class="radio inline">',
                                                             )); ?>
-            <div class="shipping-instructions">
-                <h5><a class="launch-tooltip"
-                        data-toggle="tooltip"
-                        data-placement="top"
-                        title="Please add any special instructions here or information
-                        you need to pass along to me.">
-                        Special Shipping Instructions
-                        <i class="icon-question-sign icon-large"></i>
-                     </a></h5>
-                <?php echo $this->Form->textarea('Order.shipping-instructions'); ?>
-            </div>
         </div>
     </section>
     <section class="address">
         <h3>Address</h3>
         <div class="address-forms"></div>
+        <div class="shipping-instructions">
+            <h5><a class="launch-tooltip"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Please add any special instructions here or information
+                    you need to pass along to me.">
+                    Special Shipping Instructions
+                    <i class="icon-question-sign icon-large"></i>
+                 </a></h5>
+        </div>
+        <?php echo $this->Form->textarea('Order.shipping-instructions'); ?>
     </section>
     <section>
         <h3>Credit Card</h3>

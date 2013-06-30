@@ -101,7 +101,7 @@ $(document).ready(function(){
         getAddressForm(country, shippingOption);
     }
     
-    $(document).on('click', '.address-form-billing .navbar li', function(){
+    /*$(document).on('click', '.address-form-billing .navbar li', function(){
         $(this).parent().find('li').removeClass('active');
         $(this).addClass('active');
         var href = $(this).find('a').attr('href');
@@ -113,6 +113,20 @@ $(document).ready(function(){
             }
         });
         return false;
+    });*/
+    
+    //Get the country from the combo US/Canada form
+    $(document).on('change', '.us-ca', function(){
+        var state = $(this).val();
+        $.ajax({
+            url: '/cart/getCountry.json',
+            data: {"state" : state},
+            dataType: 'json',
+            success: function(data){
+                var country = data.country;
+                $('#AddressBillingCountry').val(country);
+            }
+        })
     });
     
     function getAddressForm(country, shippingOption) {
@@ -122,11 +136,13 @@ $(document).ready(function(){
             dataType: 'html',
             success: function(data){
                 $('.address-forms').empty().append(data);
+                $('.shipping-instructions').show();
+                $('.address textarea').show();
             }
         });
     }
     
-    $('.payment-form').submit(function(){ 
+    /*$('.payment-form').submit(function(){ 
         $('.submit-payment').attr('disabled', 'disabled');
         var form = $(this); 
         var error = false;
@@ -164,7 +180,7 @@ $(document).ready(function(){
             });
         }
         return false;
-    });
+    });*/
     
     function reportError(msg) {
  
