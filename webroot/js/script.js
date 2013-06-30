@@ -117,7 +117,7 @@ $(document).ready(function(){
     
     function getAddressForm(country, shippingOption) {
         $.ajax({
-            url: '/cart/getAddress.json',
+            url: '/cart/getAddress.html',
             data: {"country" : country, "shipping" : shippingOption},
             dataType: 'html',
             success: function(data){
