@@ -64,8 +64,37 @@ class CartController extends AppController
     public function checkout()
     {
         if($this->request->is('post')){
-	    $address = $this->request->data['Address'];
-	    var_dump($this->request->data);
+	    $addresses = $this->request->data['Address'];
+	    $addressesToSave = array();
+	    //var_dump($addresses);
+	    foreach($addresses as $type => $data){ 
+		$address = array();
+		$address = $data;
+		$address['type'] = $type;
+		$addressesToSave[] = $address;
+	    }
+	    var_dump($addressesToSave);
+	    if($this->Address->saveMany($addressesToSave)){
+		$this->Session->setFlash('Good address.');
+	    }
+	    else{
+		$this->Session->setFlash('Bad address.');
+	    }
+	    $this->redirect(array('action' => 'index')); 
+	    /*foreach($addressesToSave as $address){
+		if($this->Address->validates()){
+		    $this->Address->save($address);
+		}
+		else{
+		    $errors = $this->Address->validationErrors;
+		    var_dump($errors);
+		}
+	    }*/
+	    /*$this->Address->set($addressesToSave);
+	    if($$this->Address->validates()){
+		$this->Address->saveMany($addressesToSave);
+	    }
+*/
 	    /*if($this->Session->check('Cart.total') == true){
 		$amount = $this->Session->read('Cart.total'); 
 		if($amount > 0){
@@ -108,7 +137,7 @@ class CartController extends AppController
     }
     
     /**
-     * Get country specific data
+     * Get country shipping and total
      */
     public function getShipping()
     {	
@@ -137,16 +166,111 @@ class CartController extends AppController
 	}
     }
     
+    /**
+     * Get address form based on country
+     */
     public function getAddress()
     {
 	if($this->request->is('ajax')){
 	    $query = $this->request->query; 
 	    $country = $query['country'];
 	    $shipping = $query['shipping'];
+	    $statesProvinces = array('states' => $this->_getStates(), 'provinces' => $this->_getCanadianProvinces());
 	    
-	    $this->set(array('data' => compact('shipping', 'country')));
+	    $this->set(array('data' => compact('shipping', 'country', 'statesProvinces')));
 	    $this->layout = 'ajax';
 	}
+    }
+    
+    
+    /**
+     * Get country based on state or province
+     */
+    public function getCountry()
+    {
+	if($this->request->is('ajax')){
+	    $query = $this->request->query;
+	    $state = $query['state'];
+	    $states = $this->_getStates();
+	    $provinces = $this->_getCanadianProvinces();
+	    $country = (isset($states[$state]) ? 'US' : (isset($provinces[$state]) ? 'CA' : ''));
+
+	    $this->set(array('data' => compact('country')));
+	    $this->layout = 'ajax';
+	}
+    }
+    
+    protected function _getStates()
+    {
+        return array('AL'=>'Alabama',  
+		'AK'=>'Alaska',  
+                'AZ'=>'Arizona',  
+                'AR'=>'Arkansas',  
+                'CA'=>'California',  
+                'CO'=>'Colorado',  
+                'CT'=>'Connecticut',  
+                'DE'=>'Delaware',  
+                'DC'=>'District Of Columbia',  
+                'FL'=>'Florida',  
+                'GA'=>'Georgia',  
+                'HI'=>'Hawaii',  
+                'ID'=>'Idaho',  
+                'IL'=>'Illinois',  
+                'IN'=>'Indiana',  
+                'IA'=>'Iowa',  
+                'KS'=>'Kansas',  
+                'KY'=>'Kentucky',  
+                'LA'=>'Louisiana',  
+                'ME'=>'Maine',  
+                'MD'=>'Maryland',  
+                'MA'=>'Massachusetts',  
+                'MI'=>'Michigan',  
+                'MN'=>'Minnesota',  
+                'MS'=>'Mississippi',  
+                'MO'=>'Missouri',  
+                'MT'=>'Montana',
+                'NE'=>'Nebraska',
+                'NV'=>'Nevada',
+                'NH'=>'New Hampshire',
+                'NJ'=>'New Jersey',
+                'NM'=>'New Mexico',
+                'NY'=>'New York',
+                'NC'=>'North Carolina',
+                'ND'=>'North Dakota',
+                'OH'=>'Ohio',  
+                'OK'=>'Oklahoma',  
+                'OR'=>'Oregon',  
+                'PA'=>'Pennsylvania',  
+                'RI'=>'Rhode Island',  
+                'SC'=>'South Carolina',  
+                'SD'=>'South Dakota',
+                'TN'=>'Tennessee',  
+                'TX'=>'Texas',  
+                'UT'=>'Utah',  
+                'VT'=>'Vermont',  
+                'VA'=>'Virginia',  
+                'WA'=>'Washington',  
+                'WV'=>'West Virginia',  
+                'WI'=>'Wisconsin',  
+                'WY'=>'Wyoming');
+    }
+    
+    protected function _getCanadianProvinces()
+    {
+        return array(
+	    'AB'=>'Alberta', 
+            'BC'=>'British Columbia',
+	    'MB'=>'Manitoba',
+	    'NB'=>'New Brunswick',
+	    'NL'=>'Newfoundland and Labrador',
+	    'NT'=>'Northwest Territories',
+	    'NS'=>'Nova Scotia',
+	    'NU'=>'Nunavut',
+            'ON'=>'Ontario', 
+            'PE'=>'Prince Edward Island', 
+            'QC'=>'Quebec', 
+            'SK'=>'Saskatchewan', 
+            'YT'=>'Yukon Territory');
     }
     
     protected function _getCountries()

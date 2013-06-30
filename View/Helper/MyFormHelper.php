@@ -36,38 +36,48 @@ class MyFormHelper extends FormHelper
         return parent::_parseOptions($options);
     }
     
-    public function addressForm($prefix, $country, $stripe = false, $required = false)
-    {
-        $requiredAttrs = array('firstName', 'lastName', 'address1', 'city', 'state', 'postalCode', 'countryName', 'country');
-        $this->inputDefaults(array('label' => array('class' => 'control-label')));
-        $nameToOptionsMap = array('firstName' => array('label' => 'First Name'),
+    protected $nameToOptionsMap = array('firstName' => array('label' => 'First Name'),
                                   'lastName' => array('label' => 'Last Name', 'stripe' => 'name'),
                                   'address1' => array('label' => 'Address 1', 'stripe' => 'address_line1'),
                                   'address2' => array('label' => 'Address 2', 'stripe' =>'address_line2'),
                                   'city' => array('label' => 'City', 'stripe' => 'address_city'),
                                  );
+    
+    public function addressForm($prefix, $country, $statesProvinces, $stripe = false, $required = false)
+    {   
+        $requiredAttrs = array('firstName', 'lastName', 'address1', 'city', 'state', 'postalCode', 'countryName', 'country');
+        $this->inputDefaults(array('label' => array('class' => 'control-label')));
+
+        $states = $statesProvinces['states'];
+        $provinces = $statesProvinces['provinces'];
         switch ($country){
             case 'us':
-                $states = $this->_getStates();
-                $nameToOptionsMap['state'] = array('label' => 'State', 'stripe' => 'address_state', 'options' => $states, 'empty' => 'Choose One');
-                $nameToOptionsMap['postalCode'] = array('label' => 'Zip Code', 'stripe' => 'address_zip', 'class' => 'input-small', 'size' => '5');
-                $nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => 'US');
+                $this->nameToOptionsMap['state'] = array('label' => 'State', 'stripe' => 'address_state', 'options' => $states, 'empty' => 'Choose One');
+                $this->nameToOptionsMap['postalCode'] = array('label' => 'Zip Code', 'stripe' => 'address_zip', 'class' => 'input-small', 'size' => '5');
+                $this->nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => 'US');
                 break;
             case 'ca':
-                $provinces = $this->_getCanadianProvinces();
-                $nameToOptionsMap['state'] = array('label' => 'Province', 'stripe' => 'address_state', 'options' => $provinces, 'empty' => 'Choose One');
-                $nameToOptionsMap['postalCode'] = array('label' => 'Postal Code', 'stripe' => 'address_zip', 'class' => 'input-small', 'size' => '7',);
-                $nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => 'CA');
+                $this->nameToOptionsMap['state'] = array('label' => 'Province', 'stripe' => 'address_state', 'options' => $provinces, 'empty' => 'Choose One');
+                $this->nameToOptionsMap['postalCode'] = array('label' => 'Postal Code', 'stripe' => 'address_zip', 'class' => 'input-small', 'size' => '7',);
+                $this->nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => 'CA');
+                break;
+            case 'us-ca':
+                $options = array('U.S.' => $states, 'Canada' => $provinces);
+                $this->_getCommonFields($options);
+                break;
+            case 'ca-us':
+                $options = array('Canada' => $provinces, 'U.S.' => $states);
+                $this->_getCommonFields($options);
                 break;
             case 'other':
-                $nameToOptionsMap['postalCode'] = array('label' => 'Postal Code', 'stripe' => 'address_zip', 'class' => 'input-small', 'size' => '7');
-                $nameToOptionsMap['countryName'] = array('label' => 'Country', 'stripe' => 'address_country');
-                $nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => '');
+                $this->nameToOptionsMap['postalCode'] = array('label' => 'Postal Code', 'stripe' => 'address_zip', 'class' => 'input-small', 'size' => '7');
+                $this->nameToOptionsMap['countryName'] = array('label' => 'Country', 'stripe' => 'address_country');
+                $this->nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => '');
                 break;
         }
         
         $form = '';
-        foreach($nameToOptionsMap as $name => $attrs){
+        foreach($this->nameToOptionsMap as $name => $attrs){
             //Label
             if(isset($attrs['label'])){
                 $options = array('label' => array('text' => $attrs['label']));
@@ -93,77 +103,11 @@ class MyFormHelper extends FormHelper
  
         return $form;
     }
-        
-    protected function _getStates()
-    {
-        return array('AL'=>'Alabama',  
-		'AK'=>'Alaska',  
-                'AZ'=>'Arizona',  
-                'AR'=>'Arkansas',  
-                'CA'=>'California',  
-                'CO'=>'Colorado',  
-                'CT'=>'Connecticut',  
-                'DE'=>'Delaware',  
-                'DC'=>'District Of Columbia',  
-                'FL'=>'Florida',  
-                'GA'=>'Georgia',  
-                'HI'=>'Hawaii',  
-                'ID'=>'Idaho',  
-                'IL'=>'Illinois',  
-                'IN'=>'Indiana',  
-                'IA'=>'Iowa',  
-                'KS'=>'Kansas',  
-                'KY'=>'Kentucky',  
-                'LA'=>'Louisiana',  
-                'ME'=>'Maine',  
-                'MD'=>'Maryland',  
-                'MA'=>'Massachusetts',  
-                'MI'=>'Michigan',  
-                'MN'=>'Minnesota',  
-                'MS'=>'Mississippi',  
-                'MO'=>'Missouri',  
-                'MT'=>'Montana',
-                'NE'=>'Nebraska',
-                'NV'=>'Nevada',
-                'NH'=>'New Hampshire',
-                'NJ'=>'New Jersey',
-                'NM'=>'New Mexico',
-                'NY'=>'New York',
-                'NC'=>'North Carolina',
-                'ND'=>'North Dakota',
-                'OH'=>'Ohio',  
-                'OK'=>'Oklahoma',  
-                'OR'=>'Oregon',  
-                'PA'=>'Pennsylvania',  
-                'RI'=>'Rhode Island',  
-                'SC'=>'South Carolina',  
-                'SD'=>'South Dakota',
-                'TN'=>'Tennessee',  
-                'TX'=>'Texas',  
-                'UT'=>'Utah',  
-                'VT'=>'Vermont',  
-                'VA'=>'Virginia',  
-                'WA'=>'Washington',  
-                'WV'=>'West Virginia',  
-                'WI'=>'Wisconsin',  
-                'WY'=>'Wyoming');
-    }
     
-    protected function _getCanadianProvinces()
+    protected function _getCommonFields($options)
     {
-        return array(
-	    'AB'=>'Alberta', 
-            'BC'=>'British Columbia',
-	    'MB'=>'Manitoba',
-	    'NB'=>'New Brunswick',
-	    'NL'=>'Newfoundland and Labrador',
-	    'NT'=>'Northwest Territories',
-	    'NS'=>'Nova Scotia',
-	    'NU'=>'Nunavut',
-            'ON'=>'Ontario', 
-            'PE'=>'Prince Edward Island', 
-            'QC'=>'Quebec', 
-            'SK'=>'Saskatchewan', 
-            'YT'=>'Yukon Territory');
+        $this->nameToOptionsMap['state'] = array('label' => 'State or Province', 'stripe' => 'address_state', 'options' => $options, 'empty' => 'Choose One', 'class' => 'us-ca');
+        $this->nameToOptionsMap['postalCode'] = array('label' => 'Zip/Postal Code', 'stripe' => 'address_zip', 'class' => 'input-small', 'size' => '7',);
+        $this->nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => '');
     }
 }

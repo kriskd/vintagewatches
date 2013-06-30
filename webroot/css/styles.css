@@ -6490,10 +6490,6 @@ table th {
 .cart.index .shipping .shipping-inner {
   display: none;
 }
-.cart.index .shipping textarea {
-  width: 440px;
-  height: 150px;
-}
 .cart.index .address .address-form-billing .checkbox {
   padding: 10px 0 0 0;
 }
@@ -6513,6 +6509,14 @@ table th {
 }
 .cart.index .address .navbar ul {
   margin: 0;
+}
+.cart.index .address .shipping-instructions {
+  display: none;
+}
+.cart.index .address textarea {
+  display: none;
+  width: 440px;
+  height: 150px;
 }
 .cart.index .checkout-form input {
   margin: 5px;
