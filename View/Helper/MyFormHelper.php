@@ -36,15 +36,21 @@ class MyFormHelper extends FormHelper
         return parent::_parseOptions($options);
     }
     
-    protected $nameToOptionsMap = array('firstName' => array('label' => 'First Name'),
+    protected $nameToOptionsMap;
+    
+    protected function setNameToOptionsMap()
+    {
+        $this->nameToOptionsMap = array('firstName' => array('label' => 'First Name'),
                                   'lastName' => array('label' => 'Last Name', 'stripe' => 'name'),
                                   'address1' => array('label' => 'Address 1', 'stripe' => 'address_line1'),
                                   'address2' => array('label' => 'Address 2', 'stripe' =>'address_line2'),
                                   'city' => array('label' => 'City', 'stripe' => 'address_city'),
                                  );
+    }
     
     public function addressForm($prefix, $country, $statesProvinces, $stripe = false, $required = false)
-    {   
+    {
+        $this->setNameToOptionsMap();
         $requiredAttrs = array('firstName', 'lastName', 'address1', 'city', 'state', 'postalCode', 'countryName', 'country');
         $this->inputDefaults(array('label' => array('class' => 'control-label')));
 
@@ -71,7 +77,9 @@ class MyFormHelper extends FormHelper
                 break;
             case 'other':
                 $this->nameToOptionsMap['postalCode'] = array('label' => 'Postal Code', 'stripe' => 'address_zip', 'class' => 'input-small', 'size' => '7');
-                $this->nameToOptionsMap['countryName'] = array('label' => 'Country', 'stripe' => 'address_country');
+                if($stripe == true){
+                    $this->nameToOptionsMap['countryName'] = array('label' => 'Country', 'stripe' => 'address_country');
+                }
                 $this->nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => '');
                 break;
         }

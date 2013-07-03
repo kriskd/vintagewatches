@@ -6476,6 +6476,22 @@ table th {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+  *zoom: 1;
+}
+.cart.index .checkout-form:before,
+.cart.index .checkout-form:after,
+.cart.index .billing-country-address-form:before,
+.cart.index .billing-country-address-form:after,
+.cart.index .shipping-country-address-form:before,
+.cart.index .shipping-country-address-form:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.cart.index .checkout-form:after,
+.cart.index .billing-country-address-form:after,
+.cart.index .shipping-country-address-form:after {
+  clear: both;
 }
 .cart.index label {
   font-size: 90%;
@@ -6503,12 +6519,9 @@ table th {
 .cart.index .address .navbar-inner {
   padding: 0 10px;
 }
-.cart.index .address .navbar .brand {
-  font-size: 16px;
-  font-weight: bold;
-}
-.cart.index .address .navbar ul {
-  margin: 0;
+.cart.index .address .billing-country-name {
+  padding-top: 5px;
+  margin-left: 170px;
 }
 .cart.index .address .shipping-instructions {
   display: none;
