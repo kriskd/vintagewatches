@@ -40,6 +40,12 @@
         <h5>Shipping Address</h5>
         <div class="shipping-country-address-form">
             <?php echo $this->Form->addressForm('Address.shipping.', $data['country'], $data['statesProvinces']); ?>
+            <?php if($data['country'] == 'other'): ?>
+                <div class="input text">
+                    <?php echo $this->Form->label('Address.shipping.' . $data['country'], 'Country', array('class' => 'control-label')); ?>
+                    <div class="billing-country-name"></div>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 <?php endif; ?>
