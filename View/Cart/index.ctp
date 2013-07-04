@@ -25,7 +25,7 @@
             <?php endforeach; ?>
             <tr>
                 <td></td>
-                <td><h5>Shipping</h5></td>
+                <td></td>
                 <td>
                     <h6 class="text-left"><a class="launch-tooltip"
                                              data-toggle="tooltip"
@@ -33,7 +33,7 @@
                                              title="Once you choose your country, the appropriate shipping charge will be added, 
                                              then the shipping bar below will expand where you indicate shipping
                                              options which will expand the address bar to enter you address.">
-                                             Choose Your Country <i class="icon-question-sign icon-large"></i>
+                                             Choose the Country Where You Want Your Order Shipped <i class="icon-question-sign icon-large"></i>
                                           </a></h6>
                     <?php echo $this->Form->create(false, array('class' => 'select-country')); ?>
                         <?php echo $this->Form->input('Address.country', array('type' => 'radio',
@@ -74,7 +74,7 @@
                     data-placement="top"
                     title="Please add any special instructions here or information
                     you need to pass along to me.">
-                    Special Shipping Instructions
+                    Special Order Instructions
                     <i class="icon-question-sign icon-large"></i>
                  </a></h5>
         </div>

@@ -85,7 +85,7 @@ $(document).ready(function(){
             success: function(data){
                 var shipping = data.shipping;
                 var totalFormatted = data.totalFormatted;
-                $('.shipping-amount').empty().append(shipping);
+                $('.shipping-amount').empty().append(shipping).find('.launch-tooltip').tooltip();
                 $('.total-formatted-amount').empty().append(totalFormatted);
                 $('.shipping-inner').show();
             }
@@ -138,7 +138,7 @@ $(document).ready(function(){
             data: {"country" : country, "shipping" : shippingOption},
             dataType: 'html',
             success: function(data){
-                $('.address-forms').empty().append(data);
+                $('.address-forms').empty().append(data).find('.launch-tooltip').tooltip();
                 $('.shipping-instructions').show();
                 $('.address textarea').show();
             }

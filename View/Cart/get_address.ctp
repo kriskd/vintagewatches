@@ -3,7 +3,12 @@
 <?php endif; ?>
 <?php if($data['shipping'] == 'billing'): ?>
     <div class="address-form-billing">
-        <h5>Billing and Shipping Address</h5>
+        <h5><?php echo $this->Html->link('Billing and Shipping Address <i class="icon-question-sign icon-large"></i>', '#',
+                                         array('class' => 'launch-tooltip',
+                                          'data-toggle' => 'tooltip',
+                                          'data-placement' => 'top',
+                                          'title' => 'This Is the Address Where Your Bank Sends Bills/Statements.',
+                                          'escape' => false)) ?></h5>
         <div class="billing-country-address-form">
             <?php echo $this->Form->addressForm('Address.billing.', $data['country'], $data['statesProvinces'], true); ?>
         </div>
@@ -29,7 +34,12 @@
             </div>
             */ ?>
         </div>
-        <h5>Billing Address</h5>
+        <h5><?php echo $this->Html->link('Billing Address <i class="icon-question-sign icon-large"></i>', '#',
+                                         array('class' => 'launch-tooltip',
+                                          'data-toggle' => 'tooltip',
+                                          'data-placement' => 'top',
+                                          'title' => 'This Is the Address Where Your Bank Sends Bills/Statements.',
+                                          'escape' => false)) ?></h5>
         <div class="billing-country-address-form">
             <?php //Billing for shipping to US or Canada can be US or Canada ?>
             <?php $country = (strcasecmp($data['country'], 'us') == 0 ? 'us-ca' : (strcasecmp($data['country'], 'ca') == 0 ? 'ca-us' : $data['country'])); ?>
