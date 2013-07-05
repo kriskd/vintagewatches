@@ -38,20 +38,19 @@ class CartController extends AppController
 	    $this->layout = 'ajax';
         }
 	
+	//Form submitted
 	if($this->request->is('post')){
-	    $data = $this->request->data; 
+	    $data = $this->request->data;
 	    $addresses = $data['Address'];
-	    //$country = isset($addresses['shipping']['country']) ? $addresses['shipping']['country'] : $addresses['billing']['country'];
-	    //$shipping = $data['Shipping'];
 	    $this->Address->set($data);
 	    
-	    //var_dump($country, $shipping); exit;
+	    //var_dump($this->Address->set($data)); exit;
 	    $addressesToSave = array();
-	    //var_dump($addresses);
-	    foreach($addresses as $type => $data){ 
-		$address = array();
-		$address = $data;
-		//$address['type'] = $type;
+	    unset($addresses['select-country']);
+	    //var_dump($addresses); exit;
+	    foreach($addresses as $type => $item){ 
+		$address = $item;
+		$address['type'] = $type;
 		$addressesToSave[] = $address;
 	    }
 	    //var_dump($addressesToSave); exit;
@@ -59,7 +58,19 @@ class CartController extends AppController
 		$this->Session->setFlash('Good address.');
 	    }
 	    else{
-		$this->Address->set($addresses);
+		$this->Session->write('Request.data', $data);
+		/*$errors = $this->Address->validationErrors;
+		$fixErrors['billing'] = $errors[0];
+		if(isset($errors[1])){
+		    $fixErrors['shipping'] = $errors[1];
+		}
+		$this->Address->validiationErrors = $fixErrors;
+				
+		$data = $this->Address->data;
+		
+		var_dump($this->Address); exit;*/
+		    
+		//$this->Address->set($addresses);
 		//var_dump($this->Address);
 		//var_dump($this->Address); exit;
 		//$this->Session->setFlash('Bad address. ');
@@ -70,8 +81,7 @@ class CartController extends AppController
 			//$addressType
 		    //}
 
-		    //$errors = $this->Address->validationErrors;
-		    //var_dump($address, $errors);
+
 		    //if($this->Address->validates()){
 		    //	$this->Address->save($address);
 		    //}
@@ -116,6 +126,82 @@ class CartController extends AppController
         $this->set(compact('watches', 'months', 'years', 'total'));
     }
     
+    public function test()
+    {
+	if($this->request->is('post')){
+	    $data = $this->request->data;
+	    $addresses = $data['Address'];
+	    foreach($addresses as $type => $item){ 
+		$address = $item;
+		$address['type'] = $type;
+		$addressesToSave[] = $address;
+	    }
+	    /*
+	     $addressesToSave looks like:
+	     array(2) {
+		[0]=>
+		array(2) {
+		  ["firstName"]=>
+		  string(4) "Jack"
+		  ["type"]=>
+		  string(7) "billing"
+		}
+		[1]=>
+		array(2) {
+		  ["firstName"]=>
+		  string(8) "Margaret"
+		  ["type"]=>
+		  string(8) "shipping"
+		}
+	      }
+	     */
+	    $this->Address->set($addressesToSave);
+	    if($this->Address->saveMany($addressesToSave)){
+		$this->Session->setFlash('valid');
+	    }
+	    
+	    else{
+		$errors = $this->Address->validationErrors;
+		/*
+		 $errors looks like:
+		array(2) {
+		  [0]=>
+		  array(2) {
+		    ["firstName"]=>
+		    array(1) {
+		      [0]=>
+		      string(29) "Please enter your first name."
+		    }
+		    ["lastName"]=>
+		    array(1) {
+		      [0]=>
+		      string(28) "Please enter your last name."
+		    }
+		  }
+		  [1]=>
+		  array(2) {
+		    ["firstName"]=>
+		    array(1) {
+		      [0]=>
+		      string(29) "Please enter your first name."
+		    }
+		    ["lastName"]=>
+		    array(1) {
+		      [0]=>
+		      string(28) "Please enter your last name."
+		    }
+		  }
+		}
+		 */
+		$fixErrors['billing'] = $errors[0];
+		if(isset($errors[1])){
+		    $fixErrors['shipping'] = $errors[1];
+		}
+		$this->Address->validationErrors = $fixErrors;
+	    }
+	}
+    }
+    
     public function add($id = null)
     {   
         if (!$this->Watch->exists($id)) {
@@ -158,7 +244,7 @@ class CartController extends AppController
      */
     public function getShipping()
     {	
-	if($this->request->is('ajax')){
+	if($this->request->is('ajax')){ 
 	    $shipping = null;
 	    $query = $this->request->query; 
 	    $country = $query['country'];
@@ -188,17 +274,25 @@ class CartController extends AppController
      */
     public function getAddress()
     {
-	if($this->request->is('ajax')){
+	//if($this->request->is('ajax')){
 	    $query = $this->request->query; 
 	    $country = $query['country'];
 	    $shipping = $query['shipping'];
 	    $statesProvinces = array('states' => $this->_getStates(), 'provinces' => $this->_getCanadianProvinces());
 	    
+	    if($this->Session->check('Request.data') == true){
+		$data = $this->Session->read('Request.data');
+		unset($data['Address']['select-country']);
+		var_dump($data['Address']);
+		$this->Address->set($data['Address']['billing']);
+		$this->Address->validates();
+		//var_dump($this->Address); 
+		//$this->Session->delete('Request.data');
+	    }
 	    $this->set(array('data' => compact('shipping', 'country', 'statesProvinces')));
 	    $this->layout = 'ajax';
-	}
+	//}
     }
-    
     
     /**
      * Get country based on state or province
