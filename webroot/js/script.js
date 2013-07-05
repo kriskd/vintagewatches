@@ -47,14 +47,8 @@ $(document).ready(function(){
      * Get shipping amount and appropriate address form
      */
     if ($('.select-country input:radio').is(':checked')) {
-        //Enable submit button if country selected
-        $('.submit-payment').prop('disabled', false);
         var country = $('.select-country input:radio:checked').val();
         computeTotal(country);
-    }
-    else {
-        //Disable submit if no country selected
-        $('.submit-payment').attr('disabled', 'disabled');
     }
     
     /**
@@ -65,8 +59,6 @@ $(document).ready(function(){
         $('.shipping .radio input').prop('checked', false);
         //Remove shipping forms
         $('.address-forms').empty();
-        //Enable the submit button
-        $('.submit-payment').prop('disabled', false);
         //Hide the current address form that is showing
         //$('.address-form').hide();
         //Display correcting address form and shipping amount based on country
@@ -93,15 +85,23 @@ $(document).ready(function(){
     }
     
     $('.shipping .radio input').change(function(){
+        //Enable the submit button
+        $('.submit-payment').prop('disabled', false);
         var country = $('.select-country input:radio:checked').val();
         var shippingOption = $(this).val(); 
         getAddressForm(country, shippingOption);
     });
     
-    if ($('.shipping .radio input').is(':checked')) {
+    if ($('.shipping .radio input').is(':checked')) { 
+        //Enable submit button if shipping option selected
+        $('.submit-payment').prop('disabled', false);
         var country = $('.select-country input:radio:checked').val();
         var shippingOption = $('.shipping .radio input:radio:checked').val();
         getAddressForm(country, shippingOption);
+    }
+    else { 
+        //Disable submit if no shipping option selected
+        $('.submit-payment').attr('disabled', 'disabled');
     }
     
     /*$(document).on('click', '.address-form-billing .navbar li', function(){
@@ -138,7 +138,7 @@ $(document).ready(function(){
             data: {"country" : country, "shipping" : shippingOption},
             dataType: 'html',
             success: function(data){
-                $('.address-forms').empty().append(data).find('.launch-tooltip').tooltip();
+                $('.address-forms').empty().append(data);
                 $('.shipping-instructions').show();
                 $('.address textarea').show();
             }
