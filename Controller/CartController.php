@@ -38,63 +38,58 @@ class CartController extends AppController
 	    $this->layout = 'ajax';
         }
 	
-        $this->set(compact('watches', 'months', 'years', 'total'));
-    }
-    
-    public function add($id = null)
-    {   
-        if (!$this->Watch->exists($id)) {
-            throw new NotFoundException(__('Invalid watch'));
-        }
-        $items = array();
-        if($this->Session->check('Cart.items') == true){
-            $items = $this->Session->read('Cart.items');
-            if(in_array($id, $items)){
-                $this->Session->setFlash('That item is already in your cart.');
-                $this->redirect(array('controller' => 'watches', 'action' => 'index'));
-            }
-        }
-
-        $items[] = $id; 
-        $this->Session->write('Cart.items', $items);
-        
-        $this->redirect(array('action' => 'index'));
-    }
-    
-    public function checkout()
-    {
-        if($this->request->is('post')){
-	    $addresses = $this->request->data['Address'];
+	if($this->request->is('post')){
+	    $data = $this->request->data; 
+	    $addresses = $data['Address'];
+	    //$country = isset($addresses['shipping']['country']) ? $addresses['shipping']['country'] : $addresses['billing']['country'];
+	    //$shipping = $data['Shipping'];
+	    $this->Address->set($data);
+	    
+	    //var_dump($country, $shipping); exit;
 	    $addressesToSave = array();
 	    //var_dump($addresses);
 	    foreach($addresses as $type => $data){ 
 		$address = array();
 		$address = $data;
-		$address['type'] = $type;
+		//$address['type'] = $type;
 		$addressesToSave[] = $address;
 	    }
-	    var_dump($addressesToSave);
+	    //var_dump($addressesToSave); exit;
 	    if($this->Address->saveMany($addressesToSave)){
 		$this->Session->setFlash('Good address.');
 	    }
 	    else{
-		$this->Session->setFlash('Bad address.');
+		$this->Address->set($addresses);
+		//var_dump($this->Address);
+		//var_dump($this->Address); exit;
+		//$this->Session->setFlash('Bad address. ');
+		foreach($addressesToSave as $address){
+		    //var_dump($address);
+		    //$type = $address['type'];
+		    //foreach($address as $field){
+			//$addressType
+		    //}
+
+		    //$errors = $this->Address->validationErrors;
+		    //var_dump($address, $errors);
+		    //if($this->Address->validates()){
+		    //	$this->Address->save($address);
+		    //}
+		    //else{
+		    //	var_dump($this->Address);
+		    //}
+		}
 	    }
-	    $this->redirect(array('action' => 'index')); 
-	    /*foreach($addressesToSave as $address){
-		if($this->Address->validates()){
-		    $this->Address->save($address);
-		}
-		else{
-		    $errors = $this->Address->validationErrors;
-		    var_dump($errors);
-		}
-	    }*/
+	    //exit;
+
 	    /*$this->Address->set($addressesToSave);
 	    if($$this->Address->validates()){
 		$this->Address->saveMany($addressesToSave);
 	    }
-*/
+	    else{
+		var_dump($this->Address);
+	    }*/
+	    //$this->redirect(array('action' => 'index')); 
 	    /*if($this->Session->check('Cart.total') == true){
 		$amount = $this->Session->read('Cart.total'); 
 		if($amount > 0){
@@ -117,6 +112,28 @@ class CartController extends AppController
 	    //$this->Session->setFlash('Please select your country.');
         }
         //$this->redirect(array('action' => 'index')); 
+	
+        $this->set(compact('watches', 'months', 'years', 'total'));
+    }
+    
+    public function add($id = null)
+    {   
+        if (!$this->Watch->exists($id)) {
+            throw new NotFoundException(__('Invalid watch'));
+        }
+        $items = array();
+        if($this->Session->check('Cart.items') == true){
+            $items = $this->Session->read('Cart.items');
+            if(in_array($id, $items)){
+                $this->Session->setFlash('That item is already in your cart.');
+                $this->redirect(array('controller' => 'watches', 'action' => 'index'));
+            }
+        }
+
+        $items[] = $id; 
+        $this->Session->write('Cart.items', $items);
+        
+        $this->redirect(array('action' => 'index'));
     }
     
     public function remove($id = null)

@@ -1,3 +1,4 @@
+<?php echo $this->Form->create('Order', array('url' => '/cart', 'class' => 'form-horizontal payment-form')); ?>
 <div class="cart index">
     <section class="review-cart">
         <h3>Review Cart</h3>
@@ -31,32 +32,38 @@
                                              data-toggle="tooltip"
                                              data-placement="top"
                                              title="Once you choose your country, the appropriate shipping charge will be added, 
-                                             then the shipping bar below will expand where you indicate shipping
+                                             then the shipping bar below will then expand where you indicate shipping
                                              options which will expand the address bar to enter you address.">
                                              Choose the Country Where You Want Your Order Shipped <i class="icon-question-sign icon-large"></i>
                                           </a></h6>
-                    <?php echo $this->Form->create(false, array('class' => 'select-country')); ?>
-                        <?php echo $this->Form->input('Address.country', array('type' => 'radio',
+                        <div class="select-country">
+                        <?php echo $this->Form->input('Address.select-country', array('type' => 'radio',
                                                                              'options' => array('us' => 'U.S.', 'ca' => 'Canada', 'other' => 'Other'),
                                                                              'legend' => false,
                                                                              //'hiddenField' => false,
                                                                              'div' => "radio inline",
                                                                              'separator' => '</div><div class="radio inline">',
                                                                                 )); ?>
-                    <?php echo $this->Form->end(); ?>
+                        </div>
                 </td>
                 <td class="shipping-amount text-right"></td>
             </tr>
              <tr class="total-row"><td></td><td></td><td class="text-right">Total</td><td class="total-formatted-amount text-right"></td></tr>
         </table>
     </section>
-    <?php echo $this->Form->create('Order', array('url' => '/cart/checkout', 'class' => 'form-horizontal payment-form')); ?>
+    
     <section class="shipping">
         <h3>Shipping</h3>
             <div class="shipping-inner">
             <h4>Choose one of the following shipping options:</h4>
             <?php echo $this->Form->input('Shipping.option', array('type' => 'radio',
-                                                         'options' => array('billing' => 'Shipping Address Will be the Same as my Billing Address',
+                                                         'options' => array('billing' => 'Shipping Address Will be the Same as my ' .
+                                                                            $this->Html->link('Billing Address <i class="icon-question-sign icon-large"></i>', '#',
+                                                                                array('class' => 'launch-tooltip',
+                                                                                 'data-toggle' => 'tooltip',
+                                                                                 'data-placement' => 'top',
+                                                                                 'title' => 'This Is the address that appears on your billing statement.',
+                                                                                 'escape' => false)),
                                                                             'shipping' => 'Shipping Address Will be Different From my Billing Address'),
                                                          'legend' => false,
                                                          //'hiddenField' => false,
