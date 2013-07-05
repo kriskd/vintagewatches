@@ -48,8 +48,8 @@ class MyFormHelper extends FormHelper
                                  );
     }
     
-    public function addressForm($prefix, $country, $statesProvinces, $stripe = false, $required = false)
-    {
+    public function addressForm($prefix, $country, $statesProvinces, $stripe = false, $required = false, $values = null, $errors = null)
+    {   
         $this->setNameToOptionsMap();
         $requiredAttrs = array('firstName', 'lastName', 'address1', 'city', 'state', 'postalCode', 'countryName', 'country');
         $this->inputDefaults(array('label' => array('class' => 'control-label')));
@@ -103,6 +103,14 @@ class MyFormHelper extends FormHelper
             foreach($common as $item){
                 if(isset($attrs[$item])){
                     $options[$item] = $attrs[$item];
+                }
+            }
+            //Values
+            if(!empty($values)){
+                foreach($values as $key => $value){
+                    if(strcasecmp($name, $key)==0){
+                        $options['value'] = $value;
+                    }
                 }
             }
 

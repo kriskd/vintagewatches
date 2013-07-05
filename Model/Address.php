@@ -13,7 +13,7 @@ class Address extends AppModel {
  * @var array
  */
 	public $validate = array(
-		/*'id' => array(
+		'id' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
 				//'message' => 'Your custom message here',
@@ -48,7 +48,7 @@ class Address extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-		),*/
+		),
 		'firstName' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
@@ -69,7 +69,7 @@ class Address extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		/*'address1' => array(
+		'address1' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
 				//'message' => 'Your custom message here',
@@ -119,7 +119,7 @@ class Address extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-		),*/
+		),
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
