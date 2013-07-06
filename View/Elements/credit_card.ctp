@@ -28,7 +28,7 @@
                                             'div' => array('class' => 'cvc-div')
                                         )
                                     ); ?>
-    <label for="CartMonth" class="control-label">Expiration (MM/YYYY)</label>
+    <label for="CardMonth" class="control-label">Expiration (MM/YYYY)</label>
     <?php echo $this->Form->input('Card.month', array('name' => false,
                                             'empty' => 'MM',
                                             'options' => $months,
