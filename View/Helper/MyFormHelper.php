@@ -49,7 +49,7 @@ class MyFormHelper extends FormHelper
     }
     
     public function addressForm($prefix, $country, $statesProvinces, $stripe = false, $required = false, $values = null, $errors = null)
-    {   
+    {   //var_dump($errors);
         $this->setNameToOptionsMap();
         $requiredAttrs = array('firstName', 'lastName', 'address1', 'city', 'state', 'postalCode', 'countryName', 'country');
         $this->inputDefaults(array('label' => array('class' => 'control-label')));
@@ -115,6 +115,13 @@ class MyFormHelper extends FormHelper
             }
 
             $form .= $this->input($prefix . $name, $options);
+            if(isset($errors[$name])){
+                foreach($errors[$name] as $error){
+                    //The error method on FormHelper doesn't work since
+                    //validation is half-assed
+                    $form .= '<div class="error-message">' . $error . '</div>';
+                }
+            }
         }
  
         return $form;
