@@ -1,8 +1,8 @@
 <?php
 App::uses('Address', 'Model');
-class OrderController extends AppController
+class OrdersController extends AppController
 {
-    public $uses = array('Watch', 'Address');
+    public $uses = array('Watch', 'Address', 'Order');
     
     public function index()
     {
@@ -37,10 +37,12 @@ class OrderController extends AppController
 	    $this->set(compact('filtered'));
 	    $this->layout = 'ajax';
         }
-	//var_dump($this->Session->read('Cart'));
+	
 	//Form submitted
 	if($this->request->is('post')){
-	    $data = $this->request->data; 
+	    $data = $this->request->data;
+	    unset($data['Shipping']);
+	    
 	    $addresses = $data['Address'];
 	    
 	    $addressesToSave = array();
@@ -52,32 +54,67 @@ class OrderController extends AppController
 		$addressesToSave[] = $address;
 	    }
 	    
-	    //I don't think this is needed
-	    //$this->Address->set($addressesToSave);
+	    $data['Address'] = $addressesToSave;
+
+	    $checkoutData = ($this->Session->check('Cart.shipping') == true) &&
+			    ($this->Session->check('Cart.items') == true) &&
+			    ($this->Session->check('Cart.total')== true) &&
+			    ($this->Session->read('Cart.total') > 0);
+	    
+	    if(!$checkoutData){
+		//There is no data to checkout with
+		$this->redirect(array('controller' => 'watches', 'action' => 'index'));
+	    }
 	    
 	    if($this->Address->saveMany($addressesToSave)){
-		//Process payment temporarily disabled
-		/*if($this->Session->check('Cart.total') == true){
-		    $amount = $this->Session->read('Cart.total'); 
-		    if($amount > 0){
-			$stripeToken = $this->request->data['stripeToken'];
-			$data = array('amount' => $amount,
-				      'stripeToken' => $stripeToken);
-			$result = $this->Stripe->charge($data); 
-			if($result['stripe_paid'] == true){
-			    $items = $this->Session->read('Cart.items');
-			    foreach($items as $id){
-				$this->Watch->id = $id;
-				$this->Watch->saveField('active', 0);
-			    }
-			    $this->Session->delete('Cart');
-			    $this->Session->setFlash('Payment Received');
-			    $this->redirect(array('controller' => 'watches', 'action' => 'index'));
-			}
-		    }
-		} */
-		$this->Session->setFlash('Good address.');
+		$insertedIds = $this->Address->insertedIds;
 		
+		//Get the shipping amount from the session and add to Order
+		$shippingAmount = $this->Session->read('Cart.shipping');
+		$data['Order']['shippingAmount'] = $shippingAmount;
+		
+		//Save the Order
+		$this->Order->save($data['Order']);
+		
+		//Get the order_id
+		$order_id = $this->Order->id; 
+		
+		//Get the purchased items from the Session, add the order_id and
+		//update the items with the order_id
+		$items = $this->Session->read('Cart.items');
+		$watches = $this->Watch->getCartWatches($items);
+		$purchasedWatches = array_map(function($item) use ($order_id){
+					$item['Watch']['order_id'] = $order_id;
+					$item['Watch']['active'] = 0;
+					return $item;
+				    } , $watches);
+		$this->Watch->saveMany($purchasedWatches);
+		
+		
+		//Assign the addresses to an order
+		foreach($insertedIds as $id){
+		    $this->Address->read(null, $id);
+		    $this->Address->set(compact('order_id'));
+		    $this->Address->save();
+		}
+
+		//We should run the charge first and if it's successful do everything else.
+		//But we need to first have a valid billing address
+		$amount = $this->Session->read('Cart.total'); 
+		$stripeToken = $this->request->data['stripeToken'];
+		$data = array('amount' => $amount,
+			      'stripeToken' => $stripeToken);
+		$result = $this->Stripe->charge($data);
+		
+		if($result['stripe_paid'] == true){
+		    $this->Session->delete('Cart');
+		    $this->redirect(array('action' => 'confirm', $order_id));
+		}
+		
+		//Write the results of the Stripe payment processing to the table
+		$this->Order->save($result);
+		
+		$this->Session->setFlash('There was a payment problem.');
 	    }
 	    else{
 		//Address field(s) didn't validate, get the errors
@@ -135,6 +172,19 @@ class OrderController extends AppController
         }
     }
     
+    public function confirm($order_id = null)
+    {
+	/*$referer = trim($this->referer(null, true), '/');
+	if (strcasecmp($referer, 'orders') != 0){
+	    $this->redirect(array('controller' => 'watches', 'action' => 'index'));
+	}
+	if (!$this->Order->exists($order_id)) {
+            throw new NotFoundException(__('Invalid order'));
+        }*/
+	//var_dump($this->Order->read(null, $order_id));
+	$this->set('order', $this->Order->read(null, $order_id));
+    }
+    
     /**
      * Get country shipping and total
      */
@@ -157,7 +207,8 @@ class OrderController extends AppController
 	    }
 
 	    $subTotal = $this->Cart->getCartSubTotal(); 
-	    $total = $subTotal + $shipping; 
+	    $total = $subTotal + $shipping;
+	    $this->Session->write('Cart.shipping', $shipping);
 	    $this->Session->write('Cart.total', $total);
 	    
 	    $this->set(array('data' => compact('shipping', 'total')));
