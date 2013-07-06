@@ -19,15 +19,6 @@ $(document).ready(function(){
     });
     
     /**
-     * Check to see if we have a billing country and fill in shipping with it
-     * Not working since it's not in the DOM yet
-     */
-    if ($('#AddressBillingCountry').val() != '') {
-        var countryName = $('#AddressBillingCountryName').val(); 
-        $('.billing-country-name').empty().append(countryName);
-    }
-    
-    /**
      * Shipping country autocomplete
      * There should be a way to do both of these in one method
      * Shipping country will populate based on billing country
@@ -150,6 +141,11 @@ $(document).ready(function(){
                 $('.address-forms').empty().append(data);
                 $('.shipping-instructions').show();
                 $('.address textarea').show();
+                //Check to see if we have a billing country and fill in shipping with it
+                if ($('#AddressBillingCountry').val() != '') {
+                    var countryName = $('#AddressBillingCountryName').val(); 
+                    $('.billing-country-name').empty().append(countryName);
+                }       
             }
         });
     }
