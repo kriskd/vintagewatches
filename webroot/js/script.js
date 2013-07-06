@@ -19,22 +19,6 @@ $(document).ready(function(){
     });
     
     /**
-     * Shipping country autocomplete
-     * There should be a way to do both of these in one method
-     * Shipping country will populate based on billing country
-     */
-    /*$(document).on('keyup', '#AddressShippingCountryName', function(){
-        $('#AddressShippingCountryName').autocomplete({
-            source: '/cart/index.json',
-            minLength: 3,
-            select: function(event,ui){
-                $(this).val(ui.item.value);
-                $('#AddressShippingCountry').attr('value', ui.item.id);
-            }
-        });
-    });*/
-    
-    /**
      * Show shipping address form when ship to different address is selected
      */
     $(document).on('click', '#AddressShipping-address', function(){
@@ -59,8 +43,10 @@ $(document).ready(function(){
         $('.shipping .radio input').prop('checked', false);
         //Remove shipping forms
         $('.address-forms').empty();
-        //Hide the current address form that is showing
-        //$('.address-form').hide();
+        //Hide special order instructions
+        $('.shipping-instructions').hide();
+        //Disable submit 
+        $('.submit-payment').attr('disabled', 'disabled');
         //Display correcting address form and shipping amount based on country
         var country = $(this).val();
         computeTotal(country);
@@ -100,6 +86,8 @@ $(document).ready(function(){
         getAddressForm(country, shippingOption);
     }
     else { 
+        //Hide special order instructions
+        $('.shipping-instructions').hide();
         //Disable submit if no shipping option selected
         $('.submit-payment').attr('disabled', 'disabled');
     }
