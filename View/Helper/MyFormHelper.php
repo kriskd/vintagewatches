@@ -49,7 +49,7 @@ class MyFormHelper extends FormHelper
     }
     
     public function addressForm($prefix, $country, $statesProvinces, $stripe = false, $required = false, $values = null, $errors = null)
-    {   //var_dump($errors);
+    {   
         $this->setNameToOptionsMap();
         $requiredAttrs = array('firstName', 'lastName', 'address1', 'city', 'state', 'postalCode', 'countryName', 'country');
         $this->inputDefaults(array('label' => array('class' => 'control-label')));

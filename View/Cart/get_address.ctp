@@ -1,6 +1,6 @@
-<?php if($data['shipping'] == 'billing-change'): ?>
-    <?php echo $this->Form->addressForm('Address.billing.', $data['country'], $data['statesProvinces'], true, false); ?>
-<?php endif; ?>
+<?php //if($data['shipping'] == 'billing-change'): ?>
+    <?php //echo $this->Form->addressForm('Address.billing.', $data['country'], $data['statesProvinces'], true, false); ?>
+<?php //endif; ?>
 <?php if($data['shipping'] == 'billing'): ?>
     <div class="address-form-billing">
         <h5>Billing and Shipping Address</h5>

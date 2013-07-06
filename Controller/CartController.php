@@ -51,22 +51,24 @@ class CartController extends AppController
 		$address['type'] = $type;
 		$addressesToSave[] = $address;
 	    }
+	    
+	    //I don't think this is needed
+	    //$this->Address->set($addressesToSave);
 
-	    $this->Address->set($addressesToSave);
-	    //Grab the form data because the save attempt munges it
-	    $data = $this->Address->data;
 	    if($this->Address->saveMany($addressesToSave)){
 		$this->Session->setFlash('Good address.');
 	    }
 	    else{
+		//Address field(s) didn't validate, get the errors
 		$errors = $this->Address->validationErrors;
+		//Errors are a numeric array, give them keys for billing and shipping
 		$fixErrors['billing'] = $errors[0];
 		if(isset($errors[1])){
 		    $fixErrors['shipping'] = $errors[1];
 		}
 
 		$this->Address->validationErrors = $fixErrors;
-		$this->Address->data = $data;
+		$this->Address->data = $addressesToSave;
 
 		$this->Session->write('Address', serialize($this->Address));
 	    }
@@ -208,10 +210,11 @@ class CartController extends AppController
 	    $data['values'] = null;
 	    $data['errors'] = null;
 	    
+	    //Address data and errors in the session
 	    if($this->Session->check('Address') == true){
 		$address = $this->Session->read('Address');
 		$address = unserialize($address);
-		$addresses = $address->data['Address']; 
+		$addresses = $address->data;
 		foreach($addresses as $item){
 		    $type = $item['type'];
 		    unset($item['type']);
