@@ -1,5 +1,5 @@
-<?php echo $this->Form->create('Order', array('url' => '/cart', 'class' => 'form-horizontal payment-form')); ?>
-<div class="cart index">
+<?php echo $this->Form->create('Order', array('class' => 'form-horizontal payment-form')); ?>
+<div class="order index">
     <section class="review-cart">
         <h3>Review Cart</h3>
         <table class="table-bordered">
