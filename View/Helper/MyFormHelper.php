@@ -113,15 +113,15 @@ class MyFormHelper extends FormHelper
                     }
                 }
             }
-
-            $form .= $this->input($prefix . $name, $options);
+            
             if(isset($errors[$name])){
                 foreach($errors[$name] as $error){
                     //The error method on FormHelper doesn't work since
                     //validation is half-assed
-                    $form .= '<div class="error-message">' . $error . '</div>';
+                    $options['after'] = '<div class="error-message">' . $error . '</div>';
                 }
             }
+            $form .= $this->input($prefix . $name, $options);
         }
  
         return $form;

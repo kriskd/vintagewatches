@@ -272,7 +272,19 @@ class CartController extends AppController
 		}
 		$data['values'] = $values;
 		$data['errors'] = $address->validationErrors;
-		
+
+		//For other countries we need to take the error message in country
+		//and put it in countryName
+		if(strcasecmp($country, 'other') == 0){
+		    foreach($data['errors'] as $key => $errors){
+			if(isset($errors['country'])){
+			    $errors['countryName'] = $errors['country'];
+			}
+			$newErrors[$key] = $errors;
+		    }
+		    $data['errors'] = $newErrors;
+		}
+
 		$this->Session->delete('Address');
 	    }
 	    $this->set(compact('data'));
