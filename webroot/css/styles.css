@@ -6523,6 +6523,11 @@ table th {
   padding-top: 5px;
   margin-left: 170px;
 }
+.cart.index .address .error-message {
+  margin: -5px 0 5px 170px;
+  color: #9d261d;
+  font-size: 90%;
+}
 .cart.index .address .shipping-instructions {
   display: none;
 }
