@@ -2,7 +2,7 @@
 App::uses('Address', 'Model');
 class OrderController extends AppController
 {
-    public $uses = array('Cart', 'Watch', 'Address');
+    public $uses = array('Watch', 'Address');
     
     public function index()
     {
