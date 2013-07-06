@@ -37,7 +37,7 @@ class CartController extends AppController
 	    $this->set(compact('filtered'));
 	    $this->layout = 'ajax';
         }
-	
+	//var_dump($this->Session->read('Cart'));
 	//Form submitted
 	if($this->request->is('post')){
 	    $data = $this->request->data; 
@@ -54,9 +54,30 @@ class CartController extends AppController
 	    
 	    //I don't think this is needed
 	    //$this->Address->set($addressesToSave);
-
+	    
 	    if($this->Address->saveMany($addressesToSave)){
+		//Process payment temporarily disabled
+		/*if($this->Session->check('Cart.total') == true){
+		    $amount = $this->Session->read('Cart.total'); 
+		    if($amount > 0){
+			$stripeToken = $this->request->data['stripeToken'];
+			$data = array('amount' => $amount,
+				      'stripeToken' => $stripeToken);
+			$result = $this->Stripe->charge($data); 
+			if($result['stripe_paid'] == true){
+			    $items = $this->Session->read('Cart.items');
+			    foreach($items as $id){
+				$this->Watch->id = $id;
+				$this->Watch->saveField('active', 0);
+			    }
+			    $this->Session->delete('Cart');
+			    $this->Session->setFlash('Payment Received');
+			    $this->redirect(array('controller' => 'watches', 'action' => 'index'));
+			}
+		    }
+		} */
 		$this->Session->setFlash('Good address.');
+		
 	    }
 	    else{
 		//Address field(s) didn't validate, get the errors
@@ -72,62 +93,10 @@ class CartController extends AppController
 
 		$this->Session->write('Address', serialize($this->Address));
 	    }
-
-	    //$this->redirect(array('action' => 'index')); 
-	    /*if($this->Session->check('Cart.total') == true){
-		$amount = $this->Session->read('Cart.total'); 
-		if($amount > 0){
-		    $stripeToken = $this->request->data['stripeToken'];
-		    $data = array('amount' => $amount,
-				  'stripeToken' => $stripeToken);
-		    $result = $this->Stripe->charge($data); 
-		    if($result['stripe_paid'] == true){
-			$items = $this->Session->read('Cart.items');
-			foreach($items as $id){
-			    $this->Watch->id = $id;
-			    $this->Watch->saveField('active', 0);
-			}
-			$this->Session->delete('Cart');
-			$this->Session->setFlash('Payment Received');
-			$this->redirect(array('controller' => 'watches', 'action' => 'index'));
-		    }
-		}
-	    } */
-	    //$this->Session->setFlash('Please select your country.');
         }
-        //$this->redirect(array('action' => 'index')); 
 	
         $this->set(compact('watches', 'months', 'years', 'total'));
     }
-    
-    /*public function test()
-    {
-	if($this->request->is('post')){
-	    $data = $this->request->data; 
-	    $addresses = $data['Address'];
-	    foreach($addresses as $type => $item){ 
-		$address = $item;
-		$address['type'] = $type;
-		$addressesToSave[] = $address;
-	    } 
-
-	    $this->Address->set($addressesToSave);
-	    //Grab the form data because the save attempt munges it
-	    $data = $this->Address->data;
-	    if($this->Address->saveMany($addressesToSave)){
-		$this->Session->setFlash('valid');
-	    }  
-	    else{
-		$errors = $this->Address->validationErrors;
-		$fixErrors['billing'] = $errors[0];
-		if(isset($errors[1])){
-		    $fixErrors['shipping'] = $errors[1];
-		}
-		$this->Address->validationErrors = $fixErrors;
-		$this->Address->data = $data;
-	    }
-	}
-    }*/
     
     public function add($id = null)
     {   
@@ -258,6 +227,38 @@ class CartController extends AppController
 	    $this->layout = 'ajax';
 	}
     }
+    
+    /**
+     * Proof of concept for address validation
+     */
+    /*public function test()
+    {
+	if($this->request->is('post')){
+	    $data = $this->request->data; 
+	    $addresses = $data['Address'];
+	    foreach($addresses as $type => $item){ 
+		$address = $item;
+		$address['type'] = $type;
+		$addressesToSave[] = $address;
+	    } 
+
+	    $this->Address->set($addressesToSave);
+	    //Grab the form data because the save attempt munges it
+	    $data = $this->Address->data;
+	    if($this->Address->saveMany($addressesToSave)){
+		$this->Session->setFlash('valid');
+	    }  
+	    else{
+		$errors = $this->Address->validationErrors;
+		$fixErrors['billing'] = $errors[0];
+		if(isset($errors[1])){
+		    $fixErrors['shipping'] = $errors[1];
+		}
+		$this->Address->validationErrors = $fixErrors;
+		$this->Address->data = $data;
+	    }
+	}
+    }*/
     
     protected function _getStates()
     {
