@@ -71,9 +71,25 @@ class Watch extends AppModel {
 		),
 	);
         
-        /**
-         * $ids array Array of watch Ids
-         */
+/**
+ * belongsTo associations
+ *
+ * @var array
+ */
+	public $belongsTo = array(
+		'Order' => array(
+			'className' => 'Order',
+			'foreignKey' => 'id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		)
+	);
+
+        
+    /**
+     * $ids array Array of watch Ids
+     */
         public function getCartWatches($ids)
         {
             return $this->find('all', array('conditions' => array('id' => $ids),
