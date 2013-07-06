@@ -98,7 +98,7 @@ class CartController extends AppController
         $this->set(compact('watches', 'months', 'years', 'total'));
     }
     
-    public function test()
+    /*public function test()
     {
 	if($this->request->is('post')){
 	    $data = $this->request->data; 
@@ -108,25 +108,7 @@ class CartController extends AppController
 		$address['type'] = $type;
 		$addressesToSave[] = $address;
 	    } 
-	    /*
-	     $addressesToSave looks like:
-	     array(2) {
-		[0]=>
-		array(2) {
-		  ["firstName"]=>
-		  string(4) "Jack"
-		  ["type"]=>
-		  string(7) "billing"
-		}
-		[1]=>
-		array(2) {
-		  ["firstName"]=>
-		  string(8) "Margaret"
-		  ["type"]=>
-		  string(8) "shipping"
-		}
-	      }
-	     */
+
 	    $this->Address->set($addressesToSave);
 	    //Grab the form data because the save attempt munges it
 	    $data = $this->Address->data;
@@ -135,50 +117,15 @@ class CartController extends AppController
 	    }  
 	    else{
 		$errors = $this->Address->validationErrors;
-		//var_dump($this->Address); exit;
-		/*
-		 $errors looks like:
-		array(2) {
-		  [0]=>
-		  array(2) {
-		    ["firstName"]=>
-		    array(1) {
-		      [0]=>
-		      string(29) "Please enter your first name."
-		    }
-		    ["lastName"]=>
-		    array(1) {
-		      [0]=>
-		      string(28) "Please enter your last name."
-		    }
-		  }
-		  [1]=>
-		  array(2) {
-		    ["firstName"]=>
-		    array(1) {
-		      [0]=>
-		      string(29) "Please enter your first name."
-		    }
-		    ["lastName"]=>
-		    array(1) {
-		      [0]=>
-		      string(28) "Please enter your last name."
-		    }
-		  }
-		}
-		 */
 		$fixErrors['billing'] = $errors[0];
 		if(isset($errors[1])){
 		    $fixErrors['shipping'] = $errors[1];
 		}
 		$this->Address->validationErrors = $fixErrors;
 		$this->Address->data = $data;
-		//var_dump($this->Address); exit; 
-		//var_dump($this->Address->validationErrors);
-		//$this->layout = 'ajax';
 	    }
 	}
-    }
+    }*/
     
     public function add($id = null)
     {   
