@@ -75,17 +75,17 @@
     <section class="address">
         <h3>Address</h3>
         <div class="address-forms"></div>
-        <div class="shipping-instructions">
-            <h5><a class="launch-tooltip"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Please add any special instructions here or information
-                    you need to pass along to me.">
-                    Special Order Instructions
-                    <i class="icon-question-sign icon-large"></i>
-                 </a></h5>
+        <div class="shipping-instructions">        
+            <?php echo $this->Form->input('Order.notes',
+                                          array('label' => '<h5>' . $this->Html->link('Special Order Instructions
+                                                            <i class="icon-question-sign icon-large"></i>', '#',
+                                                            array('class' => 'launch-tooltip',
+                                                                     'data-toggle' => 'tooltip',
+                                                                     'data-placement' => 'top',
+                                                                     'title' => 'Please add any special instructions here or information
+                                                                                you need to pass along to me.',
+                                                                     'escape' => false)) . '</h5>')); ?>
         </div>
-        <?php echo $this->Form->textarea('Order.shipping-instructions'); ?>
     </section>
     <section>
         <h3>Credit Card</h3>
