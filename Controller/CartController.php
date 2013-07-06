@@ -270,9 +270,8 @@ class CartController extends AppController
 		    unset($item['type']);
 		    $values[$type] = $item;
 		}
-		
-		$data['errors'] = $address->validationErrors;
 		$data['values'] = $values;
+		$data['errors'] = $address->validationErrors;
 		
 		$this->Session->delete('Address');
 	    }
