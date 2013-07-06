@@ -7,7 +7,7 @@ $(document).ready(function(){
      */
     $(document).on('keyup', '#AddressBillingCountryName', function(){
         $('#AddressBillingCountryName').autocomplete({
-            source: '/cart/index.json',
+            source: '/order/index.json',
             minLength: 3,
             select: function(event,ui){
                 $(this).val(ui.item.value);
@@ -71,7 +71,7 @@ $(document).ready(function(){
      */
     function computeTotal(country) {
         $.ajax({
-            url: '/cart/getShipping.json',
+            url: '/order/getShipping.json',
             data: {"country" : country},
             dataType: 'json',
             success: function(data){
@@ -122,7 +122,7 @@ $(document).ready(function(){
     $(document).on('change', '.us-ca', function(){
         var state = $(this).val();
         $.ajax({
-            url: '/cart/getCountry.json',
+            url: '/order/getCountry.json',
             data: {"state" : state},
             dataType: 'json',
             success: function(data){
@@ -134,7 +134,7 @@ $(document).ready(function(){
     
     function getAddressForm(country, shippingOption) {
         $.ajax({
-            url: '/cart/getAddress.html',
+            url: '/order/getAddress.html',
             data: {"country" : country, "shipping" : shippingOption},
             dataType: 'html',
             success: function(data){

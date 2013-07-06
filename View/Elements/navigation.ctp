@@ -3,7 +3,7 @@
         <ul class="nav">
             <li class="<?php echo strcasecmp($controller->name, 'cart')==0 ? 'active' : '' ?>">
                 <?php echo $this->Html->cartLink('Checkout <i class="icon-shopping-cart icon-large"></i> ' . $this->Cart->cartCount('Items in Your Cart: ', '', $controller),
-                                                 array('controller' => 'cart', 'action' => 'index'),
+                                                 array('controller' => 'order', 'action' => 'index'),
                                                  array('escape' => false),
                                                  false,
                                                  $controller); ?>

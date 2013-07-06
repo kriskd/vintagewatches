@@ -1,6 +1,6 @@
 <?php
 App::uses('Address', 'Model');
-class CartController extends AppController
+class OrderController extends AppController
 {
     public $uses = array('Cart', 'Watch', 'Address');
     

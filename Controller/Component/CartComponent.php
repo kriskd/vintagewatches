@@ -45,6 +45,6 @@ class CartComponent extends Component
     
     public function getCartSubTotal()
     {
-        return ClassRegistry::init('Cart')->getSubTotal($this->getCartItems());
+        return ClassRegistry::init('Order')->getSubTotal($this->getCartItems());
     }
 }
