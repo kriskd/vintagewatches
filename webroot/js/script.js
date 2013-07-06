@@ -23,7 +23,7 @@ $(document).ready(function(){
      * Not working since it's not in the DOM yet
      */
     if ($('#AddressBillingCountry').val() != '') {
-        var countryName = $('#AddressBillingCountryName').val(); alert(countryName);
+        var countryName = $('#AddressBillingCountryName').val(); 
         $('.billing-country-name').empty().append(countryName);
     }
     
