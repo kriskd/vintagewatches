@@ -7,7 +7,7 @@ $(document).ready(function(){
      */
     $(document).on('keyup', '#AddressBillingCountryName', function(){
         $('#AddressBillingCountryName').autocomplete({
-            source: '/order/index.json',
+            source: '/orders/index.json',
             minLength: 3,
             select: function(event,ui){
                 $(this).val(ui.item.value);
@@ -57,7 +57,7 @@ $(document).ready(function(){
      */
     function computeTotal(country) {
         $.ajax({
-            url: '/order/getShipping.json',
+            url: '/orders/getShipping.json',
             data: {"country" : country},
             dataType: 'json',
             success: function(data){
@@ -110,7 +110,7 @@ $(document).ready(function(){
     $(document).on('change', '.us-ca', function(){
         var state = $(this).val();
         $.ajax({
-            url: '/order/getCountry.json',
+            url: '/orders/getCountry.json',
             data: {"state" : state},
             dataType: 'json',
             success: function(data){
@@ -122,7 +122,7 @@ $(document).ready(function(){
     
     function getAddressForm(country, shippingOption) {
         $.ajax({
-            url: '/order/getAddress.html',
+            url: '/orders/getAddress.html',
             data: {"country" : country, "shipping" : shippingOption},
             dataType: 'html',
             success: function(data){
@@ -138,7 +138,7 @@ $(document).ready(function(){
         });
     }
     
-    /*$('.payment-form').submit(function(){ 
+    $('.payment-form').submit(function(){ 
         $('.submit-payment').attr('disabled', 'disabled');
         var form = $(this); 
         var error = false;
@@ -176,7 +176,7 @@ $(document).ready(function(){
             });
         }
         return false;
-    });*/
+    });
     
     function reportError(msg) {
  

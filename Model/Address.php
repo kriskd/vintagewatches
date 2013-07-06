@@ -31,6 +31,24 @@ class Address extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+                'order_id' => array(
+                        'notempty' => array(
+				'rule' => array('notempty'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+			'numeric' => array(
+				'rule' => array('numeric'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			), 
+                ),
 		'type' => array(
 			'alphanumeric' => array(
 				'rule' => array('alphanumeric'),
@@ -53,8 +71,8 @@ class Address extends AppModel {
 			'notempty' => array(
 				'rule' => array('notempty'),
 				'message' => 'Please enter your first name.',
-				'allowEmpty' => false,
-				'required' => true,
+				//'allowEmpty' => false,
+				//'required' => true,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
@@ -63,8 +81,8 @@ class Address extends AppModel {
 			'notempty' => array(
 				'rule' => array('notempty'),
 				'message' => 'Please enter your last name.',
-				'allowEmpty' => false,
-				'required' => true,
+				//'allowEmpty' => false,
+				//'required' => true,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
@@ -121,6 +139,15 @@ class Address extends AppModel {
 			),
 		),
 	);
+        
+        public $insertedIds = array();
+        
+        public function afterSave($created){
+            if($created){
+                $this->insertedIds[] = $this->getInsertID();
+            }
+            return true;
+        }
 
 //The Associations below have been created with all possible keys, those that are not needed can be removed
 
@@ -129,7 +156,7 @@ class Address extends AppModel {
  *
  * @var array
  */
-	public $belongsTo = array(
+	/*public $belongsTo = array(
 		'Order' => array(
 			'className' => 'Order',
 			'foreignKey' => 'id',
@@ -137,5 +164,5 @@ class Address extends AppModel {
 			'fields' => '',
 			'order' => ''
 		)
-	);
+	);*/
 }
