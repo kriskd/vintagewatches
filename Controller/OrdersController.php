@@ -65,7 +65,9 @@ class OrdersController extends AppController
 		//There is no data to checkout with
 		$this->redirect(array('controller' => 'watches', 'action' => 'index'));
 	    }
-	    
+
+	    //TODO: Validate all data, not just address. Order needs to be
+	    //validated for email address
 	    if($this->Address->saveMany($addressesToSave)){
 		$insertedIds = $this->Address->insertedIds; 
 		
