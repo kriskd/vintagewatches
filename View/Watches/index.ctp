@@ -1,6 +1,6 @@
 <div class="watches index">
 	<h2><?php echo __('Watches'); ?></h2>
-	<table class="table-striped">
+	<table class="table-striped table-bordered">
 	<tr>
 			<th>Add to Cart</th>
 			<th><?php echo $this->Paginator->sort('stock_id'); ?></th>
