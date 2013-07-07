@@ -8,9 +8,22 @@
     color: @red;
 }
 table {
+    width: 500px;
+    background: @grayLighter;
     th {
         color: @blueDark;
+        border-bottom: 1px solid @grayLight;  
     }
+    td, th {
+        padding: 10px;
+    }
+    .total-row td {
+        border-top: 1px solid @grayLight;
+    }
+}
+.table-bordered {
+    border: 1px solid @gray;
+    .border-radius(5px);
 }
 dl {
     dt {
@@ -26,33 +39,16 @@ dl {
 .watches.index {
     text-align: center;
     table {
+        width: auto;
         .description {
             width: 500px;
             text-align: left;
         }
-        td, th {
-            padding: 10px;
-        }
     }
 }
 
-.order.index {
+.orders.index {
     width: 450px;
-    table {
-        width: 500px;
-        background: @grayLighter;
-        border: 1px solid @gray;
-        .border-radius(5px);
-        td, th {
-            padding: 10px;
-        }
-        th {
-            border-bottom: 1px solid @grayLight;  
-        }
-        .total-row td {
-            border-top: 1px solid @grayLight;
-        }
-    }
     h3 {
         color: @white;
         background: @blue;
@@ -163,5 +159,10 @@ dl {
         .submit {
             text-align: center;
         }
+    }
+}
+.confirm {
+    .notes {
+        width: 500px;
     }
 }
