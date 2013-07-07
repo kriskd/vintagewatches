@@ -1,5 +1,5 @@
 <?php echo $this->Form->create('Order', array('class' => 'form-horizontal payment-form')); ?>
-<div class="order index">
+<div class="orders index">
     <section class="review-cart">
         <h3>Review Cart</h3>
         <table class="table-bordered">
@@ -48,7 +48,7 @@
                 </td>
                 <td class="shipping-amount text-right"></td>
             </tr>
-             <tr class="total-row"><td></td><td></td><td class="text-right">Total</td><td class="total-formatted-amount text-right"></td></tr>
+            <tr class="total-row"><td></td><td></td><td class="text-right">Total</td><td class="total-formatted-amount text-right"></td></tr>
         </table>
     </section>
     
