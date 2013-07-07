@@ -6406,8 +6406,29 @@ a.badge:focus {
 .icon-question-sign {
   color: #9d261d;
 }
+table {
+  width: 500px;
+  background: #eee;
+}
 table th {
   color: #0064cd;
+  border-bottom: 1px solid #999;
+}
+table td,
+table th {
+  padding: 10px;
+}
+table .total-row td {
+  border-top: 1px solid #999;
+}
+.table-bordered {
+  border: 1px solid #555;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
 dl dt {
   float: left;
@@ -6421,39 +6442,17 @@ dl dd {
 .watches.index {
   text-align: center;
 }
+.watches.index table {
+  width: auto;
+}
 .watches.index table .description {
   width: 500px;
   text-align: left;
 }
-.watches.index table td,
-.watches.index table th {
-  padding: 10px;
-}
-.order.index {
+.orders.index {
   width: 450px;
 }
-.order.index table {
-  width: 500px;
-  background: #eee;
-  border: 1px solid #555;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-}
-.order.index table td,
-.order.index table th {
-  padding: 10px;
-}
-.order.index table th {
-  border-bottom: 1px solid #999;
-}
-.order.index table .total-row td {
-  border-top: 1px solid #999;
-}
-.order.index h3 {
+.orders.index h3 {
   color: #fff;
   background: #049cdb;
   -webkit-border-radius: 5px;
@@ -6464,18 +6463,18 @@ dl dd {
   border-radius: 5px;
   padding: 0 10px;
 }
-.order.index h6 {
+.orders.index h6 {
   margin: 0;
 }
-.order.index section {
+.orders.index section {
   margin-bottom: 25px;
 }
-.order.index .control-label {
+.orders.index .control-label {
   margin-right: 5px;
 }
-.order.index .checkout-form,
-.order.index .billing-country-address-form,
-.order.index .shipping-country-address-form {
+.orders.index .checkout-form,
+.orders.index .billing-country-address-form,
+.orders.index .shipping-country-address-form {
   padding: 5px;
   background: #eee;
   border: 1px solid #555;
@@ -6487,89 +6486,92 @@ dl dd {
   border-radius: 5px;
   *zoom: 1;
 }
-.order.index .checkout-form:before,
-.order.index .checkout-form:after,
-.order.index .billing-country-address-form:before,
-.order.index .billing-country-address-form:after,
-.order.index .shipping-country-address-form:before,
-.order.index .shipping-country-address-form:after {
+.orders.index .checkout-form:before,
+.orders.index .checkout-form:after,
+.orders.index .billing-country-address-form:before,
+.orders.index .billing-country-address-form:after,
+.orders.index .shipping-country-address-form:before,
+.orders.index .shipping-country-address-form:after {
   display: table;
   content: "";
   line-height: 0;
 }
-.order.index .checkout-form:after,
-.order.index .billing-country-address-form:after,
-.order.index .shipping-country-address-form:after {
+.orders.index .checkout-form:after,
+.orders.index .billing-country-address-form:after,
+.orders.index .shipping-country-address-form:after {
   clear: both;
 }
-.order.index label {
+.orders.index label {
   font-size: 90%;
   font-weight: bold;
 }
-.order.index .review-cart form {
+.orders.index .review-cart form {
   border: none;
 }
-.order.index .review-cart label {
+.orders.index .review-cart label {
   font-weight: normal;
 }
-.order.index .shipping .shipping-inner {
+.orders.index .shipping .shipping-inner {
   display: none;
 }
-.order.index .address .address-form-billing .checkbox {
+.orders.index .address .address-form-billing .checkbox {
   padding: 10px 0 0 0;
 }
-.order.index .address .radio.inline {
+.orders.index .address .radio.inline {
   margin-right: 30px;
 }
-.order.index .address input,
-.order.index .address select {
+.orders.index .address input,
+.orders.index .address select {
   margin: 5px;
 }
-.order.index .address .navbar-inner {
+.orders.index .address .navbar-inner {
   padding: 0 10px;
 }
-.order.index .address .billing-country-name {
+.orders.index .address .billing-country-name {
   padding-top: 5px;
   margin-left: 170px;
 }
-.order.index .address .error-message {
+.orders.index .address .error-message {
   margin: -5px 0 5px 170px;
   color: #9d261d;
   font-size: 90%;
 }
-.order.index .address .shipping-instructions {
+.orders.index .address .shipping-instructions {
   display: none;
 }
-.order.index .address textarea {
+.orders.index .address textarea {
   display: none;
   width: 440px;
   height: 150px;
 }
-.order.index .checkout-form input {
+.orders.index .checkout-form input {
   margin: 5px;
 }
-.order.index .checkout-form .input {
+.orders.index .checkout-form .input {
   line-height: 20px;
 }
-.order.index .checkout-form .card-expiry-month {
+.orders.index .checkout-form .card-expiry-month {
   float: left;
 }
-.order.index .checkout-form label[for=CardCvc] {
+.orders.index .checkout-form label[for=CardCvc] {
   padding-top: 10px;
 }
-.order.index .checkout-form label[for=CardMonth] {
+.orders.index .checkout-form label[for=CardMonth] {
   padding-top: 5px;
   margin-right: 10px;
 }
-.order.index .checkout-form select option {
+.orders.index .checkout-form select option {
   color: #555;
 }
-.order.index .checkout-form .payment-errors {
+.orders.index .checkout-form .payment-errors {
   display: none;
 }
-.order.index .checkout-form .card-number-div {
+.orders.index .checkout-form .card-number-div {
   height: 52px;
 }
-.order.index .checkout-form .submit {
+.orders.index .checkout-form .submit {
   text-align: center;
+}
+.confirm .notes {
+  width: 500px;
 }
