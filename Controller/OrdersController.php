@@ -67,7 +67,7 @@ class OrdersController extends AppController
 	    }
 	    
 	    if($this->Address->saveMany($addressesToSave)){
-		$insertedIds = $this->Address->insertedIds;
+		$insertedIds = $this->Address->insertedIds; 
 		
 		//Get the shipping amount from the session and add to Order
 		$shippingAmount = $this->Session->read('Cart.shipping');
@@ -92,11 +92,7 @@ class OrdersController extends AppController
 		
 		
 		//Assign the addresses to an order
-		foreach($insertedIds as $id){
-		    $this->Address->read(null, $id);
-		    $this->Address->set(compact('order_id'));
-		    $this->Address->save();
-		}
+		$this->Address->updateAll(array('order_id' => $order_id), array('id' => $insertedIds));
 
 		//We should run the charge first and if it's successful do everything else.
 		//But we need to first have a valid billing address
@@ -105,14 +101,14 @@ class OrdersController extends AppController
 		$data = array('amount' => $amount,
 			      'stripeToken' => $stripeToken);
 		$result = $this->Stripe->charge($data);
+				
+		//Write the results of the Stripe payment processing to the table
+		$this->Order->save($result);
 		
 		if($result['stripe_paid'] == true){
 		    $this->Session->delete('Cart');
 		    $this->redirect(array('action' => 'confirm', $order_id));
 		}
-		
-		//Write the results of the Stripe payment processing to the table
-		$this->Order->save($result);
 		
 		$this->Session->setFlash('There was a payment problem.');
 	    }
@@ -174,14 +170,14 @@ class OrdersController extends AppController
     
     public function confirm($order_id = null)
     {
-	/*$referer = trim($this->referer(null, true), '/');
+	$referer = trim($this->referer(null, true), '/');
 	if (strcasecmp($referer, 'orders') != 0){
 	    $this->redirect(array('controller' => 'watches', 'action' => 'index'));
 	}
 	if (!$this->Order->exists($order_id)) {
             throw new NotFoundException(__('Invalid order'));
-        }*/
-	//var_dump($this->Order->read(null, $order_id));
+        }
+
 	$this->set('order', $this->Order->read(null, $order_id));
     }
     
