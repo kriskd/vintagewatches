@@ -138,6 +138,16 @@ class Address extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+                'countryName' => array(
+			'notempty' => array(
+				'rule' => array('notempty'),
+				'message' => 'Please enter a country.',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
 	);
         
         public $insertedIds = array();
