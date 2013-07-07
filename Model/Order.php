@@ -7,6 +7,18 @@ App::uses('AppModel', 'Model');
  * @property Watch $Watch
  */
 class Order extends AppModel {
+    
+    public $validate = array(
+            'email' => array(
+                'notempty' => array(
+                    'rule' => array('notempty'),
+                    'message' => 'Please enter your email.'),
+                'email' => array(
+                    'rule' => array('email'),
+                    'message' => 'Please supply a valid email address.'
+                )
+            ),
+        );
 
 //The Associations below have been created with all possible keys, those that are not needed can be removed
 
