@@ -6475,9 +6475,7 @@ dl dd {
 .orders.index .control-label {
   margin-right: 5px;
 }
-.orders.index .checkout-form,
-.orders.index .billing-country-address-form,
-.orders.index .shipping-country-address-form {
+.orders.index .checkout-form {
   padding: 5px;
   background: #eee;
   border: 1px solid #555;
@@ -6490,18 +6488,12 @@ dl dd {
   *zoom: 1;
 }
 .orders.index .checkout-form:before,
-.orders.index .checkout-form:after,
-.orders.index .billing-country-address-form:before,
-.orders.index .billing-country-address-form:after,
-.orders.index .shipping-country-address-form:before,
-.orders.index .shipping-country-address-form:after {
+.orders.index .checkout-form:after {
   display: table;
   content: "";
   line-height: 0;
 }
-.orders.index .checkout-form:after,
-.orders.index .billing-country-address-form:after,
-.orders.index .shipping-country-address-form:after {
+.orders.index .checkout-form:after {
   clear: both;
 }
 .orders.index label {
