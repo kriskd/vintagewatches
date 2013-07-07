@@ -79,7 +79,7 @@
         <div class="shipping-instructions">
             <h5>Email and Phone Number</h5>
             <div class="checkout-form">
-                <?php echo $this->Form->input('Order.email', array('label' => array('class' => 'control-label'), 'required' => false)); ?>
+                <?php echo $this->Form->input('Order.email', array('label' => array('class' => 'control-label'))); ?>
                 <?php echo $this->Form->input('Order.phone', array('label' => array('class' => 'control-label'))); ?>
             </div>
             <?php echo $this->Form->input('Order.notes',
