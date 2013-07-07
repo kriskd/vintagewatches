@@ -42,7 +42,8 @@ class AppController extends Controller {
                             'Cart');
     
     public $components = array('Stripe' => array('className' => 'Stripe.Stripe'),
-                               'DebugKit.Toolbar', 'Session', 'Cart', 'RequestHandler');
+                               'DebugKit.Toolbar', 'Session', 'Cart', 'RequestHandler',
+                               'Cookie');
     
     /**
      * Compile LESS
@@ -60,5 +61,10 @@ class AppController extends Controller {
         
         $this->set(array('controller' => $this));
         parent::beforeRender();
+    }
+    
+    public function beforeFilter()
+    {   
+        $this->Cookie->domain = env('HTTP_BASE');
     }
 }
