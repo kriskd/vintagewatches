@@ -60,6 +60,7 @@ $(document).ready(function(){
             url: '/orders/getShipping.json',
             data: {"country" : country},
             dataType: 'json',
+            cache: false,
             success: function(data){
                 var shipping = data.shipping;
                 var totalFormatted = data.totalFormatted;
@@ -113,6 +114,7 @@ $(document).ready(function(){
             url: '/orders/getCountry.json',
             data: {"state" : state},
             dataType: 'json',
+            cache: false,
             success: function(data){
                 var country = data.country;
                 $('#AddressBillingCountry').val(country);
@@ -125,6 +127,7 @@ $(document).ready(function(){
             url: '/orders/getAddress.html',
             data: {"country" : country, "shipping" : shippingOption},
             dataType: 'html',
+            cache: false,
             success: function(data){
                 $('.address-forms').empty().append(data);
                 $('.shipping-instructions').show();
