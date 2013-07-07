@@ -6430,6 +6430,9 @@ table .total-row td {
   -moz-border-radius: 5px;
   border-radius: 5px;
 }
+span.required {
+  color: #9d261d;
+}
 dl dt {
   float: left;
   width: 160px;

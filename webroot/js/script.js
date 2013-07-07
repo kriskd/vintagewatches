@@ -129,6 +129,7 @@ $(document).ready(function(){
                 $('.address-forms').empty().append(data);
                 $('.shipping-instructions').show();
                 $('.address textarea').show();
+                $('.input.required label').append(' <span class="required">*</span>');
                 //Check to see if we have a billing country and fill in shipping with it
                 if ($('#AddressBillingCountry').val() != '') {
                     var countryName = $('#AddressBillingCountryName').val(); 
