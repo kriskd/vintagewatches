@@ -1,6 +1,7 @@
 $(document).ready(function(){
     
     $('.launch-tooltip').tooltip();
+    $('.checkout-form .input.required label').append(' <span class="required">*</span>');
 
     /**
      * Billing country autocomplete
@@ -132,7 +133,7 @@ $(document).ready(function(){
                 $('.address-forms').empty().append(data);
                 $('.shipping-instructions').show();
                 $('.address textarea').show();
-                $('.input.required label').append(' <span class="required">*</span>');
+                $('.address-forms .input.required label').append(' <span class="required">*</span>');
                 //Check to see if we have a billing country and fill in shipping with it
                 if ($('#AddressBillingCountry').val() != '') {
                     var countryName = $('#AddressBillingCountryName').val(); 

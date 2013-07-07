@@ -31,9 +31,10 @@
                     <h6 class="text-left"><a class="launch-tooltip"
                                              data-toggle="tooltip"
                                              data-placement="top"
-                                             title="Once you choose your country, the appropriate shipping charge will be added, 
-                                             then the shipping bar below will then expand where you indicate shipping
-                                             options which will expand the address bar to enter you address.">
+                                             title="Once you choose your country, the appropriate shipping
+                                             charge will be added, and the shipping bar below will expand
+                                             where you can indicate shipping options. Then, the address
+                                             bar will expand so you can enter the appropriate information.">
                                              Choose the Country Where You Want Your Order Shipped <i class="icon-question-sign icon-large"></i>
                                           </a></h6>
                         <div class="select-country">
@@ -75,7 +76,12 @@
     <section class="address">
         <h3>Address</h3>
         <div class="address-forms"></div>
-        <div class="shipping-instructions">        
+        <div class="shipping-instructions">
+            <h5>Email and Phone Number</h5>
+            <div class="checkout-form">
+                <?php echo $this->Form->input('Order.email', array('label' => array('class' => 'control-label'), 'required' => false)); ?>
+                <?php echo $this->Form->input('Order.phone', array('label' => array('class' => 'control-label'))); ?>
+            </div>
             <?php echo $this->Form->input('Order.notes',
                                           array('label' => '<h5>' . $this->Html->link('Special Order Instructions
                                                             <i class="icon-question-sign icon-large"></i>', '#',
