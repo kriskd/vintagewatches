@@ -8,7 +8,8 @@
                                             'class' => 'card-number input-large',
                                             'label' => array('text' => 'Card Number<br /><small>(no spaces or hypens)</small>',
                                                              'class' => 'control-label'),
-                                            'div' => array('class' => 'card-number-div')
+                                            'div' => array('class' => 'card-number-div input required'),
+                                            'required' => 'required'
                                         )
                                     ); ?>
     <?php echo $this->Form->input('Card.cvc', array('name' => false,
@@ -25,24 +26,29 @@
                                                                         <i class="icon-question-sign icon-large"></i>
                                                                         </a>',
                                                              'class' => 'control-label'),
-                                            'div' => array('class' => 'cvc-div')
+                                            'div' => array('class' => 'cvc-div input required'),
+                                            'required' => 'required'
                                         )
                                     ); ?>
-    <label for="CardMonth" class="control-label">Expiration (MM/YYYY)</label>
-    <?php echo $this->Form->input('Card.month', array('name' => false,
-                                            'empty' => 'MM',
-                                            'options' => $months,
-                                            'data-stripe' => 'exp-month',
-                                            'class' => 'card-expiry-month input-mini',
-                                            'label' => false,
-                                            'multiple' => false)); ?>
-    <?php echo $this->Form->input('Card.year', array('name' => false,
-                                            'empty' => 'Year',
-                                            'options' => $years,
-                                            'data-stripe' => 'exp-year',
-                                            'placeHolder' => 'Year',
-                                            'class' => 'card-expiry-year input-small',
-                                            'label' => false,
-                                            'multiple' => false)); ?>
-    <?php echo $this->Form->end(array('class' => 'btn btn-primary submit-payment', 'label' => 'Submit Payment')); ?>
+    <div class="input select required">
+        <?php echo $this->Form->label('Card.month', 'Expiration (MM/YYYY)',
+                                      array('for' => 'CardMonth',
+                                            'class' => 'control-label')); ?>
+        <?php echo $this->Form->input('Card.month', array('name' => false,
+                                                'empty' => 'MM',
+                                                'options' => $months,
+                                                'data-stripe' => 'exp-month',
+                                                'class' => 'card-expiry-month input-mini',
+                                                'label' => false,
+                                                  'multiple' => false)); ?>
+        <?php echo $this->Form->input('Card.year', array('name' => false,
+                                                'empty' => 'Year',
+                                                'options' => $years,
+                                                'data-stripe' => 'exp-year',
+                                                'placeHolder' => 'Year',
+                                                'class' => 'card-expiry-year input-small',
+                                                'label' => false,
+                                                'multiple' => false)); ?>
+        <?php echo $this->Form->end(array('class' => 'btn btn-primary submit-payment', 'label' => 'Submit Payment')); ?>
+    </div>
 </div>
