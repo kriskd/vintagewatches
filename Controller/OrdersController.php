@@ -65,58 +65,50 @@ class OrdersController extends AppController
 		//There is no data to checkout with
 		$this->redirect(array('controller' => 'watches', 'action' => 'index'));
 	    }
-
-	    //TODO: Validate all data, not just address. Order needs to be
-	    //validated for email address
-	    if($this->Address->saveMany($addressesToSave)){
-		$insertedIds = $this->Address->insertedIds; 
-		
-		//Get the shipping amount from the session and add to Order
-		$shippingAmount = $this->Session->read('Cart.shipping');
-		$data['Order']['shippingAmount'] = $shippingAmount;
-		
-		//Save the Order
-		$this->Order->save($data['Order']);
-		
-		//Get the order_id
-		$order_id = $this->Order->id; 
-		
-		//Get the purchased items from the Session, add the order_id and
-		//update the items with the order_id
-		$items = $this->Session->read('Cart.items');
-		$watches = $this->Watch->getCartWatches($items);
-		$purchasedWatches = array_map(function($item) use ($order_id){
-					$item['Watch']['order_id'] = $order_id;
-					$item['Watch']['active'] = 0;
-					return $item;
-				    } , $watches);
-		$this->Watch->saveMany($purchasedWatches);
-		
-		
-		//Assign the addresses to an order
-		$this->Address->updateAll(array('order_id' => $order_id), array('id' => $insertedIds));
-
-		//We should run the charge first and if it's successful do everything else.
-		//But we need to first have a valid billing address
+	    
+	    //Get the shipping amount from the session and add to Order
+	    $shippingAmount = $this->Session->read('Cart.shipping');
+	    $data['Order']['shippingAmount'] = $shippingAmount;
+	    
+	    $valid = $this->Order->validateAssociated($data); 
+	    if($valid == true){
 		$amount = $this->Session->read('Cart.total'); 
 		$stripeToken = $this->request->data['stripeToken'];
-		$data = array('amount' => $amount,
+		$stripeData = array('amount' => $amount,
 			      'stripeToken' => $stripeToken);
-		$result = $this->Stripe->charge($data);
-				
-		//Write the results of the Stripe payment processing to the table
-		$this->Order->save($result);
+		$result = $this->Stripe->charge($stripeData);
 		
 		if($result['stripe_paid'] == true){
+		    unset($this->Order->Address->validate['order_id']);
+		    $this->Order->saveAssociated($data); 
+		    
+		    //Write the results of the Stripe payment processing to the table
+		    $this->Order->save($result);
+		
+		    //Get the order_id
+		    $order_id = $this->Order->id; 
+		    
+		    //Get the purchased items from the Session, add the order_id and
+		    //update the items with the order_id
+		    $items = $this->Session->read('Cart.items');
+		    $watches = $this->Watch->getCartWatches($items);
+		    $purchasedWatches = array_map(function($item) use ($order_id){
+					    $item['Watch']['order_id'] = $order_id;
+					    $item['Watch']['active'] = 0;
+					    return $item;
+					} , $watches);
+		    $this->Watch->saveMany($purchasedWatches);
+		
 		    $this->Session->delete('Cart');
 		    $this->redirect(array('action' => 'confirm', $order_id));
 		}
-		
-		$this->Session->setFlash('There was a payment problem.');
+		else{
+		    $this->Session->setFlash('There was a payment problem.');
+		}
 	    }
 	    else{
 		//Address field(s) didn't validate, get the errors
-		$errors = $this->Address->validationErrors;
+		$errors = $this->Address->validationErrors; 
 		//Errors are a numeric array, give them keys for billing and shipping
 		$fixErrors['billing'] = $errors[0];
 		if(isset($errors[1])){
