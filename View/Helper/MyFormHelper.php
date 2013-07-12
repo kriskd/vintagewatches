@@ -48,8 +48,13 @@ class MyFormHelper extends FormHelper
                                  );
     }
     
-    public function addressForm($prefix, $country, $statesProvinces, $stripe = false, $required = false, $values = null, $errors = null)
-    {   
+    public function addressForm($type, $data, $stripe = false, $required = false)
+    {
+        $country = $data['country'];
+        $statesProvinces = $data['statesProvinces'];
+        $values = isset($data['values'][$type]) ? $data['values'][$type] : null; 
+        $errors = isset($data['errors']) ? $data['errors'] : null;
+        
         $this->setNameToOptionsMap();
         $requiredAttrs = array('firstName', 'lastName', 'address1', 'city', 'state', 'postalCode', 'countryName', 'country');
         $this->inputDefaults(array('label' => array('class' => 'control-label')));
@@ -121,7 +126,7 @@ class MyFormHelper extends FormHelper
                     $options['after'] = '<div class="error-message">' . $error . '</div>';
                 }
             }
-            $form .= $this->input($prefix . $name, $options);
+            $form .= $this->input('Address.' . $type . '.' . $name, $options);
         }
  
         return $form;
