@@ -107,15 +107,17 @@ class OrdersController extends AppController
 		}
 	    }
 	    else{
-		//Address field(s) didn't validate, get the errors
+		//Get Address errors if any
 		$errors = $this->Address->validationErrors; 
-		//Errors are a numeric array, give them keys for billing and shipping
-		$fixErrors['billing'] = $errors[0];
-		if(isset($errors[1])){
-		    $fixErrors['shipping'] = $errors[1];
+		if(count($errors) > 0){
+		    //Errors are a numeric array, give them keys for billing and shipping
+		    $fixErrors['billing'] = $errors[0];
+		    if(isset($errors[1])){
+			$fixErrors['shipping'] = $errors[1];
+		    }
+		    $this->Address->validationErrors = $fixErrors;
 		}
 
-		$this->Address->validationErrors = $fixErrors;
 		$this->Address->data = $addressesToSave;
 
 		$this->Session->write('Address', serialize($this->Address));
@@ -180,7 +182,10 @@ class OrdersController extends AppController
      */
     public function getShipping()
     {	
-	if($this->request->is('ajax')){ 
+	if($this->request->is('ajax')){
+	    //Clear out Address session so lingering error messages don't show
+	    $this->Session->delete('Address');
+	    
 	    $shipping = null;
 	    $query = $this->request->query; 
 	    $country = $query['country'];
@@ -217,9 +222,7 @@ class OrdersController extends AppController
 	    $shipping = $query['shipping'];
 	    $statesProvinces = array('states' => $this->_getStates(), 'provinces' => $this->_getCanadianProvinces());
 	    $data = compact('shipping', 'country', 'statesProvinces');
-	    $data['values'] = null;
-	    $data['errors'] = null;
-	    
+	
 	    //Address data and errors in the session
 	    if($this->Session->check('Address') == true){
 		$address = $this->Session->read('Address');
@@ -231,11 +234,11 @@ class OrdersController extends AppController
 		    $values[$type] = $item;
 		}
 		$data['values'] = $values;
-		$data['errors'] = $address->validationErrors;
+		$data['errors'] = $address->validationErrors; 
 
 		//For other countries we need to take the error message in country
 		//and put it in countryName
-		if(strcasecmp($country, 'other') == 0){
+		if(strcasecmp($country, 'other') == 0 && !empty($data['errors'])){
 		    foreach($data['errors'] as $key => $errors){
 			if(isset($errors['country'])){
 			    $errors['countryName'] = $errors['country'];
@@ -246,7 +249,7 @@ class OrdersController extends AppController
 		}
 
 		$this->Session->delete('Address');
-	    }
+	    } 
 	    $this->set(compact('data'));
 	    $this->layout = 'ajax';
 	}
@@ -258,13 +261,16 @@ class OrdersController extends AppController
     public function getCountry()
     {
 	if($this->request->is('ajax')){
-	    $query = $this->request->query;
-	    $state = $query['state'];
+	    $data = $this->request->query['data'];
+	    $type = key($data['Address']);
+	    $state = $data['Address'][$type]['state'];
+	    $type = ucfirst($type);
+	    
 	    $states = $this->_getStates();
 	    $provinces = $this->_getCanadianProvinces();
 	    $country = (isset($states[$state]) ? 'US' : (isset($provinces[$state]) ? 'CA' : ''));
 
-	    $this->set(array('data' => compact('country')));
+	    $this->set(array('data' => compact('country', 'type')));
 	    $this->layout = 'ajax';
 	}
     }
