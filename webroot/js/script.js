@@ -110,26 +110,16 @@ $(document).ready(function(){
     
     //Get the country from the combo US/Canada form
     $(document).on('change', '.us-ca', function(){
-        var state = $(this).val();
-        $.ajax({
-            url: '/orders/getCountry.json',
-            data: {"state" : state},
-            dataType: 'json',
-            cache: false,
-            success: function(data){
-                var country = data.country;
-                $('#AddressBillingCountry').val(country);
-            }
-        })
+        getCountry($(this));
     });
     
-    function getAddressForm(country, shippingOption) {
+    function getAddressForm(country, shippingOption) { 
         $.ajax({
             url: '/orders/getAddress.html',
             data: {"country" : country, "shipping" : shippingOption},
             dataType: 'html',
             cache: false,
-            success: function(data){
+            success: function(data){ 
                 $('.address-forms').empty().append(data);
                 $('.shipping-instructions').show();
                 $('.address textarea').show();
@@ -138,9 +128,28 @@ $(document).ready(function(){
                 if ($('#AddressBillingCountry').val() != '') {
                     var countryName = $('#AddressBillingCountryName').val(); 
                     $('.billing-country-name').empty().append(countryName);
-                }       
+                }
+
+                //Check to see if state dropdown has a value and fill in the hidden country field
+                $('select.us-ca').each(function(){
+                    getCountry($(this));
+                })
             }
         });
+    }
+    
+    function getCountry (value) {
+        $.ajax({
+            url: '/orders/getCountry.json',
+            data: value,
+            dataType: 'json',
+            cache: false,
+            success: function(data){
+                var country = data.country;
+                var type = data.type;
+                $('#Address' + type + 'Country').val(country);
+            }
+        })
     }
     
     $('.payment-form').submit(function(){ 
@@ -193,5 +202,5 @@ $(document).ready(function(){
      
         return false;
  
-    }
+    } 
 });
