@@ -78,7 +78,7 @@ class OrdersController extends AppController
 			      'stripeToken' => $stripeToken);
 		$result = $this->Stripe->charge($stripeData);
 		
-		if($result['stripe_paid'] == true){
+		if(is_array($result) && $result['stripe_paid'] == true){
 		    unset($this->Order->Address->validate['order_id']);
 		    $this->Order->saveAssociated($data); 
 		    
@@ -100,9 +100,12 @@ class OrdersController extends AppController
 		    $this->Watch->saveMany($purchasedWatches);
 		
 		    $this->Session->delete('Cart');
+		    $this->Session->setFlash('<i class="icon-ok icon-large"></i> Thank you for your order.', 'default', array('class' => 'alert alert-success'));
 		    $this->redirect(array('action' => 'confirm', $order_id));
 		}
-		$this->Session->setFlash('There was a payment problem.');
+		
+		$this->Session->write(array('Address' => array('data' => $addressesToSave)));
+		$this->Session->setFlash('<i class="icon-warning-sign icon-large"></i> ' . $result, 'default', array('class' => 'alert alert-error'));
 	    }
 	    else{ 
 		//Get Address errors if any
@@ -221,11 +224,11 @@ class OrdersController extends AppController
 	    $shipping = $query['shipping'];
 	    $statesProvinces = array('states' => $this->_getStates(), 'provinces' => $this->_getCanadianProvinces());
 	    $data = compact('shipping', 'country', 'statesProvinces');
-
+	    
 	    //Address data and errors in the session
 	    if($this->Session->check('Address') == true){
 		$data['errors'] = $this->Session->read('Address.errors');
-		$addresses = $this->Session->read('Address.data');
+		$addresses = $this->Session->read('Address.data'); 
 		$values = null;
 		foreach($addresses as $item){
 		    $type = $item['type'];
