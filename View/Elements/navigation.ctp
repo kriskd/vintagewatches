@@ -9,11 +9,17 @@
                                                  $controller); ?>
             </li>
             <?php //Wrapped in <li> in Component ?>
-                <?php echo $this->Html->navLink('<i class="icon-tags icon-large"></i> Go Back to Store',
-                                             array('controller' => 'watches', 'action' => 'index'),
-                                             array('escape' => false),
-                                             false,
-                                             $controller); ?>
+            <?php echo $this->Html->navLink('<i class="icon-tags icon-large"></i> Go Back to Store',
+                                         array('controller' => 'watches', 'action' => 'index'),
+                                         array('escape' => false),
+                                         false,
+                                         $controller); ?>
+            <?php echo $this->Html->adminLink('<i class="icon-pushpin icon-large"></i> Orders',
+                                              array('controller' => 'orders', 'action' => 'admin_index'),
+                                              array('escape' => false)); ?>
+            <?php echo $this->Html->adminLink('<i class="icon-cogs icon-large"></i> Watches',
+                                              array('controller' => 'watches', 'action' => 'admin_index'),
+                                              array('escape' => false)); ?>
         </ul>
     </div>
-</div>
+</div><?php  ?>
