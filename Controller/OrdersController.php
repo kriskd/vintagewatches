@@ -104,7 +104,7 @@ class OrdersController extends AppController
 		}
 		$this->Session->setFlash('There was a payment problem.');
 	    }
-	    else{
+	    else{ 
 		//Get Address errors if any
 		$errors = $this->Address->validationErrors; 
 		
@@ -114,9 +114,12 @@ class OrdersController extends AppController
 		}
 		$this->Address->validationErrors = $fixErrors;
 		
-		$this->Address->data = $addressesToSave;
-
-		$this->Session->write('Address', serialize($this->Address));
+		//Values aren't being returned to the form if they were filled in
+		//by an auto fill form and address is good, but email is bad
+		//I can't consistently repeat this behavior in order ot fix it.  ???
+		
+		$this->Session->write(array('Address' => array('errors' => $fixErrors,
+							       'data' => $addressesToSave)));
 	    }
         }
 	
@@ -218,12 +221,11 @@ class OrdersController extends AppController
 	    $shipping = $query['shipping'];
 	    $statesProvinces = array('states' => $this->_getStates(), 'provinces' => $this->_getCanadianProvinces());
 	    $data = compact('shipping', 'country', 'statesProvinces');
-	
+
 	    //Address data and errors in the session
 	    if($this->Session->check('Address') == true){
-		$address = $this->Session->read('Address');
-		$address = unserialize($address);
-		$addresses = $address->data;
+		$data['errors'] = $this->Session->read('Address.errors');
+		$addresses = $this->Session->read('Address.data');
 		$values = null;
 		foreach($addresses as $item){
 		    $type = $item['type'];
@@ -231,7 +233,6 @@ class OrdersController extends AppController
 		    $values[$type] = $item;
 		}
 		$data['values'] = $values; 
-		$data['errors'] = $address->validationErrors; 
 
 		//For other countries we need to take the error message in country
 		//and put it in countryName
@@ -245,7 +246,7 @@ class OrdersController extends AppController
 		    $data['errors'] = $newErrors;
 		}
 
-		$this->Session->delete('Address');
+		$this->Session->delete('Address'); 
 	    } 
 	    $this->set(compact('data'));
 	    $this->layout = 'ajax';
