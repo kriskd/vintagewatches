@@ -19,6 +19,8 @@ class MyHtmlHelper extends HtmlHelper
         if($cart->cartEmpty() == true){
             return null;
         }
+        $url['admin'] = false;
+        
         return parent::link($title, $url, $options, $confirmMessage);
     }
     
@@ -34,6 +36,18 @@ class MyHtmlHelper extends HtmlHelper
         if(strcasecmp($controller->name, $urlController)==0){
             return null;
         }
+        $url['admin'] = false;
+        
+        return '<li>' . parent::link($title, $url, $options, $confirmMessage) . '</li>';
+    }
+    
+    public function adminLink($title, $url = null, $options = array(), $confirmMessage = false, $controller = null)
+    {
+        if($this->params->prefix != 'admin'){
+            return null;
+        }
+        $url['admin'] = true;
+        
         return '<li>' . parent::link($title, $url, $options, $confirmMessage) . '</li>';
     }
 }

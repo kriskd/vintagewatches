@@ -43,7 +43,14 @@ class AppController extends Controller {
     
     public $components = array('Stripe' => array('className' => 'Stripe.Stripe'),
                                'DebugKit.Toolbar', 'Session', 'Cart', 'RequestHandler',
-                               'Cookie');
+                               'Cookie',
+                               'Auth' => array('authorize' => 'Controller',
+                                    'allowedActions' => array('index', 'display'),
+                                    'loginAction' => array('controller' => 'users', 'action' => 'login', 'admin' => false),
+                                    'loginRedirect' => array('controller' => 'orders', 'action' => 'index', 'admin' => true),
+                                    'logoutRedirect' => array('controller' => 'users', 'action' => 'login', 'admin' => false),
+                                    )
+                            );
     
     /**
      * Compile LESS
@@ -59,12 +66,30 @@ class AppController extends Controller {
             $lessc->checkedCompile($less,$css);
         }
         
-        $this->set(array('controller' => $this));
+        if($this->Auth->loggedIn()){
+            $this->set('loggedIn', true);
+        }
+        
+        $this->set('controller', $this);
         parent::beforeRender();
     }
     
     public function beforeFilter()
     {   
         $this->Cookie->domain = env('HTTP_BASE');
+    }
+    
+    public function isAuthorized($user){
+        
+        if(empty($this->request->params['admin'])) return true;
+        
+        if($user) return true;
+        
+        if(in_array($this->action, array('login'))){
+            $this->Auth->authError = 'You are already logged in.';
+            return false;
+        }
+        
+        return false;
     }
 }

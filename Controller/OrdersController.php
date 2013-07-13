@@ -287,6 +287,12 @@ class OrdersController extends AppController
 	}
     }
     
+    public function admin_index()
+    {
+	$this->Order->recursive = 0;
+	$this->set('orders', $this->paginate());
+    }
+    
     /**
      * Proof of concept for address validation
      */
