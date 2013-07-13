@@ -4,6 +4,21 @@ class OrdersController extends AppController
 {
     public $uses = array('Watch', 'Address', 'Order');
     
+    public function beforeRender()
+    {
+        //This seems to solve my issue of data not being read out of the session
+        //in the ajax request to get the address forms on validation fail or credit
+        //card decline and populate the fields:
+        //http://neeocis.wordpress.com/2008/07/02/cakephp-ajaxobservefield-and-session-lost/
+        $currentSessionValue = $this->Session->read('Address');
+        if($this->request->is('ajax')){
+            $this->Session->write('Address', null);
+            $this->Session->write('Address', $currentSessionValue);
+        }
+	
+	parent::beforeRender();
+    }
+    
     public function index()
     {
         if($this->Cart->cartEmpty() == true){
@@ -116,10 +131,6 @@ class OrdersController extends AppController
 		    $fixErrors[$value] = isset($errors[$key]) ? $errors[$key] : null;
 		}
 		$this->Address->validationErrors = $fixErrors;
-		
-		//Values aren't being returned to the form if they were filled in
-		//by an auto fill form and address is good, but email is bad
-		//I can't consistently repeat this behavior in order ot fix it.  ???
 		
 		$this->Session->write(array('Address' => array('errors' => $fixErrors,
 							       'data' => $addressesToSave)));
