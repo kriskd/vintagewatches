@@ -28,6 +28,15 @@ table {
 span.required {
     color: @red;
 }
+.error-message {
+    color: @red;
+    font-size: 90%;
+}
+.input {
+    .error-message {
+        margin: -5px 0 5px 170px;
+    }
+}
 dl {
     dt {
         float: left;
@@ -106,23 +115,9 @@ dl {
         .navbar-inner {
             padding: 0 10px;
         }
-        /*.navbar{
-            .brand {
-                font-size: 16px;
-                font-weight: bold;
-            }
-            ul {
-                margin: 0;
-            }
-        }*/
         .billing-country-name {
             padding-top: 5px;
             margin-left: 170px
-        }
-        .error-message {
-            margin: -5px 0 5px 170px;
-            color: @red;
-            font-size: 90%;
         }
         .shipping-instructions {
             display: none;
