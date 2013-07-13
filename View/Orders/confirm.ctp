@@ -21,6 +21,15 @@
             <td class="total-formatted-amount text-right"><?php echo $this->Number->currency($order['Order']['stripe_amount']/100, 'USD'); ?></td>
         </tr>
     </table>
+    <h2>Contact Information</h2>
+    <dl>
+        <dt>Email</dt>
+        <dd><?php echo $order['Order']['email']; ?></dd>
+        <?php if(!empty($order['Order']['phone'])): ?>
+            <dt>Phone</dt>
+            <dd><?php echo $order['Order']['phone']; ?></dd>
+        <?php endif; ?>
+    </dl>
     <?php if(!empty($order['Order']['notes'])): ?>
         <h2>Special Order Instrucations</h2>
         <div class="notes">
