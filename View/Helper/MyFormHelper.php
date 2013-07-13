@@ -48,12 +48,16 @@ class MyFormHelper extends FormHelper
                                  );
     }
     
+    /**
+     * @param enum $type 'billing or 'shipping'
+     * @param array $data Form data: country, statesProvinces, values, errors
+     */
     public function addressForm($type, $data, $stripe = false, $required = false)
-    {
+    {   
         $country = $data['country'];
         $statesProvinces = $data['statesProvinces'];
         $values = isset($data['values'][$type]) ? $data['values'][$type] : null; 
-        $errors = isset($data['errors']) ? $data['errors'] : null;
+        $errors = isset($data['errors'][$type]) ? $data['errors'][$type] : null; 
         
         $this->setNameToOptionsMap();
         $requiredAttrs = array('firstName', 'lastName', 'address1', 'city', 'state', 'postalCode', 'countryName', 'country');
@@ -82,9 +86,7 @@ class MyFormHelper extends FormHelper
                 break;
             case 'other':
                 $this->nameToOptionsMap['postalCode'] = array('label' => 'Postal Code', 'stripe' => 'address_zip', 'class' => 'input-small', 'size' => '7');
-                if($stripe == true){
-                    $this->nameToOptionsMap['countryName'] = array('label' => 'Country', 'stripe' => 'address_country');
-                }
+                $this->nameToOptionsMap['countryName'] = array('label' => 'Country');
                 $this->nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => '');
                 break;
         }

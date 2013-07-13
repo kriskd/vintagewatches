@@ -102,22 +102,18 @@ class OrdersController extends AppController
 		    $this->Session->delete('Cart');
 		    $this->redirect(array('action' => 'confirm', $order_id));
 		}
-		else{
-		    $this->Session->setFlash('There was a payment problem.');
-		}
+		$this->Session->setFlash('There was a payment problem.');
 	    }
 	    else{
 		//Get Address errors if any
 		$errors = $this->Address->validationErrors; 
-		if(count($errors) > 0){
-		    //Errors are a numeric array, give them keys for billing and shipping
-		    $fixErrors['billing'] = $errors[0];
-		    if(isset($errors[1])){
-			$fixErrors['shipping'] = $errors[1];
-		    }
-		    $this->Address->validationErrors = $fixErrors;
+		
+		//Error sets have numeric keys, change to billing or shipping
+		foreach(array('billing', 'shipping') as $key => $value){
+		    $fixErrors[$value] = isset($errors[$key]) ? $errors[$key] : null;
 		}
-
+		$this->Address->validationErrors = $fixErrors;
+		
 		$this->Address->data = $addressesToSave;
 
 		$this->Session->write('Address', serialize($this->Address));
@@ -228,12 +224,13 @@ class OrdersController extends AppController
 		$address = $this->Session->read('Address');
 		$address = unserialize($address);
 		$addresses = $address->data;
+		$values = null;
 		foreach($addresses as $item){
 		    $type = $item['type'];
 		    unset($item['type']);
 		    $values[$type] = $item;
 		}
-		$data['values'] = $values;
+		$data['values'] = $values; 
 		$data['errors'] = $address->validationErrors; 
 
 		//For other countries we need to take the error message in country
