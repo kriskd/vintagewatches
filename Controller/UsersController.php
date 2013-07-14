@@ -1,14 +1,6 @@
 <?php
-class UsersController extends AppController {
-    
-    public function beforeFilter ()
-    {
-        if (empty($this->params['prefix'])) {
-            //Not an admin page
-            $this->Auth->allow($this->action);
-        } 
-    }
-    
+class UsersController extends AppController
+{    
     public function login()
     {
         if($this->Auth->loggedIn() == true){ 
