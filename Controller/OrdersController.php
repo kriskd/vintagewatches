@@ -119,7 +119,7 @@ class OrdersController extends AppController
 		    $this->redirect(array('action' => 'confirm', $order_id));
 		}
 		
-		$this->Session->write(array('Address' => array('data' => $addressesToSave)));
+		$this->Session->write('Address', array('data' => $addressesToSave));
 		$this->Session->setFlash('<i class="icon-warning-sign icon-large"></i> ' . $result, 'default', array('class' => 'alert alert-error'));
 	    }
 	    else{ 
@@ -132,8 +132,8 @@ class OrdersController extends AppController
 		}
 		$this->Address->validationErrors = $fixErrors;
 		
-		$this->Session->write(array('Address' => array('errors' => $fixErrors,
-							       'data' => $addressesToSave)));
+		$this->Session->write('Address', array('errors' => $fixErrors,
+							'data' => $addressesToSave));
 	    }
         }
 	
@@ -196,9 +196,6 @@ class OrdersController extends AppController
     public function getShipping()
     {	
 	if($this->request->is('ajax')){
-	    //Clear out Address session so lingering error messages don't show
-	    $this->Session->delete('Address');
-	    
 	    $shipping = null;
 	    $query = $this->request->query; 
 	    $country = $query['country'];
@@ -235,11 +232,11 @@ class OrdersController extends AppController
 	    $shipping = $query['shipping'];
 	    $statesProvinces = array('states' => $this->_getStates(), 'provinces' => $this->_getCanadianProvinces());
 	    $data = compact('shipping', 'country', 'statesProvinces');
-	    
+
 	    //Address data and errors in the session
 	    if($this->Session->check('Address') == true){
 		$data['errors'] = $this->Session->read('Address.errors');
-		$addresses = $this->Session->read('Address.data'); 
+		$addresses = $this->Session->read('Address.data');
 		$values = null;
 		foreach($addresses as $item){
 		    $type = $item['type'];
