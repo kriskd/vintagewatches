@@ -10,11 +10,11 @@ class OrdersController extends AppController
         //in the ajax request to get the address forms on validation fail or credit
         //card decline and populate the fields:
         //http://neeocis.wordpress.com/2008/07/02/cakephp-ajaxobservefield-and-session-lost/
-        $currentSessionValue = $this->Session->read('Address');
+        /*$currentSessionValue = $this->Session->read('Address');
         if($this->request->is('ajax')){
             $this->Session->write('Address', null);
             $this->Session->write('Address', $currentSessionValue);
-        }
+        }*/
 	
 	parent::beforeRender();
     }
