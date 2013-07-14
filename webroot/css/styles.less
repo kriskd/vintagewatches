@@ -21,6 +21,29 @@ table {
         border-top: 1px solid @grayLight;
     }
 }
+.table {
+    display: table;
+    width: 500px;
+    background: @grayLighter;
+    span {
+        padding: 10px;
+    }
+    .table-head {
+        color: @blueDark;
+        border-bottom: 1px solid @grayLight;
+        display: table-cell;
+        text-align: center;
+        font-weight: bold;
+    }
+    .table-row {
+        display: table-row;
+        color: @grayDark;
+        text-decoration:  none;
+    }
+    .table-cell {
+        display: table-cell;
+    }
+}
 .table-bordered {
     border: 1px solid @gray;
     .border-radius(5px);
@@ -46,6 +69,15 @@ dl {
     }
     dd {
         margin-left: 170px; 
+    }
+}
+.paging {
+    font-size: 90%;
+    span {
+        padding: 5px;
+    }
+    .disabled {
+        display: none;
     }
 }
 .watches.index {
@@ -162,5 +194,11 @@ dl {
 .confirm {
     .notes {
         width: 500px;
+    }
+}
+.admin-index {
+    .row-hover {
+        background: @white;
+        cursor: pointer;
     }
 }

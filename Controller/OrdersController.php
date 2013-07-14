@@ -4,6 +4,10 @@ class OrdersController extends AppController
 {
     public $uses = array('Watch', 'Address', 'Order');
     
+    public $paginate = array('limit' => 10,
+			     'order' => array('id' => 'desc')
+			     );
+    
     public function beforeRender()
     {
         //This seems to solve my issue of data not being read out of the session
@@ -286,8 +290,17 @@ class OrdersController extends AppController
     
     public function admin_index()
     {
-	$this->Order->recursive = 0;
+	$this->Order->recursive = -1;
 	$this->set('orders', $this->paginate());
+    }
+    
+    public function admin_view($id = null)
+    {
+	if (!$this->Order->exists($id)) {
+		throw new NotFoundException(__('Invalid order'));
+	}
+	$options = array('conditions' => array('Watch.' . $this->Watch->primaryKey => $id));
+	$this->set('order', $this->Order->find('first', $options));
     }
     
     /**
