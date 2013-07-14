@@ -45,7 +45,6 @@ class AppController extends Controller {
                                'DebugKit.Toolbar', 'Session', 'Cart', 'RequestHandler',
                                'Cookie',
                                'Auth' => array('authorize' => 'Controller',
-                                    'allowedActions' => array('index', 'display'),
                                     'loginAction' => array('controller' => 'users', 'action' => 'login', 'admin' => false),
                                     'loginRedirect' => array('controller' => 'orders', 'action' => 'index', 'admin' => true),
                                     'logoutRedirect' => array('controller' => 'users', 'action' => 'login', 'admin' => false),
@@ -77,10 +76,15 @@ class AppController extends Controller {
     public function beforeFilter()
     {   
         $this->Cookie->domain = env('HTTP_BASE');
+        
+        if (empty($this->params['prefix'])) {
+            //Not an admin page
+            $this->Auth->allow($this->action);
+        } 
     }
     
-    public function isAuthorized($user){
-        
+    public function isAuthorized($user)
+    {    
         if(empty($this->request->params['admin'])) return true;
         
         if($user) return true;
