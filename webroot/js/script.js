@@ -94,23 +94,16 @@ $(document).ready(function(){
         $('.submit-payment').attr('disabled', 'disabled');
     }
     
-    /*$(document).on('click', '.address-form-billing .navbar li', function(){
-        $(this).parent().find('li').removeClass('active');
-        $(this).addClass('active');
-        var href = $(this).find('a').attr('href');
-        $.ajax({
-            url: href,
-            dataType: 'html',
-            success: function(data){
-                $('.billing-country-address-form').empty().append(data);
-            }
-        });
-        return false;
-    });*/
-    
     //Get the country from the combo US/Canada form
     $(document).on('change', '.us-ca', function(){
         getCountry($(this));
+    });
+    
+    $('.table a.table-row').hover(function(){
+        $(this).addClass('row-hover');
+    },
+    function(){
+        $(this).removeClass('row-hover');    
     });
     
     function getAddressForm(country, shippingOption) { 

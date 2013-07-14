@@ -6421,6 +6421,29 @@ table th {
 table .total-row td {
   border-top: 1px solid #999;
 }
+.table {
+  display: table;
+  width: 500px;
+  background: #eee;
+}
+.table span {
+  padding: 10px;
+}
+.table .table-head {
+  color: #0064cd;
+  border-bottom: 1px solid #999;
+  display: table-cell;
+  text-align: center;
+  font-weight: bold;
+}
+.table .table-row {
+  display: table-row;
+  color: #333;
+  text-decoration: none;
+}
+.table .table-cell {
+  display: table-cell;
+}
 .table-bordered {
   border: 1px solid #555;
   -webkit-border-radius: 5px;
@@ -6448,6 +6471,15 @@ dl dt {
 }
 dl dd {
   margin-left: 170px;
+}
+.paging {
+  font-size: 90%;
+}
+.paging span {
+  padding: 5px;
+}
+.paging .disabled {
+  display: none;
 }
 .watches.index {
   text-align: center;
@@ -6571,4 +6603,8 @@ dl dd {
 }
 .confirm .notes {
   width: 500px;
+}
+.admin-index .row-hover {
+  background: #fff;
+  cursor: pointer;
 }
