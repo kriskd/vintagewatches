@@ -4,25 +4,6 @@ class OrdersController extends AppController
 {
     public $uses = array('Watch', 'Address', 'Order');
     
-    public $paginate = array('limit' => 10,
-			     'order' => array('id' => 'desc')
-			     );
-    
-    public function beforeRender()
-    {
-        //This seems to solve my issue of data not being read out of the session
-        //in the ajax request to get the address forms on validation fail or credit
-        //card decline and populate the fields:
-        //http://neeocis.wordpress.com/2008/07/02/cakephp-ajaxobservefield-and-session-lost/
-        /*$currentSessionValue = $this->Session->read('Address');
-        if($this->request->is('ajax')){
-            $this->Session->write('Address', null);
-            $this->Session->write('Address', $currentSessionValue);
-        }*/
-	
-	parent::beforeRender();
-    }
-    
     public function index()
     {
         if($this->Cart->cartEmpty() == true){
@@ -290,8 +271,12 @@ class OrdersController extends AppController
     
     public function admin_index()
     {
-	$this->Order->recursive = -1;
-	$this->set('orders', $this->paginate());
+	$this->Watch->recursive = -1;
+	$orderIds = $this->Watch->find('list', array('fields' => array('order_id')));
+	$this->paginate = array('Order' => array('conditions' => array('Order.id' => $orderIds),
+						 'limit' => 10,
+						 'order' => array('Order.id' => 'desc')));
+	$this->set('orders', $this->paginate('Order'));
     }
     
     public function admin_view($id = null)
@@ -299,7 +284,7 @@ class OrdersController extends AppController
 	if (!$this->Order->exists($id)) {
 		throw new NotFoundException(__('Invalid order'));
 	}
-	$options = array('conditions' => array('Watch.' . $this->Watch->primaryKey => $id));
+	$options = array('conditions' => array('Order.' . $this->Order->primaryKey => $id));
 	$this->set('order', $this->Order->find('first', $options));
     }
     
