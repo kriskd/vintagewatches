@@ -103,9 +103,10 @@ class OrdersController extends AppController
 		    $this->Session->setFlash('<i class="icon-ok icon-large"></i> Thank you for your order.', 'default', array('class' => 'alert alert-success'));
 		    $this->redirect(array('action' => 'confirm', $order_id));
 		}
-		
-		$this->Session->write('Address', array('data' => $addressesToSave));
-		$this->Session->setFlash('<i class="icon-warning-sign icon-large"></i> ' . $result, 'default', array('class' => 'alert alert-error'));
+		//Decline
+		$this->Session->write('Address', array('data' => $addresses));
+		$this->Session->setFlash('<i class="icon-warning-sign icon-large"></i> ' . $result,
+					 'default', array('class' => 'alert alert-error'));
 	    }
 	    else{ 
 		//Get Address errors if any
@@ -117,8 +118,7 @@ class OrdersController extends AppController
 		}
 		$this->Address->validationErrors = $fixErrors;
 		
-		$this->Session->write('Address', array('errors' => $fixErrors,
-							'data' => $addressesToSave));
+		$this->Session->write('Address', array('errors' => $fixErrors, 'data' => $addresses));
 	    }
         }
 	
@@ -221,14 +221,7 @@ class OrdersController extends AppController
 	    //Address data and errors in the session
 	    if($this->Session->check('Address') == true){
 		$data['errors'] = $this->Session->read('Address.errors');
-		$addresses = $this->Session->read('Address.data');
-		$values = null;
-		foreach($addresses as $item){
-		    $type = $item['type'];
-		    unset($item['type']);
-		    $values[$type] = $item;
-		}
-		$data['values'] = $values; 
+		$data['values'] = $this->Session->read('Address.data');
 
 		//For other countries we need to take the error message in country
 		//and put it in countryName
