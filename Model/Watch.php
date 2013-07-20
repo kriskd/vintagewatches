@@ -19,7 +19,7 @@ class Watch extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'stock_id' => array(
+		'stockId' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
@@ -93,7 +93,7 @@ class Watch extends AppModel {
         public function getCartWatches($ids)
         {
             return $this->find('all', array('conditions' => array('Watch.id' => $ids),
-                                                   'fields' => array('id', 'stock_id', 'price', 'name')
+                                                   'fields' => array('id', 'stockId', 'price', 'name')
                                                    )
                                       );
         }

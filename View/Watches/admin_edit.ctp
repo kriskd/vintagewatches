@@ -4,7 +4,7 @@
 		<legend><?php echo __('Edit Watch'); ?></legend>
 	<?php
 		echo $this->Form->input('id');
-		echo $this->Form->input('stock_id');
+		echo $this->Form->input('stockId');
 		echo $this->Form->input('price');
 		echo $this->Form->input('name');
 		echo $this->Form->input('description');
