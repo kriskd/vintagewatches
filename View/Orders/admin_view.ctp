@@ -5,7 +5,7 @@
         <tr><th>Stock ID</th><th>Name</th><th>Price</th></tr>
         <?php foreach($order['Watch'] as $watch): ?>
             <tr>
-                <td><?php echo $watch['stock_id']; ?></td>
+                <td><?php echo $watch['stockId']; ?></td>
                 <td><?php echo $watch['name']; ?></td>
                 <td class="text-right"><?php echo $this->Number->currency($watch['price'], 'USD'); ?></td>
             </tr>
