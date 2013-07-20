@@ -6444,6 +6444,10 @@ table .total-row td {
 .table .table-cell {
   display: table-cell;
 }
+.table .row-hover {
+  background: #fff;
+  cursor: pointer;
+}
 .table-bordered {
   border: 1px solid #555;
   -webkit-border-radius: 5px;
@@ -6603,8 +6607,4 @@ dl dd {
 }
 .confirm .notes {
   width: 500px;
-}
-.admin-index .row-hover {
-  background: #fff;
-  cursor: pointer;
 }
