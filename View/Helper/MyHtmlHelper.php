@@ -25,7 +25,7 @@ class MyHtmlHelper extends HtmlHelper
     }
     
     /**
-     * Create nav link only when not on that page
+     * Create nav link only when not on that page and not in admin
      */
     public function navLink($title, $url = null, $options = array(), $confirmMessage = false, $controller = null)
     {
@@ -33,7 +33,7 @@ class MyHtmlHelper extends HtmlHelper
             $url = Router::parse($this->url($url));
         }
         $urlController = isset($url['controller']) ? $url['controller'] : null;
-        if(strcasecmp($controller->name, $urlController)==0){
+        if(strcasecmp($controller->name, $urlController)==0 && $this->params->prefix != 'admin'){
             return null;
         }
         $url['admin'] = false;
