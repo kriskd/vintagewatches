@@ -3,7 +3,7 @@
 	<table class="table-striped table-bordered">
 	<tr>
 			<th>Add to Cart</th>
-			<th><?php echo $this->Paginator->sort('stock_id'); ?></th>
+			<th><?php echo $this->Paginator->sort('stockId'); ?></th>
 			<th><?php echo $this->Paginator->sort('price'); ?></th>
 			<th><?php echo $this->Paginator->sort('name'); ?></th>
 			<th class="description"><?php echo $this->Paginator->sort('description'); ?></th>
@@ -17,16 +17,12 @@
                     <?php echo $this->Html->link('Add to Cart', array('controller' => 'orders', 'action' => 'add', $watch['Watch']['id']), array('class' => 'btn btn-primary')); ?>
                 <?php endif; ?>
             </td>
-            <td><?php echo h($watch['Watch']['stock_id']); ?>&nbsp;</td>
+            <td><?php echo h($watch['Watch']['stockId']); ?>&nbsp;</td>
             <td><?php echo h($this->Number->currency($watch['Watch']['price'], 'USD')); ?>&nbsp;</td>
             <td><?php echo h($watch['Watch']['name']); ?>&nbsp;</td>
             <?php $description = $watch['Watch']['description']; ?>
-            <?php $words = str_word_count($description, 1); ?>
-            <?php if(count($words)> 50): ?>
-                <?php $slice = array_slice($words, 0, 50); ?>
-                <?php $more = $this->Html->link('More details', array('action' => 'view', $watch['Watch']['id']), array()); ?>
-                <?php $description = h(implode(' ', $slice)) . '... ' . $more; ?>
-            <?php endif; ?>
+            <?php $more = $this->Html->link('More details', array('action' => 'view', $watch['Watch']['id']), array()); ?>
+            <?php $description = $this->Watch->shortDescription($description, $more); ?>
             <td class="description"><?php echo $description; ?>&nbsp;</td>
         </tr>
     <?php endforeach; ?>

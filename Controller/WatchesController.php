@@ -40,8 +40,11 @@ class WatchesController extends AppController {
  *
  * @return void
  */
-	public function admin_index() {
-		$this->Watch->recursive = 0;
+	public function admin_index()
+	{
+		$this->paginate = array('limit' => 10,
+					'order' => array('Watch.id' => 'desc'));
+		//$this->Watch->recursive = 0;
 		$this->set('watches', $this->paginate());
 	}
 

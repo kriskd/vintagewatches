@@ -3,7 +3,7 @@
 	<fieldset>
 		<legend><?php echo __('Add Watch'); ?></legend>
 	<?php
-		echo $this->Form->input('stock_id');
+		echo $this->Form->input('stockId');
 		echo $this->Form->input('price');
 		echo $this->Form->input('name');
 		echo $this->Form->input('description');

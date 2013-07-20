@@ -3,7 +3,7 @@
 	<dl>
 		<dt><?php echo __('Stock Id'); ?></dt>
 		<dd>
-			<?php echo h($watch['Watch']['stock_id']); ?>
+			<?php echo h($watch['Watch']['stockId']); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __('Price'); ?></dt>
