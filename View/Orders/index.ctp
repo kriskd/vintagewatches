@@ -1,6 +1,14 @@
 <?php echo $this->Form->create('Order', array('class' => 'form-horizontal payment-form')); ?>
 <div class="orders index">
     <section class="review-cart">
+        <?php if(isset($errors) && $errors = true): ?>
+            <div class="error-message">
+                Sorry, your order could not be completed because one or more required
+                fields was not filled out. Please scroll down the form, and missing field
+                or fields will be highlighted in red. Fill them out, and then resubmit
+                the form.
+            </div>
+        <?php endif; ?>
         <h3>Review Cart</h3>
         <table class="table-bordered">
             <tr>

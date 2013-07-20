@@ -119,6 +119,9 @@ class OrdersController extends AppController
 		$this->Address->validationErrors = $fixErrors;
 		
 		$this->Session->write('Address', array('errors' => $fixErrors, 'data' => $addresses));
+		
+		//Set a variable for the view to display a general error message
+		$this->set(array('errors' => true));
 	    }
         }
 	
