@@ -1,12 +1,4 @@
 <p>All fields marked <span class=required>*</span> must be filled out.</p>
-<?php if(isset($data['errors'])): ?>
-    <div class="error-message">
-        Sorry, your order could not be completed because one or more required
-        fields was not filled out. Please scroll down the form, and missing field
-        or fields will be highlighted in red. Fill them out, and then resubmit
-        the form.
-    </div>
-<?php endif; ?>
 <?php if($data['shipping'] == 'billing'): ?>
     <div class="address-form-billing">
         <h5>Billing and Shipping Address</h5>
