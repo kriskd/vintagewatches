@@ -6406,6 +6406,9 @@ a.badge:focus {
 .icon-question-sign {
   color: #9d261d;
 }
+.nav-tabs a {
+  color: #555;
+}
 table {
   width: 500px;
   background: #eee;

@@ -1,5 +1,5 @@
 <ul class="nav nav-tabs">
-    <?php if($this->params->prefix == 'admin'): ?>
+    <?php if($loggedIn == true): ?>
         <li class="dropdown <?php echo $this->params->prefix == 'admin' ? 'active' : ''; ?>">
             <?php echo $this->Html->link('<i class="icon-wrench icon-large"></i> Admin<b class="caret"></b>',
                                          array('controller' => 'orders', 'action' => 'index', 'admin' => true),
