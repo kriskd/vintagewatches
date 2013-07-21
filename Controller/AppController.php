@@ -65,6 +65,7 @@ class AppController extends Controller {
             $lessc->checkedCompile($less,$css);
         }
         
+        $this->set('loggedIn', false);
         if($this->Auth->loggedIn()){
             $this->set('loggedIn', true);
         }
