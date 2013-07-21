@@ -28,11 +28,12 @@ class MyHtmlHelper extends HtmlHelper
      * Create nav link only when not on that page and not in admin
      */
     public function navLink($title, $url = null, $options = array(), $confirmMessage = false, $controller = null)
-    {
+    {   
         if(is_string($url)){
             $url = Router::parse($this->url($url));
         }
         $urlController = isset($url['controller']) ? $url['controller'] : null;
+        $urlAction = isset($url['action']) ? $url['action'] : null;
         if(strcasecmp($controller->name, $urlController)==0 && $this->params->prefix != 'admin'){
             return null;
         }
@@ -43,7 +44,9 @@ class MyHtmlHelper extends HtmlHelper
     
     public function adminLink($title, $url = null, $options = array(), $confirmMessage = false, $controller = null)
     {
-        if($this->params->prefix != 'admin'){
+        $auth = new AuthComponent(new ComponentCollection());
+        $auth->initialize($controller);
+        if($this->params->prefix != 'admin' && !$auth->loggedIn()){
             return null;
         }
         $url['admin'] = true;
