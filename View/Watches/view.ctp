@@ -13,7 +13,7 @@
 		</dd>
 		<dt><?php echo __('Description'); ?></dt>
 		<dd>
-			<?php echo h($watch['Watch']['description']); ?>
+			<?php echo nl2br(h($watch['Watch']['description'])); ?>
 			&nbsp;
 		</dd>
 	</dl>
