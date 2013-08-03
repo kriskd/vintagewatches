@@ -11,10 +11,22 @@
 		echo $this->Form->input('active');
 	?>
 	</fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
-<?php echo $this->Form->create('Watch', array('type' => 'file', 'action' => 'picture')); ?>
+<?php echo $this->Form->end(array('label' => 'Submit', 'class' => 'btn btn-primary')); ?>
+
+<?php echo $this->Form->create('Watch', array('type' => 'file', 'action' => 'picture', 'class' => 'form-inline')); ?>
+	<?php echo $this->Form->label('Add Image'); ?>
 	<?php echo $this->Form->file('image'); ?>
-<?php echo $this->Form->end('Submit'); ?>
+<?php echo $this->Form->end(array('label' => 'Submit', 'class' => 'btn btn-primary')); ?>
+
+<?php if(!empty($watch['Image'])): ?>
+	<?php $images = $watch['Image']; ?>
+	<?php foreach($images as $image): ?>
+		<?php if($image['type'] == 'thumb'): ?>
+			<?php echo $this->Html->link($this->Html->image('/files/thumbs/' . $image['filename']), array('action' => 'delete_picture', $image['id'], 'admin' => 'true'), array('escape' => false)); ?>
+		<?php endif; ?>
+	<?php endforeach; ?>
+<?php endif; ?>
+		
 </div>
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>

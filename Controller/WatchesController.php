@@ -105,6 +105,7 @@ class WatchesController extends AppController {
 		} else {
 			$options = array('conditions' => array('Watch.' . $this->Watch->primaryKey => $id));
 			$this->request->data = $this->Watch->find('first', $options);
+            $this->set('watch', $this->Watch->find('first', $options));
 		}
 	}
 
@@ -150,8 +151,8 @@ class WatchesController extends AppController {
                 $output = $this->ImageUploader->upload($image, $imagePath, $options);
                 $fileName = substr($output['file_path'], strrpos($output['file_path'], '/')+1, strlen($output['file_path']));
                 $thumbFileName = substr($output['thumb_path'], strrpos($output['thumb_path'], '/')+1, strlen($output['thumb_path']));
-                $data = array(array('Image' => array('watch_id' => $id, 'filename' => $fileName)),
-                              array('Image' => array('watch_id' => $id, 'filename' => $thumbFileName))
+                $data = array(array('Image' => array('watch_id' => $id, 'type' => 'image', 'filename' => $fileName)),
+                              array('Image' => array('watch_id' => $id, 'type' => 'thumb', 'filename' => $thumbFileName))
                              );
                 $this->Image->saveMany($data);
             } catch(Exception $e) {
