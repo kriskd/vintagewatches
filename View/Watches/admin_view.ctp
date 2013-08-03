@@ -1,16 +1,13 @@
-<div class="watches view">
+<div class="watches view"><?php //var_dump($watch); ?>
 <h2><?php  echo __('Watch'); ?></h2>
 	<dl>
-		<dt><?php echo __('Order'); ?></dt>
-		<dd>
-			<?php echo $this->Html->link($watch['Order']['id'], array('controller' => 'orders', 'action' => 'view', $watch['Order']['id'])); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Order Id'); ?></dt>
-		<dd>
-			<?php echo h($watch['Watch']['order_id']); ?>
-			&nbsp;
-		</dd>
+		<?php if(isset($watch['Watch']['order_id'])): ?>
+			<dt><?php echo __('Order Id'); ?></dt>
+			<dd>
+				<?php echo $this->Html->link(h($watch['Watch']['order_id']),
+						  array('controller' => 'orders', 'action' => 'view', $watch['Watch']['order_id'], 'admin' => true)); ?>
+			</dd>
+		<?php endif; ?>
 		<dt><?php echo __('Stock Id'); ?></dt>
 		<dd>
 			<?php echo h($watch['Watch']['stockId']); ?>
@@ -46,6 +43,17 @@
 			<?php echo h($watch['Watch']['modified']); ?>
 			&nbsp;
 		</dd>
+		<?php if(!empty($watch['Image'])): ?>
+			<?php $images = $watch['Image']; ?>
+			<?php foreach($images as $image): ?>
+				<?php if($image['type'] == 'thumb'): ?>
+					<dt>Image</dt>
+					<dd>
+						<?php echo $this->Html->image('/files/thumbs/' . $image['filename']); ?>
+					</dd>
+				<?php endif; ?>
+			<?php endforeach; ?>
+		<?php endif; ?>
 	</dl>
 </div>
 <div class="actions">
