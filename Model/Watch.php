@@ -76,7 +76,7 @@ class Watch extends AppModel {
  *
  * @var array
  */
-	public $belongsTo = array(
+	/*public $belongsTo = array(
 		'Order' => array(
 			'className' => 'Order',
 			'foreignKey' => 'id',
@@ -84,8 +84,37 @@ class Watch extends AppModel {
 			'fields' => '',
 			'order' => ''
 		)
-	);
+	);*/
 
+	public $hasMany = array(
+		'Image' => array(
+		    'className' => 'Image',
+		    'foreignKey' => 'watch_id'
+		)
+				);
+	
+/**
+ * hasAndBelongsToMany associations
+ *
+ * @var array
+ */
+	public $hasAndBelongsToMany = array(
+		'Order' => array(
+			'className' => 'Order',
+			'joinTable' => 'orders_watches',
+			'foreignKey' => 'watch_id',
+			'associationForeignKey' => 'order_id',
+			'unique' => 'keepExisting',
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'finderQuery' => '',
+			'deleteQuery' => '',
+			'insertQuery' => ''
+		)
+	);
         
     /**
      * $ids array Array of watch Ids

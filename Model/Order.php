@@ -41,7 +41,7 @@ class Order extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-                'Watch' => array(
+                /*'Watch' => array(
 			'className' => 'Watch',
 			'foreignKey' => 'order_id',
 			'dependent' => false,
@@ -53,7 +53,7 @@ class Order extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
-		)
+		)*/
 	);
 
 
@@ -62,7 +62,7 @@ class Order extends AppModel {
  *
  * @var array
  */
-	/*public $hasAndBelongsToMany = array(
+	public $hasAndBelongsToMany = array(
 		'Watch' => array(
 			'className' => 'Watch',
 			'joinTable' => 'orders_watches',
@@ -78,7 +78,7 @@ class Order extends AppModel {
 			'deleteQuery' => '',
 			'insertQuery' => ''
 		)
-	);*/
+	);
         
     /**
      * $items array Array of Watch objects
