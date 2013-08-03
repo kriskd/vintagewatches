@@ -12,6 +12,9 @@
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
+<?php echo $this->Form->create('Watch', array('type' => 'file', 'action' => 'picture')); ?>
+	<?php echo $this->Form->file('image'); ?>
+<?php echo $this->Form->end('Submit'); ?>
 </div>
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
