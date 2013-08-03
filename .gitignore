@@ -2,3 +2,4 @@
 *.komodoproject
 /Vendor
 /Plugin/Stripe
+/webroot/files
