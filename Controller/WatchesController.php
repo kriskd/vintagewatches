@@ -12,7 +12,7 @@ class WatchesController extends AppController {
 	
 	public $components = array('ImageUploader');
     
-    public $uses = array('Watch', 'Image');
+    public $uses = array('Watch', 'Image', 'Order', 'OrdersWatch');
 
 /**
  * index method
@@ -46,10 +46,28 @@ class WatchesController extends AppController {
  */
 	public function admin_index()
 	{
-		$this->paginate = array('limit' => 10,
+        $paginate = array('limit' => 10,
 					'order' => array('Watch.id' => 'desc'));
-		//$this->Watch->recursive = 0;
-		$this->set('watches', $this->paginate());
+
+        if(isset($this->params['named']['sold'])){ 
+            $soldIds = $this->OrdersWatch->find('list', array('fields' => 'watch_id'));
+            if($this->params['named']['sold'] === '1'){
+                $paginate['conditions'] = array('Watch.id' => $soldIds);
+            }
+            if($this->params['named']['sold'] === '0'){
+                $paginate['conditions'] = array('NOT' => array('Watch.id' => $soldIds));
+            }
+        }
+        
+        if(isset($this->params['named']['active'])){
+            $paginate['conditions'] = array('Watch.active' => $this->params['named']['active']);
+        }
+        
+		$this->paginate = $paginate; 
+		//$this->Watch->recursive = 2;
+		$this->set('watches', $this->paginate()); 
+        
+
 	}
 
 /**

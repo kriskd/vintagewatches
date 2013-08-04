@@ -2,7 +2,7 @@
 App::uses('Address', 'Model');
 class OrdersController extends AppController
 {
-    public $uses = array('Watch', 'Address', 'Order');
+    public $uses = array('Watch', 'Address', 'Order', 'OrdersWatch');
     
     public function index()
     {
@@ -88,16 +88,28 @@ class OrdersController extends AppController
 		    //Get the order_id
 		    $order_id = $this->Order->id; 
 		    
-		    //Get the purchased items from the Session, add the order_id and
-		    //update the items with the order_id
 		    $items = $this->Session->read('Cart.items');
 		    $watches = $this->Watch->getCartWatches($items);
-		    $purchasedWatches = array_map(function($item) use ($order_id){
+		    
+		    //Since associations changed, change how data is saved
+		    foreach($watches as $watch){
+			$inactive[] = array('id' => $watch['Watch']['id'],
+					    'active' => 0);
+			$purchased[] = array('order_id' => $order_id,
+					     'watch_id' => $watch['Watch']['id']);
+		    }
+		    
+		    $this->Watch->saveMany($inactive);
+		    $this->OrdersWatch->saveMany($purchased);
+		    
+		    //Get the purchased items from the Session, add the order_id and
+		    //update the items with the order_id
+		    /*$purchasedWatches = array_map(function($item) use ($order_id){
 					    $item['Watch']['order_id'] = $order_id;
 					    $item['Watch']['active'] = 0;
 					    return $item;
 					} , $watches);
-		    $this->Watch->saveMany($purchasedWatches);
+		    $this->Watch->saveMany($purchasedWatches);*/
 		
 		    $this->Session->delete('Cart');
 		    $this->Session->setFlash('<i class="icon-ok icon-large"></i> Thank you for your order.', 'default', array('class' => 'alert alert-success'));
@@ -165,17 +177,17 @@ class OrdersController extends AppController
         }
     }
     
-    public function confirm($order_id = null)
+    public function confirm($id = null)
     {
 	$referer = trim($this->referer(null, true), '/');
 	if (strcasecmp($referer, 'orders') != 0){
 	    $this->redirect(array('controller' => 'watches', 'action' => 'index'));
 	}
-	if (!$this->Order->exists($order_id)) {
+	if (!$this->Order->exists($id)) {
             throw new NotFoundException(__('Invalid order'));
         }
-
-	$this->set('order', $this->Order->read(null, $order_id));
+	
+	$this->set('order', $this->Order->getOrder($id));
     }
     
     /**
@@ -267,9 +279,9 @@ class OrdersController extends AppController
     
     public function admin_index()
     {
-	$this->Watch->recursive = -1;
-	$orderIds = $this->Watch->find('list', array('fields' => array('order_id')));
-	$this->paginate = array('Order' => array('conditions' => array('Order.id' => $orderIds),
+	//$this->Watch->recursive = -1;
+	//$orderIds = $this->Watch->find('list', array('fields' => array('order_id')));
+	$this->paginate = array('Order' => array(
 						 'limit' => 10,
 						 'order' => array('Order.id' => 'desc')));
 	$this->set('orders', $this->paginate('Order'));
@@ -280,8 +292,8 @@ class OrdersController extends AppController
 	if (!$this->Order->exists($id)) {
 		throw new NotFoundException(__('Invalid order'));
 	}
-	$options = array('conditions' => array('Order.' . $this->Order->primaryKey => $id));
-	$this->set('order', $this->Order->find('first', $options));
+
+	$this->set('order', $this->Order->getOrder($id));
     }
     
     /**

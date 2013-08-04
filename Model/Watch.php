@@ -87,18 +87,22 @@ class Watch extends AppModel {
 	);*/
 
 	public $hasMany = array(
-		'Image' => array(
-		    'className' => 'Image',
-		    'foreignKey' => 'watch_id'
-		)
-				);
+		    'Image' => array(
+			'className' => 'Image',
+			'foreignKey' => 'watch_id'
+		    ),
+		    'OrdersWatch' => array(
+			'className' => 'OrdersWatch',
+			'foreignKey' => 'watch_id'
+		    )
+		);
 	
 /**
  * hasAndBelongsToMany associations
  *
  * @var array
  */
-	public $hasAndBelongsToMany = array(
+	/*public $hasAndBelongsToMany = array(
 		'Order' => array(
 			'className' => 'Order',
 			'joinTable' => 'orders_watches',
@@ -114,7 +118,7 @@ class Watch extends AppModel {
 			'deleteQuery' => '',
 			'insertQuery' => ''
 		)
-	);
+	);*/
         
     /**
      * $ids array Array of watch Ids
