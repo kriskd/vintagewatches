@@ -130,4 +130,24 @@ class Watch extends AppModel {
                                                    )
                                       );
         }
+	
+	public function getWatchesConditions($active = null, $sold = null)
+	{   
+	    $conditions = array();
+	    if($active != null){
+		$conditions['Watch.active'] = $active;
+	    }
+	    
+	    if($sold !== null){
+		$soldIds = ClassRegistry::init('OrdersWatch')->find('list', array('fields' => 'watch_id'));
+		if($sold === 1){
+		    $conditions['Watch.id'] = $soldIds;
+		}
+		if($sold === 0){ 
+		    $conditions['NOT']['Watch.id'] = $soldIds;
+		}
+	    }
+	    
+	    return $conditions;
+	}
 }
