@@ -63,6 +63,18 @@
         {
             "type": "package",
             "package": {
+                "name": "twbs/bootstrap",
+                "version": "dev-3.0.0-wip",
+                "source": {
+                    "url": "https://github.com/twbs/bootstrap",
+                    "type": "git",
+                    "reference": "origin/master"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
                 "name": "leafo/lessphp",
                 "version": "master",
                 "source": {
@@ -103,6 +115,7 @@
         "chronon/stripe": "*",
         "stripe/stripe-php": "*",
         "twitter/bootstrap": "2.3.2",
+        "twbs/bootstrap": "dev-3.0.0-wip",
         "leafo/lessphp": "*",
         "malikov/cakephp2.0-image-upload": "dev-master",
         "font-awesome": "v3.2.1"
