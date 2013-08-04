@@ -6498,6 +6498,9 @@ dl dd {
   width: 500px;
   text-align: left;
 }
+.watches.form textarea {
+  width: 600px;
+}
 .orders.index {
   width: 450px;
 }
