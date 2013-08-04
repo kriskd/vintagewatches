@@ -1,23 +1,37 @@
 <div class="watches index">
 	<h2><?php echo __('Watches'); ?></h2>
+    <?php echo $this->Html->link('All Watches', array('controller' => 'watches', 'action' => 'index'), array('class' => 'btn btn-default', 'admin' => true)); ?>
+    <?php echo $this->Html->link('Sold Watches', array('controller' => 'watches', 'action' => 'index', 'sold' => '1'), array('class' => 'btn btn-default', 'admin' => true)); ?>
+    <?php echo $this->Html->link('Unsold Watches', array('controller' => 'watches', 'action' => 'index', 'sold' => '0'), array('class' => 'btn btn-default', 'admin' => true)); ?>
+    <?php echo $this->Html->link('Active Watches', array('controller' => 'watches', 'action' => 'index', 'active' => '1'), array('class' => 'btn btn-default', 'admin' => true)); ?>
+    <?php echo $this->Html->link('Inactive Watches', array('controller' => 'watches', 'action' => 'index', 'active' => '0'), array('class' => 'btn btn-default', 'admin' => true)); ?>
     <div class="table">
         <div class="table-row">
-			<span class="table-head"><?php echo $this->Paginator->sort('order_id'); ?></span>
+			<span class="table-head">Image</span>
 			<span class="table-head"><?php echo $this->Paginator->sort('stockId'); ?></span>
 			<span class="table-head"><?php echo $this->Paginator->sort('price'); ?></span>
 			<span class="table-head"><?php echo $this->Paginator->sort('name'); ?></span>
 			<span class="table-head"><?php echo $this->Paginator->sort('description'); ?></span>
-			<span class="table-head"><?php echo $this->Paginator->sort('active'); ?></span>
 			<span class="table-head"><?php echo $this->Paginator->sort('created'); ?></span>
 			<span class="table-head"><?php echo $this->Paginator->sort('modified'); ?></span>
         </div>
-        <?php foreach ($watches as $watch): ?> 
-            <?php $row = $this->Html->tag('span', h($watch['Watch']['order_id']), array('class' => 'table-cell')); ?>
+        <?php foreach ($watches as $watch): ?>
+            <?php $row = ''; ?>
+            <?php $image = ''; ?>
+            <?php if(!empty($watch['Image'])): ?>
+                <?php $images = $watch['Image']; ?>
+                <?php foreach($images as $item): ?>
+                    <?php if($item['type'] == 'thumb'): ?>
+                        <?php $image = $this->Html->image('/files/thumbs/' . $item['filename']); ?>
+                        <?php break; ?>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+            <?php $row .= $this->Html->tag('span', $image); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['stockId']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['price']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['name']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', $this->Watch->shortDescription($watch['Watch']['description'], null, 10), array('class' => 'table-cell')); ?>
-            <?php $row .= $this->Html->tag('span', h($watch['Watch']['active']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['created']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['modified']), array('class' => 'table-cell')); ?>
             <?php echo $this->Html->link($row, array('action' => 'admin_view', $watch['Watch']['id'], 'admin' => true), array('class' => 'table-row', 'escape' => false)); ?>
