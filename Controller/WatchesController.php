@@ -20,7 +20,13 @@ class WatchesController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->Watch->recursive = 0;
+        //Get only active and unsold watches
+        $this->paginate['Watch'] = array(
+                            'limit' => 10,
+                            'contain' => 'Image',
+                            'conditions' => $this->Watch->getWatchesConditions(1, 0)
+                        );
+
 		$this->set('watches', $this->paginate());
 	}
 
@@ -49,22 +55,12 @@ class WatchesController extends AppController {
         $paginate = array('limit' => 10,
 					'order' => array('Watch.id' => 'desc'));
 
-        if(isset($this->params['named']['sold'])){ 
-            $soldIds = $this->OrdersWatch->find('list', array('fields' => 'watch_id'));
-            if($this->params['named']['sold'] === '1'){
-                $paginate['conditions'] = array('Watch.id' => $soldIds);
-            }
-            if($this->params['named']['sold'] === '0'){
-                $paginate['conditions'] = array('NOT' => array('Watch.id' => $soldIds));
-            }
-        }
+        $active = isset($this->params['named']['active']) ? $this->params['named']['active'] : null;
+        $sold = isset($this->params['named']['sold']) ? $this->params['named']['sold'] : null;
         
-        if(isset($this->params['named']['active'])){
-            $paginate['conditions'] = array('Watch.active' => $this->params['named']['active']);
-        }
-        
+        $paginate['conditions'] = $this->Watch->getWatchesConditions($active, $sold);
 		$this->paginate = $paginate; 
-		//$this->Watch->recursive = 2;
+		
 		$this->set('watches', $this->paginate()); 
         
 
