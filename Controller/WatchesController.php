@@ -55,10 +55,10 @@ class WatchesController extends AppController {
         $paginate = array('limit' => 10,
 					'order' => array('Watch.id' => 'desc'));
 
-        $active = isset($this->params['named']['active']) ? $this->params['named']['active'] : null;
-        $sold = isset($this->params['named']['sold']) ? $this->params['named']['sold'] : null;
-        
-        $paginate['conditions'] = $this->Watch->getWatchesConditions($active, $sold);
+        $active = isset($this->params['named']['active']) ? (int)$this->params['named']['active'] : null;
+        $sold = isset($this->params['named']['sold']) ? (int)$this->params['named']['sold'] : null;
+
+        $paginate['conditions'] = $this->Watch->getWatchesConditions($active, $sold); 
 		$this->paginate = $paginate; 
 		
 		$this->set('watches', $this->paginate()); 
