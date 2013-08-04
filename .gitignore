@@ -3,3 +3,4 @@
 /Vendor
 /Plugin/Stripe
 /webroot/files
+node_modules
