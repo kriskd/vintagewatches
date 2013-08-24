@@ -2,7 +2,7 @@
 App::uses('Address', 'Model');
 class OrdersController extends AppController
 {
-    public $uses = array('Watch', 'Address', 'Order', 'OrdersWatch');
+    public $uses = array('Watch', 'Address', 'Order');
     
     public function index()
     {
@@ -91,8 +91,8 @@ class OrdersController extends AppController
 		    $items = $this->Session->read('Cart.items');
 		    $watches = $this->Watch->getCartWatches($items);
 		    
-		    //Since associations changed, change how data is saved
-		    foreach($watches as $watch){
+		    //This is for a many-to-many relationship if I go back to that
+		    /*foreach($watches as $watch){
 			$inactive[] = array('id' => $watch['Watch']['id'],
 					    'active' => 0);
 			$purchased[] = array('order_id' => $order_id,
@@ -100,16 +100,16 @@ class OrdersController extends AppController
 		    }
 		    
 		    $this->Watch->saveMany($inactive);
-		    $this->OrdersWatch->saveMany($purchased);
+		    $this->OrdersWatch->saveMany($purchased);*/
 		    
 		    //Get the purchased items from the Session, add the order_id and
 		    //update the items with the order_id
-		    /*$purchasedWatches = array_map(function($item) use ($order_id){
+		    $purchasedWatches = array_map(function($item) use ($order_id){
 					    $item['Watch']['order_id'] = $order_id;
 					    $item['Watch']['active'] = 0;
 					    return $item;
 					} , $watches);
-		    $this->Watch->saveMany($purchasedWatches);*/
+		    $this->Watch->saveMany($purchasedWatches);
 		
 		    $this->Session->delete('Cart');
 		    $this->Session->setFlash('<i class="icon-ok icon-large"></i> Thank you for your order.', 'default', array('class' => 'alert alert-success'));

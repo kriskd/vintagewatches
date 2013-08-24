@@ -12,7 +12,7 @@ class WatchesController extends AppController {
 	
 	public $components = array('ImageUploader');
     
-    public $uses = array('Watch', 'Image', 'Order', 'OrdersWatch');
+    public $uses = array('Watch', 'Image');
 
 /**
  * index method

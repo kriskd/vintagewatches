@@ -76,25 +76,25 @@ class Watch extends AppModel {
  *
  * @var array
  */
-	/*public $belongsTo = array(
+	public $belongsTo = array(
 		'Order' => array(
 			'className' => 'Order',
-			'foreignKey' => 'id',
+			'foreignKey' => 'order_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
 		)
-	);*/
+	);
 
 	public $hasMany = array(
 		    'Image' => array(
 			'className' => 'Image',
 			'foreignKey' => 'watch_id'
 		    ),
-		    'OrdersWatch' => array(
+		    /*'OrdersWatch' => array(
 			'className' => 'OrdersWatch',
 			'foreignKey' => 'watch_id'
-		    )
+		    )*/
 		);
 	
 /**
@@ -139,12 +139,11 @@ class Watch extends AppModel {
 	    }
 	    
 	    if($sold !== null){
-		$soldIds = ClassRegistry::init('OrdersWatch')->find('list', array('fields' => 'watch_id'));
 		if($sold === 1){
-		    $conditions['Watch.id'] = $soldIds;
+		    $conditions['NOT']['order_id'] = null;
 		}
 		if($sold === 0){ 
-		    $conditions['NOT']['Watch.id'] = $soldIds;
+		    $conditions['order_id'] = null;
 		}
 	    }
 	    
