@@ -6501,6 +6501,10 @@ dl dd {
 .watches.form textarea {
   width: 600px;
 }
+.watches.form .image-thumb {
+  width: 133px;
+  text-align: center;
+}
 .orders.index {
   width: 450px;
 }
