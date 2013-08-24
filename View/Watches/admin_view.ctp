@@ -54,9 +54,15 @@
 				<?php endif; ?>
 			<?php endforeach; ?>
 		<?php endif; ?>
-		<?php if(!empty($watch['OrdersWatch'])): ?>
+		<?php if(!empty($watch['Order'])): ?>
 			<dt>Order ID</dt>
-			<dd><?php echo $this->Html->link($watch['OrdersWatch'][0]['order_id'], array('controller' => 'orders', 'action' => 'view', $watch['OrdersWatch'][0]['order_id'], 'admin' => true)); ?></dd>
+			<dd>
+				<?php echo $this->Html->link($watch['Order']['id'],
+							     array('controller' => 'orders', 'action' => 'view',
+								   $watch['Order']['id'],
+								   'admin' => true));
+				?>
+			</dd>
 		<?php endif; ?>
 	</dl>
 </div>

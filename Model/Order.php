@@ -41,8 +41,8 @@ class Order extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-                'OrdersWatch' => array(
-			'className' => 'OrdersWatch',
+                'Watch' => array(
+			'className' => 'Watch',
 			'foreignKey' => 'order_id',
 			'dependent' => false,
 			'conditions' => '',
@@ -55,7 +55,6 @@ class Order extends AppModel {
 			'counterQuery' => ''
 		)
 	);
-
 
 /**
  * hasAndBelongsToMany associations
@@ -101,10 +100,8 @@ class Order extends AppModel {
 	$options = array('conditions' => array('Order.' . $this->primaryKey => $id));
 	
 	$options['contain'] = array('Address',
-				    'OrdersWatch' => array(
-					'Watch' => array(
-					    'Image'
-					)
+				    'Watch' => array(
+					'Image'
 				    )
 				);
 	return $this->find('first', $options);

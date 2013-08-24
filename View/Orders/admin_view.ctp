@@ -3,7 +3,7 @@
     <h2>Purchases</h2>
     <table class="table-bordered">
         <tr><th>Stock ID</th><th>Name</th><th>Price</th></tr>
-        <?php foreach($order['OrdersWatch'] as $watch): ?>
+        <?php foreach($order['Order'] as $watch): ?>
             <tr>
                 <td><?php echo $watch['Watch']['stockId']; ?></td>
                 <td><?php echo $watch['Watch']['name']; ?></td>
