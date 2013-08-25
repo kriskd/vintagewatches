@@ -21,23 +21,25 @@
 	<?php echo $this->Form->end(array('label' => 'Submit', 'class' => 'btn btn-primary')); ?>
 	
 	<?php if(!empty($watch['Image'])): ?>
-		<?php $images = $watch['Image']; ?>
-		<?php foreach($images as $image): ?>
-			<?php if($image['type'] == 'thumb'): ?>
-				<div class="image-thumb">
-					<?php echo $this->Html->image('/files/thumbs/' . $image['filename'],
-								      array('url' =>
-									    array('controller' => 'images',
-										  'action' => 'delete_picture', $image['id'], 'admin' => 'true'),
-									    array('escape' => false)));
-					?>
-					<?php echo $this->Html->link('Make Primary',
-								     array('controller' => 'images',
-									   'action' => 'primary', $image['id'],
-									   'admin' => 'true')); ?>
-				</div>
-			<?php endif; ?>
-		<?php endforeach; ?>
+		<div class="watch-images">
+			<?php $images = $watch['Image']; ?>
+			<?php foreach($images as $image): ?>
+				<?php if($image['type'] == 'thumb'): ?>
+					<div class="image-thumb">
+						<?php echo $this->Html->image(array('files', $watch['Watch']['id'], 'thumbs', $image['filename']),
+									      array('url' =>
+										    array('controller' => 'images',
+											  'action' => 'delete_picture', $image['id'], 'admin' => 'true'),
+										    ));
+						?>
+						<?php echo $this->Html->link('Make Primary',
+									     array('controller' => 'images',
+										   'action' => 'primary', $watch['Watch']['id'], $image['id'],
+										   'admin' => 'true')); ?>
+					</div>
+				<?php endif; ?>
+			<?php endforeach; ?>
+		</div>
 	<?php endif; ?>	
 </div>
 

@@ -6501,9 +6501,25 @@ dl dd {
 .watches.form textarea {
   width: 600px;
 }
-.watches.form .image-thumb {
+.watches.form .watch-images {
+  *zoom: 1;
+}
+.watches.form .watch-images:before,
+.watches.form .watch-images:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.watches.form .watch-images:after {
+  clear: both;
+}
+.watches.form .watch-images .image-thumb {
   width: 133px;
   text-align: center;
+  float: left;
+}
+.watches.form .watch-images .image-thumb a {
+  display: block;
 }
 .orders.index {
   width: 450px;
