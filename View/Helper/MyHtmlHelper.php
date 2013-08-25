@@ -53,4 +53,13 @@ class MyHtmlHelper extends HtmlHelper
         
         return '<li>' . parent::link($title, $url, $options, $confirmMessage) . '</li>';
     }
+    
+    public function image($path, $options = array())
+    {
+        if (is_array($path)) {
+            $path = DS . implode('/', $path);
+        }
+        
+        return parent::image($path, $options);
+    }
 }
