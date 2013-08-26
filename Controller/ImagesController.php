@@ -1,5 +1,6 @@
 <?php
 App::uses('Folder', 'Utility');
+App::uses('File', 'Utility');
 class ImagesController extends Controller
 {
     public $components = array('ImageUploader');
@@ -29,15 +30,10 @@ class ImagesController extends Controller
             
             try {
                 $output = $this->ImageUploader->upload($image, $imagePath, $options); 
-                $fileName = empty($output['file_path_max_width']) ?
-                            $this->_getFileNameFromPath($output['file_path']) :
-                            $this->_getFileNameFromPath($output['file_path_max_width']);
-                $thumbFileName = $this->_getFileNameFromPath($output['thumb_path']);
+                $fileName = $this->_getFileNameFromPath($output['file_path']);
+                $data = array('Image' => array('watch_id' => $id, 'filename' => $fileName));
+                $this->Image->save($data);
                 
-                $data = array(array('Image' => array('watch_id' => $id, 'type' => 'image', 'filename' => $fileName)),
-                              array('Image' => array('watch_id' => $id, 'type' => 'thumb', 'filename' => $thumbFileName))
-                             );
-                $this->Image->saveMany($data);
             } catch(Exception $e) {
                 $output = array('bool' => FALSE, 'error_message' => $e->getMessage());
             }

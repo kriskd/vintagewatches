@@ -24,20 +24,24 @@
 		<div class="watch-images">
 			<?php $images = $watch['Image']; ?>
 			<?php foreach($images as $image): ?>
-				<?php if($image['type'] == 'thumb'): ?>
-					<div class="image-thumb">
-						<?php echo $this->Html->image(array('files', $watch['Watch']['id'], 'thumbs', $image['filename']),
-									      array('url' =>
-										    array('controller' => 'images',
-											  'action' => 'delete_picture', $image['id'], 'admin' => 'true'),
-										    ));
-						?>
-						<?php echo $this->Html->link('Make Primary',
-									     array('controller' => 'images',
-										   'action' => 'primary', $watch['Watch']['id'], $image['id'],
-										   'admin' => 'true')); ?>
-					</div>
-				<?php endif; ?>
+				<div class="image-thumb">
+					<?php echo $this->Html->thumbImage($watch['Watch']['id'], $image['filename'],
+								      array('url' =>
+									    array('controller' => 'images',
+										  'action' => 'delete_picture', $image['id'], 'admin' => 'true'),
+									    ));
+					?>
+					<?php echo $this->Html->link('Make Primary',
+								     array('controller' => 'images',
+									   'action' => 'primary', $watch['Watch']['id'], $image['id'],
+									   'admin' => 'true')); ?>
+				</div>
+				<?php echo $this->Html->watchImage($watch['Watch']['id'], $image['filename'],
+							      array('url' =>
+								    array('controller' => 'images',
+									  'action' => 'delete_picture', $image['id'], 'admin' => 'true'),
+								    ));
+				?>
 			<?php endforeach; ?>
 		</div>
 	<?php endif; ?>	

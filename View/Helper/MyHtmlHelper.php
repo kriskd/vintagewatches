@@ -62,4 +62,17 @@ class MyHtmlHelper extends HtmlHelper
         
         return parent::image($path, $options);
     }
+    
+    public function thumbImage($watchId, $imageFilename, $options = array())
+    {
+        return $this->image(array('files', $watchId, 'thumbs', $imageFilename), $options);
+    }
+    
+    public function watchImage($watchId, $imageFilename, $options = array())
+    {   
+        if (file_exists(WWW_ROOT . DS . 'files' . DS . $watchId . DS . 'image' . DS . $imageFilename)) { 
+            return $this->image(array('files', $watchId, 'image', $imageFilename), $options);
+        }
+        return $this->image(array('files', $watchId, $imageFilename), $options);
+    }
 }
