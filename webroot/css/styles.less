@@ -1,8 +1,19 @@
 @import "less/bootstrap.less";
 
+// Accent colors
+// -------------------------
+@blue:                  #049cdb;
+@blueDark:              #0064cd;
+@green:                 #46a546;
+@red:                   #9d261d;
+@yellow:                #ffc40d;
+@orange:                #f89406;
+@pink:                  #c3325f;
+@purple:                #7a43b6;
+
 .launch-tooltip, .launch-tooltip:hover {
     text-decoration: none;
-    color: @grayDark;
+    color: @gray-dark;
 }
 
 .icon-question-sign {
@@ -13,48 +24,51 @@
 }
 table {
     width: 500px;
-    background: @grayLighter;
+    background: @gray-lighter;
     th {
         color: @blueDark;
-        border-bottom: 1px solid @grayLight;  
+        border-bottom: 1px solid @gray-light;  
     }
     td, th {
         padding: 10px;
     }
     .total-row td {
-        border-top: 1px solid @grayLight;
+        border-top: 1px solid @gray-light;
     }
 }
 .table {
     display: table;
     width: 500px;
-    background: @grayLighter;
+    background: @gray-lighter;
     span {
         padding: 10px;
     }
     .table-head {
         color: @blueDark;
-        border-bottom: 1px solid @grayLight;
+        border-bottom: 1px solid @gray-light;
         display: table-cell;
         text-align: center;
         font-weight: bold;
     }
     .table-row {
         display: table-row;
-        color: @grayDark;
+        color: @gray-dark;
         text-decoration:  none;
     }
     .table-cell {
         display: table-cell;
     }
     .row-hover {
-        background: @white;
+        background: #fff;
         cursor: pointer;
     }
 }
 .table-bordered {
     border: 1px solid @gray;
-    .border-radius(5px);
+    .border-top-radius(5px);
+    .border-right-radius(5px);
+    .border-bottom-radius(5px);
+    .border-left-radius(5px);
 }
 span.required {
     color: @red;
@@ -117,9 +131,12 @@ dl {
 .orders.index {
     width: 450px;
     h3 {
-        color: @white;
+        color: #fff;
         background: @blue;
-        .border-radius(5px);
+        .border-top-radius(5px);
+        .border-right-radius(5px);
+        .border-bottom-radius(5px);
+        .border-left-radius(5px);
         padding: 0 10px;
     }
     h6 {
@@ -133,9 +150,12 @@ dl {
     }
     .checkout-form {
         padding: 5px;
-        background: @grayLighter;
+        background: @gray-lighter;
         border: 1px solid @gray;
-        .border-radius(5px);
+        .border-top-radius(5px);
+        .border-right-radius(5px);
+        .border-bottom-radius(5px);
+        .border-left-radius(5px);
         .clearfix();
     }
     label {

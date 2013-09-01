@@ -11,5 +11,10 @@
     "url": "ssh://sprechereast@sprechereast.com/home/sprechereast/git.jimandkris.com/bruce.git/"
   },
   "author": "",
-  "license": "BSD"
+  "license": "BSD",
+  "devDependencies": {
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-contrib-watch": "~0.5.3"
+  }
 }

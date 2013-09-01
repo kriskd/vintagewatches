@@ -57,14 +57,6 @@ class AppController extends Controller {
      */
     public function beforeRender()
     {   
-        if(Configure::read('debug') > 0){
-            App::import('Vendor', 'leafo/lessphp/lessc.inc');
-            $lessc = new lessc();
-            $less = getcwd() . DS . 'css' . DS . 'styles.less'; 
-            $css = getcwd() . DS . 'css' . DS . 'styles.css'; 
-            $lessc->checkedCompile($less,$css);
-        }
-        
         $this->set('loggedIn', false);
         if($this->Auth->loggedIn()){
             $this->set('loggedIn', true);

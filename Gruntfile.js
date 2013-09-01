@@ -9,8 +9,8 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				src: [
-					'webroot/js/src/bootstrap-dropdown.js',
-					'webroot/js/src/bootstrap-tooltip.js',
+					'webroot/js/src/dropdown.js',
+					'webroot/js/src/tooltip.js',
 					'webroot/js/src/script.js',
 				],
 				dest: 'webroot/js/build/scripts.js'
@@ -26,17 +26,29 @@ module.exports = function(grunt) {
 				}
 			}
 		},
+		less:	{
+			my_target: {
+				files: {
+					'webroot/css/styles.css': 'webroot/css/styles.less'
+				}
+			}
+		},
                 watch: {
-                    jss: {
-                        files: ['webroot/js/src/*.js'],
-                        tasks: ['concat', 'uglify']
-                    }
-                }
+			jss: {
+			    files: ['webroot/js/src/*.js'],
+			    tasks: ['concat', 'uglify']
+			},
+			css: {
+				files: ['webroot/css/styles.less'],
+				tasks: ['less']
+			}
+                },
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
         grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-less');
 
 	grunt.registerTask('default', ['concat:dist', 'uglify']);
 };
