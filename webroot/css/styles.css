@@ -5955,12 +5955,15 @@ td.visible-print {
     display: none !important;
   }
 }
+.glyphicon {
+  font-size: 120%;
+}
 .launch-tooltip,
 .launch-tooltip:hover {
   text-decoration: none;
   color: #333333;
 }
-.icon-question-sign {
+.glyphicon-question-sign {
   color: #9d261d;
 }
 .nav-tabs a {
@@ -6099,6 +6102,7 @@ dl dd {
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
   padding: 0 10px;
+  line-height: 40px;
 }
 .orders.index h6 {
   margin: 0;
@@ -6108,6 +6112,9 @@ dl dd {
 }
 .orders.index .control-label {
   margin-right: 5px;
+  width: 160px;
+  float: left;
+  text-align: right;
 }
 .orders.index .checkout-form {
   padding: 5px;

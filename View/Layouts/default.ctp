@@ -45,7 +45,7 @@
 	
 </head>
 <body>
-	<div id="container" class="container-fluid">
+	<div class="container">
 		<div id="header">
 			<h1></h1>
 		</div>
