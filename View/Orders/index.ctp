@@ -10,7 +10,7 @@
             </div>
         <?php endif; ?>
         <h3>Review Cart</h3>
-        <table class="table-bordered">
+        <table class="table table-bordered">
             <tr>
                 <th></th>
                 <th>Stock ID</th>
@@ -19,7 +19,7 @@
             </tr>
             <?php foreach($watches as $watch): ?>
                 <tr>
-                    <td class="text-center"><?php echo $this->Html->link('<i class="icon-trash icon-large"></i>',
+                    <td class="text-center"><?php echo $this->Html->link('<i class="glyphicon glyphicon-trash"></i>',
                                                                          array('action' => 'remove', $watch['Watch']['id']),
                                                                          array('escape' => false, 'class' => 'launch-tooltip',
                                                                                'data-toggle' => 'tooltip',
@@ -43,7 +43,7 @@
                                              charge will be added, and the shipping bar below will expand
                                              where you can indicate shipping options. Then, the address
                                              bar will expand so you can enter the appropriate information.">
-                                             Choose the Country Where You Want Your Order Shipped <i class="icon-question-sign icon-large"></i>
+                                             Choose the Country Where You Want Your Order Shipped <i class="glyphicon glyphicon-question-sign"></i>
                                           </a></h6>
                         <div class="select-country">
                         <?php echo $this->Form->input('Address.select-country', array('type' => 'radio',

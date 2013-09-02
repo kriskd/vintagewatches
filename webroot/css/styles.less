@@ -11,12 +11,16 @@
 @pink:                  #c3325f;
 @purple:                #7a43b6;
 
+.glyphicon {
+    font-size: 120%;
+}
+
 .launch-tooltip, .launch-tooltip:hover {
     text-decoration: none;
     color: @gray-dark;
 }
 
-.icon-question-sign {
+.glyphicon-question-sign {
     color: @red;
 }
 .nav-tabs a {
@@ -138,6 +142,7 @@ dl {
         .border-bottom-radius(5px);
         .border-left-radius(5px);
         padding: 0 10px;
+        line-height: 40px;
     }
     h6 {
         margin: 0;
@@ -146,7 +151,10 @@ dl {
         margin-bottom: 25px; 
     }
     .control-label {
-        margin-right: 5px; 
+        margin-right: 5px;
+        width: 160px;
+        float: left;
+        text-align: right;
     }
     .checkout-form {
         padding: 5px;
