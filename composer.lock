@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "e705d500570f4ecb0409531cd88fd05e",
+    "hash": "9b793477cac4ee437758aacd5d377c3d",
     "packages": [
         {
             "name": "cakephp/debug_kit",
@@ -211,14 +211,13 @@
         },
         {
             "name": "twbs/bootstrap",
-            "version": "dev-3.0.0-wip",
+            "version": "v3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap",
                 "reference": "origin/master"
             },
-            "type": "library",
-            "time": "2013-08-27 18:18:10"
+            "type": "library"
         }
     ],
     "packages-dev": [
@@ -229,7 +228,6 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "twbs/bootstrap": 20,
         "malikov/cakephp2.0-image-upload": 20
     },
     "platform": [
