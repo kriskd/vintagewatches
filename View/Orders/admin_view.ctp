@@ -3,11 +3,11 @@
     <h2>Purchases</h2>
     <table class="table-bordered">
         <tr><th>Stock ID</th><th>Name</th><th>Price</th></tr>
-        <?php foreach($order['Order'] as $watch): ?>
+        <?php foreach($order['Watch'] as $watch): ?>
             <tr>
-                <td><?php echo $watch['Watch']['stockId']; ?></td>
-                <td><?php echo $watch['Watch']['name']; ?></td>
-                <td class="text-right"><?php echo $this->Number->currency($watch['Watch']['price'], 'USD'); ?></td>
+                <td><?php echo $watch['stockId']; ?></td>
+                <td><?php echo $watch['name']; ?></td>
+                <td class="text-right"><?php echo $this->Number->currency($watch['price'], 'USD'); ?></td>
             </tr>
         <?php endforeach; ?>
         <tr class="total-row">

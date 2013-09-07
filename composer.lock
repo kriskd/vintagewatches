@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "9b793477cac4ee437758aacd5d377c3d",
+    "hash": "16e4fd4db9f7bdb95a1900305a67dc5a",
     "packages": [
         {
             "name": "cakephp/debug_kit",
@@ -143,6 +143,17 @@
             "type": "library"
         },
         {
+            "name": "kriskd/cakephp2.0-image-upload",
+            "version": "master",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/kriskd/cakephp2.0-image-upload.git",
+                "reference": "origin/master"
+            },
+            "type": "library",
+            "time": "2013-09-05 00:30:56"
+        },
+        {
             "name": "loadsys/twitter-bootstrap-helper",
             "version": "2.1",
             "source": {
@@ -151,17 +162,6 @@
                 "reference": "origin/2.1"
             },
             "type": "library"
-        },
-        {
-            "name": "malikov/cakephp2.0-image-upload",
-            "version": "master",
-            "source": {
-                "type": "git",
-                "url": "git://github.com/malikov/cakephp2.0-image-upload.git",
-                "reference": "origin/master"
-            },
-            "type": "library",
-            "time": "2012-10-17 17:48:32"
         },
         {
             "name": "stripe/stripe-php",
@@ -228,7 +228,7 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "malikov/cakephp2.0-image-upload": 20
+        "kriskd/cakephp2.0-image-upload": 20
     },
     "platform": [
 

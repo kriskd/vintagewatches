@@ -5,17 +5,17 @@
                                          array('controller' => 'orders', 'action' => 'index', 'admin' => true),
                                          array('data-toggle' => 'dropdown', 'escape' => false)); ?>
             <ul class="dropdown-menu">
-                <?php echo $this->Html->adminLink('<i class="icon-pushpin icon-large"></i> Orders',
+                <?php echo $this->Html->adminLink('<i class="glyphicon glyphicon-usd"></i> Orders',
                                                   array('controller' => 'orders', 'action' => 'admin_index'),
                                                   array('escape' => false),
                                                   false,
                                                   $controller); ?>
-                <?php echo $this->Html->adminLink('<i class="icon-cogs icon-large"></i> Watches',
+                <?php echo $this->Html->adminLink('<i class="glyphicon glyphicon-cog"></i> Watches',
                                                   array('controller' => 'watches', 'action' => 'admin_index'),
                                                   array('escape' => false),
                                                   false,
                                                   $controller); ?>
-                <li><?php echo $this->Html->link('<i class="icon-off icon-large"></i> Logout',
+                <li><?php echo $this->Html->link('<i class="glyphicon glyphicon-off"></i> Logout',
                                                  array('controller' => 'users', 'action' => 'logout', 'admin' => false),
                                                  array('escape' => false)
                                                  ); ?></li>
