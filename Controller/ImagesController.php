@@ -3,7 +3,7 @@ App::uses('Folder', 'Utility');
 App::uses('File', 'Utility');
 class ImagesController extends Controller
 {
-    public $components = array('ImageUploader');
+    public $components = array('ImageUploader' => array('scaledImageTimeStampName' => false));
     
     public function admin_picture($id = null)
     {    
