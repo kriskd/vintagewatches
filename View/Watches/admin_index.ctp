@@ -17,17 +17,7 @@
         </div>
         <?php foreach ($watches as $watch): ?>
             <?php $row = ''; ?>
-            <?php $image = ''; ?>
-            <?php if(!empty($watch['Image'])): ?>
-                <?php $images = $watch['Image']; ?>
-                <?php foreach($images as $item): ?>
-                    <?php if($item['type'] == 'thumb'): ?>
-                        <?php $image = $this->Html->image('/files/thumbs/' . $item['filename']); ?>
-                        <?php break; ?>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            <?php endif; ?>
-            <?php $row .= $this->Html->tag('span', $image); ?>
+            <?php $row .= $this->Html->tag('span', $this->Html->thumbImagePrimary($watch)); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['stockId']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['price']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['name']), array('class' => 'table-cell')); ?>
