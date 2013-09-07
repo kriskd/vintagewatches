@@ -96,7 +96,7 @@
         "stripe/stripe-php": "1.8.3",
         "twbs/bootstrap": "3.0.0",
         "kriskd/cakephp2.0-image-upload": "dev-master",
-        "font-awesome": "v3.2.1"
+        "font-awesome": "3.2.1"
     },
     "config": {
         "vendor-dir": "Vendor"
