@@ -3,19 +3,21 @@
         {
             "type": "package",
             "package": {
-                "name": "cakephp/debug_kit",
-                "version": "2.0",
+                "name": "DebugKit",
+                "type": "cakephp-plugin",
+                "version": "2.2.1",
                 "source": {
                     "url": "https://github.com/cakephp/debug_kit",
                     "type": "git",
-                    "reference": "origin/2.0"
+                    "reference": "origin/master"
                 }
             }
         },
         {
             "type": "package",
             "package": {
-                "name": "loadsys/twitter-bootstrap-helper",
+                "name": "TwitterBootstrap",
+                "type": "cakephp-plugin",
                 "version": "2.1",
                 "source": {
                     "url": "https://github.com/loadsys/twitter-bootstrap-helper",
@@ -27,8 +29,9 @@
         {
             "type": "package",
             "package": {
-                "name": "chronon/stripe",
-                "version": "master",
+                "name": "Stripe",
+                "type": "cakephp-plugin",
+                "version": "1.0.2",
                 "source": {
                     "url": "https://github.com/chronon/CakePHP-StripeComponent-Plugin",
                     "type": "git",
@@ -40,7 +43,7 @@
             "type": "package",
             "package": {
                 "name": "stripe/stripe-php",
-                "version": "master",
+                "version": "1.8.3",
                 "source": {
                     "url": "https://github.com/stripe/stripe-php",
                     "type": "git",
@@ -64,9 +67,9 @@
             "type": "package",
             "package": {
                 "name": "kriskd/cakephp2.0-image-upload",
-                "version": "master",
+                "version": "dev-master",
                 "source": {
-                    "url": "git://github.com/kriskd/cakephp2.0-image-upload.git",
+                    "url": "https://github.com/kriskd/cakephp2.0-image-upload",
                     "type": "git",
                     "reference": "origin/master"
                 }
@@ -86,10 +89,11 @@
         }
     ],
     "require": {
-        "loadsys/twitter-bootstrap-helper": "2.1.*",
-        "cakephp/debug_kit": "2.0",
-        "chronon/stripe": "*",
-        "stripe/stripe-php": "*",
+        "composer/installers": "dev-master",
+        "TwitterBootstrap": "2.1.*",
+        "DebugKit": "2.2.1",
+        "Stripe": "1.0.2",
+        "stripe/stripe-php": "1.8.3",
         "twbs/bootstrap": "3.0.0",
         "kriskd/cakephp2.0-image-upload": "dev-master",
         "font-awesome": "v3.2.1"
@@ -99,12 +103,8 @@
     },
     "extra": {
         "installer-paths": {
-            "Plugin/{$name}": ["cakephp/debug_kit"],
-            "Plugin/TwitterBootstrap": ["loadsys/twitter-bootstrap-helper"],
-            "Plugin/Stripe": ["chronon/stripe"],
             "Plugin/Stripe/Vendor/Stripe": ["stripe/stripe-php"],
-            "Controller/Component": ["kriskd/cakephp2.0-image-upload"]/*,
-            "Vendor/twbs/bootstrap/less/font-awesome": ["font-awesome"]*/
+            "Controller/Component": ["kriskd/cakephp2.0-image-upload"]
         }
     }
 }
