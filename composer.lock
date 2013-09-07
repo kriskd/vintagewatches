@@ -3,65 +3,41 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "16e4fd4db9f7bdb95a1900305a67dc5a",
+    "hash": "4f70f8afbb0e6fdc2a679cd5d9fe2892",
     "packages": [
         {
-            "name": "cakephp/debug_kit",
-            "version": "2.0",
+            "name": "DebugKit",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/debug_kit",
-                "reference": "origin/2.0"
+                "reference": "origin/master"
             },
-            "type": "library"
+            "type": "cakephp-plugin"
         },
         {
-            "name": "chronon/stripe",
+            "name": "Stripe",
             "version": "1.0.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/chronon/CakePHP-StripeComponent-Plugin.git",
-                "reference": "1.0.2"
+                "url": "https://github.com/chronon/CakePHP-StripeComponent-Plugin",
+                "reference": "origin/master"
             },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/chronon/CakePHP-StripeComponent-Plugin/zipball/1.0.2",
-                "reference": "1.0.2",
-                "shasum": ""
+            "type": "cakephp-plugin"
+        },
+        {
+            "name": "TwitterBootstrap",
+            "version": "2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/loadsys/twitter-bootstrap-helper",
+                "reference": "origin/2.1"
             },
-            "require": {
-                "composer/installers": "*",
-                "ext-curl": "*",
-                "php": ">=5.3.0",
-                "stripe/stripe-php": "1.7.*"
-            },
-            "type": "cakephp-plugin",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Gregory Gaskill",
-                    "email": "one@chronon.com",
-                    "homepage": "http://technokracy.net",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A CakePHP 2.x Stripe Payment Processing Component.",
-            "homepage": "https://github.com/chronon/CakePHP-StripeComponent-Plugin",
-            "keywords": [
-                "cakephp",
-                "component",
-                "payments",
-                "plugin",
-                "stripe"
-            ],
-            "time": "2013-05-21 16:24:06"
+            "type": "cakephp-plugin"
         },
         {
             "name": "composer/installers",
-            "version": "v1.0.6",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
@@ -151,63 +127,17 @@
                 "reference": "origin/master"
             },
             "type": "library",
-            "time": "2013-09-05 00:30:56"
-        },
-        {
-            "name": "loadsys/twitter-bootstrap-helper",
-            "version": "2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/loadsys/twitter-bootstrap-helper",
-                "reference": "origin/2.1"
-            },
-            "type": "library"
+            "time": "2013-09-07 19:54:09"
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v1.7.15",
+            "version": "1.8.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "v1.7.15"
+                "url": "https://github.com/stripe/stripe-php",
+                "reference": "origin/master"
             },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/v1.7.15",
-                "reference": "v1.7.15",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "php": ">=5.2"
-            },
-            "require-dev": {
-                "vierbergenlars/simpletest": "*"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "lib/Stripe/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Stripe and contributors",
-                    "homepage": "https://github.com/stripe/stripe-php/contributors"
-                }
-            ],
-            "description": "Stripe PHP Library",
-            "homepage": "https://stripe.com/",
-            "keywords": [
-                "api",
-                "payment processing",
-                "stripe"
-            ],
-            "time": "2013-02-21 20:00:30"
+            "type": "library"
         },
         {
             "name": "twbs/bootstrap",
@@ -228,6 +158,7 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
+        "composer/installers": 20,
         "kriskd/cakephp2.0-image-upload": 20
     },
     "platform": [
