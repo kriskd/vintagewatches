@@ -169,8 +169,17 @@ class MyFormHelper extends FormHelper
     
     protected function _getCommonFields($options)
     {
-        $this->nameToOptionsMap['state'] = array('label' => 'State or Province', 'stripe' => 'address_state', 'options' => $options, 'empty' => 'Choose One', 'class' => 'us-ca');
-        $this->nameToOptionsMap['postalCode'] = array('label' => 'Zip/Postal Code', 'stripe' => 'address_zip', 'class' => 'input-small', 'size' => '7',);
+        $this->nameToOptionsMap['state'] = array('label' => 'State or Province',
+                                                 'stripe' => 'address_state',
+                                                 'options' => $options,
+                                                 'empty' => 'Choose One',
+                                                 'class' => 'us-ca form-control');
+        $this->nameToOptionsMap['postalCode'] = array('label' => 'Zip/Postal Code',
+                                                      'stripe' => 'address_zip',
+                                                      'class' => 'form-control',
+                                                      'size' => '7',
+                                                      'between' => '<div class="col-lg-6">',
+                                                      'after' => '</div>');
         $this->nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => '');
     }
 }
