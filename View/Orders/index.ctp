@@ -67,17 +67,18 @@
             <h4>Choose one of the following shipping options:</h4>
             <?php echo $this->Form->input('Shipping.option', array('type' => 'radio',
                                                          'options' => array('billing' => 'Shipping Address Will be the Same as my ' .
-                                                                            $this->Html->link('Billing Address <i class="icon-question-sign icon-large"></i>', '#',
+                                                                            $this->Html->link('Billing Address <i class="glyphicon glyphicon-question-sign"></i>', '#',
                                                                                 array('class' => 'launch-tooltip',
                                                                                  'data-toggle' => 'tooltip',
                                                                                  'data-placement' => 'top',
                                                                                  'title' => 'This Is the address that appears on your billing statement.',
-                                                                                 'escape' => false)),
+                                                                                 'escape' => false)
+                                                                                ),
                                                                             'shipping' => 'Shipping Address Will be Different From my Billing Address'),
                                                          'legend' => false,
                                                          //'hiddenField' => false,
-                                                         //'div' => "radio inline",
-                                                         //'separator' => '</div><div class="radio inline">',
+                                                         'div' => "radio inline",
+                                                         'separator' => '</div><div class="radio inline">',
                                                             )); ?>
         </div>
     </section>
@@ -87,12 +88,18 @@
         <div class="shipping-instructions">
             <h5>Email and Phone Number</h5>
             <div class="checkout-form">
-                <?php echo $this->Form->input('Order.email', array('label' => array('class' => 'control-label'))); ?>
-                <?php echo $this->Form->input('Order.phone', array('label' => array('class' => 'control-label'))); ?>
+                <?php echo $this->Form->input('Order.email', array('label' => array('class' => 'control-label'),
+                                                                   'class' => 'form-control',
+                                                                   'between' => '<div class="col-lg-6">',
+                                                                   'after' => '</div>')); ?>
+                <?php echo $this->Form->input('Order.phone', array('label' => array('class' => 'control-label'),
+                                                                   'class' => 'form-control',
+                                                                   'between' => '<div class="col-lg-6">',
+                                                                   'after' => '</div>')); ?>
             </div>
             <?php echo $this->Form->input('Order.notes',
                                           array('label' => '<h5>' . $this->Html->link('Special Order Instructions
-                                                            <i class="icon-question-sign icon-large"></i>', '#',
+                                                            <i class="glyphicon glyphicon-question-sign"></i>', '#',
                                                             array('class' => 'launch-tooltip',
                                                                      'data-toggle' => 'tooltip',
                                                                      'data-placement' => 'top',

@@ -1,7 +1,7 @@
 $(document).ready(function(){
     
     $('.launch-tooltip').tooltip();
-    $('.checkout-form .input.required label').append(' <span class="required">*</span>');
+    $('.checkout-form .required label').append(' <span class="required">*</span>');
 
     /**
      * Billing country autocomplete
@@ -127,6 +127,9 @@ $(document).ready(function(){
                 $('select.us-ca').each(function(){
                     getCountry($(this));
                 })
+                
+                //Add required asterisk
+                $('.address-forms .required label').append(' <span class="required">*</span>');
             }
         });
     }

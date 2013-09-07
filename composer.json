@@ -52,7 +52,7 @@
             "type": "package",
             "package": {
                 "name": "twbs/bootstrap",
-                "version": "v3.0.0",
+                "version": "3.0.0",
                 "source": {
                     "url": "https://github.com/twbs/bootstrap",
                     "type": "git",
@@ -63,10 +63,10 @@
         {
             "type": "package",
             "package": {
-                "name": "malikov/cakephp2.0-image-upload",
+                "name": "kriskd/cakephp2.0-image-upload",
                 "version": "master",
                 "source": {
-                    "url": "git://github.com/malikov/cakephp2.0-image-upload.git",
+                    "url": "git://github.com/kriskd/cakephp2.0-image-upload.git",
                     "type": "git",
                     "reference": "origin/master"
                 }
@@ -90,8 +90,8 @@
         "cakephp/debug_kit": "2.0",
         "chronon/stripe": "*",
         "stripe/stripe-php": "*",
-        "twbs/bootstrap": "v3.0.0",
-        "malikov/cakephp2.0-image-upload": "dev-master",
+        "twbs/bootstrap": "3.0.0",
+        "kriskd/cakephp2.0-image-upload": "dev-master",
         "font-awesome": "v3.2.1"
     },
     "config": {
@@ -103,8 +103,8 @@
             "Plugin/TwitterBootstrap": ["loadsys/twitter-bootstrap-helper"],
             "Plugin/Stripe": ["chronon/stripe"],
             "Plugin/Stripe/Vendor/Stripe": ["stripe/stripe-php"],
-            "Controller/Component": ["malikov/cakephp2.0-image-upload"],
-            "Vendor/twbs/bootstrap/less/font-awesome": ["font-awesome"]
+            "Controller/Component": ["kriskd/cakephp2.0-image-upload"]/*,
+            "Vendor/twbs/bootstrap/less/font-awesome": ["font-awesome"]*/
         }
     }
 }
