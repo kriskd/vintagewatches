@@ -1,1 +1,1 @@
-../../Vendor/malikov/cakephp2.0-image-upload/ImageUploaderComponent.php
+../../Vendor/kriskd/cakephp2.0-image-upload/ImageUploaderComponent.php
