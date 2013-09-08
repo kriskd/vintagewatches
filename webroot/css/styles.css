@@ -6006,18 +6006,30 @@ td.visible-print {
 .glyphicon {
   font-size: 120%;
 }
+.glyphicon-question-sign {
+  color: #9d261d;
+}
 .launch-tooltip,
 .launch-tooltip:hover {
   text-decoration: none;
   color: #333333;
 }
-.glyphicon-question-sign {
-  color: #9d261d;
+.form-group {
+  margin-bottom: 0;
+}
+input:focus:invalid {
+  border-color: #ee6f6b;
+  color: #b94a48;
 }
 .nav-tabs a {
   color: #555555;
 }
-h5 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: bold;
 }
 table {
@@ -6027,6 +6039,7 @@ table {
 table th {
   color: #0064cd;
   border-bottom: 1px solid #999999;
+  text-align: center;
 }
 table td,
 table th {
@@ -6057,6 +6070,7 @@ table .total-row td {
 }
 .table .table-cell {
   display: table-cell;
+  vertical-align: top;
 }
 .table .row-hover {
   background: #fff;

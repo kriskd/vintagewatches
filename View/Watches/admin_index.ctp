@@ -17,7 +17,7 @@
         </div>
         <?php foreach ($watches as $watch): ?>
             <?php $row = ''; ?>
-            <?php $row .= $this->Html->tag('span', $this->Html->thumbImagePrimary($watch)); ?>
+            <?php $row .= $this->Html->tag('span', $this->Html->thumbImagePrimary($watch), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['stockId']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['price']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['name']), array('class' => 'table-cell')); ?>
