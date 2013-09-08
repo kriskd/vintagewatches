@@ -6033,7 +6033,6 @@ h6 {
   font-weight: bold;
 }
 table {
-  width: 500px;
   background: #eeeeee;
 }
 table th {
@@ -6050,7 +6049,6 @@ table .total-row td {
 }
 .table {
   display: table;
-  width: 500px;
   background: #eeeeee;
 }
 .table span {
@@ -6157,7 +6155,7 @@ dl dd {
   display: block;
 }
 .orders.index {
-  width: 450px;
+  max-width: 500px;
 }
 .orders.index h3 {
   color: #fff;
@@ -6249,7 +6247,6 @@ dl dd {
 }
 .orders.index .address textarea {
   display: none;
-  width: 440px;
   height: 150px;
 }
 .orders.index .checkout-form input {
