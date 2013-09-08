@@ -27,14 +27,19 @@ class MyHtmlHelper extends HtmlHelper
     /**
      * Create nav link only when not on that page and not in admin
      */
-    public function navLink($title, $url = null, $options = array(), $confirmMessage = false, $controller = null)
-    {   
+    public function navLink($title, $url = null, $options = array(), $confirmMessage = false)
+    {
         if(is_string($url)){
             $url = Router::parse($this->url($url));
-        }
-        $urlController = isset($url['controller']) ? $url['controller'] : null;
-        $urlAction = isset($url['action']) ? $url['action'] : null;
-        if(strcasecmp($controller->name, $urlController)==0 && $this->params->prefix != 'admin'){
+        } 
+        $linkController = isset($url['controller']) ? $url['controller'] : null;
+        $linkAction = isset($url['action']) ? $url['action'] : null;
+        $here = Router::parse(Router::url($this->here));
+        $currentController = $here['controller'];
+        $currentAction = $here['action'];
+        if(strcasecmp($linkController, $currentController)==0 &&
+           strcasecmp($linkAction, $currentAction)==0 &&
+           $this->params->prefix != 'admin'){
             return null;
         }
         $url['admin'] = false;

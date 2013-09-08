@@ -31,10 +31,9 @@
     </li>
     <?php //Wrapped in <li> in Component ?>
 
-    <?php echo $this->Html->navLink('<i class="glyphicon glyphicon-tags"></i> Go Back to Store',
+    <?php echo $this->Html->navLink('<i class="glyphicon glyphicon-tags"></i>&nbsp;&nbsp;Go Back to Store',
                                  array('controller' => 'watches', 'action' => 'index'),
                                  array('escape' => false),
-                                 false,
-                                 $controller); ?>
+                                 false); ?>
 
 </ul>
