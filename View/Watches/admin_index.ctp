@@ -47,6 +47,6 @@
 	<ul>
 		<li><?php echo $this->Html->link(__('New Watch'), array('action' => 'add')); ?></li>
 		<li><?php echo $this->Html->link(__('List Orders'), array('controller' => 'orders', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Order'), array('controller' => 'orders', 'action' => 'add')); ?> </li>
+		<!--<li><?php //echo $this->Html->link(__('New Order'), array('controller' => 'orders', 'action' => 'add')); ?> </li>-->
 	</ul>
 </div>
