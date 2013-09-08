@@ -12,7 +12,7 @@
 	<?php foreach ($watches as $watch): ?>
         <tr>
             <td>
-                <?php echo $this->Html->thumbImagePrimary($watch); ?>
+                <?php echo $this->Html->link($this->Html->thumbImagePrimary($watch), array('action' => 'view', $watch['Watch']['id']), array('escape' => false)); ?>
             </td>
             <td>
                 <?php if($this->Cart->inCart($watch['Watch']['id'], $controller)): ?>

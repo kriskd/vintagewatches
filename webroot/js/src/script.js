@@ -1,6 +1,9 @@
 $(document).ready(function(){
     
     $('.launch-tooltip').tooltip();
+    $('.carousel').carousel({
+        pause: 'hover'    
+    });
     $('.checkout-form .required label').append(' <span class="required">*</span>');
 
     /**
