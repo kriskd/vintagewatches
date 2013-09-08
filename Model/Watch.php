@@ -22,7 +22,7 @@ class Watch extends AppModel {
 		'stockId' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
-				//'message' => 'Your custom message here',
+				'message' => 'Please enter a numeric Stock ID.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -32,11 +32,17 @@ class Watch extends AppModel {
 		'price' => array(
 			'money' => array(
 				'rule' => array('money'),
-				//'message' => 'Your custom message here',
+				'message' => 'Please enter a valid price.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+		),
+		'name' => array(
+			'notempty' => array(
+			    'rule' => array('notempty'),
+			    'message' => 'Please enter a watch name.'
 			),
 		),
 		'active' => array(
