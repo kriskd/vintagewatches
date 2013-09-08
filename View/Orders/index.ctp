@@ -13,6 +13,7 @@
         <table class="table table-bordered">
             <tr>
                 <th></th>
+                <th></th>
                 <th>Stock ID</th>
                 <th>Name</th>
                 <th>Price</th>
@@ -27,6 +28,9 @@
                                                                                'title' => 'Remove from Cart')
                                                                          ); ?>
                     </td>
+                    <td>
+                        <?php echo $this->Html->thumbImagePrimary($watch); ?>
+                    </td>
                     <td><?php echo h($watch['Watch']['stockId']); ?></td>
                     <td><?php echo $this->Html->link(h($watch['Watch']['name']), array('controller' => 'watches', 'action' => 'view', $watch['Watch']['id'])); ?></td>
                     <td class="text-right"><?php echo h($this->Number->currency($watch['Watch']['price'], 'USD')); ?></td>
@@ -35,7 +39,7 @@
             <tr>
                 <td></td>
                 <td></td>
-                <td>
+                <td colspan=2>
                     <h6 class="text-left"><a class="launch-tooltip"
                                              data-toggle="tooltip"
                                              data-placement="top"
@@ -57,7 +61,7 @@
                 </td>
                 <td class="shipping-amount text-right"></td>
             </tr>
-            <tr class="total-row"><td></td><td></td><td class="text-right">Total</td><td class="total-formatted-amount text-right"></td></tr>
+            <tr class="total-row"><td></td><td></td><td></td><td class="text-right">Total</td><td class="total-formatted-amount text-right"></td></tr>
         </table>
     </section>
     
