@@ -1,17 +1,6 @@
 <div class="watches form">
-	<?php echo $this->Form->create('Watch'); ?>
-		<fieldset>
-			<legend><?php echo __('Edit Watch'); ?></legend>
-		<?php
-			echo $this->Form->input('id', array('class' => 'form-control'));
-			echo $this->Form->input('stockId', array('class' => 'form-control'));
-			echo $this->Form->input('price', array('class' => 'form-control'));
-			echo $this->Form->input('name', array('class' => 'form-control'));
-			echo $this->Form->input('description', array('class' => 'form-control'));
-			echo $this->Form->input('active');
-		?>
-		</fieldset>
-	<?php echo $this->Form->end(array('label' => 'Submit', 'class' => 'btn btn-primary')); ?>
+	
+	<?php echo $this->Element('form_watch', array('action' => 'Edit')); ?>
 	
 	<?php echo $this->Form->create('Image', array('type' => 'file',
 						      'url' => array('action' => 'picture', $watch['Watch']['id']),
