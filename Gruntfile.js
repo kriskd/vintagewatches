@@ -11,6 +11,7 @@ module.exports = function(grunt) {
 				src: [
 					'webroot/js/src/carousel.js',
 					'webroot/js/src/dropdown.js',
+					'webroot/js/src/modal.js',
 					'webroot/js/src/tooltip.js',
 					'webroot/js/src/script.js',
 				],

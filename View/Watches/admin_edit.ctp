@@ -2,44 +2,72 @@
 	
 	<?php echo $this->Element('form_watch', array('action' => 'Edit')); ?>
 	
-	<?php echo $this->Form->create('Image', array('type' => 'file',
-						      'url' => array('action' => 'picture', $watch['Watch']['id']),
-						      'class' => 'form-inline')); ?>
-		<?php echo $this->Form->label('Add Image'); ?>
-		<?php echo $this->Form->file('image'); ?>
-	<?php echo $this->Form->end(array('label' => 'Submit', 'class' => 'btn btn-primary')); ?>
-	
 	<?php if(!empty($watch['Image'])): ?>
 		<div class="watch-images">
 			<?php $images = $watch['Image']; ?>
 			<?php foreach($images as $image): ?>
 				<div class="image-thumb">
-					<?php echo $this->Html->thumbImage($watch['Watch']['id'], $image['filename'],
-								      array('url' =>
-									    array('controller' => 'images',
-										  'action' => 'delete_picture', $image['id'], 'admin' => 'true'),
-									    ));
+					<?php echo $this->Html->link($this->Html->thumbImage($watch['Watch']['id'], $image['filename']),
+                                                 '#delete-' . $watch['Watch']['id'] . '-' . $image['id'],
+                                                 array('escape' => false, 'data-toggle' => 'modal')
+                                                 );
 					?>
-					<?php echo $this->Html->link('Make Primary',
+                    <div class="modal fade" id="delete-<?php echo $watch['Watch']['id']; ?>-<?php echo $image['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title">Confirm Image Delete</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <?php echo $this->Html->thumbImage($watch['Watch']['id'], $image['filename'],
+                                                                        array('escape' => false)
+                                                 ); ?>
+                                </div>
+                                <div class="modal-footer">
+                                    <?php echo $this->Html->link('Close', '#', array('data-dismiss' => 'modal',
+                                                                                     'class' => 'btn btn-default btn-lg')); ?>
+                                    <?php echo $this->Html->link('Delete', array('controller' => 'images',
+                                                                                 'action' => 'delete', $watch['Watch']['id'], $image['id']),
+                                                                            array('class' => 'btn btn-danger btn-lg')); ?>                                    
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+                    
+					<?php if ($image['primary'] == 1): ?>
+						<p class="label label-success">Primary</p>
+					<?php else: ?>
+						<?php echo $this->Html->link('Make Primary',
 								     array('controller' => 'images',
 									   'action' => 'primary', $watch['Watch']['id'], $image['id'],
-									   'admin' => 'true')); ?>
+									   'admin' => 'true')
+                                     ); ?>
+					<?php endif; ?>
+
 				</div>
-				<?php echo $this->Html->watchImage($watch['Watch']['id'], $image['filename'],
+				<?php /*echo $this->Html->watchImage($watch['Watch']['id'], $image['filename'],
 							      array('url' =>
 								    array('controller' => 'images',
 									  'action' => 'delete_picture', $image['id'], 'admin' => 'true'),
-								    ));
+								    ));*/
 				?>
 			<?php endforeach; ?>
 		</div>
-	<?php endif; ?>	
-</div>
-
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('Watch.id')), null, __('Are you sure you want to delete # %s?', $this->Form->value('Watch.id'))); ?></li>
-		<li><?php echo $this->Html->link(__('List Watches'), array('action' => 'index')); ?></li>
-	</ul>
+	<?php endif; ?>
+    
+    <div class="jumbotron">
+        <?php echo $this->Form->create('Image', array('type' => 'file',
+                                  'url' => array('action' => 'picture', $watch['Watch']['id']),
+                                  )); ?>
+            <?php echo $this->Form->label('Add Image'); ?>
+            <?php echo $this->Form->button('Choose File', array('type' => 'button',
+                                                                'class' => 'btn btn-default fake-upload',
+                                                                )
+                                                            ); ?>
+            <?php echo $this->Form->input('image', array('type' => 'file',
+                                     'label' => false,
+                                     'class' => 'image-upload')); ?>
+        <?php echo $this->Form->end(array('label' => 'Upload Image', 'class' => 'btn btn-primary')); ?>
+    </div>
 </div>
