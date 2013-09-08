@@ -132,17 +132,36 @@ dl {
     }
 }
 .watches.form {
+    #WatchAdminEditForm {
+        margin-bottom: 20px;
+    }
     textarea {
         width: 600px;
     }
+    .fake-upload {
+        display: block;
+    }
+    .image-upload {
+        display: none;
+    }
+    .jumbotron {
+        width: 50%;
+    }
     .watch-images {
+        margin-bottom: 20px;
         .clearfix();
         .image-thumb {
             width: 133px;
             text-align: center;
-            float: left; 
+            float: left;
+            margin: 5px;
             a {
                 display: block;
+            }
+            .modal {
+                a {
+                    display: inline;
+                }
             }
         }
     }

@@ -6143,8 +6143,23 @@ dl dd {
   width: 500px;
   text-align: left;
 }
+.watches.form #WatchAdminEditForm {
+  margin-bottom: 20px;
+}
 .watches.form textarea {
   width: 600px;
+}
+.watches.form .fake-upload {
+  display: block;
+}
+.watches.form .image-upload {
+  display: none;
+}
+.watches.form .jumbotron {
+  width: 50%;
+}
+.watches.form .watch-images {
+  margin-bottom: 20px;
 }
 .watches.form .watch-images:before,
 .watches.form .watch-images:after {
@@ -6174,9 +6189,13 @@ dl dd {
   width: 133px;
   text-align: center;
   float: left;
+  margin: 5px;
 }
 .watches.form .watch-images .image-thumb a {
   display: block;
+}
+.watches.form .watch-images .image-thumb .modal a {
+  display: inline;
 }
 .watches.view #carousel-watch {
   max-width: 700px;

@@ -5,6 +5,10 @@ $(document).ready(function(){
         pause: 'hover'    
     });
     $('.checkout-form .required label').append(' <span class="required">*</span>');
+    
+    $(document).on('click', '.fake-upload', function(){
+        $('.image-upload').click();
+    });
 
     /**
      * Billing country autocomplete

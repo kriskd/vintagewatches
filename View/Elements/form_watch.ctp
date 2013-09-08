@@ -24,4 +24,4 @@
 					);
 	?>
 	</fieldset>
-<?php echo $this->Form->end(array('label' => __('Submit'), 'class' => 'btn btn-primary')); ?>
+<?php echo $this->Form->end(array('label' => __('Save Watch Text'), 'class' => 'btn btn-primary')); ?>
