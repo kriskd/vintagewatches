@@ -6143,6 +6143,17 @@ dl dd {
   width: 500px;
   text-align: left;
 }
+.watches.index .header {
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.watches.index .add-watch {
+  text-align: left;
+  float: left;
+}
+.watches.index .filters {
+  float: right;
+}
 .watches.form #WatchAdminEditForm {
   margin-bottom: 20px;
 }

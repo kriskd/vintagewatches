@@ -1,10 +1,15 @@
 <div class="watches index">
 	<h2><?php echo __('Watches'); ?></h2>
-    <?php echo $this->Html->link('All Watches', array('controller' => 'watches', 'action' => 'index'), array('class' => 'btn btn-default', 'admin' => true)); ?>
-    <?php echo $this->Html->link('Sold Watches', array('controller' => 'watches', 'action' => 'index', 'sold' => '1'), array('class' => 'btn btn-default', 'admin' => true)); ?>
-    <?php echo $this->Html->link('Unsold Watches', array('controller' => 'watches', 'action' => 'index', 'sold' => '0'), array('class' => 'btn btn-default', 'admin' => true)); ?>
-    <?php echo $this->Html->link('Active Watches', array('controller' => 'watches', 'action' => 'index', 'active' => '1'), array('class' => 'btn btn-default', 'admin' => true)); ?>
-    <?php echo $this->Html->link('Inactive Watches', array('controller' => 'watches', 'action' => 'index', 'active' => '0'), array('class' => 'btn btn-default', 'admin' => true)); ?>
+    <section class="header">
+        <?php echo $this->Html->link('Add Watch', array('action' => 'add'), array('class' => 'btn btn-success add-watch')); ?>
+        <div class="filters">
+            <?php echo $this->Html->link('All Watches', array('controller' => 'watches', 'action' => 'index'), array('class' => 'btn btn-default', 'admin' => true)); ?>
+            <?php echo $this->Html->link('Sold Watches', array('controller' => 'watches', 'action' => 'index', 'sold' => '1'), array('class' => 'btn btn-default', 'admin' => true)); ?>
+            <?php echo $this->Html->link('Unsold Watches', array('controller' => 'watches', 'action' => 'index', 'sold' => '0'), array('class' => 'btn btn-default', 'admin' => true)); ?>
+            <?php echo $this->Html->link('Active Watches', array('controller' => 'watches', 'action' => 'index', 'active' => '1'), array('class' => 'btn btn-default', 'admin' => true)); ?>
+            <?php echo $this->Html->link('Inactive Watches', array('controller' => 'watches', 'action' => 'index', 'active' => '0'), array('class' => 'btn btn-default', 'admin' => true)); ?>
+        </div>
+    </section>
     <div class="table">
         <div class="table-row">
 			<span class="table-head">Image</span>
@@ -41,12 +46,4 @@
 		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
 	?>
 	</div>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('New Watch'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Orders'), array('controller' => 'orders', 'action' => 'index')); ?> </li>
-		<!--<li><?php //echo $this->Html->link(__('New Order'), array('controller' => 'orders', 'action' => 'add')); ?> </li>-->
-	</ul>
 </div>
