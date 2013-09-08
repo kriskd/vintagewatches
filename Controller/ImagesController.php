@@ -41,23 +41,20 @@ class ImagesController extends Controller
         $this->redirect(array('controller' => 'watches', 'action' => 'edit', $id, 'admin' => true));
     }
     
-    /**
-     * Not done, need to change how images are saved due to naming issues
-     */
     public function admin_primary($watchId, $imageId)
-    {
-        if (!$this->Image->exists($imageid)) {
+    {   
+        if (!$this->Image->exists($imageId)) {
             throw new NotFoundException(__('Invalid image'));
         }
         
-        $images = $this->Image->find('list', array('conditions' => array('watch_id' => $watchId),
-                                                   'fields' => (array('id')
-                                                    )
-                                                   )
-                                    );
+        //Set all primary to 0 for all images
         $this->Image->updateAll(array('primary' => 0), array('watch_id' => $watchId));
         
-        $thumb = $this->Image->find('first', array('conditions' => array('id' => $imageId)));
+        //Make the selected impage primary
+        $this->Image->id = $imageId;
+        $this->Image->saveField('primary', 1);
+        
+        $this->redirect($this->referer());
     }
     
         
