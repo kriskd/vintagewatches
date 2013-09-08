@@ -1,13 +1,6 @@
-<div class="watches view"><?php //var_dump($watch); ?>
+<div class="watches view">
 <h2><?php  echo __('Watch'); ?></h2>
 	<dl>
-		<?php if(isset($watch['Watch']['order_id'])): ?>
-			<dt><?php echo __('Order Id'); ?></dt>
-			<dd>
-				<?php echo $this->Html->link(h($watch['Watch']['order_id']),
-						  array('controller' => 'orders', 'action' => 'view', $watch['Watch']['order_id'], 'admin' => true)); ?>
-			</dd>
-		<?php endif; ?>
 		<dt><?php echo __('Stock Id'); ?></dt>
 		<dd>
 			<?php echo h($watch['Watch']['stockId']); ?>
@@ -65,6 +58,7 @@
 			</dd>
 		<?php endif; ?>
 	</dl>
+	<?php echo $this->Element('carousel', compact('watch')); ?>
 </div>
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
