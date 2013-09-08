@@ -10,7 +10,7 @@
                                                              'class' => 'control-label'),
                                             'div' => array('class' => 'card-number-div input required'),
                                             'required' => 'required',
-                                            'between' => '<div class="col-lg-6">',
+                                            'between' => '<div class="col-xs-6">',
                                                'after' => '</div>'
                                         )
                                     ); ?>
@@ -30,7 +30,7 @@
                                                              'class' => 'control-label'),
                                             'div' => array('class' => 'cvc-div input required'),
                                             'required' => 'required',
-                                            'between' => '<div class="col-lg-6">',
+                                            'between' => '<div class="col-xs-6">',
                                             'after' => '</div>'
                                         )
                                     ); ?>
@@ -45,7 +45,7 @@
                                                 'class' => 'card-expiry-month form-control',
                                                 'label' => false,
                                                 'multiple' => false,
-                                                'between' => '<div class="col-lg-3">',
+                                                'between' => '<div class="col-xs-3">',
                                                 'after' => '</div>')); ?>
         <?php echo $this->Form->input('Card.year', array('name' => false,
                                                 'empty' => 'Year',
@@ -55,7 +55,7 @@
                                                 'class' => 'card-expiry-year form-control',
                                                 'label' => false,
                                                 'multiple' => false,
-                                                'between' => '<div class="col-lg-3">',
+                                                'between' => '<div class="col-xs-3">',
                                                 'after' => '</div>')); ?>
         <?php echo $this->Form->end(array('class' => 'btn btn-primary submit-payment', 'label' => 'Submit Payment')); ?>
     </div>

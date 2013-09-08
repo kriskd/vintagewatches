@@ -90,11 +90,11 @@
             <div class="checkout-form">
                 <?php echo $this->Form->input('Order.email', array('label' => array('class' => 'control-label'),
                                                                    'class' => 'form-control',
-                                                                   'between' => '<div class="col-lg-6">',
+                                                                   'between' => '<div class="col-xs-6">',
                                                                    'after' => '</div>')); ?>
                 <?php echo $this->Form->input('Order.phone', array('label' => array('class' => 'control-label'),
                                                                    'class' => 'form-control',
-                                                                   'between' => '<div class="col-lg-6">',
+                                                                   'between' => '<div class="col-xs-6">',
                                                                    'after' => '</div>')); ?>
             </div>
             <?php echo $this->Form->input('Order.notes',
@@ -105,7 +105,9 @@
                                                                      'data-placement' => 'top',
                                                                      'title' => 'Please add any special instructions here or information
                                                                                 you need to pass along to me.',
-                                                                     'escape' => false)) . '</h5>')); ?>
+                                                                     'escape' => false)) . '</h5>',
+                                                'class' => 'form-control')
+                                                ); ?>
         </div>
     </section>
     <section>

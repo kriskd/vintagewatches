@@ -64,7 +64,7 @@ class MyFormHelper extends FormHelper
         $this->inputDefaults(array('label' => array('class' => 'control-label'),
                                     'div' => 'form-group',
                                     'class' => 'form-control',
-                                    'between' => '<div class="col-lg-6">',
+                                    'between' => '<div class="col-xs-6">',
                                     'after' => '</div>'
                                     )
                             );
@@ -78,13 +78,13 @@ class MyFormHelper extends FormHelper
                                                          'class' => 'form-control',
                                                          'options' => $states,
                                                          'empty' => 'Choose One',
-                                                         'between' => '<div class="col-lg-6">',
+                                                         'between' => '<div class="col-xs-6">',
                                                          'after' => '</div>');
                 $this->nameToOptionsMap['postalCode'] = array('label' => 'Zip Code',
                                                               'stripe' => 'address_zip',
                                                               'class' => 'form-control',
                                                               'size' => '5',
-                                                              'between' => '<div class="col-lg-6">',
+                                                              'between' => '<div class="col-xs-6">',
                                                               'after' => '</div>');
                 $this->nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => 'US');
                 break;
@@ -94,13 +94,13 @@ class MyFormHelper extends FormHelper
                                                          'class' => 'form-control',
                                                          'options' => $provinces,
                                                          'empty' => 'Choose One',
-                                                         'between' => '<div class="col-lg-6">',
+                                                         'between' => '<div class="col-xs-6">',
                                                          'after' => '</div>');
                 $this->nameToOptionsMap['postalCode'] = array('label' => 'Postal Code',
                                                               'stripe' => 'address_zip',
                                                               'class' => 'form-control',
                                                               'size' => '7',
-                                                              'between' => '<div class="col-lg-6">',
+                                                              'between' => '<div class="col-xs-6">',
                                                               'after' => '</div>');
                 $this->nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => 'CA');
                 break;
@@ -117,7 +117,7 @@ class MyFormHelper extends FormHelper
                                                               'stripe' => 'address_zip',
                                                               'class' => 'form-control',
                                                               'size' => '7',
-                                                              'between' => '<div class="col-lg-6">',
+                                                              'between' => '<div class="col-xs-6">',
                                                               'after' => '</div>');
                 $this->nameToOptionsMap['countryName'] = array('label' => 'Country');
                 $this->nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => '');
@@ -178,7 +178,7 @@ class MyFormHelper extends FormHelper
                                                       'stripe' => 'address_zip',
                                                       'class' => 'form-control',
                                                       'size' => '7',
-                                                      'between' => '<div class="col-lg-6">',
+                                                      'between' => '<div class="col-xs-6">',
                                                       'after' => '</div>');
         $this->nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => '');
     }
