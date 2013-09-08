@@ -9,6 +9,7 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				src: [
+					'webroot/js/src/carousel.js',
 					'webroot/js/src/dropdown.js',
 					'webroot/js/src/tooltip.js',
 					'webroot/js/src/script.js',
