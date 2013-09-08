@@ -87,7 +87,7 @@ class MyHtmlHelper extends HtmlHelper
                     return $primaryExists;
                 }, null);
             $image = empty($primary) ? current($images) : $primary;
-            return $this->image(array('files', $watch['Watch']['id'], 'thumbs', $image['filename']));
+            return $this->image(array('files', $image['watch_id'], 'thumbs', $image['filename']));
         }
         return 'No Image Available';
     }
