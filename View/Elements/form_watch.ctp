@@ -4,12 +4,18 @@
 	<?php
 		echo $this->Form->input('stockId', array('label' => array('class' => 'control-label'),
 							 'class' => 'form-control',
-							 'type' => 'text'));
+							 'type' => 'text',
+							 'error' => false));
+		echo $this->Form->error('stockId', null, array('class' => 'label label-danger'));
 		echo $this->Form->input('price', array('label' => array('class' => 'control-label'),
 							 'class' => 'form-control',
-							 'min' => 0));
+							 'min' => 0,
+							 'error' => false));
+		echo $this->Form->error('price', null, array('class' => 'label label-danger'));
 		echo $this->Form->input('name', array('label' => array('class' => 'control-label'),
-							 'class' => 'form-control'));
+							 'class' => 'form-control',
+							 'error' => false));
+		echo $this->Form->error('name', null, array('class' => 'label label-danger'));
 		echo $this->Form->input('description', array('label' => array('class' => 'control-label'),
 							 'class' => 'form-control'));
 		echo $this->Form->input('active', array('label' => array('class' => 'control-label'),

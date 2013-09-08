@@ -88,10 +88,10 @@ class WatchesController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Watch->create();
 			if ($this->Watch->save($this->request->data)) {
-				$this->Session->setFlash(__('The watch has been saved'));
-				$this->redirect(array('action' => 'index'));
+				$this->Session->setFlash('Watch ' . $this->Watch->getInsertID() . ' has been created', 'success');
+				$this->redirect(array('action' => 'edit', $this->Watch->getInsertID(), 'admin' => true));
 			} else {
-				$this->Session->setFlash(__('The watch could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The watch could not be saved. Please, try again.'), 'danger');
 			}
 		}
 	}
@@ -108,9 +108,10 @@ class WatchesController extends AppController {
 			throw new NotFoundException(__('Invalid watch'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
+            $this->request->data['Watch']['id'] = $id; 
 			if ($this->Watch->save($this->request->data)) {
-				$this->Session->setFlash(__('The watch has been saved'));
-				$this->redirect(array('action' => 'index'));
+				$this->Session->setFlash(__('The watch has been saved'), 'success');
+				$this->redirect(array('action' => 'edit', $id));
 			} else {
 				$this->Session->setFlash(__('The watch could not be saved. Please, try again.'));
 			}
