@@ -6091,6 +6091,30 @@ span.required {
 .input .error-message {
   margin: -5px 0 5px 170px;
 }
+dl:before,
+dl:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+dl:after {
+  clear: both;
+}
+dl:before,
+dl:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+dl:after {
+  clear: both;
+}
 dl dt {
   float: left;
   width: 160px;
@@ -6154,10 +6178,11 @@ dl dd {
 .watches.form .watch-images .image-thumb a {
   display: block;
 }
-.orders.index {
+.orders {
   max-width: 500px;
 }
-.orders.index h3 {
+.orders h2,
+.orders h3 {
   color: #fff;
   background: #049cdb;
   border-top-right-radius: 5px;
@@ -6167,19 +6192,19 @@ dl dd {
   padding: 0 10px;
   line-height: 40px;
 }
-.orders.index h6 {
+.orders h6 {
   margin: 0;
 }
-.orders.index section {
+.orders section {
   margin-bottom: 25px;
 }
-.orders.index .control-label {
+.orders .control-label {
   margin-right: 5px;
   width: 160px;
   float: left;
   text-align: right;
 }
-.orders.index .checkout-form {
+.orders .checkout-form {
   padding: 5px;
   background: #eeeeee;
   border: 1px solid #555555;
@@ -6188,8 +6213,8 @@ dl dd {
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
 }
-.orders.index .checkout-form:before,
-.orders.index .checkout-form:after {
+.orders .checkout-form:before,
+.orders .checkout-form:after {
   content: " ";
   /* 1 */
 
@@ -6197,11 +6222,11 @@ dl dd {
   /* 2 */
 
 }
-.orders.index .checkout-form:after {
+.orders .checkout-form:after {
   clear: both;
 }
-.orders.index .checkout-form:before,
-.orders.index .checkout-form:after {
+.orders .checkout-form:before,
+.orders .checkout-form:after {
   content: " ";
   /* 1 */
 
@@ -6209,72 +6234,72 @@ dl dd {
   /* 2 */
 
 }
-.orders.index .checkout-form:after {
+.orders .checkout-form:after {
   clear: both;
 }
-.orders.index label {
+.orders label {
   font-size: 90%;
   font-weight: bold;
 }
-.orders.index .review-cart form {
+.orders .review-cart form {
   border: none;
 }
-.orders.index .review-cart label {
+.orders .review-cart label {
   font-weight: normal;
 }
-.orders.index .shipping .shipping-inner {
+.orders .shipping .shipping-inner {
   display: none;
 }
-.orders.index .address .address-form-billing .checkbox {
+.orders .address .address-form-billing .checkbox {
   padding: 10px 0 0 0;
 }
-.orders.index .address .radio.inline {
+.orders .address .radio.inline {
   margin-right: 30px;
 }
-.orders.index .address input,
-.orders.index .address select {
+.orders .address input,
+.orders .address select {
   margin: 5px;
 }
-.orders.index .address .navbar-inner {
+.orders .address .navbar-inner {
   padding: 0 10px;
 }
-.orders.index .address .billing-country-name {
+.orders .address .billing-country-name {
   padding-top: 5px;
   margin-left: 170px;
 }
-.orders.index .address .shipping-instructions {
+.orders .address .shipping-instructions {
   display: none;
 }
-.orders.index .address textarea {
+.orders .address textarea {
   display: none;
   height: 150px;
 }
-.orders.index .checkout-form input {
+.orders .checkout-form input {
   margin: 5px;
 }
-.orders.index .checkout-form .input {
+.orders .checkout-form .input {
   line-height: 20px;
 }
-.orders.index .checkout-form .card-expiry-month {
+.orders .checkout-form .card-expiry-month {
   float: left;
 }
-.orders.index .checkout-form label[for=CardCvc] {
+.orders .checkout-form label[for=CardCvc] {
   padding-top: 10px;
 }
-.orders.index .checkout-form label[for=CardMonth] {
+.orders .checkout-form label[for=CardMonth] {
   padding-top: 5px;
   margin-right: 10px;
 }
-.orders.index .checkout-form select option {
+.orders .checkout-form select option {
   color: #555;
 }
-.orders.index .checkout-form .payment-errors {
+.orders .checkout-form .payment-errors {
   display: none;
 }
-.orders.index .checkout-form .card-number-div {
+.orders .checkout-form .card-number-div {
   height: 52px;
 }
-.orders.index .checkout-form .submit {
+.orders .checkout-form .submit {
   text-align: center;
 }
 .confirm .notes {

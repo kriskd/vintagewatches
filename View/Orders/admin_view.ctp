@@ -1,10 +1,17 @@
 <div class="orders admin-view">
     <h1>Order <?php echo $order['Order']['id']; ?> Detail</h1>
     <h2>Purchases</h2>
-    <table class="table-bordered">
-        <tr><th>Stock ID</th><th>Name</th><th>Price</th></tr>
+    <dl>
+        <dt>Date</dt>
+        <dd><?php echo $order['Order']['created']; ?></dd>
+    </dl>
+    <table class="table table-bordered">
+        <tr><th></th><th>Stock ID</th><th>Name</th><th>Price</th></tr>
         <?php foreach($order['Watch'] as $watch): ?>
             <tr>
+                <td>
+                    <?php echo $this->Html->thumbImagePrimary($watch); ?>
+                </td>
                 <td><?php echo $watch['stockId']; ?></td>
                 <td><?php echo $watch['name']; ?></td>
                 <td class="text-right"><?php echo $this->Number->currency($watch['price'], 'USD'); ?></td>
@@ -12,10 +19,12 @@
         <?php endforeach; ?>
         <tr class="total-row">
             <td></td>
+            <td></td>
             <td class="text-right">Shipping</td>
             <td class="total-formatted-amount text-right"><?php echo $this->Number->currency($order['Order']['shippingAmount'], 'USD'); ?></td>
         </tr>
         <tr class="total-row">
+            <td></td>
             <td></td>
             <td class="text-right">Total</td>
             <td class="total-formatted-amount text-right"><?php echo $this->Number->currency($order['Order']['stripe_amount']/100, 'USD'); ?></td>
