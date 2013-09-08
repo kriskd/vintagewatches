@@ -50,8 +50,8 @@
                                                                              'options' => array('us' => 'U.S.', 'ca' => 'Canada', 'other' => 'Other'),
                                                                              'legend' => false,
                                                                              //'hiddenField' => false,
-                                                                             'div' => "radio inline",
-                                                                             'separator' => '</div><div class="radio inline">',
+                                                                             'div' => "radio-inline",
+                                                                             'separator' => '</div><div class="radio-inline">',
                                                                                 )); ?>
                         </div>
                 </td>

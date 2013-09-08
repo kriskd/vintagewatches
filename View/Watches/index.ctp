@@ -2,14 +2,18 @@
 	<h2><?php echo __('Watches'); ?></h2>
 	<table class="table-striped table-bordered">
 	<tr>
-			<th>Add to Cart</th>
-			<th><?php echo $this->Paginator->sort('stockId'); ?></th>
-			<th><?php echo $this->Paginator->sort('price'); ?></th>
-			<th><?php echo $this->Paginator->sort('name'); ?></th>
-			<th class="description"><?php echo $this->Paginator->sort('description'); ?></th>
+        <th></th>
+		<th>Add to Cart</th>
+		<th><?php echo $this->Paginator->sort('stockId'); ?></th>
+		<th><?php echo $this->Paginator->sort('price'); ?></th>
+		<th><?php echo $this->Paginator->sort('name'); ?></th>
+		<th class="description"><?php echo $this->Paginator->sort('description'); ?></th>
 	</tr>
 	<?php foreach ($watches as $watch): ?>
         <tr>
+            <td>
+                <?php echo $this->Html->thumbImagePrimary($watch); ?>
+            </td>
             <td>
                 <?php if($this->Cart->inCart($watch['Watch']['id'], $controller)): ?>
                     <span class="label label-important">This item is in your cart</span>
