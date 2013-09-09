@@ -12,17 +12,20 @@
     </section>
     <div class="table">
         <div class="table-row">
-			<span class="table-head">Image</span>
-			<span class="table-head"><?php echo $this->Paginator->sort('stockId'); ?></span>
-			<span class="table-head"><?php echo $this->Paginator->sort('price'); ?></span>
-			<span class="table-head"><?php echo $this->Paginator->sort('name'); ?></span>
-			<span class="table-head"><?php echo $this->Paginator->sort('description'); ?></span>
-			<span class="table-head"><?php echo $this->Paginator->sort('created'); ?></span>
-			<span class="table-head"><?php echo $this->Paginator->sort('modified'); ?></span>
+            <span class="table-head">Image</span>
+            <span class="table-head">Order</span>
+            <span class="table-head"><?php echo $this->Paginator->sort('stockId'); ?></span>
+            <span class="table-head"><?php echo $this->Paginator->sort('price'); ?></span>
+            <span class="table-head"><?php echo $this->Paginator->sort('name'); ?></span>
+            <span class="table-head"><?php echo $this->Paginator->sort('description'); ?></span>
+            <span class="table-head"><?php echo $this->Paginator->sort('created'); ?></span>
+            <span class="table-head"><?php echo $this->Paginator->sort('modified'); ?></span>
         </div>
         <?php foreach ($watches as $watch): ?>
+            <?php $orderId = isset($watch['Order']['id']) ? $watch['Order']['id'] : ''; ?>
             <?php $row = ''; ?>
             <?php $row .= $this->Html->tag('span', $this->Html->thumbImagePrimary($watch), array('class' => 'table-cell')); ?>
+            <?php $row .= $this->Html->tag('span', $orderId, array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['stockId']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['price']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['name']), array('class' => 'table-cell')); ?>
