@@ -46,17 +46,13 @@
 </head>
 <body>
 	<div class="container">
-		<div id="header">
-			<h1></h1>
-		</div>
+		<?php echo $this->Element('header'); ?>
 		<div id="content">
 			<?php echo $this->Element('navigation'); ?>
 			<?php echo $this->Session->flash(); ?>
 			<?php echo $this->fetch('content'); ?>
 		</div>
-		<div id="footer">
-
-		</div>
+		<?php echo $this->Element('footer'); ?>
 	</div>
 	<?php //echo $this->element('sql_dump'); ?>
 </body>

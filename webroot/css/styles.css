@@ -6133,6 +6133,16 @@ dl dd {
 .paging .disabled {
   display: none;
 }
+#header .col-md-4,
+#header .col-md-2 {
+  margin-top: 20px;
+}
+#header .col-md-4 {
+  font-style: italic;
+}
+#header .col-md-2 {
+  text-align: right;
+}
 .watches.index {
   text-align: center;
 }
