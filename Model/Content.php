@@ -8,13 +8,6 @@ App::uses('AppModel', 'Model');
 class Content extends AppModel {
 
 /**
- * Use database config
- *
- * @var string
- */
-	public $useDbConfig = 'development';
-
-/**
  * Validation rules
  *
  * @var array
