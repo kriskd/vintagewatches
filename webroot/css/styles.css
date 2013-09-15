@@ -6017,6 +6017,9 @@ td.visible-print {
 .form-group {
   margin-bottom: 0;
 }
+body {
+  padding-top: 70px;
+}
 input:focus:invalid {
   border-color: #ee6f6b;
   color: #b94a48;
@@ -6133,15 +6136,15 @@ dl dd {
 .paging .disabled {
   display: none;
 }
+#header {
+  margin-bottom: 20px;
+}
 #header .col-md-4,
 #header .col-md-2 {
   margin-top: 20px;
 }
 #header .col-md-4 {
   font-style: italic;
-}
-#header .col-md-2 {
-  text-align: right;
 }
 .watches.index {
   text-align: center;
