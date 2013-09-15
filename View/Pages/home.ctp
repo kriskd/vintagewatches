@@ -1,5 +1,5 @@
-<div id="header">
-    <div class="row">
+<div class="page">
+    <div class="row header">
         <div class="col-md-8">
             <h1>Bruces's Vintage Watches</h1>
             <h4>Fine timepieces at reasonable prices from a name you trust.</h4>
@@ -9,7 +9,14 @@
             with an unconditional seven-day money back guarantee.
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-8">
+            <?php foreach ($page['Content'] as $content): ?>
+                <?php echo $content['value']; ?>
+            <?php endforeach; ?>
+        </div>
+        <div class="col-md-4">
+            <?php echo $this->Element('recent_watches'); ?>
+        </div>
+    </div>
 </div>
-<?php foreach ($page['Content'] as $content): ?>
-	<?php echo $content['value']; ?>
-<?php endforeach; ?>

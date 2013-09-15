@@ -76,7 +76,7 @@ class MyHtmlHelper extends HtmlHelper
     /**
      * Returns primary image if one is designated or the first image if not
      */
-    public function thumbImagePrimary($watch)
+    public function thumbImagePrimary($watch, $options = array())
     {   
         if (!empty($watch['Image'])) {
             $images = $watch['Image'];
@@ -87,7 +87,7 @@ class MyHtmlHelper extends HtmlHelper
                     return $primaryExists;
                 }, null);
             $image = empty($primary) ? current($images) : $primary;
-            return $this->image(array('files', $image['watch_id'], 'thumbs', $image['filename']));
+            return $this->image(array('files', $image['watch_id'], 'thumbs', $image['filename']), $options);
         }
         return 'No Image Available';
     }

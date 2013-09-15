@@ -167,16 +167,45 @@ dl {
     }
 }
 
-#header {
-    margin-bottom: 20px;
-    .col-md-4, .col-md-2 {
-        margin-top: 20px;
+.page {
+    .row {
+        margin-bottom: 20px;
     }
-    .col-md-4 {
-        font-style: italic;
+    .header {
+        .col-md-8 {
+            border: 2px solid @goldDark;
+            background: @gray-light;
+            h1, h4 {
+                color: @goldDark;
+            }
+            .border-top-radius(5px);
+            .border-right-radius(5px);
+            .border-bottom-radius(5px);
+            .border-left-radius(5px);
+        }
+        .col-md-4 {
+            margin-top: 20px;
+            font-style: italic;
+            font-weight: bold;
+        }
     }
-    .col-md-2 {
+}
 
+.recent-watches {
+    border: 1px solid @goldDark;
+    .border-top-radius(5px);
+    .border-right-radius(5px);
+    .border-bottom-radius(5px);
+    .border-left-radius(5px);
+    background: @gray-lighter;
+    padding: 10px;
+    h3 {
+        margin: 0px 0px -10px 0px;
+        text-align: center;
+        color: @goldDark;
+    }
+    hr {
+        border-top-color: @goldDark;
     }
 }
 .watches.index {
