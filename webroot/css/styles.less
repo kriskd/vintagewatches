@@ -31,10 +31,10 @@
     -webkit-font-smoothing: antialiased;
 }
 
-a:link, a:visited, a:active {
+a:link:not(.btn, .navbar-fixed-top), a:visited:not(.btn, .navbar-fixed-top), a:active:not(.btn, .navbar-fixed-top) {
     color: @goldDark;
 }
-a:hover {
+a:hover:not(.btn, .navbar-fixed-top) {
     color: @gold;
 }
 
@@ -154,7 +154,7 @@ dl {
 }
 
 .navbar-inverse {
-    .navbar-brand {
+    a:link, a:visited, a:hover, a:active {
         color: @gold;
     }
 }
@@ -396,5 +396,11 @@ dl {
 .confirm {
     .notes {
         width: 500px;
+    }
+}
+
+.pages.admin-edit {
+    textarea {
+        height: 300px;
     }
 }

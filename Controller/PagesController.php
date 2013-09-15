@@ -37,13 +37,16 @@ class PagesController extends AppController {
  * @var string
  */
 	public $name = 'Pages';
-
-/**
- * This controller does not use a model
- *
- * @var array
- */
-	public $uses = array();
+	
+	public $paginate = array(
+			'limit' => 10,
+			'order' => array(
+				'Page.name'
+			),
+			'recursive' => -1
+		);
+    
+    public $users = array('Page', 'Content');
 
 /**
  * Displays a view
@@ -80,4 +83,30 @@ class PagesController extends AppController {
 		$this->set(compact('page', 'subpage', 'title_for_layout'));
 		$this->render(implode('/', $path));*/
 	}
+	
+	public function admin_index()
+	{
+		$pages = $this->Paginator->paginate('Page');
+		$this->set('pages', $pages);
+	}
+	
+	public function admin_edit($id = null)
+	{
+		if (!$this->Page->exists($id)) {
+			throw new NotFoundException(__('Invalid page'));
+		}
+        if ($this->request->is('post') || $this->request->is('put')) { //var_dump($this->request->data); exit;
+            $this->loadModel('Content');
+            if ($this->Content->save($this->request->data)) {
+                $this->Session->setFlash(__('The page has been saved'), 'success');
+                $this->redirect(array('action' => 'edit', $id));
+            } else {
+                $this->Session->setFlash(__('The page could not be saved. Please, try again.'));
+                }
+            } else {
+                $options = array('conditions' => array('Page.' . $this->Page->primaryKey => $id));
+                $this->request->data = $this->Page->find('first', $options);
+                $this->set('page', $this->Page->find('first', $options));
+            }
+        }
 }

@@ -6019,12 +6019,12 @@ td.visible-print {
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.33);
   -webkit-font-smoothing: antialiased;
 }
-a:link,
-a:visited,
-a:active {
+a:link:not(.btn, .navbar-fixed-top),
+a:visited:not(.btn, .navbar-fixed-top),
+a:active:not(.btn, .navbar-fixed-top) {
   color: #665600;
 }
-a:hover {
+a:hover:not(.btn, .navbar-fixed-top) {
   color: #b29600;
 }
 .label-warning {
@@ -6160,7 +6160,10 @@ dl dd {
 .paging .disabled {
   display: none;
 }
-.navbar-inverse .navbar-brand {
+.navbar-inverse a:link,
+.navbar-inverse a:visited,
+.navbar-inverse a:hover,
+.navbar-inverse a:active {
   color: #b29600;
 }
 .navbar .navbar-right img {
@@ -6420,4 +6423,7 @@ dl dd {
 }
 .confirm .notes {
   width: 500px;
+}
+.pages.admin-edit textarea {
+  height: 300px;
 }
