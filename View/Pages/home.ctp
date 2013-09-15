@@ -1,7 +1,7 @@
 <div class="page">
     <div class="row header">
         <div class="col-md-8">
-            <h1>Bruces's Vintage Watches</h1>
+            <h1>Bruce's Vintage Watches</h1>
             <h4>Fine timepieces at reasonable prices from a name you trust.</h4>
         </div>
         <div class="col-md-4">
