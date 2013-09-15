@@ -16,9 +16,9 @@
             </td>
             <td>
                 <?php if($this->Cart->inCart($watch['Watch']['id'], $controller)): ?>
-                    <span class="label label-info">This item is in your cart</span>
+                    <span class="label label-warning">This item is in your cart</span>
                 <?php else: ?>
-                    <?php echo $this->Html->link('Add to Cart', array('controller' => 'orders', 'action' => 'add', $watch['Watch']['id']), array('class' => 'btn btn-primary')); ?>
+                    <?php echo $this->Html->link('Add to Cart', array('controller' => 'orders', 'action' => 'add', $watch['Watch']['id']), array('class' => 'btn btn-gold')); ?>
                 <?php endif; ?>
             </td>
             <td><?php echo h($watch['Watch']['stockId']); ?>&nbsp;</td>
