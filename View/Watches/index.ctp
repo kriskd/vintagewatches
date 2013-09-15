@@ -15,11 +15,7 @@
                 <?php echo $this->Html->link($this->Html->thumbImagePrimary($watch), array('action' => 'view', $watch['Watch']['id']), array('escape' => false)); ?>
             </td>
             <td>
-                <?php if($this->Cart->inCart($watch['Watch']['id'], $controller)): ?>
-                    <span class="label label-warning">This item is in your cart</span>
-                <?php else: ?>
-                    <?php echo $this->Html->link('Add to Cart', array('controller' => 'orders', 'action' => 'add', $watch['Watch']['id']), array('class' => 'btn btn-gold')); ?>
-                <?php endif; ?>
+                <?php echo $this->Element('add_to_cart', compact('watch', 'controller') + array('class' => 'btn btn-gold')); ?>
             </td>
             <td><?php echo h($watch['Watch']['stockId']); ?>&nbsp;</td>
             <td><?php echo h($this->Number->currency($watch['Watch']['price'], 'USD')); ?>&nbsp;</td>
