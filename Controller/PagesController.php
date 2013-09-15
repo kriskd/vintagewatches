@@ -52,9 +52,17 @@ class PagesController extends AppController {
  * @return void
  */
 	public function display() {
-		$path = func_get_args();
-
-		$count = count($path);
+		$path = func_get_args(); 
+		$slug = current($path); 
+		$page = $this->Page->find('first', array('conditions' => array('slug' => $slug)));
+		if (empty($path)) {
+			$this->redirect('/');
+		}
+		$title_for_layout = $page['Page']['name'];
+		$this->set(compact('page', 'title_for_layout'));
+		$this->render('home');
+		
+		/*$count = count($path);
 		if (!$count) {
 			$this->redirect('/');
 		}
@@ -70,6 +78,6 @@ class PagesController extends AppController {
 			$title_for_layout = Inflector::humanize($path[$count - 1]);
 		}
 		$this->set(compact('page', 'subpage', 'title_for_layout'));
-		$this->render(implode('/', $path));
+		$this->render(implode('/', $path));*/
 	}
 }

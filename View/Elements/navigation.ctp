@@ -27,6 +27,11 @@
                     </ul>
                 </li>
             <?php endif; ?>
+            <?php //Wrapped in <li> in Component ?>
+            <?php echo $this->Html->navLink('<i class="glyphicon glyphicon-tags"></i>&nbsp;&nbsp;Go to the Store',
+                                         array('controller' => 'watches', 'action' => 'index'),
+                                         array('escape' => false),
+                                         false); ?>
             <li class="<?php echo strcasecmp($controller->name, 'orders')==0 && $this->params->prefix != 'admin' ? 'active' : '' ?>">
                 <?php echo $this->Html->cartLink('Checkout <i class="glyphicon glyphicon-shopping-cart"></i> ' . $this->Cart->cartCount('Items in Your Cart: ', '', $controller),
                                                  array('controller' => 'orders', 'action' => 'index'),
@@ -34,12 +39,7 @@
                                                  false,
                                                  $controller); ?>
             </li>
-            <?php //Wrapped in <li> in Component ?>
-        
-            <?php echo $this->Html->navLink('<i class="glyphicon glyphicon-tags"></i>&nbsp;&nbsp;Go Back to Store',
-                                         array('controller' => 'watches', 'action' => 'index'),
-                                         array('escape' => false),
-                                         false); ?>
+
             <li class="dropdown">
                 <?php echo $this->Html->link('About Us<span class="caret"></span>', '#',
                                              array('class' => 'dropdown-toggle',
