@@ -6166,15 +6166,42 @@ dl dd {
 .navbar .navbar-right img {
   margin-top: 10px;
 }
-#header {
+.page .row {
   margin-bottom: 20px;
 }
-#header .col-md-4,
-#header .col-md-2 {
-  margin-top: 20px;
+.page .header .col-md-8 {
+  border: 2px solid #665600;
+  background: #999999;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
 }
-#header .col-md-4 {
+.page .header .col-md-8 h1,
+.page .header .col-md-8 h4 {
+  color: #665600;
+}
+.page .header .col-md-4 {
+  margin-top: 20px;
   font-style: italic;
+  font-weight: bold;
+}
+.recent-watches {
+  border: 1px solid #665600;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  background: #eeeeee;
+  padding: 10px;
+}
+.recent-watches h3 {
+  margin: 0px 0px -10px 0px;
+  text-align: center;
+  color: #665600;
+}
+.recent-watches hr {
+  border-top-color: #665600;
 }
 .watches.index {
   text-align: center;

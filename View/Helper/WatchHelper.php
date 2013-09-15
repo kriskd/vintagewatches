@@ -1,6 +1,6 @@
 <?php
 
-class WatchHelper extends Helper
+class WatchHelper extends AppHelper
 {
     public function shortDescription($description, $more = null, $limit = 50)
     {
@@ -14,5 +14,10 @@ class WatchHelper extends Helper
             return $ret;
         }
         return $description;
+    }
+    
+    public function getRecentWatches($count = 3)
+    {
+        return ClassRegistry::init('Watch')->getRecentWatches();
     }
 }
