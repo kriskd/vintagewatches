@@ -10,6 +10,37 @@
 @orange:                #f89406;
 @pink:                  #c3325f;
 @purple:                #7a43b6;
+@gold:                  #b29600;
+@goldDark:              #665600;
+
+// Buttons
+.btn-gold {
+    background-color: hsl(177, 90%, 10%) !important;
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="@gold", endColorstr="@goldDark");
+    background-image: -khtml-gradient(linear, left top, left bottom, from(@gold), to(@goldDark));
+    background-image: -moz-linear-gradient(top, @gold, @goldDark);
+    background-image: -ms-linear-gradient(top, @gold, @goldDark);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, @gold), color-stop(100%, @goldDark));
+    background-image: -webkit-linear-gradient(top, @gold, @goldDark);
+    background-image: -o-linear-gradient(top, @gold, @goldDark);
+    background-image: linear-gradient(@gold, @goldDark);
+    border-color: @goldDark @goldDark hsl(177, 90%, 5%);
+    color: #fff !important;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.33);
+    -webkit-font-smoothing: antialiased;
+}
+
+a:link, a:visited, a:hover, a:active {
+    color: @goldDark;
+}
+a:hover {
+    color: @gold;
+}
+
+.label-warning {
+    background-color: @gold;
+}
 
 .glyphicon {
     font-size: 120%;
@@ -43,7 +74,7 @@ h1, h2, h3, h4, h5, h6 {
 table {
     background: @gray-lighter;
     th {
-        color: @blueDark;
+        color: @goldDark;
         border-bottom: 1px solid @gray-light;
         text-align: center;
     }
@@ -61,7 +92,7 @@ table {
         padding: 10px;
     }
     .table-head {
-        color: @blueDark;
+        color: @goldDark;
         border-bottom: 1px solid @gray-light;
         display: table-cell;
         text-align: center;
@@ -124,7 +155,7 @@ dl {
 
 .navbar-inverse {
     .navbar-brand {
-        color: #b29600;
+        color: @gold;
     }
 }
     
@@ -218,7 +249,7 @@ dl {
     max-width: 500px;
     h2, h3 {
         color: #fff;
-        background: @blue;
+        background: @goldDark;
         .border-top-radius(5px);
         .border-right-radius(5px);
         .border-bottom-radius(5px);

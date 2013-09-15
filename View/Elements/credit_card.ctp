@@ -57,6 +57,6 @@
                                                 'multiple' => false,
                                                 'between' => '<div class="col-xs-3">',
                                                 'after' => '</div>')); ?>
-        <?php echo $this->Form->end(array('class' => 'btn btn-primary submit-payment', 'label' => 'Submit Payment')); ?>
+        <?php echo $this->Form->end(array('class' => 'btn btn-gold submit-payment', 'label' => 'Submit Payment')); ?>
     </div>
 </div>

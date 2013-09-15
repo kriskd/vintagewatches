@@ -6003,6 +6003,34 @@ td.visible-print {
     display: none !important;
   }
 }
+.btn-gold {
+  background-color: #03302e !important;
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="@gold", endColorstr="@goldDark");
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#b29600), to(#665600));
+  background-image: -moz-linear-gradient(top, #b29600, #665600);
+  background-image: -ms-linear-gradient(top, #b29600, #665600);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #b29600), color-stop(100%, #665600));
+  background-image: -webkit-linear-gradient(top, #b29600, #665600);
+  background-image: -o-linear-gradient(top, #b29600, #665600);
+  background-image: linear-gradient(#b29600, #665600);
+  border-color: #665600 #665600 #011817;
+  color: #fff !important;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.33);
+  -webkit-font-smoothing: antialiased;
+}
+a:link,
+a:visited,
+a:hover,
+a:active {
+  color: #665600;
+}
+a:hover {
+  color: #b29600;
+}
+.label-warning {
+  background-color: #b29600;
+}
 .glyphicon {
   font-size: 120%;
 }
@@ -6036,7 +6064,7 @@ table {
   background: #eeeeee;
 }
 table th {
-  color: #0064cd;
+  color: #665600;
   border-bottom: 1px solid #999999;
   text-align: center;
 }
@@ -6055,7 +6083,7 @@ table .total-row td {
   padding: 10px;
 }
 .table .table-head {
-  color: #0064cd;
+  color: #665600;
   border-bottom: 1px solid #999999;
   display: table-cell;
   text-align: center;
@@ -6238,7 +6266,7 @@ dl dd {
 .orders h2,
 .orders h3 {
   color: #fff;
-  background: #049cdb;
+  background: #665600;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
