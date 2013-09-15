@@ -1,5 +1,8 @@
 <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
     <div class="container">
+        <div class="navbar-header">
+            <?php echo $this->Html->link('Bruce\'s Vintage Watches', '/', array('class' => 'navbar-brand')); ?>
+        </div>
         <ul class="nav navbar-nav">
             <?php if($loggedIn == true): ?>
                 <li class="dropdown <?php echo $this->params->prefix == 'admin' ? 'active' : ''; ?>">
@@ -48,6 +51,11 @@
                     <li><?php echo $this->Html->link('Selling/Trading Your Watches', '#'); ?></li>
                     <li><?php echo $this->Html->link('Contact Me', '#'); ?></li>
                 </ul>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <?php echo $this->Html->image('credit_card_logos_43.gif'); ?>
             </li>
         </ul>
     </div>
