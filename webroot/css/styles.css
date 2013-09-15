@@ -6166,6 +6166,14 @@ dl dd {
 .navbar .navbar-right img {
   margin-top: 10px;
 }
+.navbar-fixed-bottom .navbar-text {
+  float: none;
+}
+.navbar-fixed-bottom p {
+  text-align: center;
+  font-size: 90%;
+  font-weight: bold;
+}
 .page .row {
   margin-bottom: 20px;
 }
