@@ -6024,9 +6024,6 @@ input:focus:invalid {
   border-color: #ee6f6b;
   color: #b94a48;
 }
-.nav-tabs a {
-  color: #555555;
-}
 h1,
 h2,
 h3,
@@ -6135,6 +6132,12 @@ dl dd {
 }
 .paging .disabled {
   display: none;
+}
+.navbar-inverse .navbar-brand {
+  color: #b29600;
+}
+.navbar .navbar-right img {
+  margin-top: 10px;
 }
 #header {
   margin-bottom: 20px;
