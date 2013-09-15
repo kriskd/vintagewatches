@@ -20,6 +20,11 @@
                                                           array('escape' => false),
                                                           false,
                                                           $controller); ?>
+                        <?php echo $this->Html->adminLink('<i class="glyphicon glyphicon-book"></i> Pages',
+                                                          array('controller' => 'pages', 'action' => 'admin_index'),
+                                                          array('escape' => false),
+                                                          false,
+                                                          $controller); ?>
                         <li><?php echo $this->Html->link('<i class="glyphicon glyphicon-off"></i> Logout',
                                                          array('controller' => 'users', 'action' => 'logout', 'admin' => false),
                                                          array('escape' => false)
