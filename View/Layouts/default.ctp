@@ -45,10 +45,10 @@
 	
 </head>
 <body>
+	<?php echo $this->Element('navigation'); ?>
 	<div class="container">
 		<?php echo $this->Element('header'); ?>
 		<div id="content">
-			<?php echo $this->Element('navigation'); ?>
 			<?php echo $this->Session->flash(); ?>
 			<?php echo $this->fetch('content'); ?>
 		</div>
