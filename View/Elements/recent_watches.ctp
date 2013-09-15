@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-md-12">
                 <?php $more = $this->Html->link('<strong>More details</strong>',
-                                                array('action' => 'view', $watch['Watch']['id']),
+                                                array('controller' => 'watches', 'action' => 'view', $watch['Watch']['id']),
                                                 array('escape' => false)); ?>
                 <p><?php echo $this->Watch->shortDescription($watch['Watch']['description'], $more, 20); ?></p>
             </div>
