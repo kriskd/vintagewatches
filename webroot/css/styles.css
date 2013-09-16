@@ -6045,7 +6045,7 @@ td.visible-print {
   margin-bottom: 0;
 }
 body {
-  padding-top: 70px;
+  padding: 70px 0;
 }
 input:focus:invalid {
   border-color: #ee6f6b;
