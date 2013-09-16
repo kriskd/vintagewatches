@@ -31,13 +31,14 @@
     -webkit-font-smoothing: antialiased;
 }
 
-a:link:not(.btn, .navbar-fixed-top), a:visited:not(.btn, .navbar-fixed-top), a:active:not(.btn, .navbar-fixed-top) {
-    color: @goldDark;
+#content {
+    a:link:not(.btn), a:visited:not(.btn), a:active:not(.btn) {
+        color: @goldDark;
+    }
+    a:hover:not(.btn) {
+        color: @gold;
+    }
 }
-a:hover:not(.btn, .navbar-fixed-top) {
-    color: @gold;
-}
-
 .label-warning {
     background-color: @gold;
 }
@@ -153,7 +154,7 @@ dl {
     }
 }
 
-.navbar-inverse {
+.navbar-header {
     a:link, a:visited, a:hover, a:active {
         color: @gold;
     }
