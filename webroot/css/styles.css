@@ -6426,4 +6426,5 @@ dl dd {
 }
 .pages.admin-edit textarea {
   height: 300px;
+  margin-bottom: 20px;
 }
