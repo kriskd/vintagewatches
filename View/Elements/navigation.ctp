@@ -52,7 +52,8 @@
                                                     'escape' => false)
                                             ); ?>
                 <ul class="dropdown-menu">
-                    <li><?php echo $this->Html->link('Essential Information', '#'); ?></li>
+                    <li><?php echo $this->Html->link('Essential Information', array('controller' => 'pages',
+                                                                                    'action' => 'display', 'essential-information')); ?></li>
                     <li><?php echo $this->Html->link('Selling/Trading Your Watches', '#'); ?></li>
                     <li><?php echo $this->Html->link('Contact Me', '#'); ?></li>
                 </ul>
