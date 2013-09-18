@@ -6115,9 +6115,6 @@ span.required {
   color: #9d261d;
   font-size: 90%;
 }
-.input .error-message {
-  margin: -5px 0 5px 170px;
-}
 dl:before,
 dl:after {
   content: " ";
@@ -6355,6 +6352,9 @@ dl dd {
 }
 .orders .checkout-form:after {
   clear: both;
+}
+.orders .checkout-form .error-message {
+  margin: 0 0 2px 188px;
 }
 .orders label {
   font-size: 90%;
