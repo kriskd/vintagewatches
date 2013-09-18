@@ -23,7 +23,7 @@ class Page extends AppModel {
 		'name' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Page name is required.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -39,6 +39,10 @@ class Page extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
+                        'slug' => array(
+                                'rule' => array('custom', '/[a-z0-9\-]/'),
+                                'message' => 'Only lowercase letters, number and dashes.'
+                        )
 		),
 		'created' => array(
 			'datetime' => array(
