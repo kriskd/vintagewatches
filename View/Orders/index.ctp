@@ -94,8 +94,8 @@
             <div class="checkout-form">
                 <?php echo $this->Form->input('Order.email', array('label' => array('class' => 'control-label'),
                                                                    'class' => 'form-control',
-                                                                   'between' => '<div class="col-xs-6">',
-                                                                   'after' => '</div>')); ?>
+                                                                   'between' => '<div class="clearfix"><div class="col-xs-6">',
+                                                                   'after' => '</div></div>')); ?>
                 <?php echo $this->Form->input('Order.phone', array('label' => array('class' => 'control-label'),
                                                                    'class' => 'form-control',
                                                                    'between' => '<div class="col-xs-6">',
