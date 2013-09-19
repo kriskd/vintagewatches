@@ -13,6 +13,7 @@ module.exports = function(grunt) {
 					'webroot/js/src/dropdown.js',
 					'webroot/js/src/modal.js',
 					'webroot/js/src/tooltip.js',
+					'webroot/js/src/collapse.js',
 					'webroot/js/src/script.js',
 				],
 				dest: 'webroot/js/build/scripts.js'
