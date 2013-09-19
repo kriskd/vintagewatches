@@ -6177,7 +6177,7 @@ dl dd {
 .page .row {
   margin-bottom: 20px;
 }
-.page .header .col-md-8 {
+.page .header .col-sm-8 {
   border: 2px solid #665600;
   background: #999999;
   border-top-right-radius: 5px;
@@ -6185,11 +6185,11 @@ dl dd {
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
 }
-.page .header .col-md-8 h1,
-.page .header .col-md-8 h4 {
+.page .header .col-sm-8 h1,
+.page .header .col-sm-8 h4 {
   color: #665600;
 }
-.page .header .col-md-4 {
+.page .header .col-sm-4 {
   margin-top: 20px;
   font-style: italic;
   font-weight: bold;
