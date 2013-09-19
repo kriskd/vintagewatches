@@ -54,7 +54,7 @@ class MyFormHelper extends FormHelper
      */
     public function addressForm($type, $data, $stripe = false, $required = false)
     {   
-        $country = $data['country'];
+        $country = $data['country']; 
         $statesProvinces = $data['statesProvinces'];
         $values = isset($data['values'][$type]) ? $data['values'][$type] : null; 
         $errors = isset($data['errors'][$type]) ? $data['errors'][$type] : null; 
@@ -114,7 +114,9 @@ class MyFormHelper extends FormHelper
                                                               'class' => 'form-control',
                                                               'size' => '7',
                                                               );
-                $this->nameToOptionsMap['countryName'] = array('label' => 'Country');
+                if ($stripe == true) {
+                    $this->nameToOptionsMap['countryName'] = array('label' => 'Country');
+                }
                 $this->nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => '');
                 break;
         }

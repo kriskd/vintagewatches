@@ -6384,7 +6384,7 @@ dl dd {
 }
 .orders .address .billing-country-name {
   padding-top: 5px;
-  margin-left: 170px;
+  margin-left: 10px;
 }
 .orders .address .shipping-instructions {
   display: none;
