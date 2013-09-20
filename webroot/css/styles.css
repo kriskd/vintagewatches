@@ -6157,22 +6157,50 @@ dl dd {
 .paging .disabled {
   display: none;
 }
-.navbar-header a:link,
-.navbar-header a:visited,
-.navbar-header a:hover,
-.navbar-header a:active {
+.navbar .navbar-header a:link,
+.navbar .navbar-header a:visited,
+.navbar .navbar-header a:hover,
+.navbar .navbar-header a:active {
   color: #b29600;
 }
 .navbar .navbar-right img {
   margin-top: 10px;
 }
-.navbar-fixed-bottom .navbar-text {
+.navbar img.credit-card-logos {
+  float: right;
+  margin-top: 10px;
+}
+.navbar .navbar-fixed-bottom .navbar-text {
   float: none;
 }
-.navbar-fixed-bottom p {
+.navbar .navbar-fixed-bottom p {
   text-align: center;
   font-size: 90%;
   font-weight: bold;
+}
+@media (min-width: 768px) {
+  .navbar .navbar-right {
+    display: none;
+  }
+  .navbar .navbar-header .credit-card-logos {
+    display: block;
+  }
+}
+@media (min-width: 992px) {
+  .navbar .navbar-right {
+    display: block;
+  }
+  .navbar .navbar-header .credit-card-logos {
+    display: none;
+  }
+}
+@media (min-width: 1200px) {
+  .navbar .navbar-right {
+    display: block;
+  }
+  .navbar .navbar-header .credit-card-logos {
+    display: none;
+  }
 }
 .page .row {
   margin-bottom: 20px;
