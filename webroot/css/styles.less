@@ -151,31 +151,77 @@ dl {
         display: none;
     }
 }
-
-.navbar-header {
-    a:link, a:visited, a:hover, a:active {
-        color: @gold;
-    }
-}
     
 .navbar {
+    .navbar-header {
+        a:link, a:visited, a:hover, a:active {
+            color: @gold;
+        }
+    }
+    //Medium & large screens
     .navbar-right {
         img {
             margin-top: 10px;
         }
     }
+    //Small screens
+    img.credit-card-logos {
+        float: right;
+        margin-top: 10px;
+    }
+    .navbar-fixed-bottom {
+        .navbar-text {
+            float: none;
+        }
+        p {
+            text-align: center;
+            font-size: 90%;
+            font-weight: bold;
+        }
+    }
 }
 
-.navbar-fixed-bottom {
-    .navbar-text {
-        float: none;
-    }
-    p {
-        text-align: center;
-        font-size: 90%;
-        font-weight: bold;
+//Small screens - credit card logos are in the navbar-header and don't become part of dropdown
+@media (min-width: @screen-sm) {
+    .navbar {
+        .navbar-right {
+            display: none;
+        }
+        .navbar-header {
+            .credit-card-logos {
+                display: block;
+            }
+        }
     }
 }
+
+//Medium & large screens - credit card logos are in the navbar-right so it stays floated right
+@media (min-width: @screen-md) {
+    .navbar {
+        .navbar-right {
+            display: block;
+        }
+        .navbar-header {
+            .credit-card-logos {
+                display: none;
+            }
+        }
+    }
+}
+
+@media (min-width: @screen-lg) {
+    .navbar {
+        .navbar-right {
+            display: block;
+        }
+        .navbar-header {
+            .credit-card-logos {
+                display: none;
+            }
+        }
+    }
+}
+
 .page {
     .row {
         margin-bottom: 20px;

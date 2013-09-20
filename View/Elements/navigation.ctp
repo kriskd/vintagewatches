@@ -12,6 +12,7 @@
                                                      )
                                             ); ?>
             <?php echo $this->Html->link('Bruce\'s Vintage Watches', '/', array('class' => 'navbar-brand')); ?>
+            <?php echo $this->Html->image('credit_card_logos_43.gif', array('class' => 'credit-card-logos')); ?>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
