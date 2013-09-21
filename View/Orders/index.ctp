@@ -92,14 +92,16 @@
         <div class="shipping-instructions">
             <h5>Email and Phone Number</h5>
             <div class="checkout-form">
-                <?php echo $this->Form->input('Order.email', array('label' => array('class' => 'control-label'),
-                                                                   'class' => 'form-control',
-                                                                   'between' => '<div class="clearfix"><div class="col-xs-6">',
-                                                                   'after' => '</div></div>')); ?>
-                <?php echo $this->Form->input('Order.phone', array('label' => array('class' => 'control-label'),
+                <?php echo $this->Form->input('Order.email', array('label' => array('class' => 'control-label col-xs-2'),
                                                                    'class' => 'form-control',
                                                                    'between' => '<div class="col-xs-6">',
-                                                                   'after' => '</div>')); ?>
+                                                                   'after' => '</div>',
+                                                                   'div' => 'form-group row')); ?>
+                <?php echo $this->Form->input('Order.phone', array('label' => array('class' => 'control-label col-xs-2'),
+                                                                   'class' => 'form-control',
+                                                                   'between' => '<div class="col-xs-6">',
+                                                                   'after' => '</div>',
+                                                                   'div' => 'form-group row')); ?>
             </div>
             <?php echo $this->Form->input('Order.notes',
                                           array('label' => '<h5>' . $this->Html->link('Special Order Instructions

@@ -62,10 +62,10 @@ class MyFormHelper extends FormHelper
         $this->setNameToOptionsMap();
         $requiredAttrs = array('firstName', 'lastName', 'address1', 'city', 'state', 'postalCode', 'countryName', 'country');
         $this->inputDefaults(array('label' => array('class' => 'control-label col-xs-2'),
-                                    'div' => 'form-group',
+                                    'div' => 'form-group row',
                                     'class' => 'form-control',
-                                    'between' => '<div class="clearfix"><div class="col-xs-6">',
-                                    'after' => '</div></div>'
+                                    'between' => '<div class="col-xs-6">',
+                                    'after' => '</div>'
                                     )
                             );
 
@@ -156,7 +156,7 @@ class MyFormHelper extends FormHelper
                     //Add errors manually since form is loaded via ajax
                     $errorClass = '<div class="error-message">' . $error . '</div>';
                     //Add 2 closing divs since this will over write the after key in inputDefaults
-                    $options['after'] = '</div></div>' . $errorClass;
+                    $options['after'] = '</div>' . $errorClass;
                 }
             }
             $form .= $this->input('Address.' . $type . '.' . $name, $options); 

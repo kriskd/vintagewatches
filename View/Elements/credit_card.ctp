@@ -1,20 +1,23 @@
 <div class="checkout-form">
     <div class="payment-errors alert alert-error"></div>
-    <?php echo $this->Form->input('Card.number', array('name' => false,
+    <div class="row">
+        <?php echo $this->Form->input('Card.number', array('name' => false,
                                             'size' => 20,
                                             'data-stripe' => 'number',
                                             'autocomplete' => 'off',
                                             'placeHolder' => 'Card Number',
                                             'class' => 'card-number form-control',
                                             'label' => array('text' => 'Card Number<br /><small>(no spaces or hypens)</small>',
-                                                             'class' => 'control-label'),
+                                                             'class' => 'control-label col-xs-6'),
                                             'div' => array('class' => 'card-number-div input required'),
                                             'required' => 'required',
                                             'between' => '<div class="col-xs-6">',
                                                'after' => '</div>'
                                         )
                                     ); ?>
-    <?php echo $this->Form->input('Card.cvc', array('name' => false,
+    </div>
+    <div class="row">
+        <?php echo $this->Form->input('Card.cvc', array('name' => false,
                                             'size' => 4,
                                             'data-stripe' => 'cvc',
                                             'autocomplete' => 'off',
@@ -27,18 +30,20 @@
                                                                         credit/debit card.">CVC
                                                                         <i class="glyphicon glyphicon-question-sign"></i>
                                                                         </a>',
-                                                             'class' => 'control-label'),
+                                                             'class' => 'control-label col-xs-6'),
                                             'div' => array('class' => 'cvc-div input required'),
                                             'required' => 'required',
                                             'between' => '<div class="col-xs-6">',
                                             'after' => '</div>'
                                         )
                                     ); ?>
+    </div>
     <div class="input select required">
-        <?php echo $this->Form->label('Card.month', 'Expiration (MM/YYYY)',
+        <div class="row">
+            <?php echo $this->Form->label('Card.month', 'Expiration (MM/YYYY)',
                                       array('for' => 'CardMonth',
-                                            'class' => 'control-label')); ?>
-        <?php echo $this->Form->input('Card.month', array('name' => false,
+                                            'class' => 'control-label col-xs-6')); ?>
+            <?php echo $this->Form->input('Card.month', array('name' => false,
                                                 'empty' => 'MM',
                                                 'options' => $months,
                                                 'data-stripe' => 'exp-month',
@@ -47,7 +52,7 @@
                                                 'multiple' => false,
                                                 'between' => '<div class="col-xs-3">',
                                                 'after' => '</div>')); ?>
-        <?php echo $this->Form->input('Card.year', array('name' => false,
+            <?php echo $this->Form->input('Card.year', array('name' => false,
                                                 'empty' => 'Year',
                                                 'options' => $years,
                                                 'data-stripe' => 'exp-year',
@@ -57,8 +62,11 @@
                                                 'multiple' => false,
                                                 'between' => '<div class="col-xs-3">',
                                                 'after' => '</div>')); ?>
-        <?php echo $this->Form->end(array('class' => 'btn btn-gold submit-payment',
+        </div>
+        <div class="row">
+            <?php echo $this->Form->end(array('class' => 'btn btn-gold submit-payment',
                                           'label' => 'Submit Payment',
                                           'div' => 'submit col-xs-12')); ?>
+        </div>
     </div>
 </div>
