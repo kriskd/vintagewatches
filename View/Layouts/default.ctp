@@ -42,7 +42,7 @@
 		echo '<script type="text/javascript">Stripe.setPublishableKey("' . Configure::read('Stripe.TestPublishable') . '");</script>';
 		echo $this->Html->script('/js/build/scripts.min');
 	?>
-	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 	<?php echo $this->Element('navigation'); ?>
