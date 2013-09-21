@@ -94,13 +94,13 @@
             <div class="checkout-form">
                 <?php echo $this->Form->input('Order.email', array('label' => array('class' => 'control-label col-xs-2'),
                                                                    'class' => 'form-control',
-                                                                   'between' => '<div class="col-xs-6">',
-                                                                   'after' => '</div>',
+                                                                   'between' => '<div class="clearfix"><div class="col-xs-6">',
+                                                                   'after' => '</div></div>',
                                                                    'div' => 'form-group row')); ?>
                 <?php echo $this->Form->input('Order.phone', array('label' => array('class' => 'control-label col-xs-2'),
                                                                    'class' => 'form-control',
-                                                                   'between' => '<div class="col-xs-6">',
-                                                                   'after' => '</div>',
+                                                                   'between' => '<div class="clearfix"><div class="col-xs-6">',
+                                                                   'after' => '</div></div>',
                                                                    'div' => 'form-group row')); ?>
             </div>
             <?php echo $this->Form->input('Order.notes',
