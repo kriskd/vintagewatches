@@ -6157,6 +6157,9 @@ dl dd {
 .paging .disabled {
   display: none;
 }
+.navbar .navbar-header .credit-card-logos {
+  display: block;
+}
 .navbar .navbar-header a:link,
 .navbar .navbar-header a:visited,
 .navbar .navbar-header a:hover,
@@ -6165,6 +6168,7 @@ dl dd {
 }
 .navbar .navbar-right img {
   margin-top: 10px;
+  display: none;
 }
 .navbar img.credit-card-logos {
   float: right;
@@ -6178,16 +6182,16 @@ dl dd {
   font-size: 90%;
   font-weight: bold;
 }
-@media (min-width: 768px) {
-  .navbar .navbar-right {
+@media (min-width: 768px) and (max-width: 991px) {
+  .navbar .navbar-right img {
     display: none;
   }
   .navbar .navbar-header .credit-card-logos {
     display: block;
   }
 }
-@media (min-width: 992px) {
-  .navbar .navbar-right {
+@media (min-width: 992px) and (max-width: 1199px) {
+  .navbar .navbar-right img {
     display: block;
   }
   .navbar .navbar-header .credit-card-logos {
@@ -6195,7 +6199,7 @@ dl dd {
   }
 }
 @media (min-width: 1200px) {
-  .navbar .navbar-right {
+  .navbar .navbar-right img {
     display: block;
   }
   .navbar .navbar-header .credit-card-logos {

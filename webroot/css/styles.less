@@ -154,6 +154,10 @@ dl {
     
 .navbar {
     .navbar-header {
+        .credit-card-logos {
+            display: block;
+            //border: 5px solid purple;
+        }
         a:link, a:visited, a:hover, a:active {
             color: @gold;
         }
@@ -162,6 +166,8 @@ dl {
     .navbar-right {
         img {
             margin-top: 10px;
+            display: none;
+            //border: 5px solid purple;
         }
     }
     //Small screens
@@ -182,28 +188,36 @@ dl {
 }
 
 //Small screens - credit card logos are in the navbar-header and don't become part of dropdown
-@media (min-width: @screen-sm) {
+@media (min-width: @screen-sm) and (max-width: @screen-sm-max) {
     .navbar {
         .navbar-right {
-            display: none;
+            img {
+                display: none;
+                //border: 5px solid blue;
+            }
         }
         .navbar-header {
             .credit-card-logos {
                 display: block;
+                //border: 5px solid blue;
             }
         }
     }
 }
 
 //Medium & large screens - credit card logos are in the navbar-right so it stays floated right
-@media (min-width: @screen-md) {
+@media (min-width: @screen-md) and (max-width: @screen-md-max) {
     .navbar {
         .navbar-right {
-            display: block;
+            img {
+                display: block;
+                //border: 5px solid red;
+            }
         }
         .navbar-header {
             .credit-card-logos {
                 display: none;
+                //border: 5px solid red;
             }
         }
     }
@@ -212,11 +226,15 @@ dl {
 @media (min-width: @screen-lg) {
     .navbar {
         .navbar-right {
-            display: block;
+            img {
+                display: block;
+                //border: 5px solid green;
+            }
         }
         .navbar-header {
             .credit-card-logos {
                 display: none;
+                //border: 5px solid green;
             }
         }
     }
