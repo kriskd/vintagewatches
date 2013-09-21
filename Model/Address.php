@@ -152,7 +152,7 @@ class Address extends AppModel {
         
         public $insertedIds = array();
         
-        public function afterSave($created){
+        public function afterSave($created, $options = array()){
             if($created){
                 $this->insertedIds[] = $this->getInsertID();
             }
