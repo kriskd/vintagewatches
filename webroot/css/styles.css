@@ -6696,7 +6696,8 @@ dl dd {
 .page .row {
   margin-bottom: 20px;
 }
-.page .header .col-sm-8 {
+.page .header .header-inner {
+  padding: 0 1em;
   border: 2px solid #665600;
   background: #999999;
   border-top-right-radius: 5px;
@@ -6704,8 +6705,8 @@ dl dd {
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
 }
-.page .header .col-sm-8 h1,
-.page .header .col-sm-8 h4 {
+.page .header .header-inner h1,
+.page .header .header-inner h4 {
   color: #665600;
 }
 .page .header .col-sm-4 {
