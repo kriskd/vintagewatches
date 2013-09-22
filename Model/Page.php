@@ -42,6 +42,10 @@ class Page extends AppModel {
                         'slug' => array(
                                 'rule' => array('custom', '/^[a-z0-9\-]+$/'),
                                 'message' => 'Only lowercase letters, number and dashes.',
+                        ),
+                        'unique' => array(
+                            'rule' => 'isUnique',
+                            'message' => 'This must be a unique value.'
                         )
 		),
 		'created' => array(
@@ -88,5 +92,14 @@ class Page extends AppModel {
 			'counterQuery' => ''
 		)
 	);
+        
+        public function getNavigation()
+        {
+            return $this->find('list', array('fields' => array('slug', 'name'),
+                                               'recursive' => -1,
+                                               'conditions' => array('slug !=' => 'home', 'active' => 1),
+                                               'order' => 'name',
+                                               ));
+        }
 
 }

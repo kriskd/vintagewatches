@@ -49,11 +49,11 @@ class AppController extends Controller {
                                     'loginRedirect' => array('controller' => 'orders', 'action' => 'index', 'admin' => true),
                                     'logoutRedirect' => array('controller' => 'users', 'action' => 'login', 'admin' => false),
                                     ),
-                               'Paginator'
+                               'Paginator',
+                               'Navigation'
                             );
     
     /**
-     * Compile LESS
      * Send the Controller object to the View so Helpers can initialize a Component with it
      */
     public function beforeRender()

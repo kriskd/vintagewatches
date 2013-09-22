@@ -64,10 +64,14 @@
                                                         'escape' => false)
                                                 ); ?>
                     <ul class="dropdown-menu">
-                        <li><?php echo $this->Html->link('Essential Information', array('controller' => 'pages',
-                                                                                        'action' => 'display', 'essential-information',
-                                                                                        'admin' => false)); ?></li>
-                        <li><?php echo $this->Html->link('Selling/Trading Your Watches', '#'); ?></li>
+                        <?php $navigation = $this->Navigation->getNavigation(); ?>
+                        <?php if (!(empty($navigation))): ?>
+                            <?php foreach ($navigation as $slug => $name): ?>
+                                <li><?php echo $this->Html->link($name, array('controller' => 'pages',
+                                                                              'action' => 'display', $slug,
+                                                                              'admin' => false)); ?></li>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                         <li><?php echo $this->Html->link('Contact Me', '#'); ?></li>
                     </ul>
                 </li>

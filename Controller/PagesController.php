@@ -108,5 +108,17 @@ class PagesController extends AppController {
         $options = array('conditions' => array('Page.' . $this->Page->primaryKey => $id));
         $this->request->data = $this->Page->find('first', $options);
         $this->set('page', $this->Page->find('first', $options));
-    } 
+    }
+    
+	public function admin_add() {
+		if ($this->request->is('post')) {
+			$this->Page->create();
+			if ($this->Page->saveAssociated($this->request->data)) {
+				$this->Session->setFlash('Page ' . $this->Page->getInsertID() . ' has been created', 'success');
+				$this->redirect(array('action' => 'edit', $this->Page->getInsertID(), 'admin' => true));
+			} else {
+				$this->Session->setFlash(__('The page could not be saved. Please, try again.'), 'danger');
+			}
+		}
+	}
 }

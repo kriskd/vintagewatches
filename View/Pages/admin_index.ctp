@@ -1,5 +1,7 @@
 <div class="pages admin-index">
     <h1>Pages Admin</h1>
+    <?php echo $this->Html->link('Add a Page', array('action' => 'add', 'admin' => 'true'),
+                                                array('class' => 'btn btn-primary')); ?>
     <table>
         <tr>
             <th>Name</th>
