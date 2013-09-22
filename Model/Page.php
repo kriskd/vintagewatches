@@ -34,14 +34,14 @@ class Page extends AppModel {
 			'notempty' => array(
 				'rule' => array('notempty'),
 				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
+				'allowEmpty' => false,
+				'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
                         'slug' => array(
-                                'rule' => array('custom', '/[a-z0-9\-]/'),
-                                'message' => 'Only lowercase letters, number and dashes.'
+                                'rule' => array('custom', '/^[a-z0-9\-]+$/'),
+                                'message' => 'Only lowercase letters, number and dashes.',
                         )
 		),
 		'created' => array(
