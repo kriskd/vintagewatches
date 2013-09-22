@@ -32,7 +32,7 @@
                         <?php echo $this->Html->thumbImagePrimary($watch); ?>
                     </td>
                     <td><?php echo h($watch['Watch']['stockId']); ?></td>
-                    <td><?php echo $this->Html->link(h($watch['Watch']['name']), array('controller' => 'watches', 'action' => 'view', $watch['Watch']['id'])); ?></td>
+                    <td><?php echo $this->Html->link(htmlspecialchars($watch['Watch']['name'], ENT_NOQUOTES, 'UTF-8'), array('controller' => 'watches', 'action' => 'view', $watch['Watch']['id'])); ?></td>
                     <td class="text-right"><?php echo h($this->Number->currency($watch['Watch']['price'], 'USD')); ?></td>
                 </tr>
             <?php endforeach; ?>
