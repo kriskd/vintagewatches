@@ -4,14 +4,14 @@
     <?php foreach ($recentWatches as $watch): ?>
         <hr />
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-xs-6 col-sm-12 col-md-6">
                 <?php echo $this->Html->thumbImagePrimary($watch,
                                                           array('class' => 'center-block',
                                                                 'url' => array('controller' => 'watches',
                                                                                'action' => 'view', $watch['Watch']['id']))
                                                           ); ?>
             </div>
-            <div class="col-md-7">
+            <div class="col-xs-6 col-sm-12 col-md-6">
                 <h5><?php echo $watch['Watch']['name']; ?></h5>
                 <p><?php echo $this->Number->currency($watch['Watch']['price'], 'USD'); ?></p>
             </div>
