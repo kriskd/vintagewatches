@@ -16,6 +16,8 @@ If you are collaborating with me set up the project as follows:
 <li>In Plugin/Stripe/Vendor create this sym link if it doesn't exist
 `ln -s ../../../Vendor/stripe/stripe-php Stripe`</li>
 <li>Make tmp directory web writeable with `sudo chown -R www-data:www-data tmp/`</li>
+<li>The full CakePHP project should live at the same level as this project in a folder named cakephp
+with tag 2.4.1 checkout out</li>
 </ol>
 
 The previous version of the project https://github.com/kriskd/thewatchstore
