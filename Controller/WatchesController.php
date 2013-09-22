@@ -10,7 +10,7 @@ class WatchesController extends AppController {
 	public $paginate = array('limit' => 10,
 				 'conditions' => array('active' => 1));
     
-    public $uses = array('Watch', 'Image');
+	public $uses = array('Watch', 'Image');
 
 /**
  * index method
@@ -18,14 +18,17 @@ class WatchesController extends AppController {
  * @return void
  */
 	public function index() {
-        //Get only active and unsold watches
-        $this->paginate['Watch'] = array(
-                            'limit' => 10,
-                            'contain' => 'Image',
-                            'conditions' => $this->Watch->getWatchesConditions(1, 0)
-                        );
+		//Get only active and unsold watches
+		$this->paginate('Watch', $this->Watch->getWatchesConditions(1, 0),
+					array(
+						'limit' => 10,
+						'contain' => array('Image'),
+						'fields' => array('id', 'stockId', 'price', 'name', 'description')
+					)
+			        );
+		$this->Paginator->settings = $this->paginate;
 
-		$this->set('watches', $this->paginate());
+		$this->set('watches', $this->Paginator->paginate('Watch'));
 	}
 
 /**
