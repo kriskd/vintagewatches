@@ -20,7 +20,7 @@
 							 'class' => 'form-control'));
 		echo $this->Form->input('active', array('label' => array('class' => 'control-label'),
 							 'div' => "checkbox-inline",
-                                                         'separator' => '</div><div class="checkbox-inline">')
+                                                         )
 					);
 	?>
 	</fieldset>

@@ -4,7 +4,6 @@
 	<?php echo $this->Form->input('Page.slug', array('class' => 'form-control')); ?>
 	<?php echo $this->Form->input('Page.active', array('label' => array('class' => 'control-label'),
 														'div' => "checkbox-inline",
-                                                        'separator' => '</div><div class="checkbox-inline">'
 														)
 								 ); ?>
 	<?php if (isset($contents)): ?>
