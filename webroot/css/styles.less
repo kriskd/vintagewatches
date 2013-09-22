@@ -155,9 +155,9 @@ dl {
     
 .navbar {
     .navbar-header {
+        // No ccd logos on 480 width
         .credit-card-logos {
-            display: block;
-            //border: 5px solid purple;
+            display: none;
         }
         a:link, a:visited, a:hover, a:active {
             color: @gold;
@@ -168,7 +168,6 @@ dl {
         img {
             margin-top: 10px;
             display: none;
-            //border: 5px solid purple;
         }
     }
     //Small screens
@@ -189,18 +188,16 @@ dl {
 }
 
 //Small screens - credit card logos are in the navbar-header and don't become part of dropdown
-@media (min-width: @screen-sm) and (max-width: @screen-sm-max) {
+@media (min-width: @screen-xs) and (max-width: @screen-sm-max) {
     .navbar {
         .navbar-right {
             img {
                 display: none;
-                //border: 5px solid blue;
             }
         }
         .navbar-header {
             .credit-card-logos {
                 display: block;
-                //border: 5px solid blue;
             }
         }
     }
@@ -212,13 +209,11 @@ dl {
         .navbar-right {
             img {
                 display: block;
-                //border: 5px solid red;
             }
         }
         .navbar-header {
             .credit-card-logos {
                 display: none;
-                //border: 5px solid red;
             }
         }
     }
@@ -229,13 +224,11 @@ dl {
         .navbar-right {
             img {
                 display: block;
-                //border: 5px solid green;
             }
         }
         .navbar-header {
             .credit-card-logos {
                 display: none;
-                //border: 5px solid green;
             }
         }
     }

@@ -6645,7 +6645,7 @@ dl dd {
   display: none;
 }
 .navbar .navbar-header .credit-card-logos {
-  display: block;
+  display: none;
 }
 .navbar .navbar-header a:link,
 .navbar .navbar-header a:visited,
@@ -6669,7 +6669,7 @@ dl dd {
   font-size: 90%;
   font-weight: bold;
 }
-@media (min-width: 768px) and (max-width: 991px) {
+@media (min-width: 480px) and (max-width: 991px) {
   .navbar .navbar-right img {
     display: none;
   }
