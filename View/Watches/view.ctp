@@ -10,7 +10,7 @@
                 </dd>
                 <dt><?php echo __('Price'); ?></dt>
                 <dd>
-                    <?php echo h($watch['Watch']['price']); ?>
+                    <?php echo h($this->Number->currency($watch['Watch']['price'], 'USD')); ?>
                     &nbsp;
                 </dd>
                 <dt><?php echo __('Description'); ?></dt>
