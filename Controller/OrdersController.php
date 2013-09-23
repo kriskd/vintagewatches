@@ -189,7 +189,7 @@ class OrdersController extends AppController
         }
 	
 	$order = $this->Order->getOrder($id);
-	$this->emailOrder($order);
+	//$this->emailOrder($order);
 	$this->set('order', $order);
     }
     
