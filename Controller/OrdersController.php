@@ -1,5 +1,6 @@
 <?php
 App::uses('Address', 'Model');
+App::uses('CakeEmail', 'Network/Email');
 class OrdersController extends AppController
 {
     public $uses = array('Watch', 'Address', 'Order');
@@ -187,7 +188,9 @@ class OrdersController extends AppController
             throw new NotFoundException(__('Invalid order'));
         }
 	
-	$this->set('order', $this->Order->getOrder($id));
+	$order = $this->Order->getOrder($id);
+	$this->emailOrder($order);
+	$this->set('order', $order);
     }
     
     /**
@@ -294,6 +297,30 @@ class OrdersController extends AppController
 	}
 
 	$this->set('order', $this->Order->getOrder($id));
+    }
+    
+    public function emailOrder($order = null)
+    {
+	$Email = new CakeEmail();
+	$Email->config('smtp');
+	$Email->from(array('me@example.com' => 'My Site'));
+	$Email->to('kris@jimandkris.com');
+	$Email->subject('About');
+	$Email->send('My message');
+	debug($Email->config());
+	/*$Email = new CakeEmail();
+	
+	$Email->template('order_received', 'default')
+	      ->emailFormat('html')
+	      //->to('bruce.shawkey@gmail.com')
+	      ->to('kris@jimandkris.com')
+	      ->from('kriskd@gmail.com')
+	      //->subject('Order No. ' . $order['Order']['id'])
+	      ->subject('Here')
+	      //->viewVars(array('order' => $watches))
+	      ->send();
+	*/
+	var_dump($Email->smtpError); exit;
     }
     
     /**
