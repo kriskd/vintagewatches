@@ -13,6 +13,7 @@ If you are collaborating with me set up the project as follows:
 <li>`git submodule init`</li>
 <li>`git submodule update` There will be a password prompt to get this private repo that I will provide.</li>
 <li>Get dependencies from Composer with `composer update`</li>
+<li>Reference Gruntfile.js for the list of Grunt Plugins to install</li>
 <li>In Plugin/Stripe/Vendor create this sym link if it doesn't exist
 `ln -s ../../../Vendor/stripe/stripe-php Stripe`</li>
 <li>Make tmp directory web writeable with `sudo chown -R www-data:www-data tmp/`</li>
