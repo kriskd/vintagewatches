@@ -302,8 +302,8 @@ class OrdersController extends AppController
     public function emailOrder($order = null)
     {
 	$Email = new CakeEmail();
-	$Email->config('smtp');
-	$Email->from(array('me@example.com' => 'My Site'));
+	$Email->config('default');
+	$Email->from(array('orders@brucesvintagewatches.com' => 'My Site'));
 	$Email->to('kris@jimandkris.com');
 	$Email->subject('About');
 	$Email->send('My message');
