@@ -9,7 +9,7 @@ senstive passwords, etc out of the public github repo.
 If you are collaborating with me set up the project as follows:
 
 <ol>
-<li>`git@github.com:kriskd/vintagewatches.git`</li>
+<li>`git clone git@github.com:kriskd/vintagewatches.git`</li>
 <li>`git submodule init`</li>
 <li>`git submodule update` There will be a password prompt to get this private repo that I will provide.</li>
 <li>Get dependencies from Composer with `composer update`</li>
