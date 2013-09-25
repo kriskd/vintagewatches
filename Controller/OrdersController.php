@@ -303,24 +303,22 @@ class OrdersController extends AppController
     {
 	$Email = new CakeEmail();
 	$Email->config('default');
-	$Email->from(array('orders@brucesvintagewatches.com' => 'My Site'));
-	$Email->to('kris@jimandkris.com');
+	$Email->from(array(Configure::read('ordersEmail') => 'My Site'));
+	$Email->to(Configure::read('testEmailTo'));
 	$Email->subject('About');
-	$Email->send('My message');
+	//$Email->send('My message');
 	debug($Email->config());
 	/*$Email = new CakeEmail();
 	
 	$Email->template('order_received', 'default')
 	      ->emailFormat('html')
-	      //->to('bruce.shawkey@gmail.com')
-	      ->to('kris@jimandkris.com')
-	      ->from('kriskd@gmail.com')
+	      ->to(Configure::read('testEmailTo'))
+	      ->from(Configure::read('ordersEmail'))
 	      //->subject('Order No. ' . $order['Order']['id'])
 	      ->subject('Here')
 	      //->viewVars(array('order' => $watches))
 	      ->send();
 	*/
-	var_dump($Email->smtpError); exit;
     }
     
     /**
