@@ -302,12 +302,12 @@ class OrdersController extends AppController
     public function emailOrder($order = null)
     {
 	$Email = new CakeEmail();
-	$Email->config('default');
-	$Email->from(array(Configure::read('ordersEmail') => 'My Site'));
+	$Email->config('smtp');
+	$Email->from(array(Configure::read('fromEmail') => 'My Site'));
 	$Email->to(Configure::read('testEmailTo'));
 	$Email->subject('About');
-	//$Email->send('My message');
-	debug($Email->config());
+	$Email->send('My message');
+	//debug($Email->config());
 	/*$Email = new CakeEmail();
 	
 	$Email->template('order_received', 'default')
