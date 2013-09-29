@@ -122,3 +122,13 @@
     </section>
     
 </div>
+
+<?php $this->append('script'); ?>
+    <?php echo $this->Html->script('https://js.stripe.com/v2/'); ?>
+    <?php echo '<script type="text/javascript">Stripe.setPublishableKey("' . Configure::read('Stripe.TestPublishable') . '");</script>'; ?>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            Stripe.setPublishableKey("<?php echo Configure::read('Stripe.TestPublishable'); ?>")
+        });
+    </script>
+<?php $this->end(); ?>
