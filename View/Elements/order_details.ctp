@@ -41,6 +41,10 @@
         <dl>
             <dt>Name</dt>
             <dd><?php echo $address['firstName']; ?> <?php echo $address['lastName']; ?></dd>
+            <?php if(!empty($address['company'])): ?>
+                <dt>Company</dt>
+                <dd><?php echo $address['company']; ?></dd>
+            <?php endif; ?>
             <dt>Address</dt>
             <dd><?php echo $address['address1']; ?></dd>
             <?php if(!empty($address['address2'])): ?>

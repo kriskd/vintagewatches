@@ -42,6 +42,7 @@ class MyFormHelper extends FormHelper
     {
         $this->nameToOptionsMap = array('firstName' => array('label' => 'First Name'),
                                   'lastName' => array('label' => 'Last Name', 'stripe' => 'name'),
+                                  'company' => array('label' => 'Company'),
                                   'address1' => array('label' => 'Address 1', 'stripe' => 'address_line1'),
                                   'address2' => array('label' => 'Address 2', 'stripe' =>'address_line2'),
                                   'city' => array('label' => 'City', 'stripe' => 'address_city'),
