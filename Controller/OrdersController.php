@@ -308,8 +308,7 @@ class OrdersController extends AppController
 	$Email->subject('About');
 	$Email->send('My message');
 	//debug($Email->config());
-	/*$Email = new CakeEmail();
-	
+	/*
 	$Email->template('order_received', 'default')
 	      ->emailFormat('html')
 	      ->to(Configure::read('testEmailTo'))
@@ -319,6 +318,7 @@ class OrdersController extends AppController
 	      //->viewVars(array('order' => $watches))
 	      ->send();
 	*/
+	$this->layout = false;
     }
     
     /**
