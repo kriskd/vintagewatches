@@ -304,7 +304,7 @@ class OrdersController extends AppController
 	$Email = new CakeEmail('smtp');
 	$Email->template('order_received', 'default')
 	      ->emailFormat('html')
-	      ->to(Configure::read('testEmailTo'))
+	      ->to(Configure::read('toEmail'))
 	      ->from(Configure::read('fromEmail'))
 	      ->subject('Order No. ' . $order['Order']['id'])
 	      ->viewVars(array('order' => $order))
