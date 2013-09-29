@@ -189,7 +189,7 @@ class OrdersController extends AppController
         }
 	
 	$order = $this->Order->getOrder($id);
-	//$this->emailOrder($order);
+	$this->emailOrder($order);
 	$this->set('order', $order);
     }
     
@@ -301,24 +301,16 @@ class OrdersController extends AppController
     
     public function emailOrder($order = null)
     {
-	$Email = new CakeEmail();
-	$Email->config('smtp');
-	$Email->from(array(Configure::read('fromEmail') => 'My Site'));
-	$Email->to(Configure::read('testEmailTo'));
-	$Email->subject('About');
-	$Email->send('My message');
-	//debug($Email->config());
-	/*
+	$Email = new CakeEmail('smtp');
 	$Email->template('order_received', 'default')
 	      ->emailFormat('html')
 	      ->to(Configure::read('testEmailTo'))
-	      ->from(Configure::read('ordersEmail'))
-	      //->subject('Order No. ' . $order['Order']['id'])
-	      ->subject('Here')
-	      //->viewVars(array('order' => $watches))
+	      ->from(Configure::read('fromEmail'))
+	      ->subject('Order No. ' . $order['Order']['id'])
+	      ->viewVars(array('order' => $order))
 	      ->send();
-	*/
-	$this->layout = false;
+	
+	return;
     }
     
     /**
