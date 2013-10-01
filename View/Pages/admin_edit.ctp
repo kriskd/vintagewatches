@@ -12,7 +12,7 @@
     <?php echo $this->Html->script('/js/src/tiny.editor.packed.js'); ?> 
     <script type="text/javascript">
         $(document).ready(function(){
-            var myInstance = TINY.editor.edit('editor',{
+            var myInstance = new TINY.editor.edit('editor',{
                 id:'Content0Value', // (required) ID of the textarea
                 width:'100%', // (optional) width of the editor
                 height:175, // (optional) heightof the editor
@@ -34,7 +34,7 @@
                 footerclass:'tinyeditor-footer', // (optional) CSS class of the footer
                 //toggle:{text:'source',activetext:'wysiwyg',cssclass:'toggle'}, // (optional) toggle to markup view options
                 resize:{cssclass:'resize'} // (optional) display options for the editor resize
-            });
+            }); 
             $(document).on('submit', '#PageAdminEditForm', function(){
                 myInstance.post();
             });
