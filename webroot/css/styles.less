@@ -71,6 +71,10 @@ input:focus:invalid {
     color: #b94a48;
 }
 
+input[type=submit] {
+    margin-top: 20px;
+}
+
 h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
 }
@@ -158,6 +162,39 @@ dl {
     .disabled {
         display: none;
     }
+}
+
+#s3captcha-images {
+    .clearfix();
+    .s3captcha {
+        float: left;
+        .img {
+                width: 33px;
+                height: 33px;
+                background-position: bottom left;
+                background-repeat: no-repeat;
+                cursor: pointer;
+        }
+        .apple {
+                background-image: url(/css/images/s3icons/fruit/apple.jpg);
+        }
+        .strawberry {
+                background-image: url(/css/images/s3icons/fruit/strawberry.jpg);
+        }
+        .lemon {
+                background-image: url(/css/images/s3icons/fruit/lemon.jpg);
+        }
+        .cherry {
+                background-image: url(/css/images/s3icons/fruit/cherry.jpg);
+        }
+        .pear {
+                background-image: url(/css/images/s3icons/fruit/pear.jpg);
+        }
+    }
+}
+
+.error-message {
+        margin-top: 10px;
 }
     
 .navbar {
