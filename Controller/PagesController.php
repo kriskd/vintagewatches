@@ -46,7 +46,7 @@ class PagesController extends AppController {
 			'recursive' => -1
 		);
     
-    public $users = array('Page', 'Content');
+    public $users = array('Page', 'Content', 'Contact');
 
 /**
  * Displays a view
@@ -96,19 +96,19 @@ class PagesController extends AppController {
 			throw new NotFoundException(__('Invalid page'));
 		}
         
-        if ($this->request->is('post') || $this->request->is('put')) { 
-            if ($this->Page->saveAssociated($this->request->data)) {
-                $this->Session->setFlash(__('The page has been saved'), 'success');
-                $this->redirect(array('action' => 'edit', $id));
-            } else {
-                $this->Session->setFlash(__('The page could not be saved. Please, try again.'), 'danger');
-            }
-        }
+		if ($this->request->is('post') || $this->request->is('put')) { 
+		    if ($this->Page->saveAssociated($this->request->data)) {
+			$this->Session->setFlash(__('The page has been saved'), 'success');
+			$this->redirect(array('action' => 'edit', $id));
+		    } else {
+			$this->Session->setFlash(__('The page could not be saved. Please, try again.'), 'danger');
+		    }
+		}
         
-        $options = array('conditions' => array('Page.' . $this->Page->primaryKey => $id));
-        $this->request->data = $this->Page->find('first', $options);
-        $this->set('page', $this->Page->find('first', $options));
-    }
+		$options = array('conditions' => array('Page.' . $this->Page->primaryKey => $id));
+		$this->request->data = $this->Page->find('first', $options);
+		$this->set('page', $this->Page->find('first', $options));
+	}
     
 	public function admin_add() {
 		if ($this->request->is('post')) {
