@@ -29,9 +29,10 @@ class CaptchaComponent extends Component
     }
     
     public function verify()
-    {   
-        $data = array_shift($this->controller->request->data); 
-        $captcha = $data['s3captcha']; 
+    {
+        $data = $this->controller->request->data;
+        $model = $this->controller->modelClass;
+        $captcha = $data[$model]['s3captcha'];
         $correctAnswer = $this->Session->read('Captcha.answer'); 
         if (empty($correctAnswer) || empty($captcha)) { 
             return false;

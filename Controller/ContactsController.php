@@ -21,12 +21,12 @@ class ContactsController extends AppController {
  * @return void
  */
 	public function index() {
-		if ($this->request->is('post')) { 
+		if ($this->request->is('post')) {
+			$this->Contact->set($this->request->data);
 			if(!$this->Captcha->verify()) { 
 				$this->Contact->invalidate('s3captcha-error');
 			}
-			$this->Contact->set($this->request->data);
-			if ($this->Contact->validates()){
+			if ($this->Contact->validates()){ 
 				$this->Contact->create();
 				if ($this->Contact->save($this->request->data)) {
 					$this->Session->setFlash(__('Thank you for contacting us.'), 'success');
@@ -36,6 +36,7 @@ class ContactsController extends AppController {
 				}
 			}
 		}
+
 		list($items, $selectedItem) = $this->Captcha->makeCaptcha();
 		$this->set(compact('items', 'selectedItem'));
 	}
