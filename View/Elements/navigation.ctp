@@ -72,7 +72,7 @@
                                                                               'admin' => false)); ?></li>
                             <?php endforeach; ?>
                         <?php endif; ?>
-                        <li><?php echo $this->Html->link('Contact Me', array('controller' => 'contacts', 'action' => 'index')); ?></li>
+                        <li><?php echo $this->Html->link('Contact Me', array('controller' => 'contacts', 'action' => 'index', 'admin' => false)); ?></li>
                     </ul>
                 </li>
             </ul>
