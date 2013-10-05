@@ -9,7 +9,7 @@ class CaptchaComponent extends Component
     
     public function makeCaptcha()
     {
-        $values = array('apple','strawberry','lemon','cherry','pear');
+        $values = array('umbrella','key','clock','television','leaf');
 
         $imageKey = mt_rand(0,(sizeof($values)-1));
         shuffle($values);

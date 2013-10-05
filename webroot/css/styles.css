@@ -6653,26 +6653,26 @@ dl dd {
   float: left;
 }
 #s3captcha-images .s3captcha .img {
-  width: 33px;
-  height: 33px;
+  width: 50px;
+  height: 50px;
   background-position: bottom left;
   background-repeat: no-repeat;
   cursor: pointer;
 }
-#s3captcha-images .s3captcha .apple {
-  background-image: url(/css/images/s3icons/fruit/apple.jpg);
+#s3captcha-images .s3captcha .umbrella {
+  background-image: url(/css/images/s3icons/new/umbrella.png);
 }
-#s3captcha-images .s3captcha .strawberry {
-  background-image: url(/css/images/s3icons/fruit/strawberry.jpg);
+#s3captcha-images .s3captcha .key {
+  background-image: url(/css/images/s3icons/new/key.png);
 }
-#s3captcha-images .s3captcha .lemon {
-  background-image: url(/css/images/s3icons/fruit/lemon.jpg);
+#s3captcha-images .s3captcha .clock {
+  background-image: url(/css/images/s3icons/new/clock.png);
 }
-#s3captcha-images .s3captcha .cherry {
-  background-image: url(/css/images/s3icons/fruit/cherry.jpg);
+#s3captcha-images .s3captcha .television {
+  background-image: url(/css/images/s3icons/new/television.png);
 }
-#s3captcha-images .s3captcha .pear {
-  background-image: url(/css/images/s3icons/fruit/pear.jpg);
+#s3captcha-images .s3captcha .leaf {
+  background-image: url(/css/images/s3icons/new/leaf.png);
 }
 .error-message {
   margin-top: 10px;
