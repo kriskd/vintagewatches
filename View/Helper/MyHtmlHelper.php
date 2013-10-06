@@ -9,21 +9,6 @@ class MyHtmlHelper extends HtmlHelper
         parent::__construct($View, $settings);
     }
     
-    /**
-     * Create cart link only if items in the cart
-     */
-    public function cartLink($title, $url = null, $options = array(), $confirmMessage = false, $controller = null)
-    {
-        $cart = new CartComponent(new ComponentCollection());
-        $cart->initialize($controller);
-        if($cart->cartEmpty() == true){
-            return null;
-        }
-        $url['admin'] = false;
-        
-        return parent::link($title, $url, $options, $confirmMessage);
-    }
-    
     public function adminLink($title, $url = null, $options = array(), $confirmMessage = false, $controller = null)
     {
         $auth = new AuthComponent(new ComponentCollection());

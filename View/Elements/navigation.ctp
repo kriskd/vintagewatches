@@ -50,12 +50,12 @@
                     </li>
                 <?php endif; ?>
                 <?php //Wrapped in <li> in Component ?>
-                <?php echo $this->Watch->storeLink('<i class="glyphicon glyphicon-tags"></i>&nbsp;&nbsp;Go to the Store',
+                <?php echo $this->Navigation->storeLink('<i class="glyphicon glyphicon-tags"></i>&nbsp;&nbsp;Go to the Store',
                                              array('controller' => 'watches', 'action' => 'index'),
                                              array('escape' => false),
                                              false); ?>
                 <li class="<?php echo strcasecmp($controller->name, 'orders')==0 && $this->params->prefix != 'admin' ? 'active' : '' ?>">
-                    <?php echo $this->Html->cartLink('Checkout <i class="glyphicon glyphicon-shopping-cart"></i> ' . $this->Cart->cartCount('Items in Your Cart: ', '', $controller),
+                    <?php echo $this->Navigation->cartLink('Checkout <i class="glyphicon glyphicon-shopping-cart"></i> ' . $this->Cart->cartCount('Items in Your Cart: ', '', $controller),
                                                      array('controller' => 'orders', 'action' => 'index'),
                                                      array('escape' => false),
                                                      false,
@@ -69,7 +69,7 @@
                                                         'escape' => false)
                                                 ); ?>
                     <ul class="dropdown-menu">
-                        <?php $navigation = $this->Navigation->getNavigation(); ?>
+                        <?php $navigation = $this->Navigation->getPageLinks(); ?>
                         <?php if (!(empty($navigation))): ?>
                             <?php foreach ($navigation as $slug => $name): ?>
                                 <li><?php echo $this->Html->link($name, array('controller' => 'pages',

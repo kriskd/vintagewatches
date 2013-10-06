@@ -19,7 +19,6 @@ class WatchesController extends AppController {
 	
 	public function beforeFilter()
 	{
-		//var_dump(empty($this->request->params['admin']));
 		$storeOpen = $this->Watch->storeOpen(); 
 		//Redirect if store is closed and going to a non-watch order page
 		if ($storeOpen == false && empty($this->request->params['admin'])) {
