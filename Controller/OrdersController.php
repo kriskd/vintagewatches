@@ -1,6 +1,5 @@
 <?php
 App::uses('Address', 'Model');
-App::uses('CakeEmail', 'Network/Email');
 class OrdersController extends AppController
 {
     public $uses = array('Watch', 'Address', 'Order');
@@ -304,12 +303,21 @@ class OrdersController extends AppController
 	$Email = new CakeEmail('smtp');
 	$Email->template('order_received', 'default')
 	      ->emailFormat('html')
-	      ->to(Configure::read('toEmail'))
+	      ->to(Configure::read('ordersEmail'))
 	      ->from(Configure::read('fromEmail'))
 	      ->subject('Order No. ' . $order['Order']['id'])
 	      ->viewVars(array('order' => $order))
 	      ->send();
 	
+	$Email = new CakeEmail('smtp');
+	$Email->template('order_received', 'default')
+	      ->emailFormat('html')
+	      ->to($order['Order']['email'])
+	      ->from(Configure::read('fromEmail'))
+	      ->subject('Thank you for your order from Bruce\'s Vintage Watches')
+	      ->viewVars(array('order' => $order))
+	      ->send();
+	      
 	return;
     }
     

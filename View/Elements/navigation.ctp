@@ -37,6 +37,11 @@
                                                               array('escape' => false),
                                                               false,
                                                               $controller); ?>
+                            <?php echo $this->Html->adminLink('<i class="glyphicon glyphicon-envelope"></i> Contacts',
+                                                              array('controller' => 'contacts', 'action' => 'admin_index'),
+                                                              array('escape' => false),
+                                                              false,
+                                                              $controller); ?>
                             <li><?php echo $this->Html->link('<i class="glyphicon glyphicon-off"></i> Logout',
                                                              array('controller' => 'users', 'action' => 'logout', 'admin' => false),
                                                              array('escape' => false)
@@ -58,7 +63,7 @@
                 </li>
     
                 <li class="dropdown">
-                    <?php echo $this->Html->link('About Us<span class="caret"></span>', '#',
+                    <?php echo $this->Html->link('Other Vital Info<span class="caret"></span>', '#',
                                                  array('class' => 'dropdown-toggle',
                                                         'data-toggle' => 'dropdown',
                                                         'escape' => false)

@@ -2,7 +2,7 @@
     <?php echo $this->Form->create('Contact', array('role' => 'form')); ?>
     <?php echo $this->Form->input('name', array('class' => 'form-control')); ?>
     <?php echo $this->Form->input('email', array('class' => 'form-control')); ?>
-    <?php echo $this->Form->input('comment', array('class' => 'form-control')); ?>
+    <?php echo $this->Form->input('comment', array('class' => 'form-control', 'label' => 'Comment/Question')); ?>
     
     <p>Verify that you are a human, please choose the <strong><?php echo $selectedItem; ?></strong>.</p>
     <?php //Add hidden field so the key is always included in the data sent even without a selected value ?>

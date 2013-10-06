@@ -14,6 +14,12 @@ class ContactsController extends AppController {
  * @var array
  */
 	public $components = array('Paginator', 'Captcha');
+	
+	public $paginate = array(
+		'order' => array(
+			'id' => 'desc'
+		)
+	);
 
 /**
  * index method
@@ -29,8 +35,18 @@ class ContactsController extends AppController {
 			if ($this->Contact->validates()){ 
 				$this->Contact->create();
 				if ($this->Contact->save($this->request->data)) {
+					$contact = $this->request->data;
+					$Email = new CakeEmail('smtp');
+					$Email->template('contact', 'default')
+					      ->emailFormat('html')
+					      ->to(Configure::read('contactFormEmail'))
+					      ->from(Configure::read('fromEmail'))
+					      ->replyTo($contact['Contact']['email'])
+					      ->subject('Message From ' . $contact['Contact']['name'])
+					      ->viewVars(array('contact' => $contact))
+					      ->send();
 					$this->Session->setFlash(__('Thank you for contacting us.'), 'success');
-					return $this->redirect(array('action' => 'index'));
+					return $this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));
 				} else {
 					$this->Session->setFlash(__('Message could not be saved. Please, try again.'), 'danger');
 				}
@@ -49,6 +65,7 @@ class ContactsController extends AppController {
  */
 	public function admin_index() {
 		$this->Contact->recursive = 0;
+		$this->Paginator->settings = $this->paginate;
 		$this->set('contacts', $this->Paginator->paginate());
 	}
 
