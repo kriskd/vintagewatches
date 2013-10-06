@@ -207,6 +207,9 @@ dl {
         a:link, a:visited, a:hover, a:active {
             color: @gold;
         }
+        .navbar-brand {
+            font-size: 16px;
+        }
     }
     //Medium & large screens
     .navbar-right {
@@ -244,6 +247,9 @@ dl {
             .credit-card-logos {
                 display: block;
             }
+            .navbar-brand {
+                font-size: 18px;
+            }
         }
     }
 }
@@ -260,6 +266,9 @@ dl {
             .credit-card-logos {
                 display: none;
             }
+            .navbar-brand {
+                font-size: 18px;
+            }
         }
     }
 }
@@ -274,6 +283,9 @@ dl {
         .navbar-header {
             .credit-card-logos {
                 display: none;
+            }
+            .navbar-brand {
+                font-size: 18px;
             }
         }
     }
@@ -413,6 +425,11 @@ dl {
         width: 160px;
         float: left;
         text-align: right;
+    }
+    @media (max-width: @screen-xs) {
+        .control-label {
+            text-align: left;
+        }
     }
     .checkout-form {
         padding: 5px;

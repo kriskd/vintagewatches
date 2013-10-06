@@ -65,7 +65,7 @@ class MyFormHelper extends FormHelper
         $this->inputDefaults(array('label' => array('class' => 'control-label col-xs-2'),
                                     'div' => 'form-group row',
                                     'class' => 'form-control',
-                                    'between' => '<div class="clearfix"><div class="col-xs-6">',
+                                    'between' => '<div class="clearfix"><div class="col-xs-11 col-sm-6 col-md-6 col-lg-6">',
                                     'after' => '</div></div>'
                                     )
                             );
