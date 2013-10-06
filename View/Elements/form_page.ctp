@@ -52,7 +52,7 @@
                 //toggle:{text:'source',activetext:'wysiwyg',cssclass:'toggle'}, // (optional) toggle to markup view options
                 resize:{cssclass:'resize'} // (optional) display options for the editor resize
             }); 
-            $(document).on('submit', '#PageAdminEditForm', function(){
+            $(document).on('submit', '#PageAdminEditForm, #PageAdminAddForm', function(){
                 myInstance.post();
             });
         });
