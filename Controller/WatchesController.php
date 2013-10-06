@@ -52,19 +52,21 @@ class WatchesController extends AppController {
  * @return void
  */
 	public function admin_index()
-	{
-        $paginate = array('limit' => 10,
-					'order' => array('Watch.id' => 'desc'));
-
-        $active = isset($this->params['named']['active']) ? (int)$this->params['named']['active'] : null;
-        $sold = isset($this->params['named']['sold']) ? (int)$this->params['named']['sold'] : null;
-
-        $paginate['conditions'] = $this->Watch->getWatchesConditions($active, $sold); 
-		$this->paginate = $paginate; 
+	{	
+		$active = isset($this->params['named']['active']) ? (int)$this->params['named']['active'] : null;
+		$sold = isset($this->params['named']['sold']) ? (int)$this->params['named']['sold'] : null;
 		
+		$conditions = $this->Watch->getWatchesConditions($active, $sold); 
+		$paginate = array(
+				'limit' => 10,
+				'order' => array(
+					'Watch.id' => 'desc'
+					),
+				'conditions' => $conditions
+				);
+		$this->Paginator->settings = $paginate;
+			
 		$this->set('watches', $this->paginate()); 
-        
-
 	}
 
 /**

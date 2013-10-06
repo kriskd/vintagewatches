@@ -140,7 +140,7 @@ class Watch extends AppModel {
 	public function getWatchesConditions($active = null, $sold = null)
 	{   
 	    $conditions = array();
-	    if($active != null){
+	    if($active !== null){
 		$conditions['Watch.active'] = $active;
 	    }
 	    
