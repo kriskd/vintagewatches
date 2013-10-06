@@ -142,9 +142,9 @@ class OrdersController extends AppController
     
     public function add($id = null)
     {   
-        if (!$this->Watch->exists($id)) {
-            throw new NotFoundException(__('Invalid watch'));
-        }
+	if (!$this->Watch->sellable($id)) {
+		$this->redirect(array('action' => 'index'));
+	}
         $items = array();
         if($this->Session->check('Cart.items') == true){
             $items = $this->Session->read('Cart.items');

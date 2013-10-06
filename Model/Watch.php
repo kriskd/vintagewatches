@@ -155,6 +155,19 @@ class Watch extends AppModel {
 	    
 	    return $conditions;
 	}
+        
+        public function sellable($id)
+        {
+            return $this->find('first', array(
+                                            'conditions' => array(
+                                                'id' => $id,
+                                                'order_id' => null,
+                                                'active' => 1
+                                            ),
+                                            'contain' => 'Image'
+                                        )
+                               );
+        }
 	
 	public function getRecentWatches($count = 3)
 	{

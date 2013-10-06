@@ -39,8 +39,8 @@ class WatchesController extends AppController {
  * @return void
  */
 	public function view($id = null) {
-		if (!$this->Watch->exists($id)) {
-			throw new NotFoundException(__('Invalid watch'));
+		if (!$this->Watch->sellable($id)) {
+			$this->redirect(array('controller' => 'pages', 'action' => 'home', 'display'));
 		}
 		$options = array('conditions' => array('Watch.' . $this->Watch->primaryKey => $id));
 		$this->set('watch', $this->Watch->find('first', $options));
