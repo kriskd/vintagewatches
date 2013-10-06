@@ -20,7 +20,7 @@
                 </dd>
                 <dt><?php echo __('Description'); ?></dt>
                 <dd>
-                    <?php echo h($watch['Watch']['description']); ?>
+                    <?php echo $watch['Watch']['description']; ?>
                     &nbsp;
                 </dd>
                 <dt><?php echo __('Active'); ?></dt>
