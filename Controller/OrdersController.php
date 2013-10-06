@@ -4,6 +4,15 @@ class OrdersController extends AppController
 {
     public $uses = array('Watch', 'Address', 'Order');
     
+    public function beforeFilter()
+    {
+	$storeOpen = $this->Watch->storeOpen();
+	//Redirect if store is closed and going to a non-admin order page
+	if ($storeOpen == false && $this->request->params['admin'] == false) {
+	    $this->redirect(array('controller' => 'pages', 'action' => 'home', 'admin' => false));
+	}
+    }
+    
     public function index()
     {
         if($this->Cart->cartEmpty() == true){

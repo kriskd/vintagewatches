@@ -16,6 +16,15 @@ class WatchesController extends AppController {
 			);
     
 	public $uses = array('Watch', 'Image');
+	
+	public function beforeFilter()
+	{
+	    $storeOpen = $this->Watch->storeOpen();
+	    //Redirect if store is closed and going to a non-watch order page
+	    if ($storeOpen == false && $this->request->params['admin'] == false) {
+		$this->redirect(array('controller' => 'pages', 'action' => 'home', 'admin' => false));
+	    }
+	}
 
 /**
  * index method
@@ -149,5 +158,20 @@ class WatchesController extends AppController {
 		}
 		$this->Session->setFlash(__('Watch was not deleted'));
 		$this->redirect(array('action' => 'index'));
+	}
+	
+	public function admin_close()
+	{
+		$this->Watch->updateAll(array('active' => 0));
+		$this->Session->setFlash(__('The store is closed.'), 'success');
+		$this->redirect(array('action' => 'index', 'admin' => true));
+	}
+	
+	public function admin_open()
+	{
+		$this->Watch->updateAll(array('active' => 1),
+					array('order_id' => null));
+		$this->Session->setFlash(__('The store is open.'), 'success');
+		$this->redirect(array('action' => 'index', 'admin' => true));
 	}
 }

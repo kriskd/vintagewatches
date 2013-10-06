@@ -1,5 +1,9 @@
 <div class="recent-watches">
     <?php $recentWatches = $this->Watch->getRecentWatches(); ?>
+    <?php if (count($recentWatches) <= 0): ?>
+        <h4>Bruce's Vintage Watches is Currently Closed.</h4>
+        <?php return; ?>
+    <?php endif; ?>
     <h3>Recent Watches</h3>
     <?php foreach ($recentWatches as $watch): ?>
         <hr />

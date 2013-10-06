@@ -6835,13 +6835,16 @@ dl dd {
   text-align: center;
   color: #665600;
 }
+.recent-watches h4 {
+  text-align: center;
+  color: #665600;
+  padding: 20px;
+}
 .recent-watches hr {
   border-top-color: #665600;
 }
-.watches.index {
-  text-align: center;
-}
 .watches.index table {
+  text-align: center;
   width: auto;
 }
 .watches.index table .description {
@@ -6852,8 +6855,10 @@ dl dd {
   margin-bottom: 20px;
   overflow: hidden;
 }
+.watches.index .header .btn-primary {
+  margin-right: 10px;
+}
 .watches.index .add-watch {
-  text-align: left;
   float: left;
 }
 .watches.index .btn-group {

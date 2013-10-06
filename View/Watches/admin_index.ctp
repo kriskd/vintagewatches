@@ -1,7 +1,8 @@
 <div class="watches index">
 	<h2><?php echo __('Watches'); ?></h2>
     <section class="header">
-        <?php echo $this->Html->link('Add Watch', array('action' => 'add'), array('class' => 'btn btn-success add-watch')); ?>
+        <?php echo $this->Html->link('Add Watch', array('action' => 'add'), array('class' => 'btn btn-primary add-watch')); ?>
+        <?php echo $this->Watch->closeOpenStore(); ?>
         <div class="btn-group">
             <?php foreach ($buttons as $button => $attrs): ?>
                 <?php $class = array('btn', 'btn-default'); ?>

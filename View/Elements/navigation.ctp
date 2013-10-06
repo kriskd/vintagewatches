@@ -50,7 +50,7 @@
                     </li>
                 <?php endif; ?>
                 <?php //Wrapped in <li> in Component ?>
-                <?php echo $this->Html->navLink('<i class="glyphicon glyphicon-tags"></i>&nbsp;&nbsp;Go to the Store',
+                <?php echo $this->Watch->storeLink('<i class="glyphicon glyphicon-tags"></i>&nbsp;&nbsp;Go to the Store',
                                              array('controller' => 'watches', 'action' => 'index'),
                                              array('escape' => false),
                                              false); ?>
