@@ -15,7 +15,7 @@
                 </dd>
                 <dt><?php echo __('Description'); ?></dt>
                 <dd>
-                    <?php echo nl2br(h($watch['Watch']['description'])); ?>
+                    <?php echo $watch['Watch']['description']; ?>
                     &nbsp;
                 </dd>
             </dl>

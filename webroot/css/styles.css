@@ -6862,9 +6862,6 @@ dl dd {
 .watches.form #WatchAdminEditForm {
   margin-bottom: 20px;
 }
-.watches.form textarea {
-  width: 600px;
-}
 .watches.form .fake-upload {
   display: block;
 }
