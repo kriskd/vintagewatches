@@ -8,9 +8,10 @@ class OrdersController extends AppController
     {
 	$storeOpen = $this->Watch->storeOpen();
 	//Redirect if store is closed and going to a non-admin order page
-	if ($storeOpen == false && $this->request->params['admin'] == false) {
+	if ($storeOpen == false && empty($this->request->params['admin'])) {
 	    $this->redirect(array('controller' => 'pages', 'action' => 'home', 'admin' => false));
 	}
+	parent::beforeFilter();
     }
     
     public function index()
