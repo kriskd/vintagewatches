@@ -2,12 +2,23 @@
 	<h2><?php echo __('Watches'); ?></h2>
     <section class="header">
         <?php echo $this->Html->link('Add Watch', array('action' => 'add'), array('class' => 'btn btn-success add-watch')); ?>
-        <div class="filters">
-            <?php echo $this->Html->link('All Watches', array('controller' => 'watches', 'action' => 'index'), array('class' => 'btn btn-default', 'admin' => true)); ?>
-            <?php echo $this->Html->link('Sold Watches', array('controller' => 'watches', 'action' => 'index', 'sold' => '1'), array('class' => 'btn btn-default', 'admin' => true)); ?>
-            <?php echo $this->Html->link('Unsold Watches', array('controller' => 'watches', 'action' => 'index', 'sold' => '0'), array('class' => 'btn btn-default', 'admin' => true)); ?>
-            <?php echo $this->Html->link('Active Watches', array('controller' => 'watches', 'action' => 'index', 'active' => '1'), array('class' => 'btn btn-default', 'admin' => true)); ?>
-            <?php echo $this->Html->link('Inactive Watches', array('controller' => 'watches', 'action' => 'index', 'active' => '0'), array('class' => 'btn btn-default', 'admin' => true)); ?>
+        <div class="btn-group">
+            <?php foreach ($buttons as $button => $attrs): ?>
+                <?php $class = array('btn', 'btn-default'); ?>
+                <?php if ($sold === $attrs['sold'] && $active === $attrs['active']): ?>
+                    <?php $class[] = 'active'; ?>
+                <?php endif; ?>
+                <?php echo $this->Html->link($button, array(
+                                    'action' => 'index',
+                                    'active' => $attrs['active'],
+                                    'sold' => $attrs['sold']
+                                ),
+                                array(
+                                    'class' => implode(' ', $class),
+                                    'admin' => true
+                                )
+                             ); ?>
+            <?php endforeach; ?>
         </div>
     </section>
     <div class="table">
@@ -30,6 +41,7 @@
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['price']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['name']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', $this->Watch->shortDescription($watch['Watch']['description'], null, 10), array('class' => 'table-cell')); ?>
+            <?php //$row .= $this->Html->tag('span', $watch['Watch']['description'], array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['created']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['modified']), array('class' => 'table-cell')); ?>
             <?php echo $this->Html->link($row, array('action' => 'admin_view', $watch['Watch']['id'], 'admin' => true), array('class' => 'table-row', 'escape' => false)); ?>

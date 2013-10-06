@@ -6856,7 +6856,7 @@ dl dd {
   text-align: left;
   float: left;
 }
-.watches.index .filters {
+.watches.index .btn-group {
   float: right;
 }
 .watches.form #WatchAdminEditForm {

@@ -7,8 +7,13 @@ App::uses('AppController', 'Controller');
  */
 class WatchesController extends AppController {
 	
-	public $paginate = array('limit' => 10,
-				 'conditions' => array('active' => 1));
+	public $paginate = array(
+				'limit' => 10,
+				'order' => array(
+					'Watch.id' => 'desc'
+				),
+				'contain' => array('Image')
+			);
     
 	public $uses = array('Watch', 'Image');
 
@@ -19,15 +24,10 @@ class WatchesController extends AppController {
  */
 	public function index() {
 		//Get only active and unsold watches
-		$this->paginate('Watch', $this->Watch->getWatchesConditions(1, 0),
-					array(
-						'limit' => 10,
-						'contain' => array('Image'),
-						'fields' => array('id', 'stockId', 'price', 'name', 'description')
-					)
-			        );
+		$this->paginate['conditions'] = $this->Watch->getWatchesConditions(1, 0);
+		$this->paginate['fields'] = array('id', 'stockId', 'price', 'name', 'description');
 		$this->Paginator->settings = $this->paginate;
-
+		
 		$this->set('watches', $this->Paginator->paginate('Watch'));
 	}
 
@@ -56,17 +56,20 @@ class WatchesController extends AppController {
 		$active = isset($this->params['named']['active']) ? (int)$this->params['named']['active'] : null;
 		$sold = isset($this->params['named']['sold']) ? (int)$this->params['named']['sold'] : null;
 		
-		$conditions = $this->Watch->getWatchesConditions($active, $sold); 
-		$paginate = array(
-				'limit' => 10,
-				'order' => array(
-					'Watch.id' => 'desc'
-					),
-				'conditions' => $conditions
-				);
-		$this->Paginator->settings = $paginate;
-			
-		$this->set('watches', $this->paginate()); 
+		$this->paginate['conditions'] = $this->Watch->getWatchesConditions($active, $sold);
+		$this->paginate['fields'] = array('id', 'stockId', 'price', 'name', 'description', 'created', 'modified');
+		$this->paginate['contain'][] = 'Order';
+		$this->Paginator->settings = $this->paginate;
+		
+		$buttons = array(
+			'All Watches' => array('active' => null, 'sold' => null),
+			'Sold Watches' => array('active' => null, 'sold' => 1),
+			'Unsold Watches' => array('active' => null, 'sold' => 0),
+			'Active Watches' => array('active' => 1, 'sold' => null),
+			'Inactive Watches' => array('active' => 0, 'sold' => null)
+		);
+		
+		$this->set(array('watches' => $this->paginate()) + compact('active', 'sold', 'buttons')); 
 	}
 
 /**
