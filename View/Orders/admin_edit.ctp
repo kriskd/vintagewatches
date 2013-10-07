@@ -26,6 +26,8 @@
 					<?php elseif (strcasecmp($address['country'], 'CA')==0): ?>
 						<?php $options['options'] = $statesCA; ?>
 					<?php endif; ?>
+				<?php elseif (strcasecmp($field, 'state')==0 && empty($field)): ?>
+					<?php continue; ?>
 				<?php endif; ?>
 				<?php echo $this->Form->input('Address.'.$i.'.'.$field, $options); ?>
 			<?php endforeach; ?>
