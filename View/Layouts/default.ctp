@@ -23,6 +23,8 @@
 <head>
 	<?php echo $this->Html->charset(); ?>
 	<title>
+		<?php $title_for_layout = 'Bruce\'s Vintage Watches'; ?>
+		<?php $title_for_layout = isset($title) ? $title_for_layout . ' : ' . $title :  $title_for_layout; ?>
 		<?php echo $title_for_layout; ?>
 	</title>
 	<?php

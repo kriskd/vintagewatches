@@ -37,6 +37,7 @@ class WatchesController extends AppController {
 		$this->paginate['conditions'] = $this->Watch->getWatchesConditions(1, 0);
 		$this->paginate['fields'] = array('id', 'stockId', 'price', 'name', 'description');
 		$this->Paginator->settings = $this->paginate;
+		$this->set('title', 'Store');
 		
 		$this->set('watches', $this->Paginator->paginate('Watch'));
 	}
@@ -53,7 +54,10 @@ class WatchesController extends AppController {
 			$this->redirect(array('controller' => 'pages', 'action' => 'home', 'display'));
 		}
 		$options = array('conditions' => array('Watch.' . $this->Watch->primaryKey => $id));
-		$this->set('watch', $this->Watch->find('first', $options));
+		$watch = $this->Watch->find('first', $options);
+		$this->set('watch', $watch);
+		
+		$this->set(array('title' => $watch['Watch']['name']));
 	}
 
 /**

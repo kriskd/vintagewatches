@@ -61,8 +61,8 @@ class PagesController extends AppController {
 		if (empty($path)) {
 			$this->redirect('/');
 		}
-		$title_for_layout = 'Bruce\'s Vintage Watches : ' . $page['Page']['name'];
-		$this->set(compact('page', 'title_for_layout'));
+		$title = $page['Page']['name'];
+		$this->set(compact('page', 'title'));
 		$this->render('home');
 		
 		/*$count = count($path);

@@ -101,17 +101,6 @@ class OrdersController extends AppController
 		    $items = $this->Session->read('Cart.items');
 		    $watches = $this->Watch->getCartWatches($items);
 		    
-		    //This is for a many-to-many relationship if I go back to that
-		    /*foreach($watches as $watch){
-			$inactive[] = array('id' => $watch['Watch']['id'],
-					    'active' => 0);
-			$purchased[] = array('order_id' => $order_id,
-					     'watch_id' => $watch['Watch']['id']);
-		    }
-		    
-		    $this->Watch->saveMany($inactive);
-		    $this->OrdersWatch->saveMany($purchased);*/
-		    
 		    //Get the purchased items from the Session, add the order_id and
 		    //update the items with the order_id
 		    $purchasedWatches = array_map(function($item) use ($order_id){
@@ -147,7 +136,8 @@ class OrdersController extends AppController
 	    }
         }
 	
-        $this->set(compact('watches', 'months', 'years', 'total'));
+	$title = 'Checkout';
+        $this->set(compact('watches', 'months', 'years', 'total', 'title'));
     }
     
     public function add($id = null)
@@ -189,7 +179,7 @@ class OrdersController extends AppController
     
     public function confirm($id = null)
     {
-	$referer = trim($this->referer(null, true), '/');
+	$referer = trim($this->referer(null, true), '/'); 
 	if (strcasecmp($referer, 'orders') != 0){
 	    $this->redirect(array('controller' => 'watches', 'action' => 'index'));
 	}
@@ -199,7 +189,8 @@ class OrdersController extends AppController
 	
 	$order = $this->Order->getOrder($id);
 	$this->emailOrder($order);
-	$this->set('order', $order);
+	$title = 'Thank You For Your Order';
+	$this->set(compact('order', 'title'));
     }
     
     /**

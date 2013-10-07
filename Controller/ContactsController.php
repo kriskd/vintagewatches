@@ -54,7 +54,8 @@ class ContactsController extends AppController {
 		}
 
 		list($items, $selectedItem) = $this->Captcha->makeCaptcha();
-		$this->set(compact('items', 'selectedItem'));
+		$title = 'Contact Us';
+		$this->set(compact('items', 'selectedItem', 'title'));
 	}
 
 
