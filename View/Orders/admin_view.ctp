@@ -1,5 +1,44 @@
 <div class="orders admin-view">
-    <h1>Order <?php echo $order['Order']['id']; ?> Detail</h1>
+    <h1>
+        Order <?php echo $order['Order']['id']; ?> Detail
+        <?php echo $this->Html->link('Edit', array(
+                                                'action' => 'edit',
+                                                'admin' => true
+                                                ),
+                                           array(
+                                                 'class' => 'btn btn-success'
+                                                 )
+                                           ); ?>
+        <?php echo $this->Html->link('Delete', '#delete-order',
+                                                array(
+                                                    'class' => 'btn btn-danger',
+                                                    'data-toggle' => 'modal'
+                                                )
+                                     ); ?>
+    </h1>
+    <div class="modal fade" id="delete-order" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Confirm Order Delete</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Are you sure you want to delete Order <?php echo $order['Order']['id']; ?>
+                        from <?php echo $order['Address'][0]['firstName']; ?> <?php echo $order['Address'][0]['lastName']; ?>
+                        for <?php echo $this->Number->currency($order['Order']['stripe_amount']/100, 'USD'); ?>?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <?php echo $this->Html->link('Close', '#', array('data-dismiss' => 'modal',
+                                                                     'class' => 'btn btn-default btn-lg')); ?>
+                    <?php echo $this->Html->link('Delete', array('action' => 'delete', 'admin' => true),
+                                                            array('class' => 'btn btn-danger btn-lg')); ?>                                    
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     <h2>Purchases</h2>
     <dl>
         <dt>Date</dt>
