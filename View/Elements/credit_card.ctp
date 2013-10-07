@@ -42,7 +42,7 @@
         <div class="row">
             <?php echo $this->Form->label('Card.month', 'Expiration (MM/YYYY)',
                                       array('for' => 'CardMonth',
-                                            'class' => 'control-label col-xs-11 col-sm-6 col-md-6 col-lg-6')); ?>
+                                            'class' => 'control-label col-xs-12 col-sm-6 col-md-6 col-lg-6')); ?>
             <?php echo $this->Form->input('Card.month', array('name' => false,
                                                 'empty' => 'MM',
                                                 'options' => $months,
@@ -50,7 +50,7 @@
                                                 'class' => 'card-expiry-month form-control',
                                                 'label' => false,
                                                 'multiple' => false,
-                                                'between' => '<div class="col-xs-5 col-sm-3 col-md-3 col-lg-3">',
+                                                'between' => '<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">',
                                                 'after' => '</div>')); ?>
             <?php echo $this->Form->input('Card.year', array('name' => false,
                                                 'empty' => 'Year',
@@ -60,7 +60,7 @@
                                                 'class' => 'card-expiry-year form-control',
                                                 'label' => false,
                                                 'multiple' => false,
-                                                'between' => '<div class="col-xs-5 col-sm-3 col-md-3 col-lg-3">',
+                                                'between' => '<div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">',
                                                 'after' => '</div>')); ?>
         </div>
         <div class="row">
