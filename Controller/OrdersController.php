@@ -1,4 +1,5 @@
 <?php
+App::uses('AppController', 'Controller');
 App::uses('Address', 'Model');
 class OrdersController extends AppController
 {
@@ -297,6 +298,62 @@ class OrdersController extends AppController
 	}
 
 	$this->set('order', $this->Order->getOrder($id));
+    }
+    
+/**
+ * admin_edit method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
+    public function admin_edit($id = null) { 
+	if (!$this->Order->exists($id)) {
+		throw new NotFoundException(__('Invalid order'));
+	}
+	if ($this->request->is('post') || $this->request->is('put')) {
+	    $this->request->data['Order']['id'] = $id; 
+		if ($this->Order->saveAssociated($this->request->data)) { 
+			$this->Session->setFlash(__('The order has been saved'), 'success');
+			$this->redirect(array('action' => 'edit', $id));
+		} else {
+			$this->Session->setFlash(__('The order could not be saved. Please, try again.'));
+		}
+	}
+	
+	$options = array('conditions' => array('Order.' . $this->Order->primaryKey => $id));
+	$this->request->data = $this->Order->find('first', $options);
+	$order = $this->Order->find('first', $options);
+	$this->set('order', $order);
+	
+	$addressFields = array('firstName', 'lastName', 'company', 'address1', 'address2', 'city', 'state',
+			'postalCode', 'country');
+
+	$statesUS = $this->_getStates();
+	$statesCA = $this->_getCanadianProvinces();
+	
+	$this->set(compact('addressFields', 'statesUS', 'statesCA'));
+    }
+
+/**
+ * admin_delete method
+ *
+ * @throws NotFoundException
+ * @param string $id
+ * @return void
+ */
+    public function admin_delete($id = null) {
+	$this->Order->id = $id;
+	if (!$this->Order->exists()) {
+		throw new NotFoundException(__('Invalid order'));
+	}
+	$this->request->onlyAllow('post', 'delete');
+	if ($this->Order->delete()) {
+		$this->Session->setFlash(__('Order deleted'));
+		$this->redirect(array('action' => 'index'));
+	}
+	$this->Session->setFlash(__('Order was not deleted'));
+	$this->redirect(array('action' => 'index'));
     }
     
     public function emailOrder($order = null)
