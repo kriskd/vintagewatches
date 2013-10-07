@@ -2,11 +2,11 @@
     <h1>Order Admin</h1>
     <div class="table">
         <div class="table-row">
-            <span class="table-head">Order ID</span>
-            <span class="table-head">Email</span>
-            <span class="table-head">Stripe ID</span>
-            <span class="table-head">Stripe Amount</span>
-            <span class="table-head">Created</span>
+            <span class="table-head"><?php echo $this->Paginator->sort('id'); ?></span>
+            <span class="table-head"><?php echo $this->Paginator->sort('email'); ?></span>
+            <span class="table-head"><?php echo $this->Paginator->sort('stripe_id'); ?></span>
+            <span class="table-head"><?php echo $this->Paginator->sort('stripe_amount'); ?></span>
+            <span class="table-head"><?php echo $this->Paginator->sort('created'); ?></span>
         </div>
         <?php foreach($orders as $order): ?>
             <?php $row = $this->Html->tag('span', $order['Order']['id'], array('class' => 'table-cell')); ?>
