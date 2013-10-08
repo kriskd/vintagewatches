@@ -20,13 +20,13 @@
 			<?php echo $this->Form->input('Address.'.$i.'.id', array('type' => 'hidden', 'value' => $address['id'])); ?>
 			<?php foreach ($addressFields as $field): ?>
 				<?php $options = array('value' => $address[$field]); ?>
-				<?php if (strcasecmp($field, 'state')==0 && !empty($field)): ?>
+				<?php if (strcasecmp($field, 'state')==0 && !empty($address[$field])): ?>
 					<?php if (strcasecmp($address['country'], 'US')==0): ?>
 						<?php $options['options'] = $statesUS; ?>
 					<?php elseif (strcasecmp($address['country'], 'CA')==0): ?>
 						<?php $options['options'] = $statesCA; ?>
 					<?php endif; ?>
-				<?php elseif (strcasecmp($field, 'state')==0 && empty($field)): ?>
+				<?php elseif (strcasecmp($field, 'state')==0 && empty($address[$field])): ?>
 					<?php continue; ?>
 				<?php endif; ?>
 				<?php echo $this->Form->input('Address.'.$i.'.'.$field, $options); ?>
