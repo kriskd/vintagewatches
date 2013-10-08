@@ -2,7 +2,7 @@
     <h1>
         Order <?php echo $order['Order']['id']; ?> Detail
         <?php echo $this->Html->link('Edit', array(
-                                                'action' => 'edit',
+                                                'action' => 'edit', $order['Order']['id'],
                                                 'admin' => true
                                                 ),
                                            array(
