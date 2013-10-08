@@ -6,6 +6,10 @@ App::uses('AppModel', 'Model');
  * @property address $address
  */
 class Address extends AppModel {
+    
+    public $virtualFields = array(
+        'name' => 'CONCAT(Address.firstName, " ", Address.lastName)'
+    );
 
 /**
  * Validation rules
@@ -158,6 +162,17 @@ class Address extends AppModel {
             }
             return true;
         }
+        
+        /**
+         * Set the state to null if not US or CA
+         */
+        public function beforeSave($options = array())
+        {
+            if (!in_array($this->data['Address']['country'], array('US', 'CA'))) {
+                $this->data['Address']['state'] = null;
+            }
+            return true;
+        }
 
 //The Associations below have been created with all possible keys, those that are not needed can be removed
 
@@ -166,7 +181,7 @@ class Address extends AppModel {
  *
  * @var array
  */
-	/*public $belongsTo = array(
+	public $belongsTo = array(
 		'Order' => array(
 			'className' => 'Order',
 			'foreignKey' => 'id',
@@ -174,5 +189,5 @@ class Address extends AppModel {
 			'fields' => '',
 			'order' => ''
 		)
-	);*/
+	);
 }
