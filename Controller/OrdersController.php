@@ -283,8 +283,6 @@ class OrdersController extends AppController
     
     public function admin_index()
     {
-	//$this->Watch->recursive = -1;
-	//$orderIds = $this->Watch->find('list', array('fields' => array('order_id')));
 	$this->paginate = array('Order' => array(
 						 'limit' => 10,
 						 'order' => array('Order.id' => 'desc')));
@@ -324,15 +322,16 @@ class OrdersController extends AppController
 	$options = array('conditions' => array('Order.' . $this->Order->primaryKey => $id));
 	$this->request->data = $this->Order->find('first', $options);
 	$order = $this->Order->find('first', $options);
-	$this->set('order', $order);
+	$this->set('order', $order); 
 	
 	$addressFields = array('firstName', 'lastName', 'company', 'address1', 'address2', 'city', 'state',
 			'postalCode', 'country');
 
-	$statesUS = $this->_getStates();
-	$statesCA = $this->_getCanadianProvinces();
+	$statesUS = array('' => 'Select One') + $this->_getStates();
+	$statesCA = array('' => 'Select One') + $this->_getCanadianProvinces();
+	$countries = $this->_getCountries();
 	
-	$this->set(compact('addressFields', 'statesUS', 'statesCA'));
+	$this->set(compact('addressFields', 'statesUS', 'statesCA', 'countries'));
     }
 
 /**
