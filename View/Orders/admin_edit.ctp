@@ -12,11 +12,13 @@
 			echo $this->Form->input('phone');
 			echo $this->Form->input('shippingAmount');
 			echo $this->Form->input('notes', array('label' => 'Notes from ' . $order['Address'][0]['name']));
+			echo $this->Form->input('orderNotes', array('label' => 'Order Notes <small>(Notes by Bruce)</small>'));
+			echo $this->Form->input('shipDate', array('type' => 'text'));
 		?>
 		</fieldset>
 		<fieldset>
 			<?php foreach ($order['Address'] as $i => $address): ?>
-				<h4><?php echo ucfirst($address['type']); ?> Address</h4>
+				<h4><?php echo ucfirst($address['type']); ?> Name and Address</h4>
 				<?php echo $this->Form->input('Address.'.$i.'.id', array('type' => 'hidden', 'value' => $address['id'])); ?>
 				<?php foreach ($addressFields as $field): ?>
 					<?php $options = array('value' => $address[$field]); ?>

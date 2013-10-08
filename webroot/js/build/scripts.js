@@ -1191,6 +1191,8 @@
     $(document).on('click', '.fake-upload', function(){
         $('.image-upload').click();
     });
+    
+    $('#OrderShipDate').datepicker({dateFormat: 'yy-mm-dd'});
 
     /**
      * Billing country autocomplete

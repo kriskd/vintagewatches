@@ -18,6 +18,14 @@ class Order extends AppModel {
                     'message' => 'Please supply a valid email address.'
                 )
             ),
+	    'shipDate' => array(
+		'date' => array(
+		    'rule' => array('date', 'ymd'),
+		    'message' => 'Enter a valid date in YYY-MM-DD format.',
+		    'allowEmpty' => true,
+		    'required' => false
+		)
+	    )
         );
 
 //The Associations below have been created with all possible keys, those that are not needed can be removed
