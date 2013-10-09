@@ -1,7 +1,10 @@
 <div class="watches index">
-    <div class="watches-header">
-        <h2 class="pull-left"><?php echo __('Welcome to the Watches Page'); ?></h2>
-        <?php echo $this->Html->link($this->Html->tag('span', '', array(
+    <div class="watches-header row">
+        <div class="col-xs-11 col-sm-11 col-md-11 col-lg11">
+            <h2 class="pull-left"><?php echo __('Welcome to the Watches Page'); ?></h2>
+        </div>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg1">
+            <?php echo $this->Html->link($this->Html->tag('span', '', array(
                                                             'class' => 'glyphicon glyphicon-eye-open'
                                                             )
                                                         ),
@@ -14,6 +17,7 @@
                                                'escape' => false
                                             )
                              ); ?>
+        </div>
     </div>
     <div class="watch-index-intro">
         <?php echo $this->Html->link($this->Html->tag('span', '', array(
@@ -67,7 +71,7 @@
                         <?php echo h($this->Number->currency($watch['Watch']['price'], 'USD')); ?>
                     </div>
                 </div>
-                <div class="col-xs-6 col-sm-2 col-md-2 col-lg-2 center-block">
+                <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 center-block">
                     <div class="watch-thumb">
                         <?php echo $this->Html->thumbImagePrimary($watch,
                                                           array('class' => 'center-block',
@@ -79,7 +83,7 @@
                         <?php echo $this->Element('add_to_cart', compact('watch', 'controller') + array('class' => 'btn btn-gold')); ?>
                     </div>
                 </div>
-                <div class="col-xs-6 col-sm-10 col-md-10 col-lg-10">
+                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
                     <div class="row">
                         <div class="col-lg-12">
                             <?php $description = $watch['Watch']['description']; ?>
