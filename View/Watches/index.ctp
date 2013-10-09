@@ -29,8 +29,10 @@
     <?php endforeach; ?>
 	</table>
 	*/ ?>
-    <?php foreach ($watches as $watch): ?>
+    <?php foreach ($watches as $i => $watch): ?>
+        <?php if ($i%3==0): ?>
         <div class="row">
+        <?php endif; ?>
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
                 <div class="watch">
                     <div class="row">
@@ -56,7 +58,9 @@
                     </div>
                 </div>
             </div>
+        <?php if ($i%3==2 || $i==count($watches)-1): ?>
         </div>
+        <?php endif; ?>
     <?php endforeach; ?>
     <div class="row">
         <p>
