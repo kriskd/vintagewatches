@@ -1193,6 +1193,16 @@
     });
     
     $('#OrderShipDate').datepicker({dateFormat: 'yy-mm-dd'});
+    
+    $('.watches-header .glyphicon-eye-open').hide();
+    $(document).on('click', '.watch-index-intro .glyphicon-remove', function(){
+        $('.watch-index-intro').hide();
+        $('.watches-header .glyphicon-eye-open').show();
+    });
+    $(document).on('click', '.watches-header .glyphicon-eye-open', function(){
+        $('.watch-index-intro').show();
+        $('.watches-header .glyphicon-eye-open').hide();
+    });
 
     /**
      * Billing country autocomplete

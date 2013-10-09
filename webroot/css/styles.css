@@ -6876,13 +6876,57 @@ dl dd {
 .watches.index .btn-group {
   float: right;
 }
+.watches.index .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+.watches.index .watches-header:before,
+.watches.index .watches-header:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+.watches.index .watches-header:after {
+  clear: both;
+}
+.watches.index .watches-header:before,
+.watches.index .watches-header:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+.watches.index .watches-header:after {
+  clear: both;
+}
+.watches.index .watches-header .show-text {
+  margin: 30px 10px 0px 0px;
+}
+.watches.index .watch-index-intro {
+  border: 1px solid #665600;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  background: #eeeeee;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.watches.index .watch-index-intro .hide-text {
+  margin: 0 0 10px 10px;
+}
 .watches.index .watch {
   border: 1px solid #665600;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
-  padding: 0px 0px 10px 10px;
+  padding: 0px 0px 10px 0px;
   overflow: hidden;
   margin-bottom: 10px;
 }

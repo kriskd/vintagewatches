@@ -360,13 +360,37 @@ dl {
     .btn-group {
         float: right;
     }
+    //This fixes the watch "boxes" from overflowing into L & R margins
+    .row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .watches-header {
+        .clearfix();
+        .show-text {
+            margin: 30px 10px 0px 0px;
+        }
+    }
+    .watch-index-intro {
+        border: 1px solid @goldDark;
+        .border-top-radius(5px);
+        .border-right-radius(5px);
+        .border-bottom-radius(5px);
+        .border-left-radius(5px);
+        background: @gray-lighter;
+        padding: 10px;
+        margin-bottom: 10px;
+        .hide-text {
+            margin: 0 0 10px 10px;
+        }
+    }
     .watch {
         border: 1px solid @goldDark;
         .border-top-radius(5px);
         .border-right-radius(5px);
         .border-bottom-radius(5px);
         .border-left-radius(5px);
-        padding: 0px 0px 10px 10px;
+        padding: 0px 0px 10px 0px;
         overflow: hidden;
         margin-bottom: 10px;
         .watch-thumb {
