@@ -6655,6 +6655,7 @@ span.required {
 .error-message {
   color: #9d261d;
   font-size: 90%;
+  margin-top: 10px;
 }
 dl:before,
 dl:after {
@@ -6747,9 +6748,6 @@ dl dd {
 }
 #s3captcha-images .s3captcha .leaf {
   background-image: url(/css/images/s3icons/new/leaf.png);
-}
-.error-message {
-  margin-top: 10px;
 }
 .navbar .navbar-header .credit-card-logos {
   display: none;
@@ -7081,43 +7079,6 @@ dl dd {
 .orders .checkout-form .error-message {
   margin: 0 0 2px 188px;
 }
-.orders label {
-  font-size: 90%;
-  font-weight: bold;
-}
-.orders .review-cart form {
-  border: none;
-}
-.orders .review-cart label {
-  font-weight: normal;
-}
-.orders .shipping .shipping-inner {
-  display: none;
-}
-.orders .address .address-form-billing .checkbox {
-  padding: 10px 0 0 0;
-}
-.orders .address .radio.inline {
-  margin-right: 30px;
-}
-.orders .address input,
-.orders .address select {
-  margin: 5px;
-}
-.orders .address .navbar-inner {
-  padding: 0 10px;
-}
-.orders .address .billing-country-name {
-  padding-top: 5px;
-  margin-left: 10px;
-}
-.orders .address .shipping-instructions {
-  display: none;
-}
-.orders .address textarea {
-  display: none;
-  height: 150px;
-}
 .orders .checkout-form input {
   margin: 5px;
 }
@@ -7169,6 +7130,43 @@ dl dd {
 }
 .orders .checkout-form .submit:after {
   clear: both;
+}
+.orders label {
+  font-size: 90%;
+  font-weight: bold;
+}
+.orders .review-cart form {
+  border: none;
+}
+.orders .review-cart label {
+  font-weight: normal;
+}
+.orders .shipping .shipping-inner {
+  display: none;
+}
+.orders .address .address-form-billing .checkbox {
+  padding: 10px 0 0 0;
+}
+.orders .address .radio.inline {
+  margin-right: 30px;
+}
+.orders .address input,
+.orders .address select {
+  margin: 5px;
+}
+.orders .address .navbar-inner {
+  padding: 0 10px;
+}
+.orders .address .billing-country-name {
+  padding-top: 5px;
+  margin-left: 10px;
+}
+.orders .address .shipping-instructions {
+  display: none;
+}
+.orders .address textarea {
+  display: none;
+  height: 150px;
 }
 .confirm .notes {
   width: 500px;

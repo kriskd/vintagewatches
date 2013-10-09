@@ -140,6 +140,7 @@ span.required {
 .error-message {
     color: @red;
     font-size: 90%;
+    margin-top: 10px;
 }
 
 dl {
@@ -194,9 +195,7 @@ dl {
     }
 }
 
-.error-message {
-        margin-top: 10px;
-}
+
     
 .navbar {
     .navbar-header {
@@ -498,6 +497,35 @@ dl {
         .error-message {
             margin: 0 0 2px 188px;
         }
+        input {
+            margin: 5px;
+        }
+        .input {
+            line-height: 20px;
+        }
+        .card-expiry-month {
+            float: left;
+        }
+        label[for=CardCvc] {
+            padding-top: 10px;
+        }
+        label[for=CardMonth] {
+            padding-top: 5px;
+            margin-right: 10px;
+        }
+        select option {
+            color: #555;
+        }
+        .payment-errors {
+            display: none;
+        }
+        .card-number-div {
+            height: 52px;
+        }
+        .submit {
+            text-align: center;
+            .clearfix();
+        }
     }
     label {
         font-size: 90%;
@@ -541,37 +569,6 @@ dl {
         textarea {
             display: none;
             height: 150px
-        }
-    }
-    .checkout-form {
-        input {
-            margin: 5px;
-        }
-        .input {
-            line-height: 20px;
-        }
-        .card-expiry-month {
-            float: left;
-        }
-        label[for=CardCvc] {
-            padding-top: 10px;
-        }
-        label[for=CardMonth] {
-            padding-top: 5px;
-            margin-right: 10px;
-        }
-        select option {
-            color: #555;
-        }
-        .payment-errors {
-            display: none;
-        }
-        .card-number-div {
-            height: 52px;
-        }
-        .submit {
-            text-align: center;
-            .clearfix();
         }
     }
 }
