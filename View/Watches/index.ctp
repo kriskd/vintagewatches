@@ -7,10 +7,10 @@
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 name">
                         <?php echo h($watch['Watch']['name']); ?>
                     </div>
-                    <div class="col-xs-6 col-md-6 col-lg-3 stockid">
+                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 stockid">
                         <?php echo h($watch['Watch']['stockId']); ?>
                     </div>
-                    <div class="col-xs-6 col-md-6 col-lg-3 price">
+                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 price">
                         <?php echo h($this->Number->currency($watch['Watch']['price'], 'USD')); ?>
                     </div>
                 </div>
