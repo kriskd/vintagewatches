@@ -6878,13 +6878,36 @@ dl dd {
 }
 .watches.index .watch {
   border: 1px solid #665600;
-  padding: 10px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  padding: 0px 0px 10px 10px;
   overflow: hidden;
   margin-bottom: 10px;
 }
-.watches.index .watch .watch-attrs {
+.watches.index .watch .watch-thumb {
+  padding-top: 10px;
+  margin-bottom: 10px;
+}
+.watches.index .watch .watch-cart-button {
   text-align: center;
+}
+.watches.index .watch .watch-attrs {
+  background-image: -webkit-gradient(linear, left 0%, left 90%, from(#222222), to(#555555));
+  background-image: -webkit-linear-gradient(top, #222222, 0%, #555555, 90%);
+  background-image: -moz-linear-gradient(top, #222222 0%, #555555 90%);
+  background-image: linear-gradient(to bottom, #222222 0%, #555555 90%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff222222', endColorstr='#ff555555', GradientType=0);
   font-weight: bold;
+  font-size: 110%;
+  color: #fff;
+  padding: 5px 10px;
+  margin-bottom: 5px;
+}
+.watches.index .watch .watch-attrs .price {
+  text-align: right;
 }
 .watches.form #WatchAdminEditForm {
   margin-bottom: 20px;

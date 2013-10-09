@@ -362,12 +362,30 @@ dl {
     }
     .watch {
         border: 1px solid @goldDark;
-        padding: 10px;
+        .border-top-radius(5px);
+        .border-right-radius(5px);
+        .border-bottom-radius(5px);
+        .border-left-radius(5px);
+        padding: 0px 0px 10px 10px;
         overflow: hidden;
         margin-bottom: 10px;
-        .watch-attrs {
+        .watch-thumb {
+            padding-top: 10px;
+            margin-bottom: 10px;
+        }
+        .watch-cart-button {
             text-align: center;
+        }
+        .watch-attrs {
+            #gradient.vertical(@gray-darker; @gray; 0%; 90%);
             font-weight: bold;
+            font-size: 110%;
+            color: #fff;
+            padding: 5px 10px;
+            margin-bottom: 5px;
+            .price {
+                text-align: right;
+            }
         }
     }
 }
