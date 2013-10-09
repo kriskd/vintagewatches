@@ -6879,6 +6879,12 @@ dl dd {
 .watches.index .watch {
   border: 1px solid #665600;
   padding: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.watches.index .watch .watch-attrs {
+  text-align: center;
+  font-weight: bold;
 }
 .watches.form #WatchAdminEditForm {
   margin-bottom: 20px;
