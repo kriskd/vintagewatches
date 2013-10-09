@@ -6880,6 +6880,9 @@ dl dd {
   margin-left: 0;
   margin-right: 0;
 }
+.watches.index .watches-header {
+  position: relative;
+}
 .watches.index .watches-header:before,
 .watches.index .watches-header:after {
   content: " ";
@@ -6905,7 +6908,9 @@ dl dd {
   clear: both;
 }
 .watches.index .watches-header .show-text {
-  margin: 30px 10px 0px 0px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 .watches.index .watch-index-intro {
   border: 1px solid #665600;

@@ -1,16 +1,16 @@
 <div class="watches index">
     <div class="watches-header row">
-        <div class="col-xs-11 col-sm-11 col-md-11 col-lg11">
+        <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
             <h2 class="pull-left"><?php echo __('Welcome to the Watches Page'); ?></h2>
         </div>
-        <div class="col-xs-1 col-sm-1 col-md-1 col-lg1">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 show-text">
             <?php echo $this->Html->link($this->Html->tag('span', '', array(
                                                             'class' => 'glyphicon glyphicon-eye-open'
                                                             )
                                                         ),
                                             '#',
                                             array(
-                                               'class' => 'launch-tooltip pull-right show-text',
+                                               'class' => 'launch-tooltip pull-right',
                                                'data-toggle' => 'tooltip',
                                                'data-placement' => 'top',
                                                'title' => 'Show welcome text.',
@@ -72,7 +72,7 @@
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 center-block">
-                    <div class="watch-thumb">
+                    <div class="watch-thumb pull">
                         <?php echo $this->Html->thumbImagePrimary($watch,
                                                           array('class' => 'center-block',
                                                                 'url' => array('controller' => 'watches',
