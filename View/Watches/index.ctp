@@ -1,6 +1,7 @@
 <div class="watches index">
 	<h2><?php echo __('Watches'); ?></h2>
-	<table class="table-striped table-bordered">
+	<?php /*
+    <table class="table-striped table-bordered">
 	<tr>
         <th></th>
 		<th>Add to Cart</th>
@@ -27,17 +28,49 @@
         </tr>
     <?php endforeach; ?>
 	</table>
-	<p>
-	<?php
-	echo $this->Paginator->counter(array(
-	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-	));
-	?>	</p>
-	<div class="paging">
-	<?php
-		echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
-		echo $this->Paginator->numbers(array('separator' => ''));
-		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
-	?>
-	</div>
+	*/ ?>
+    <?php foreach ($watches as $watch): ?>
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+                <div class="watch">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"> 
+                            <?php echo $this->Html->thumbImagePrimary($watch,
+                                                                      array('class' => 'center-block',
+                                                                            'url' => array('controller' => 'watches',
+                                                                                           'action' => 'view', $watch['Watch']['id']))
+                                                                      ); ?>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <h5><?php echo $watch['Watch']['name']; ?></h5>
+                            <p><?php echo $this->Number->currency($watch['Watch']['price'], 'USD'); ?></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <?php $more = $this->Html->link('<strong>More details</strong>',
+                                                            array('controller' => 'watches', 'action' => 'view', $watch['Watch']['id']),
+                                                            array('escape' => false)); ?>
+                            <p><?php echo $this->Watch->shortDescription($watch['Watch']['description'], $more); ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endforeach; ?>
+    <div class="row">
+        <p>
+        <?php
+        echo $this->Paginator->counter(array(
+        'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
+        ));
+        ?>	</p>
+        <div class="paging">
+        <?php
+            echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
+            echo $this->Paginator->numbers(array('separator' => ''));
+            echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
+        ?>
+        </div>
+    </div>
 </div>
