@@ -12,13 +12,13 @@
         <h3>Review Cart</h3>
         <div class="cart-details">
             <div class="row head">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
                     
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                     Stock ID
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                     Name
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -36,16 +36,24 @@
                                                                                    'title' => 'Remove from Cart')
                                                                              ); ?>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                        <?php echo $this->Html->thumbImagePrimary($watch); ?>
+                    <div class="image col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <?php echo $this->Html->thumbImagePrimary($watch, array(
+                                                                            'class' => 'img-responsive'
+                                                                        )
+                                                                  ); ?>
                     </div>
-                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <div class="text-center col-lg-2 col-md-2 col-sm-2 col-xs-2">
                         <?php echo h($watch['Watch']['stockId']); ?>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6">
-                        <?php echo $this->Html->link(htmlspecialchars($watch['Watch']['name'], ENT_NOQUOTES, 'UTF-8'), array('controller' => 'watches', 'action' => 'view', $watch['Watch']['id'])); ?>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                        <?php echo $this->Html->link(htmlspecialchars($watch['Watch']['name'], ENT_NOQUOTES, 'UTF-8'),
+                                                     array(
+                                                           'controller' => 'watches',
+                                                           'action' => 'view', $watch['Watch']['id']
+                                                           )
+                                                     ); ?>
                     </div>
-                    <div class="text-right col-lg-2 col-md-2 col-sm-6 col-xs-6">
+                    <div class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
                         <?php echo h($this->Number->currency($watch['Watch']['price'], 'USD')); ?>
                     </div>
                 </div>
