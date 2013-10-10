@@ -7043,6 +7043,33 @@ dl dd {
     text-align: left;
   }
 }
+.orders .cart-details {
+  padding: 8px;
+  background: #eeeeee;
+  border: 1px solid #665600;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+}
+.orders .cart-details .row {
+  margin: 0 -8px 10px -8px;
+}
+.orders .cart-details .head,
+.orders .cart-details .watch,
+.orders .cart-details .choose-ship {
+  border-bottom: 1px solid #ddd;
+  padding: 0 0 15px 0;
+}
+.orders .cart-details .head {
+  color: #665600;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 5px;
+}
+.orders .cart-details .glyphicon-trash {
+  text-align: center;
+}
 .orders .checkout-form {
   padding: 5px;
   background: #eeeeee;
