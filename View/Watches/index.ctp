@@ -62,7 +62,7 @@
             <div class="watch">
                 <div class="row watch-attrs">
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 name">
-                        <?php echo h($watch['Watch']['name']); ?>
+                        <?php echo $this->Html->link(h($watch['Watch']['name']), array('action' => 'view', $watch['Watch']['id']), array('escape' => false)); ?>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 stockid">
                         <?php echo h($watch['Watch']['stockId']); ?>
@@ -87,7 +87,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <?php $description = $watch['Watch']['description']; ?>
-                            <?php $more = $this->Html->link('More details', array('action' => 'view', $watch['Watch']['id']), array()); ?>
+                            <?php $more = $this->Html->link('<strong>More details</strong>', array('action' => 'view', $watch['Watch']['id']), array('escape' => false)); ?>
                             <?php $description = $this->Watch->shortDescription($description, $more); ?>
                             <?php echo $description; ?>
                         </div>
