@@ -34,7 +34,7 @@ $(document).ready(function(){
      */
     $(document).on('keyup', '#AddressBillingCountryName', function(){
         $('#AddressBillingCountryName').autocomplete({
-            source: '/orders/index.json',
+            source: '/orders/checkout.json',
             minLength: 3,
             select: function(event,ui){
                 $(this).val(ui.item.value); 

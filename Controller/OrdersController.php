@@ -15,7 +15,7 @@ class OrdersController extends AppController
 	parent::beforeFilter();
     }
     
-    public function index()
+    public function checkout()
     {
         if($this->Cart->cartEmpty() == true){
             $this->redirect(array('controller' => 'watches', 'action' => 'index'));
@@ -94,10 +94,10 @@ class OrdersController extends AppController
 		    $this->Order->saveAssociated($data); 
 		    
 		    //Write the results of the Stripe payment processing to the table
-		    $this->Order->save($result);
+		    $this->Order->save($result); 
 		
 		    //Get the order_id
-		    $order_id = $this->Order->id; 
+		    $order_id = $this->Order->id;
 		    
 		    $items = $this->Session->read('Cart.items');
 		    $watches = $this->Watch->getCartWatches($items);
@@ -110,15 +110,20 @@ class OrdersController extends AppController
 					    return $item;
 					} , $watches);
 		    $this->Watch->saveMany($purchasedWatches);
-		
+		    
 		    $this->Session->delete('Cart');
+		    $order = $this->Order->getOrder($order_id);
+		    $this->emailOrder($order);
+		    $title = 'Thank You For Your Order';
+		    $this->set(compact('order', 'title'));   
 		    $this->Session->setFlash('<i class="icon-ok icon-large"></i> Thank you for your order.', 'default', array('class' => 'alert alert-success'));
-		    $this->redirect(array('action' => 'confirm', $order_id));
+		    $this->render('confirm');
+		} else {
+		    //Decline
+		    $this->Session->write('Address', array('data' => $addresses));
+		    $this->Session->setFlash('<i class="icon-warning-sign icon-large"></i> ' . $result,
+					     'default', array('class' => 'alert alert-error'));
 		}
-		//Decline
-		$this->Session->write('Address', array('data' => $addresses));
-		$this->Session->setFlash('<i class="icon-warning-sign icon-large"></i> ' . $result,
-					 'default', array('class' => 'alert alert-error'));
 	    }
 	    else{ 
 		//Get Address errors if any
@@ -144,7 +149,7 @@ class OrdersController extends AppController
     public function add($id = null)
     {   
 	if (!$this->Watch->sellable($id)) {
-		$this->redirect(array('action' => 'index'));
+		$this->redirect(array('action' => 'checkout'));
 	}
         $items = array();
         if($this->Session->check('Cart.items') == true){
@@ -158,7 +163,7 @@ class OrdersController extends AppController
         $items[] = $id; 
         $this->Session->write('Cart.items', $items);
         
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(array('action' => 'checkout'));
     }
     
     public function remove($id = null)
@@ -173,25 +178,9 @@ class OrdersController extends AppController
                 $key = array_search($id, $items);
                 unset($items[$key]); 
                 $this->Session->write('Cart.items', $items);
-                $this->redirect(array('action' => 'index'));
+                $this->redirect(array('action' => 'checkout'));
             }
         }
-    }
-    
-    public function confirm($id = null)
-    {
-	$referer = trim($this->referer(null, true), '/'); 
-	if (strcasecmp($referer, 'orders') != 0){
-	    $this->redirect(array('controller' => 'watches', 'action' => 'index'));
-	}
-	if (!$this->Order->exists($id)) {
-            throw new NotFoundException(__('Invalid order'));
-        }
-	
-	$order = $this->Order->getOrder($id);
-	$this->emailOrder($order);
-	$title = 'Thank You For Your Order';
-	$this->set(compact('order', 'title'));
     }
     
     /**

@@ -6780,14 +6780,6 @@ body {
 #content .recent-watches hr {
   border-top-color: #665600;
 }
-#content .watches.index table {
-  text-align: center;
-  width: auto;
-}
-#content .watches.index table .description {
-  width: 500px;
-  text-align: left;
-}
 #content .watches.index .header {
   margin-bottom: 20px;
   overflow: hidden;

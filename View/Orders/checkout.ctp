@@ -1,5 +1,5 @@
 <?php echo $this->Form->create('Order', array('class' => 'form-horizontal payment-form')); ?>
-<div class="orders index col-lg-6 col-md-6 col-sm-12 col-xs-12">
+<div class="orders checkout col-lg-6 col-md-6 col-sm-12 col-xs-12">
     <section class="review-cart">
         <?php if(isset($errors) && $errors == true): ?>
             <div class="error-message">

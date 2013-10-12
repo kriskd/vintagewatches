@@ -109,6 +109,7 @@ class Order extends AppModel {
 	
 	$options['contain'] = array('Address',
 				    'Watch' => array(
+					'fields' => array('id', 'order_id', 'stockId', 'price', 'name'),
 					'Image'
 				    )
 				);
