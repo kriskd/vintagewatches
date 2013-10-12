@@ -1,26 +1,61 @@
-<div class="orders confirm col-lg-6 col-md-6 col-sm-12 col-xs-12">
+<div class="order-details col-lg-6 col-md-6 col-sm-12 col-xs-12">
     <h1>Order Summary</h1>
     <h2>Purchases</h2>
-    <table class="table-bordered">
-        <tr><th>Stock ID</th><th>Name</th><th>Price</th></tr>
-        <?php foreach($order['Watch'] as $watch): ?>
-            <tr>
-                <td><?php echo $watch['stockId']; ?></td>
-                <td><?php echo $watch['name']; ?></td>
-                <td class="text-right"><?php echo $this->Number->currency($watch['price'], 'USD'); ?></td>
-            </tr>
-        <?php endforeach; ?>
-        <tr class="total-row">
-            <td></td>
-            <td class="text-right">Shipping</td>
-            <td class="total-formatted-amount text-right"><?php echo $this->Number->currency($order['Order']['shippingAmount'], 'USD'); ?></td>
-        </tr>
-        <tr class="total-row">
-            <td></td>
-            <td class="text-right">Total</td>
-            <td class="total-formatted-amount text-right"><?php echo $this->Number->currency($order['Order']['stripe_amount']/100, 'USD'); ?></td>
-        </tr>
-    </table>
+    <div class="row head">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            Stock ID
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            Name
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            Price
+        </div>
+    </div>
+    <?php foreach($order['Watch'] as $watch): ?>
+        <div class="row watch">
+            <div class="image col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <?php echo $this->Html->thumbImagePrimary($watch, array(
+                                                                    'class' => 'img-responsive'
+                                                                )
+                                                          ); ?>
+            </div>
+            <div class="text-center col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <?php echo h($watch['stockId']); ?>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                <?php echo $watch['name']; ?>
+            </div>
+            <div class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <?php echo h($this->Number->currency($watch['price'], 'USD')); ?>
+            </div>
+        </div>
+        <div class="row choose-ship">
+            <div class="text-right col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                Shipping
+            </div>
+            <div class="shipping-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <?php echo $this->Number->currency($order['Order']['shippingAmount'], 'USD'); ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="text-right col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                Total
+            </div>
+            <div class="total-formatted-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <?php echo $this->Number->currency($order['Order']['stripe_amount']/100, 'USD'); ?>
+            </div>
+        </div>
+    <?php endforeach; ?>
+    <?php if(!empty($order['Order']['notes'])): ?>
+        <h2>Special Order Instructions</h2>
+        <div class="notes">
+            <?php echo nl2br($order['Order']['notes']); ?>
+        </div>
+    <?php endif; ?>
     <h2>Contact Information</h2>
     <dl>
         <dt>Email</dt>
@@ -30,12 +65,6 @@
             <dd><?php echo $order['Order']['phone']; ?></dd>
         <?php endif; ?>
     </dl>
-    <?php if(!empty($order['Order']['notes'])): ?>
-        <h2>Special Order Instructions</h2>
-        <div class="notes">
-            <?php echo nl2br($order['Order']['notes']); ?>
-        </div>
-    <?php endif; ?>
     <?php foreach($order['Address'] as $address): ?>
         <h3><?php echo ucfirst($address['type']); ?> Address</h3>
         <dl>

@@ -399,6 +399,7 @@ class OrdersController extends AppController
 	      ->from(Configure::read('fromEmail'))
 	      ->subject('Order No. ' . $order['Order']['id'])
 	      ->viewVars(array('order' => $order))
+	      ->helpers(array('Html' => array('className' => 'MyHtml')))
 	      ->send();
 	
 	$Email = new CakeEmail('smtp');
@@ -408,6 +409,7 @@ class OrdersController extends AppController
 	      ->from(Configure::read('fromEmail'))
 	      ->subject('Thank you for your order from Bruce\'s Vintage Watches')
 	      ->viewVars(array('order' => $order))
+	      ->helpers(array('Html' => array('className' => 'MyHtml')))
 	      ->send();
 	      
 	return;
