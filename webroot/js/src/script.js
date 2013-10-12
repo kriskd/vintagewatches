@@ -12,14 +12,22 @@ $(document).ready(function(){
     
     $('#OrderShipDate').datepicker({dateFormat: 'yy-mm-dd'});
     
+    var hideWatchIntroCookie = getCookie('hideWatchIntro'); //alert(hideWatchIntroCookie);
+    if (hideWatchIntroCookie != null && hideWatchIntroCookie == 1) {
+        $('.watch-index-intro').hide();
+        $('.watches-header .glyphicon-eye-open').show();
+    }
+
     $('.watches-header .glyphicon-eye-open').hide();
     $(document).on('click', '.watch-index-intro .glyphicon-remove', function(){
         $('.watch-index-intro').hide();
         $('.watches-header .glyphicon-eye-open').show();
+        setCookie('hideWatchIntro', 1, 90);
     });
     $(document).on('click', '.watches-header .glyphicon-eye-open', function(){
         $('.watch-index-intro').show();
         $('.watches-header .glyphicon-eye-open').hide();
+        setCookie('hideWatchIntro', 0, 90);
     });
 
     /**
@@ -208,7 +216,6 @@ $(document).ready(function(){
     });
     
     function reportError(msg) {
- 
         // Show the error in the form:
         $('.payment-errors').show().text(msg).addClass('error');
      
@@ -216,6 +223,31 @@ $(document).ready(function(){
         $('.submit-payment').prop('disabled', false);
      
         return false;
- 
-    } 
+    }
+    
+    function setCookie(cookieName, value, exdays) {
+        var exdate=new Date();
+        exdate.setDate(exdate.getDate() + exdays);
+        var cookieValue=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString()); 
+        document.cookie = cookieName + "=" + cookieValue;
+    }
+    
+    function getCookie(cookieName) {
+        var cookieValue = document.cookie; 
+        var cookieStart = cookieValue.indexOf(" " + cookieName + "="); 
+        if (cookieStart == -1) {
+            cookieStart = cookieValue.indexOf(cookieName + "=");
+        }
+        if (cookieStart == -1) {
+            cookieValue = null;
+        } else {
+            cookieStart = cookieValue.indexOf("=", cookieStart) + 1; 
+            var cookieEnd = cookieValue.indexOf(";", cookieStart);
+            if (cookieEnd == -1) {
+                cookieEnd = cookieValue.length;
+            }
+            cookieValue = unescape(cookieValue.substring(cookieStart, cookieEnd)); 
+        }
+        return cookieValue;
+    }
 });
