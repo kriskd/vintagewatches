@@ -19,46 +19,36 @@ class OrdersController extends AppController
     {
 	if (!empty($this->request->query)) {
 	    $email = $this->request->query['email'];
-	    $zip = $this->request->query['postalCode'];
-	    if (empty($email) || empty($zip)) {
+	    $postalCode = $this->request->query['postalCode'];
+	    if (empty($email) || empty($postalCode)) {
 		throw new NotFoundException('Email and Zip Required');
 	    }
-	    $conditionsSubQuery = array(
-				'Address.postalCode' => $zip,
-				'Address.type' => 'billing'
-			    );
-	    $db = $this->Address->getDataSource();
-	    $subQuery = $db->buildStatement(
-		array(
-		    'fields' => array('Address.order_id'),
-		    'table' => $db->fullTableName($this->Address),
-		    'alias' => 'Address',
-		    'conditions' => $conditionsSubQuery
-		),
-		$this->Address
-	    );
-	    $subQuery = ' Order.id IN (' . $subQuery . ')';
-	    $subQueryExpression = $db->expression($subQuery);
-	    $conditions[] = $subQueryExpression;
-	    $conditions['email'] = urldecode($email);
-    
-	    $orders = $this->Order->find('all', array(
-					    'conditions' => $conditions,
-					    'fields' => array(
-						    'id', 'email', 'phone', 'shippingAmount', 'stripe_amount',
-						    'notes', 'created', 'shipDate'
-						),
-					    'contain' => array(
-						'Address',
-						'Watch' => array(
-						    'fields' => array('id', 'order_id', 'stockId', 'price', 'name'),
-						    'Image'
-						)
-					    )
-					)
-				   );
-	    $this->set('orders', $orders);
+	    
+	    $orders = $this->Order->getCustomerOrders($email, $postalCode); 
+	    
+	    $this->set(compact('orders', 'email', 'postalCode'));
 	}
+    }
+    
+    public function view()
+    {
+	if (empty($this->request->query)) {
+	    $this->redirect(array('action' => 'index'));
+	}
+	$email = $this->request->query['email'];
+	$postalCode = $this->request->query['postalCode'];
+	$id = $this->request->query['id'];
+	if (empty($email) || empty($postalCode) || empty($id)) {
+	    $this->redirect(array('action' => 'index'));
+	}
+	
+	$order = $this->Order->getCustomerOrders($email, $postalCode, $id);
+	
+	if (empty($order)) {
+	    $this->redirect(array('action' => 'index'));
+	}
+	
+	$this->set(compact('order'));
     }
     
     public function checkout()
@@ -399,7 +389,8 @@ class OrdersController extends AppController
 	      ->from(Configure::read('fromEmail'))
 	      ->subject('Order No. ' . $order['Order']['id'])
 	      ->viewVars(array('order' => $order))
-	      ->helpers(array('Html' => array('className' => 'MyHtml')))
+	      ->helpers(array('Html' => array('className' => 'MyHtml'),
+			      'Number' => array('className' => 'MyNumber')))
 	      ->send();
 	
 	$Email = new CakeEmail('smtp');

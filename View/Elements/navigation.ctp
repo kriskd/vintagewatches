@@ -50,7 +50,7 @@
                     </li>
                 <?php endif; ?>
                 <?php //Wrapped in <li> in Component ?>
-                <?php echo $this->Navigation->storeLink('<i class="glyphicon glyphicon-tags"></i>&nbsp;&nbsp;Go to the Store',
+                <?php echo $this->Navigation->storeLink('<i class="glyphicon glyphicon-tags"></i>&nbsp;&nbsp;Store',
                                              array('controller' => 'watches', 'action' => 'index'),
                                              array('escape' => false),
                                              false); ?>
@@ -63,7 +63,7 @@
                 </li>
     
                 <li class="dropdown">
-                    <?php echo $this->Html->link('Other Vital Info<span class="caret"></span>', '#',
+                    <?php echo $this->Html->link('Support<span class="caret"></span>', '#',
                                                  array('class' => 'dropdown-toggle',
                                                         'data-toggle' => 'dropdown',
                                                         'escape' => false)
@@ -77,6 +77,7 @@
                                                                               'admin' => false)); ?></li>
                             <?php endforeach; ?>
                         <?php endif; ?>
+                        <li><?php echo $this->Html->link('Order History', array('controller' => 'orders', 'action' => 'index', 'admin' => false)); ?></li>
                         <li><?php echo $this->Html->link('Contact Me', array('controller' => 'contacts', 'action' => 'index', 'admin' => false)); ?></li>
                     </ul>
                 </li>

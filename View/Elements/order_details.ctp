@@ -92,4 +92,8 @@
             <dd><?php echo $address['country']; ?></dd>
         </dl>
     <?php endforeach; ?>
+    <?php if (!empty($order['Order']['shipDate'])): ?>
+        <h2>Date Shipped</h2>
+        <?php echo date('F j, Y', strtotime($order['Order']['shipDate'])); ?>
+    <?php endif; ?>
 </div>

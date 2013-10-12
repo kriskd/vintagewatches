@@ -115,4 +115,55 @@ class Order extends AppModel {
 				);
 	return $this->find('first', $options);
     }
+    
+    /**
+     * Retrieve orders for a given $email and $postalCode
+     * Optional $id to get specific order for the matching email & postalCode
+     */
+    public function getCustomerOrders($email, $postalCode, $id = null)
+    {
+	$conditionsSubQuery = array(
+		    'Address.postalCode' => $postalCode,
+		    'Address.type' => 'billing'
+		);
+	$db = $this->Address->getDataSource();
+	$subQuery = $db->buildStatement(
+	    array(
+		'fields' => array('Address.order_id'),
+		'table' => $db->fullTableName($this->Address),
+		'alias' => 'Address',
+		'conditions' => $conditionsSubQuery
+	    ),
+	    $this->Address
+	);
+	$subQuery = ' Order.id IN (' . $subQuery . ')';
+	$subQueryExpression = $db->expression($subQuery);
+	$conditions[] = $subQueryExpression;
+	$conditions['email'] = urldecode($email);
+	
+	$type = 'all';
+	if (!empty($id)) {
+	    $conditions['Order.id'] = $id;
+	    $type = 'first';
+	}
+
+	return $this->find($type, array(
+			    'conditions' => $conditions,
+			    'fields' => array(
+				    'id', 'email', 'phone', 'shippingAmount', 'stripe_amount',
+				    'notes', 'created', 'shipDate'
+				),
+			    'contain' => array(
+				'Address',
+				'Watch' => array(
+				    'fields' => array('id', 'order_id', 'stockId', 'price', 'name'),
+				    'Image'
+				)
+			    ),
+			    'order' => array(
+				'created' => 'DESC'
+			    )
+			)
+		    );
+    }
 }
