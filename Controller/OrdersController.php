@@ -15,57 +15,50 @@ class OrdersController extends AppController
 	parent::beforeFilter();
     }
     
-    public function index($email = null, $zip = null)
+    public function index()
     {
-	/*if (empty($email) || empty($zip)) {
-	    throw new NotFoundException('Email and Zip Required');
-	}*/
-	$email = urlencode('LindaMMayfield@mailinator.com');
-	$zip = '30339';
-	$conditionsSubQuery = array(
-				    'Address.postalCode' => $zip,
-				    'Address.type' => 'billing'
-				);
-	$db = $this->Address->getDataSource();
-	$subQuery = $db->buildStatement(
-	    array(
-		'fields' => array('Address.order_id'),
-		'table' => $db->fullTableName($this->Address),
-		'alias' => 'Address',
-		'conditions' => $conditionsSubQuery
-	    ),
-	    $this->Address
-	);
-	$subQuery = ' Order.id IN (' . $subQuery . ')';
-	$subQueryExpression = $db->expression($subQuery);
-	$conditions[] = $subQueryExpression;
-	$conditions['email'] = $email;
-
-	/*$orderIds = $this->Address->find('all', array(
-						'fields' => 'order_id',
-						'conditions' => array(
-						    'type' => 'billing',
-						    'postalCode' => $zip
+	if (!empty($this->request->query)) {
+	    $email = $this->request->query['email'];
+	    $zip = $this->request->query['postalCode'];
+	    if (empty($email) || empty($zip)) {
+		throw new NotFoundException('Email and Zip Required');
+	    }
+	    $conditionsSubQuery = array(
+				'Address.postalCode' => $zip,
+				'Address.type' => 'billing'
+			    );
+	    $db = $this->Address->getDataSource();
+	    $subQuery = $db->buildStatement(
+		array(
+		    'fields' => array('Address.order_id'),
+		    'table' => $db->fullTableName($this->Address),
+		    'alias' => 'Address',
+		    'conditions' => $conditionsSubQuery
+		),
+		$this->Address
+	    );
+	    $subQuery = ' Order.id IN (' . $subQuery . ')';
+	    $subQueryExpression = $db->expression($subQuery);
+	    $conditions[] = $subQueryExpression;
+	    $conditions['email'] = urldecode($email);
+    
+	    $orders = $this->Order->find('all', array(
+					    'conditions' => $conditions,
+					    'fields' => array(
+						    'id', 'email', 'phone', 'shippingAmount', 'stripe_amount',
+						    'notes', 'created', 'shipDate'
 						),
-						'recursive' => -1
+					    'contain' => array(
+						'Address',
+						'Watch' => array(
+						    'fields' => array('id', 'order_id', 'stockId', 'price', 'name'),
+						    'Image'
+						)
 					    )
-					);*/
-	
-	$orders = $this->Order->find('all', array(
-					'conditions' => $conditions,
-				    'contain' => array(
-					'Address' => array(
-					),
-					'Watch' => array(
-					    'fields' => array('id', 'order_id', 'stockId', 'price', 'name'),
-					    'Image'
 					)
-				    )
-				)
-			   );
-	var_dump($orders);
-	//$this->layout = false;
-	//$this->set('orders', $orders);
+				   );
+	    $this->set('orders', $orders);
+	}
     }
     
     public function checkout()
