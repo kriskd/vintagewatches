@@ -46,7 +46,7 @@
                 Total
             </div>
             <div class="total-formatted-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                <?php echo $this->Number->currency($order['Order']['stripe_amount']/100, 'USD'); ?>
+                <?php echo $this->Number->stripe($order['Order']['stripe_amount']); ?>
             </div>
         </div>
     <?php endforeach; ?>

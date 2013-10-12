@@ -27,7 +27,7 @@
                     <p>
                         Are you sure you want to delete Order <?php echo $order['Order']['id']; ?>
                         from <?php echo $order['Address'][0]['firstName']; ?> <?php echo $order['Address'][0]['lastName']; ?>
-                        for <?php echo $this->Number->currency($order['Order']['stripe_amount']/100, 'USD'); ?>?
+                        for <?php echo $this->Number->stripe($order['Order']['stripe_amount']); ?>?
                     </p>
                 </div>
                 <div class="modal-footer">

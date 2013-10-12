@@ -6,7 +6,40 @@
         <?php echo $this->Form->end(array('label' => 'Submit', 'class' => 'btn btn-gold')); ?>
         <?php return; ?>
     <?php endif; ?>
+    <div class="row">
+        <div class="col-lg-3">
+            Date Ordered
+        </div>
+        <div class="col-lg-2">
+            Order No.
+        </div>
+        <div class="col-lg-2">
+            Total Paid
+        </div>
+        <div class="col-lg-3">
+            Ship Date
+        </div>
+        <div class="col-lg-2">
+            
+        </div>
+    </div>
     <?php foreach ($orders as $order): ?>
-        <?php echo $this->Element('order_details', compact('order')); ?>
+        <div class="row">
+            <div class="col-lg-3">
+                <?php echo $order['Order']['created']; ?>
+            </div>
+            <div class="col-lg-2">
+                <?php echo $order['Order']['id']; ?>
+            </div>
+            <div class="col-lg-2">
+                <?php echo $this->Number->stripe($order['Order']['stripe_amount']); ?>
+            </div>
+            <div class="col-lg-3">
+                <?php echo $order['Order']['shipDate']; ?>
+            </div>
+            <div class="col-lg-2">
+                <?php echo $this->Html->link('View', '#', array('class' => 'btn btn-gold')); ?>
+            </div>
+        </div>
     <?php endforeach; ?>
 </div>

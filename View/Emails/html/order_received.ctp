@@ -23,7 +23,7 @@
             <td></td>
             <td></td>
             <td class="text-right">Total</td>
-            <td class="total-formatted-amount text-right"><?php echo $this->Number->currency($order['Order']['stripe_amount']/100, 'USD'); ?></td>
+            <td class="total-formatted-amount text-right"><?php echo $this->Number->stripe($order['Order']['stripe_amount']); ?></td>
         </tr>
     </table>
     <?php if(!empty($order['Order']['notes'])): ?>

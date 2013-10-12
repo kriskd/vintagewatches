@@ -12,7 +12,7 @@
             <?php $row = $this->Html->tag('span', $order['Order']['id'], array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', $order['Order']['email'], array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', $order['Order']['stripe_id'], array('class' => 'table-cell')); ?>
-            <?php $row .= $this->Html->tag('span', $this->Number->currency($order['Order']['stripe_amount']/100, 'USD'), array('class' => 'table-cell')); ?>
+            <?php $row .= $this->Html->tag('span', $this->Number->stripe($order['Order']['stripe_amount']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', $order['Order']['created'], array('class' => 'table-cell')); ?>
             <?php echo $this->Html->link($row, array('action' => 'admin_view', $order['Order']['id'], 'admin' => true), array('class' => 'table-row', 'escape' => false)); ?>
         <?php endforeach; ?>
