@@ -1194,13 +1194,12 @@
     
     $('#OrderShipDate').datepicker({dateFormat: 'yy-mm-dd'});
     
-    var hideWatchIntroCookie = getCookie('hideWatchIntro'); //alert(hideWatchIntroCookie);
+    var hideWatchIntroCookie = getCookie('hideWatchIntro'); 
     if (hideWatchIntroCookie != null && hideWatchIntroCookie == 1) {
         $('.watch-index-intro').hide();
         $('.watches-header .glyphicon-eye-open').show();
     }
-
-    $('.watches-header .glyphicon-eye-open').hide();
+    
     $(document).on('click', '.watch-index-intro .glyphicon-remove', function(){
         $('.watch-index-intro').hide();
         $('.watches-header .glyphicon-eye-open').show();
