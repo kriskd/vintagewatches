@@ -15,29 +15,50 @@ class OrdersController extends AppController
 	parent::beforeFilter();
     }
     
-    public function index()
+    /**
+     * Get customer orders. Store email and postalCode in session, only fetch
+     * orders that match those.
+     */
+    public function index($reset = false)
     {
-	if (!empty($this->request->query)) {
-	    $email = $this->request->query['email'];
-	    $postalCode = $this->request->query['postalCode'];
-	    if (empty($email) || empty($postalCode)) {
-		throw new NotFoundException('Email and Zip Required');
-	    }
-	    
-	    $orders = $this->Order->getCustomerOrders($email, $postalCode); 
-	    
-	    $this->set(compact('orders', 'email', 'postalCode'));
-	}
-    }
-    
-    public function view()
-    {
-	if (empty($this->request->query)) {
+	if ($reset == true) {
+	    $this->Session->delete('Order');
+	    $this->Session->delete('Address');
 	    $this->redirect(array('action' => 'index'));
 	}
-	$email = $this->request->query['email'];
-	$postalCode = $this->request->query['postalCode'];
-	$id = $this->request->query['id'];
+	
+	$email = $this->Session->read('Order.email');
+	$postalCode = $this->Session->read('Address.postalCode');
+	    
+	if($this->request->is('post')){
+	    $data = $this->request->data;
+	    $email = $data['Order']['email'];
+	    $postalCode = $data['Address']['postalCode'];
+	    
+	    if (empty($email) || empty($postalCode)) {
+		$this->Session->setFlash('Email and postal code are required to search for orders.',
+					 'danger', array('class' => 'alert alert-error'));
+	    }
+	    
+	    $this->Session->write('Order.email', $email);
+	    $this->Session->write('Address.postalCode', $postalCode);
+	}
+	
+	$orders = $this->Order->getCustomerOrders($email, $postalCode);
+
+	//Set flash message if we have an email and postalCode but no orders
+	if ((!(empty($email)) && !empty($postalCode)) && empty($orders)) { 
+	    $this->Session->setFlash('No orders found for this email and postal code.',
+			     'danger', array('class' => 'alert alert-error'));
+	}
+	$this->set(compact('orders', 'email'));
+    }
+    
+    public function view($id = null)
+    {
+	$email = $this->Session->read('Order.email');
+	$postalCode = $this->Session->read('Address.postalCode');
+	
 	if (empty($email) || empty($postalCode) || empty($id)) {
 	    $this->redirect(array('action' => 'index'));
 	}
@@ -45,6 +66,7 @@ class OrdersController extends AppController
 	$order = $this->Order->getCustomerOrders($email, $postalCode, $id);
 	
 	if (empty($order)) {
+	    $this->Session->setFlash('Invalid Order', 'danger', array('class' => 'alert alert-error'));
 	    $this->redirect(array('action' => 'index'));
 	}
 	
