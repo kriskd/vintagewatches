@@ -51,7 +51,10 @@ class OrdersController extends AppController
 	    $this->Session->setFlash('No orders found for this email and postal code.',
 			     'danger', array('class' => 'alert alert-error'));
 	}
-	$this->set(compact('orders', 'email'));
+	
+	$title = 'Order History';
+	
+	$this->set(compact('orders', 'email', 'title'));
     }
     
     public function view($id = null)
@@ -70,7 +73,9 @@ class OrdersController extends AppController
 	    $this->redirect(array('action' => 'index'));
 	}
 	
-	$this->set(compact('order'));
+	$title = 'Order History';
+	
+	$this->set(compact('order', 'title'));
     }
     
     public function checkout()
