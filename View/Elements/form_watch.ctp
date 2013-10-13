@@ -7,6 +7,10 @@
 							 'type' => 'text',
 							 'error' => false));
 		echo $this->Form->error('stockId', null, array('class' => 'label label-danger'));
+		echo $this->Form->input('brand_id', array('class' => 'form-control',
+							    'label' => 'Brand',
+							    'options' => $brands));
+		echo $this->Form->error('Brand.name', null, array('class' => 'label label-danger'));
 		echo $this->Form->input('price', array('label' => array('class' => 'control-label'),
 							 'class' => 'form-control',
 							 'min' => 0,

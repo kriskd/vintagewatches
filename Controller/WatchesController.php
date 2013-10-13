@@ -116,6 +116,7 @@ class WatchesController extends AppController {
 				$this->Session->setFlash(__('The watch could not be saved. Please, try again.'), 'danger');
 			}
 		}
+        $this->brandList();
 	}
 
 /**
@@ -138,6 +139,7 @@ class WatchesController extends AppController {
 				$this->Session->setFlash(__('The watch could not be saved. Please, try again.'));
 			}
 		} else {
+            $this->brandList();
 			$options = array('conditions' => array('Watch.' . $this->Watch->primaryKey => $id));
 			$this->request->data = $this->Watch->find('first', $options);
             $this->set('watch', $this->Watch->find('first', $options));
@@ -179,4 +181,10 @@ class WatchesController extends AppController {
 		$this->Session->setFlash(__('The store is open.'), 'success');
 		$this->redirect(array('action' => 'index', 'admin' => true));
 	}
+    
+    public function brandList()
+    {
+        $brands = array('' => 'Select One') + $this->Watch->Brand->find('list', array('order' => 'Brand.name'));
+        $this->set(compact('brands'));
+    }
 }

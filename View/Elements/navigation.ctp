@@ -23,22 +23,27 @@
                                                      array('data-toggle' => 'dropdown', 'escape' => false)); ?>
                         <ul class="dropdown-menu">
                             <?php echo $this->Html->adminLink('<i class="glyphicon glyphicon-usd"></i> Orders',
-                                                              array('controller' => 'orders', 'action' => 'admin_index'),
+                                                              array('controller' => 'orders', 'action' => 'index', 'admin' => true),
                                                               array('escape' => false),
                                                               false,
                                                               $controller); ?>
                             <?php echo $this->Html->adminLink('<i class="glyphicon glyphicon-cog"></i> Watches',
-                                                              array('controller' => 'watches', 'action' => 'admin_index'),
+                                                              array('controller' => 'watches', 'action' => 'index', 'admin' => true),
+                                                              array('escape' => false),
+                                                              false,
+                                                              $controller); ?>
+                            <?php echo $this->Html->adminLink('<i class="glyphicon glyphicon-star"></i> Brands',
+                                                              array('controller' => 'brands', 'action' => 'index', 'admin' => true),
                                                               array('escape' => false),
                                                               false,
                                                               $controller); ?>
                             <?php echo $this->Html->adminLink('<i class="glyphicon glyphicon-book"></i> Pages',
-                                                              array('controller' => 'pages', 'action' => 'admin_index'),
+                                                              array('controller' => 'pages', 'action' => 'index', 'admin' => true),
                                                               array('escape' => false),
                                                               false,
                                                               $controller); ?>
                             <?php echo $this->Html->adminLink('<i class="glyphicon glyphicon-envelope"></i> Contacts',
-                                                              array('controller' => 'contacts', 'action' => 'admin_index'),
+                                                              array('controller' => 'contacts', 'action' => 'index', 'admin' => true),
                                                               array('escape' => false),
                                                               false,
                                                               $controller); ?>
