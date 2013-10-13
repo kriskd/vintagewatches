@@ -25,7 +25,7 @@
     <div class="table">
         <div class="table-row">
             <span class="table-head">Image</span>
-            <span class="table-head">Order</span>
+            <span class="table-head"><?php echo $this->Paginator->sort('Brand.name', 'Brand'); ?></span>
             <span class="table-head"><?php echo $this->Paginator->sort('stockId'); ?></span>
             <span class="table-head"><?php echo $this->Paginator->sort('price'); ?></span>
             <span class="table-head"><?php echo $this->Paginator->sort('name'); ?></span>
@@ -34,16 +34,16 @@
             <span class="table-head"><?php echo $this->Paginator->sort('modified'); ?></span>
         </div>
         <?php foreach ($watches as $watch): ?>
-            <?php $orderId = isset($watch['Order']['id']) ? $watch['Order']['id'] : ''; ?>
             <?php $row = ''; ?>
             <?php $row .= $this->Html->tag('span', $this->Html->thumbImagePrimary($watch), array('class' => 'table-cell')); ?>
-            <?php $row .= $this->Html->tag('span', $orderId, array('class' => 'table-cell')); ?>
+            <?php $brand = isset($watch['Brand']['name']) ? $watch['Brand']['name'] : ''; ?>
+            <?php $row .= $this->Html->tag('span', $brand, array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['stockId']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['price']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['name']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', $this->Text->truncate($watch['Watch']['description'], 75, array('html' => true, 'exact' => false)), array('class' => 'table-cell')); ?>
-            <?php $row .= $this->Html->tag('span', h($watch['Watch']['created']), array('class' => 'table-cell')); ?>
-            <?php $row .= $this->Html->tag('span', h($watch['Watch']['modified']), array('class' => 'table-cell')); ?>
+            <?php $row .= $this->Html->tag('span', date('Y-m-d', strtotime($watch['Watch']['created'])), array('class' => 'table-cell')); ?>
+            <?php $row .= $this->Html->tag('span', date('Y-m-d', strtotime($watch['Watch']['modified'])), array('class' => 'table-cell')); ?>
             <?php echo $this->Html->link($row, array('action' => 'admin_view', $watch['Watch']['id'], 'admin' => true), array('class' => 'table-row', 'escape' => false)); ?>
         <?php endforeach; ?>
 	</div>

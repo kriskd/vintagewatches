@@ -29,6 +29,13 @@ class Watch extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+                'brand_id' => array(
+			'notempty' => array(
+			    'rule' => array('notempty'),
+                            'allowEmpty' => false,
+			    'message' => 'Please choose a brand.'
+			),
+		),
 		'price' => array(
 			'money' => array(
 				'rule' => array('money'),

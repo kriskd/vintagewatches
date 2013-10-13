@@ -72,7 +72,7 @@ class WatchesController extends AppController {
 		
 		$this->paginate['conditions'] = $this->Watch->getWatchesConditions($active, $sold);
 		$this->paginate['fields'] = array('id', 'stockId', 'price', 'name', 'description', 'created', 'modified');
-		$this->paginate['contain'][] = 'Order';
+		$this->paginate['contain']['Brand'] = array('fields' => array('id', 'name'));
 		$this->Paginator->settings = $this->paginate;
 		
 		$buttons = array(
@@ -82,7 +82,7 @@ class WatchesController extends AppController {
 			'Active Watches' => array('active' => 1, 'sold' => null),
 			'Inactive Watches' => array('active' => 0, 'sold' => null)
 		);
-		
+		//var_dump($this->paginate()); exit;
 		$this->set(array('watches' => $this->paginate()) + compact('active', 'sold', 'buttons')); 
 	}
 
