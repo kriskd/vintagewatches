@@ -56,7 +56,7 @@
             <?php echo nl2br($order['Order']['notes']); ?>
         </div>
     <?php endif; ?>
-    <h2>Contact Information</h2>
+    <h2>Customer Contact Information</h2>
     <dl>
         <dt>Email</dt>
         <dd><?php echo $order['Order']['email']; ?></dd>
