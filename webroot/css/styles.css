@@ -6753,6 +6753,7 @@ body {
 }
 #content .paging {
   font-size: 90%;
+  font-weight: bold;
 }
 #content .paging span {
   padding: 5px;
