@@ -25,7 +25,8 @@
                 <?php $more = $this->Html->link('<strong>More details</strong>',
                                                 array('controller' => 'watches', 'action' => 'view', $watch['Watch']['id']),
                                                 array('escape' => false)); ?>
-                <p><?php echo $this->Watch->shortDescription($watch['Watch']['description'], $more, 20); ?></p>
+                <?php $description = $this->Text->truncate($watch['Watch']['description'], 140, array('html' => true, 'exact' => false)); ?>
+                <p><?php echo $description. $more; ?></p>
             </div>
         </div>
     <?php endforeach; ?>

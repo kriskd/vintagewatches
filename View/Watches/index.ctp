@@ -86,10 +86,9 @@
                 <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
                     <div class="row">
                         <div class="col-lg-12">
-                            <?php $description = $watch['Watch']['description']; ?>
+                            <?php $description = $this->Text->truncate($watch['Watch']['description'], 350, array('html' => true, 'exact' => false)); ?>
                             <?php $more = $this->Html->link('<strong>More details</strong>', array('action' => 'view', $watch['Watch']['id']), array('escape' => false)); ?>
-                            <?php $description = $this->Watch->shortDescription($description, $more); ?>
-                            <?php echo $description; ?>
+                            <?php echo $description . $more; ?>
                         </div>
                     </div>
                 </div>

@@ -22,6 +22,7 @@
  */
 App::uses('Controller', 'Controller');
 App::uses('CakeEmail', 'Network/Email');
+App::uses('String', 'Utility');
 
 /**
  * Application Controller
@@ -36,8 +37,7 @@ class AppController extends Controller {
     
     public $helpers = array('TwitterBootstrap' =>
                             array('className' => 'TwitterBootstrap.TwitterBootstrap'),
-                            'Number',
-                            'Session',
+                            'Session', 'Text',
                             'Html' => array('className' => 'MyHtml'),
                             'Form' => array('className' => 'MyForm'),
                             'Number' => array('className' => 'MyNumber'),

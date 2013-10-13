@@ -41,8 +41,7 @@
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['stockId']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['price']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['name']), array('class' => 'table-cell')); ?>
-            <?php $row .= $this->Html->tag('span', $this->Watch->shortDescription($watch['Watch']['description'], null, 10), array('class' => 'table-cell')); ?>
-            <?php //$row .= $this->Html->tag('span', $watch['Watch']['description'], array('class' => 'table-cell')); ?>
+            <?php $row .= $this->Html->tag('span', $this->Text->truncate($watch['Watch']['description'], 75, array('html' => true, 'exact' => false)), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['created']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['modified']), array('class' => 'table-cell')); ?>
             <?php echo $this->Html->link($row, array('action' => 'admin_view', $watch['Watch']['id'], 'admin' => true), array('class' => 'table-row', 'escape' => false)); ?>
