@@ -11,16 +11,16 @@
     <h4>Orders for <?php echo $email; ?></h4>
     <div class="row">
         <div class="col-lg-3">
-            Date Ordered
+            <?php echo $this->Paginator->sort('created', 'Date Ordered'); ?>
         </div>
         <div class="col-lg-2">
-            Order No.
+            <?php echo $this->Paginator->sort('id', 'Order No.'); ?>
         </div>
         <div class="col-lg-2">
-            Total Paid
+            <?php echo $this->Paginator->sort('stripe_amount', 'Total Paid'); ?>
         </div>
         <div class="col-lg-3">
-            Ship Date
+            <?php echo $this->Paginator->sort('shipDate', 'Ship Date'); ?>
         </div>
         <div class="col-lg-2">
             
@@ -51,5 +51,6 @@
             </div>
         </div>
     <?php endforeach; ?>
+    <?php echo $this->Element('paginator'); ?>
     <?php echo $this->Html->link('Search for different orders.', array('action' => 'index', true)); ?>
 </div>

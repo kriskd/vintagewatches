@@ -5,6 +5,14 @@ class OrdersController extends AppController
 {
     public $uses = array('Watch', 'Address', 'Order');
     
+    public $paginate = array('Order' => array(
+					    'limit' => 10,
+					    'order' => array(
+							'Order.id' => 'desc'
+					    )
+					)
+				    );
+    
     public function beforeFilter()
     {
 	$storeOpen = $this->Watch->storeOpen();
@@ -28,7 +36,7 @@ class OrdersController extends AppController
 	}
 	
 	$email = $this->Session->read('Order.email');
-	$postalCode = $this->Session->read('Address.postalCode');
+	$postalCode = $this->Session->read('Address.postalCode'); 
 	    
 	if($this->request->is('post')){
 	    $data = $this->request->data;
@@ -44,7 +52,9 @@ class OrdersController extends AppController
 	    $this->Session->write('Address.postalCode', $postalCode);
 	}
 	
-	$orders = $this->Order->getCustomerOrders($email, $postalCode);
+	$options = $this->Order->getCustomerOrderOptions($email, $postalCode);
+	$this->Paginator->settings = array_merge($this->paginate['Order'], $options); 
+	$orders = $this->Paginator->paginate('Order'); 
 
 	//Set flash message if we have an email and postalCode but no orders
 	if ((!(empty($email)) && !empty($postalCode)) && empty($orders)) { 
@@ -66,7 +76,8 @@ class OrdersController extends AppController
 	    $this->redirect(array('action' => 'index'));
 	}
 	
-	$order = $this->Order->getCustomerOrders($email, $postalCode, $id);
+	$options = $this->Order->getCustomerOrderOptions($email, $postalCode, $id);
+	$order = $this->Order->find('first', $options);
 	
 	if (empty($order)) {
 	    $this->Session->setFlash('Invalid Order', 'danger', array('class' => 'alert alert-error'));
@@ -335,9 +346,7 @@ class OrdersController extends AppController
     
     public function admin_index()
     {
-	$this->paginate = array('Order' => array(
-						 'limit' => 10,
-						 'order' => array('Order.id' => 'desc')));
+	$this->Paginator->settings = $this->paginate;
 	$this->set('orders', $this->paginate('Order'));
     }
     

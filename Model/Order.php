@@ -120,8 +120,8 @@ class Order extends AppModel {
      * Retrieve orders for a given $email and $postalCode
      * Optional $id to get specific order for the matching email & postalCode
      */
-    public function getCustomerOrders($email, $postalCode, $id = null)
-    {
+    public function getCustomerOrderOptions($email, $postalCode, $id = null)
+    {	
 	$conditionsSubQuery = array(
 		    'Address.postalCode' => $postalCode,
 		    'Address.type' => 'billing'
@@ -141,28 +141,24 @@ class Order extends AppModel {
 	$conditions[] = $subQueryExpression;
 	$conditions['email'] = urldecode($email);
 	
-	$type = 'all';
 	if (!empty($id)) {
 	    $conditions['Order.id'] = $id;
-	    $type = 'first';
 	}
 
-	return $this->find($type, array(
-			    'conditions' => $conditions,
-			    'fields' => array(
-				    'id', 'email', 'phone', 'shippingAmount', 'stripe_amount',
-				    'notes', 'created', 'shipDate'
-				),
-			    'contain' => array(
-				'Address',
-				'Watch' => array(
-				    'fields' => array('id', 'order_id', 'stockId', 'price', 'name'),
-				    'Image'
-				)
+	return array('conditions' => $conditions,
+			'fields' => array(
+				'id', 'email', 'phone', 'shippingAmount', 'stripe_amount',
+				'notes', 'created', 'shipDate'
 			    ),
-			    'order' => array(
-				'created' => 'DESC'
+			'contain' => array(
+			    'Address',
+			    'Watch' => array(
+				'fields' => array('id', 'order_id', 'stockId', 'price', 'name'),
+				'Image'
 			    )
+			),
+			'order' => array(
+			    'created' => 'DESC'
 			)
 		    );
     }

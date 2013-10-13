@@ -6,6 +6,7 @@
             <span class="table-head"><?php echo $this->Paginator->sort('email'); ?></span>
             <span class="table-head"><?php echo $this->Paginator->sort('stripe_id'); ?></span>
             <span class="table-head"><?php echo $this->Paginator->sort('stripe_amount'); ?></span>
+            <span class="table-head"><?php echo $this->Paginator->sort('shipDate', 'Ship Date'); ?></span>
             <span class="table-head"><?php echo $this->Paginator->sort('created'); ?></span>
         </div>
         <?php foreach($orders as $order): ?>
@@ -13,22 +14,10 @@
             <?php $row .= $this->Html->tag('span', $order['Order']['email'], array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', $order['Order']['stripe_id'], array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', $this->Number->stripe($order['Order']['stripe_amount']), array('class' => 'table-cell')); ?>
+            <?php $row .= (isset($order['Order']['shipDate'])) ? $this->Html->tag('span', $order['Order']['shipDate'], array('class' => 'table-cell')) : $this->Html->tag('span', '', array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', $order['Order']['created'], array('class' => 'table-cell')); ?>
             <?php echo $this->Html->link($row, array('action' => 'admin_view', $order['Order']['id'], 'admin' => true), array('class' => 'table-row', 'escape' => false)); ?>
         <?php endforeach; ?>
     </div>
-    
-    <p>
-    <?php
-    echo $this->Paginator->counter(array(
-    'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-    ));
-    ?></p>
-    <div class="paging">
-        <?php
-                echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
-                echo $this->Paginator->numbers(array('separator' => ''));
-                echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
-        ?>
-    </div>
+    <?php echo $this->Element('paginator'); ?>
 </div>
