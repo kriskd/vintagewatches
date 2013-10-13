@@ -21,7 +21,7 @@ class Order extends AppModel {
 	    'shipDate' => array(
 		'date' => array(
 		    'rule' => array('date', 'ymd'),
-		    'message' => 'Enter a valid date in YYY-MM-DD format.',
+		    'message' => 'Enter a valid date in YYYY-MM-DD format.',
 		    'allowEmpty' => true,
 		    'required' => false
 		)
