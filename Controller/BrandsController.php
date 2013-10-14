@@ -51,7 +51,7 @@ class BrandsController extends AppController {
 		if ($this->request->is('post')) { 
 			$data = $this->request->data; 
 			$newBrand['Brand']['name'] = array_pop($data['Brand']); 
-			if (!empty($newBrand['Brand']['name'])) {
+			if (!empty($newBrand['Brand']['name'])) { 
 				$this->Brand->create(); 
 				if ($this->Brand->save($newBrand)) {
 					$this->Session->setFlash(__('The brand has been saved.'), 'success');
@@ -61,36 +61,15 @@ class BrandsController extends AppController {
 			}
 			
 			foreach($data['Brand'] as $id => $item ) {
-				$saveMany[] = array('Brand' => array('id' => $id, 'name' => $item['name']));
+				$saveMany[$id] = array('id' => $id, 'name' => $item['name']);
 			}
 			
 			$this->Brand->saveMany($saveMany); 
 		}
-		$brands = $this->Brand->find('all', array(
-                                            'recursive' => -1,
-                                            'order' => 'name'
-                                        )
-                                    );
+        $brands = $this->Brand->find('all', array(
+                            'recursive' => -1,
+                            'order' => 'name'
+                        )
+                    );
 		$this->set('brands', $brands);
 	}
-
-/**
- * admin_delete method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function admin_delete($id = null) {
-		$this->Brand->id = $id;
-		if (!$this->Brand->exists()) {
-			throw new NotFoundException(__('Invalid brand'));
-		}
-		$this->request->onlyAllow('post', 'delete');
-		if ($this->Brand->delete()) {
-			$this->Session->setFlash(__('The brand has been deleted.'));
-		} else {
-			$this->Session->setFlash(__('The brand could not be deleted. Please, try again.'));
-		}
-		return $this->redirect(array('action' => 'index'));
-	}}
