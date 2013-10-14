@@ -436,7 +436,8 @@ class OrdersController extends AppController
 	      ->from(Configure::read('fromEmail'))
 	      ->subject('Thank you for your order from Bruce\'s Vintage Watches')
 	      ->viewVars(array('order' => $order))
-	      ->helpers(array('Html' => array('className' => 'MyHtml')))
+	      ->helpers(array('Html' => array('className' => 'MyHtml'),
+			      'Number' => array('className' => 'MyNumber')))
 	      ->send();
 	      
 	return;
