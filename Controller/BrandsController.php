@@ -60,11 +60,13 @@ class BrandsController extends AppController {
 				}
 			}
 			
-			foreach($data['Brand'] as $id => $item ) {
-				$saveMany[$id] = array('id' => $id, 'name' => $item['name']);
-			}
-			
-			$this->Brand->saveMany($saveMany); 
+            if (!empty($data['Brand'])) {
+                foreach($data['Brand'] as $id => $item ) {
+                    $saveMany[$id] = array('id' => $id, 'name' => $item['name']);
+                }
+                
+                $this->Brand->saveMany($saveMany);
+            }
 		}
         $brands = $this->Brand->find('all', array(
                             'recursive' => -1,
@@ -73,3 +75,4 @@ class BrandsController extends AppController {
                     );
 		$this->set('brands', $brands);
 	}
+}
