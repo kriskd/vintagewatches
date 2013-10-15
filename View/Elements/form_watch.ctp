@@ -22,10 +22,9 @@
 		echo $this->Form->error('name', null, array('class' => 'label label-danger'));
 		echo $this->Form->input('description', array('label' => array('class' => 'control-label'),
 							 'class' => 'form-control'));
-		echo $this->Form->input('active', array('label' => array('class' => 'control-label'),
-							 'div' => "checkbox-inline",
-                                                         )
-					);
+		//$watch isn't defined on add action, so give it a null value to avoid notices
+		$watch = empty($watch) ? null : $watch;
+		echo $this->Watch->active($watch);
 	?>
 	</fieldset>
 <?php echo $this->Form->end(array('label' => __('Save Watch Text'), 'class' => 'btn btn-primary')); ?>
