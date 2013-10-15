@@ -12,7 +12,14 @@ class WatchesController extends AppController {
 				'order' => array(
 					'Watch.id' => 'desc'
 				),
-				'contain' => array('Image')
+				'contain' => array(
+                                'Image',
+                                'Brand' => array(
+                                    'fields' => array(
+                                        'id', 'name'
+                                    )
+                                )
+                            )
 			);
     
 	public $uses = array('Watch', 'Image');
@@ -35,6 +42,10 @@ class WatchesController extends AppController {
 	public function index() {
 		//Get only active and unsold watches
 		$this->paginate['conditions'] = $this->Watch->getWatchesConditions(1, 0);
+        if (!empty($this->params->named)) {
+            $brand_id = $this->params->named['brand'];
+            $this->paginate['conditions']['brand_id'] = $brand_id;
+        }
 		$this->paginate['fields'] = array('id', 'stockId', 'price', 'name', 'description');
 		$this->Paginator->settings = $this->paginate;
 		$this->set('title', 'Store');
@@ -72,7 +83,6 @@ class WatchesController extends AppController {
 		
 		$this->paginate['conditions'] = $this->Watch->getWatchesConditions($active, $sold);
 		$this->paginate['fields'] = array('id', 'stockId', 'price', 'name', 'description', 'created', 'modified');
-		$this->paginate['contain']['Brand'] = array('fields' => array('id', 'name'));
 		$this->Paginator->settings = $this->paginate;
 		
 		$buttons = array(
