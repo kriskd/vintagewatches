@@ -6560,6 +6560,9 @@ body {
 .glyphicon {
   font-size: 120%;
 }
+.right {
+  text-align: right;
+}
 .navbar .navbar-header .credit-card-logos {
   display: none;
 }
@@ -6927,7 +6930,8 @@ body {
   border-top-left-radius: 5px;
   padding: 0px 0px 10px 0px;
   overflow: hidden;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  background: #eeeeee;
 }
 #content .watches.index .watch .watch-thumb {
   padding-top: 10px;
@@ -6937,12 +6941,12 @@ body {
   text-align: center;
 }
 #content .watches.index .watch .watch-attrs {
-  background-image: -webkit-gradient(linear, left 0%, left 90%, from(#222222), to(#555555));
-  background-image: -webkit-linear-gradient(top, #222222, 0%, #555555, 90%);
-  background-image: -moz-linear-gradient(top, #222222 0%, #555555 90%);
-  background-image: linear-gradient(to bottom, #222222 0%, #555555 90%);
+  background-image: -webkit-gradient(linear, left 0%, left 90%, from(#555555), to(#999999));
+  background-image: -webkit-linear-gradient(top, #555555, 0%, #999999, 90%);
+  background-image: -moz-linear-gradient(top, #555555 0%, #999999 90%);
+  background-image: linear-gradient(to bottom, #555555 0%, #999999 90%);
   background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff222222', endColorstr='#ff555555', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff555555', endColorstr='#ff999999', GradientType=0);
   font-weight: bold;
   font-size: 110%;
   color: #fff;
@@ -6957,6 +6961,17 @@ body {
 #content .watches.index .watch .watch-attrs a:hover,
 #content .watches.index .watch .watch-attrs a:active {
   color: white;
+}
+#content .watches.index .watch .watch-attrs .brand {
+  background: #eeeeee;
+}
+#content .watches.index .watch .watch-attrs .brand a:link,
+#content .watches.index .watch .watch-attrs .brand a:visited,
+#content .watches.index .watch .watch-attrs .brand a:hover,
+#content .watches.index .watch .watch-attrs .brand a:active {
+  text-transform: uppercase;
+  font-size: 105%;
+  color: #b29600;
 }
 #content .watches.form #WatchAdminEditForm {
   margin-bottom: 20px;
@@ -7013,9 +7028,16 @@ body {
   max-width: 700px;
   height: 525px;
   margin: auto;
+  margin-bottom: 20px;
 }
 #content .watches.view #carousel-watch img {
   margin: auto;
+}
+#content .watches.view .info {
+  border: 10px solid #b29600;
+}
+#content .watches.view .info .description {
+  margin-bottom: 20px;
 }
 #content .orders h2,
 #content .orders h3 {

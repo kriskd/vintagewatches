@@ -11,7 +11,7 @@
             <?php foreach ($images as $image): ?>
                 <div class="item <?php echo $first == true ? 'active' : ''; ?>">
                     <?php $first = false; ?>
-                    <?php echo $this->Html->watchImage($watch['Watch']['id'], $image['filename']); ?>
+                    <?php echo $this->Html->watchImage($watch['Watch']['id'], $image['filename'], array('class' => 'img-responsive')); ?>
                 </div>
             <?php endforeach; ?>
         </div>

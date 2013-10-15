@@ -13,6 +13,7 @@
 @orange:                #f89406;
 @pink:                  #c3325f;
 @purple:                #7a43b6;
+@goldLight:             #ccac00;
 @gold:                  #b29600;
 @goldDark:              #665600;
 
@@ -40,6 +41,10 @@ body {
 
 .glyphicon {
     font-size: 120%;
+}
+
+.right {
+    text-align: right;
 }
 
 .navbar {
@@ -387,7 +392,8 @@ body {
             .border-left-radius(5px);
             padding: 0px 0px 10px 0px;
             overflow: hidden;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
+            background: @gray-lighter;
             .watch-thumb {
                 padding-top: 10px;
                 margin-bottom: 10px;
@@ -396,7 +402,10 @@ body {
                 text-align: center;
             }
             .watch-attrs {
-                #gradient.vertical(@gray-darker; @gray; 0%; 90%);
+                //#gradient.vertical(@gray-darker; @gray; 0%; 90%);
+                #gradient.vertical(@gray; @gray-light; 0%; 90%);
+                //#gradient.vertical(@goldDark; @gold; 0%; 90%);
+                //background: @gray;
                 font-weight: bold;
                 font-size: 110%;
                 color: #fff;
@@ -408,6 +417,17 @@ body {
                 a:link, a:visited, a:hover, a:active {
                     color: white;
                 }
+                .brand {
+                    background: @gray-lighter;
+                    a:link, a:visited, a:hover, a:active {
+                        text-transform: uppercase;
+                        font-size: 105%;
+                        color: @gold;
+                    }
+                }
+            }
+            .watch-details {
+                
             }
         }
     }
@@ -450,6 +470,13 @@ body {
             margin: auto;
             img {
                 margin: auto;
+            }
+            margin-bottom: 20px;
+        }
+        .info {
+            border: 10px solid @gold;
+            .description {
+                margin-bottom: 20px;
             }
         }
     }
