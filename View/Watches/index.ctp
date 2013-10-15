@@ -61,6 +61,11 @@
         <div class="row">
             <div class="watch">
                 <div class="row watch-attrs">
+                    <?php /*<div class="col-xs-12 col-sm-12 col-md-6 col-lg-1 brand">
+                        <?php echo $this->Html->link(h($watch['Brand']['name']),
+                                                     array('action' => 'index', 'brand' => strtolower($watch['Brand']['id'])),
+                                                     array('escape' => false)); ?>
+                    </div>*/ ?>
                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 name">
                         <?php echo $this->Html->link(h($watch['Watch']['name']), array('action' => 'view', $watch['Watch']['id']), array('escape' => false)); ?>
                     </div>
@@ -71,8 +76,8 @@
                         <?php echo h($this->Number->currency($watch['Watch']['price'], 'USD')); ?>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 center-block">
-                    <div class="watch-thumb pull">
+                <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 watch-details">
+                    <div class="watch-thumb">
                         <?php echo $this->Html->thumbImagePrimary($watch,
                                                           array('class' => 'center-block',
                                                                 'url' => array('controller' => 'watches',
