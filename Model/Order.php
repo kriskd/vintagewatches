@@ -28,7 +28,17 @@ class Order extends AppModel {
 	    )
         );
 
-//The Associations below have been created with all possible keys, those that are not needed can be removed
+    /**
+     * Remove the order_id on the watch after order is deleted
+     */
+    public function afterDelete()
+    {
+	$order_id = $this->id;
+	$this->Watch->updateAll(
+	    array('Watch.order_id' => null),
+	    array('Watch.order_id' => $order_id)
+	);
+    }
 
 /**
  * hasMany associations
@@ -39,7 +49,7 @@ class Order extends AppModel {
 		'Address' => array(
 			'className' => 'Address',
 			'foreignKey' => 'order_id',
-			'dependent' => false,
+			'dependent' => true, //Delete associated addreseses
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
@@ -52,7 +62,7 @@ class Order extends AppModel {
                 'Watch' => array(
 			'className' => 'Watch',
 			'foreignKey' => 'order_id',
-			'dependent' => false,
+			'dependent' => false, //Don't delete associated watches
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',

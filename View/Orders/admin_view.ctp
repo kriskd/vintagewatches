@@ -33,7 +33,7 @@
                 <div class="modal-footer">
                     <?php echo $this->Html->link('Close', '#', array('data-dismiss' => 'modal',
                                                                      'class' => 'btn btn-default btn-lg')); ?>
-                    <?php echo $this->Html->link('Delete', array('action' => 'delete', 'admin' => true),
+                    <?php echo $this->Form->postLink('Delete', array('action' => 'delete', $order['Order']['id'], 'admin' => true),
                                                             array('class' => 'btn btn-danger btn-lg')); ?>                                    
                 </div>
             </div><!-- /.modal-content -->
