@@ -409,10 +409,10 @@ class OrdersController extends AppController
 	}
 	$this->request->onlyAllow('post', 'delete');
 	if ($this->Order->delete()) {
-		$this->Session->setFlash(__('Order deleted'));
+		$this->Session->setFlash(__('Order deleted'), 'success');
 		$this->redirect(array('action' => 'index'));
 	}
-	$this->Session->setFlash(__('Order was not deleted'));
+	$this->Session->setFlash(__('Order was not deleted'), 'danger');
 	$this->redirect(array('action' => 'index'));
     }
     
