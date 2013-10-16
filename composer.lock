@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "d34158198c546e8c102c157dc74d637f",
+    "hash": "2fe867d9c7f642a194e6df0880575896",
     "packages": [
         {
             "name": "DebugKit",
@@ -41,12 +41,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "b3bd071ea114a57212c75aa6a2eef5cfe0cc798f"
+                "reference": "46085247845046fadfdbf1b3d8ac851fa90a48d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/b3bd071ea114a57212c75aa6a2eef5cfe0cc798f",
-                "reference": "b3bd071ea114a57212c75aa6a2eef5cfe0cc798f",
+                "url": "https://api.github.com/repos/composer/installers/zipball/46085247845046fadfdbf1b3d8ac851fa90a48d5",
+                "reference": "46085247845046fadfdbf1b3d8ac851fa90a48d5",
                 "shasum": ""
             },
             "replace": {
@@ -106,17 +106,7 @@
                 "wordpress",
                 "zend"
             ],
-            "time": "2013-08-20 04:37:09"
-        },
-        {
-            "name": "font-awesome",
-            "version": "3.2.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/FortAwesome/Font-Awesome/",
-                "reference": "origin/master"
-            },
-            "type": "library"
+            "time": "2013-10-11 03:22:56"
         },
         {
             "name": "kriskd/cakephp2.0-image-upload",
@@ -128,6 +118,123 @@
             },
             "type": "library",
             "time": "2013-09-07 19:54:09"
+        },
+        {
+            "name": "mjohnson/transit",
+            "version": "1.4.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/milesj/transit.git",
+                "reference": "5ec7ecb99cce1998cb7c8c46837b5f662424d766"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/milesj/transit/zipball/5ec7ecb99cce1998cb7c8c46837b5f662424d766",
+                "reference": "5ec7ecb99cce1998cb7c8c46837b5f662424d766",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-fileinfo": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "aws/aws-sdk-php": "~2.2",
+                "ext-exif": "*"
+            },
+            "suggest": {
+                "aws/aws-sdk-php": "~2.2",
+                "ext-exif": "Extract exif data from images",
+                "ext-gd": "Enable the GD library for image transforming"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Transit": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Miles Johnson",
+                    "homepage": "http://milesj.me"
+                }
+            ],
+            "description": "A file uploader with support for validation, image transformation and remote transportation.",
+            "homepage": "http://milesj.me/code/php/transit",
+            "keywords": [
+                "application",
+                "archive",
+                "audio",
+                "exif",
+                "file",
+                "glacier",
+                "image",
+                "importer",
+                "s3",
+                "text",
+                "transformer",
+                "transit",
+                "transporter",
+                "uploader",
+                "validator",
+                "video"
+            ],
+            "time": "2013-09-15 08:42:19"
+        },
+        {
+            "name": "mjohnson/uploader",
+            "version": "4.3.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/milesj/uploader.git",
+                "reference": "c5b3085b7cc00c0491c39e72e0c143cabd6312a4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/milesj/uploader/zipball/c5b3085b7cc00c0491c39e72e0c143cabd6312a4",
+                "reference": "c5b3085b7cc00c0491c39e72e0c143cabd6312a4",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "*",
+                "ext-curl": "*",
+                "ext-fileinfo": "*",
+                "ext-mbstring": "*",
+                "mjohnson/transit": "~1.4",
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "aws/aws-sdk-php": "~2.2",
+                "ext-exif": "Extract exif data from images",
+                "ext-gd": "Enable the GD library for image transforming"
+            },
+            "type": "cakephp-plugin",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Miles Johnson",
+                    "homepage": "http://milesj.me"
+                }
+            ],
+            "description": "File uploader and validation plugin for CakePHP.",
+            "homepage": "http://milesj.me/code/cakephp/uploader",
+            "keywords": [
+                "attachment",
+                "cakephp",
+                "file",
+                "plugin",
+                "uploader",
+                "validation"
+            ],
+            "time": "2013-10-01 02:23:09"
         },
         {
             "name": "stripe/stripe-php",
@@ -148,6 +255,41 @@
                 "reference": "origin/master"
             },
             "type": "library"
+        },
+        {
+            "name": "weotch/phpthumb",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/weotch/PHPThumb.git",
+                "reference": "316a472b9a00fb33450d46f463de62c0eadb876a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/weotch/PHPThumb/zipball/316a472b9a00fb33450d46f463de62c0eadb876a",
+                "reference": "316a472b9a00fb33450d46f463de62c0eadb876a",
+                "shasum": ""
+            },
+            "replace": {
+                "dannytrue/phpthumb": "dev-master#2d8898f62e75a743e248dd5906a038d574e0dfe0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Robert Reinhard"
+                }
+            ],
+            "description": "Fork of PHPThumb that adds auto-image rotation based on EXIF data and composer support",
+            "time": "2013-04-08 22:11:00"
         }
     ],
     "packages-dev": [
