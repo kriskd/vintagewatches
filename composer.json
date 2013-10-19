@@ -78,7 +78,6 @@
     ],
     "require": {
         "composer/installers": "dev-master",
-        "weotch/phpthumb": "1.0.4",
         "mjohnson/uploader": "4.*",
         "TwitterBootstrap": "2.1.*",
         "DebugKit": "2.2.1",
