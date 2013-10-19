@@ -62,18 +62,8 @@ class ImagesController extends Controller
         if (!$this->Image->exists($imageId)) {
             throw new NotFoundException(__('Invalid image'));
         }
-        /*$image = $this->Image->find('first', array('conditions' => array('id' => $imageId), 'recursive' => -1));
-        $filename = $image['Image']['filename'];
-        $imagePath = WWW_ROOT . 'files' . DS . $watchId;
-        $thumbPath = $imagePath . DS . 'thumbs';
-        $resizedPath = $imagePath . DS . 'image';
-        foreach (array($imagePath, $thumbPath, $resizedPath) as $path) {
-            $file = new File($path . DS . $filename, false);
-            if ($file->exists()) {
-                $file->delete();
-            }
-        }*/
-        var_dump($this->Image->delete($imageId)); exit;
+
+        $this->Image->delete($imageId);
         
         $this->redirect($this->referer());
     }
