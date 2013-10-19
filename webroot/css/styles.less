@@ -464,20 +464,40 @@ body {
         }
     }
     .watches.view {
-        #carousel-watch {
-            max-width: 700px;
-            height: 525px;
-            margin: auto;
-            img {
+        .carousel {
+            #carousel-watch {
+                //width: 700px;
+                //height: 525px;
                 margin: auto;
+                img {
+                    margin: auto;
+                }
+                margin-bottom: 20px;
             }
-            margin-bottom: 20px;
         }
         .info {
             border: 10px solid @gold;
+            padding: 15px;
             .description {
                 margin-bottom: 20px;
             }
+            //min-height and push add to cart to bottom for md and lg only
+            @media (min-width: @screen-md) {
+                position: relative;
+                min-height: 525px;
+                .bottom {
+                    position: absolute;
+                    bottom: 0px;
+                    width: 100%;
+                    padding-right: 15px;
+                    a {
+                        margin: auto;
+                    }
+                }
+            }
+        }
+        .carousel-control.left, .carousel-control.right {
+            background-image: none;
         }
     }
     .orders {

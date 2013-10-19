@@ -78,7 +78,11 @@ class ImagesController extends Controller
         $this->redirect($this->referer());
     }
     
-        
+    public function admin_upload($id = null)
+    {
+        $this->Image->save($this->request->data);
+        $this->redirect(array('controller' => 'watches', 'action' => 'edit', $id, 'admin' => true));
+    }
     protected function _getFileNameFromPath($path)
     {
         return substr($path, strrpos($path, '/')+1, strlen($path));

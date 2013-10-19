@@ -70,4 +70,9 @@
                                      'class' => 'image-upload')); ?>
         <?php echo $this->Form->end(array('label' => 'Upload Image', 'class' => 'btn btn-primary')); ?>
     </div>
+    
+    <?php echo $this->Form->create('Image', array('type' => 'file', 'url' => array('action' => 'upload', $watch['Watch']['id']))); ?>
+    <?php echo $this->Form->input('filename', array('type' => 'file')); ?>
+    <?php echo $this->Form->input('watch_id', array('type' => 'hidden', 'value' => $watch['Watch']['id'])); ?>
+    <?php echo $this->Form->end('Submit'); ?>
 </div>

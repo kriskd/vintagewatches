@@ -56,9 +56,9 @@ class MyHtmlHelper extends HtmlHelper
     
     public function watchImage($watchId, $imageFilename, $options = array())
     {   
-        if (file_exists(WWW_ROOT . DS . 'files' . DS . $watchId . DS . 'image' . DS . $imageFilename)) { 
-            return $this->image(array('files', $watchId, 'image', $imageFilename), $options);
+        if (file_exists(WWW_ROOT . $imageFilename)) { 
+            return $this->image($imageFilename, $options);
         }
-        return $this->image(array('files', $watchId, $imageFilename), $options);
+        return $this->image($imageFilename, $options);
     }
 }

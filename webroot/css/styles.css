@@ -7024,20 +7024,38 @@ body {
 #content .watches.form .watch-images .image-thumb .modal a {
   display: inline;
 }
-#content .watches.view #carousel-watch {
-  max-width: 700px;
-  height: 525px;
+#content .watches.view .carousel #carousel-watch {
   margin: auto;
   margin-bottom: 20px;
 }
-#content .watches.view #carousel-watch img {
+#content .watches.view .carousel #carousel-watch img {
   margin: auto;
 }
 #content .watches.view .info {
   border: 10px solid #b29600;
+  padding: 15px;
 }
 #content .watches.view .info .description {
   margin-bottom: 20px;
+}
+@media (min-width: 992px) {
+  #content .watches.view .info {
+    position: relative;
+    min-height: 525px;
+  }
+  #content .watches.view .info .bottom {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    padding-right: 15px;
+  }
+  #content .watches.view .info .bottom a {
+    margin: auto;
+  }
+}
+#content .watches.view .carousel-control.left,
+#content .watches.view .carousel-control.right {
+  background-image: none;
 }
 #content .orders h2,
 #content .orders h3 {
