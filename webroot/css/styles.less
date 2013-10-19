@@ -397,6 +397,9 @@ body {
             .watch-thumb {
                 padding-top: 10px;
                 margin-bottom: 10px;
+                img {
+                    .center-block();
+                }
             }
             .watch-cart-button {
                 text-align: center;
@@ -502,6 +505,14 @@ body {
         }
         .carousel-control.left, .carousel-control.right {
             background-image: none;
+        }
+        .carousel-indicators {
+            li {
+                border: 1px solid #000;
+            }
+            .active {
+                background-color: #000;
+            }
         }
     }
     .orders {

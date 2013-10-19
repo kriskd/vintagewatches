@@ -79,8 +79,7 @@
                 <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 watch-details">
                     <div class="watch-thumb">
                         <?php echo $this->Html->thumbImagePrimary($watch,
-                                                          array('class' => 'center-block',
-                                                                'url' => array('controller' => 'watches',
+                                                          array('url' => array('controller' => 'watches',
                                                                                'action' => 'view', $watch['Watch']['id']))
                                                           ); ?>
                     </div>
