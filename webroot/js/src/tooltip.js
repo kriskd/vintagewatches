@@ -1,1 +1,1 @@
-../../../Vendor/twbs/bootstrap/js/tooltip.js
+../../../Vendor/twitter/bootstrap/js/tooltip.js

@@ -1,1 +1,1 @@
-../../../Vendor/twbs/bootstrap/js/carousel.js
+../../../Vendor/twitter/bootstrap/js/carousel.js

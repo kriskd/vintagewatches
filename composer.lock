@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "90cb83f228ef25813ae29cbf0653249e",
+    "hash": "855e7c8f92375fd2d811d263eca23c0d",
     "packages": [
         {
             "name": "DebugKit",
@@ -32,6 +32,16 @@
                 "type": "git",
                 "url": "https://github.com/loadsys/twitter-bootstrap-helper",
                 "reference": "origin/2.1"
+            },
+            "type": "cakephp-plugin"
+        },
+        {
+            "name": "Uploader",
+            "version": "4.3.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/milesj/uploader",
+                "reference": "origin/master"
             },
             "type": "cakephp-plugin"
         },
@@ -187,56 +197,6 @@
             "time": "2013-09-15 08:42:19"
         },
         {
-            "name": "mjohnson/uploader",
-            "version": "4.3.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/milesj/uploader.git",
-                "reference": "c5b3085b7cc00c0491c39e72e0c143cabd6312a4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/milesj/uploader/zipball/c5b3085b7cc00c0491c39e72e0c143cabd6312a4",
-                "reference": "c5b3085b7cc00c0491c39e72e0c143cabd6312a4",
-                "shasum": ""
-            },
-            "require": {
-                "composer/installers": "*",
-                "ext-curl": "*",
-                "ext-fileinfo": "*",
-                "ext-mbstring": "*",
-                "mjohnson/transit": "~1.4",
-                "php": ">=5.3.3"
-            },
-            "suggest": {
-                "aws/aws-sdk-php": "~2.2",
-                "ext-exif": "Extract exif data from images",
-                "ext-gd": "Enable the GD library for image transforming"
-            },
-            "type": "cakephp-plugin",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Miles Johnson",
-                    "homepage": "http://milesj.me"
-                }
-            ],
-            "description": "File uploader and validation plugin for CakePHP.",
-            "homepage": "http://milesj.me/code/cakephp/uploader",
-            "keywords": [
-                "attachment",
-                "cakephp",
-                "file",
-                "plugin",
-                "uploader",
-                "validation"
-            ],
-            "time": "2013-10-01 02:23:09"
-        },
-        {
             "name": "stripe/stripe-php",
             "version": "1.8.3",
             "source": {
@@ -247,14 +207,41 @@
             "type": "library"
         },
         {
-            "name": "twbs/bootstrap",
+            "name": "twitter/bootstrap",
             "version": "v3.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/twbs/bootstrap",
-                "reference": "origin/master"
+                "url": "https://github.com/twbs/bootstrap.git",
+                "reference": "e8a1df5f060bf7e6631554648e0abde150aedbe4"
             },
-            "type": "library"
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/e8a1df5f060bf7e6631554648e0abde150aedbe4",
+                "reference": "e8a1df5f060bf7e6631554648e0abde150aedbe4",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "sugeng tigefa",
+                    "email": "tigefa@gmail.com"
+                },
+                {
+                    "name": "Jacob Thornton",
+                    "email": "jacobthornton@gmail.com"
+                }
+            ],
+            "description": "Sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.",
+            "homepage": "http://getbootstrap.com",
+            "keywords": [
+                "bootstrap",
+                "css"
+            ],
+            "time": "2013-08-19 21:18:20"
         }
     ],
     "packages-dev": [

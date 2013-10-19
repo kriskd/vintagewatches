@@ -54,18 +54,6 @@
         {
             "type": "package",
             "package": {
-                "name": "twbs/bootstrap",
-                "version": "3.0.0",
-                "source": {
-                    "url": "https://github.com/twbs/bootstrap",
-                    "type": "git",
-                    "reference": "origin/master"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
                 "name": "kriskd/cakephp2.0-image-upload",
                 "version": "dev-master",
                 "source": {
@@ -74,16 +62,30 @@
                     "reference": "origin/master"
                 }
             }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "Uploader",
+                "type": "cakephp-plugin",
+                "version": "4.3.6",
+                "source": {
+                    "url": "https://github.com/milesj/uploader",
+                    "type": "git",
+                    "reference" : "origin/master"
+                }
+            }
         }
     ],
     "require": {
         "composer/installers": "dev-master",
-        "mjohnson/uploader": "4.*",
+        "mjohnson/transit": "~1.4",
+        "Uploader": "4.3.6",
         "TwitterBootstrap": "2.1.*",
         "DebugKit": "2.2.1",
         "Stripe": "1.0.2",
         "stripe/stripe-php": "1.8.3",
-        "twbs/bootstrap": "3.0.0",
+        "twitter/bootstrap": "3.0.0",
         "kriskd/cakephp2.0-image-upload": "dev-master"
     },
     "config": {
