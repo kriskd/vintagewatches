@@ -38,17 +38,6 @@
                     <?php echo h($watch['Watch']['modified']); ?>
                     &nbsp;
                 </dd>
-                <?php if(!empty($watch['Image'])): ?>
-                    <?php $images = $watch['Image']; ?>
-                    <?php foreach($images as $image): ?>
-                        <?php if($image['type'] == 'thumb'): ?>
-                            <dt>Image</dt>
-                            <dd>
-                                <?php echo $this->Html->image('/files/thumbs/' . $image['filename']); ?>
-                            </dd>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-                <?php endif; ?>
                 <?php if(isset($watch['Order']['id'])):  ?>
                     <dt>Sold <?php echo date('Y-m-d', strtotime($watch['Order']['created'])); ?></dt>
                     <dd>

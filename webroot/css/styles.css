@@ -7038,6 +7038,30 @@ body {
 #content .watches.view .info .description {
   margin-bottom: 20px;
 }
+#content .watches.view .info .description:before,
+#content .watches.view .info .description:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+#content .watches.view .info .description:after {
+  clear: both;
+}
+#content .watches.view .info .description:before,
+#content .watches.view .info .description:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+#content .watches.view .info .description:after {
+  clear: both;
+}
 @media (min-width: 992px) {
   #content .watches.view .info {
     position: relative;

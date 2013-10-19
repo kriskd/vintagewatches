@@ -32,7 +32,7 @@ class MyHtmlHelper extends HtmlHelper
     
     public function thumbImage($watchId, $imageFilename, $options = array())
     {
-        return $this->image(array('files', $watchId, 'thumbs', $imageFilename), $options);
+        return $this->image($imageFilename, $options);
     }
     
     /**
@@ -49,7 +49,7 @@ class MyHtmlHelper extends HtmlHelper
                     return $primaryExists;
                 }, null);
             $image = empty($primary) ? current($images) : $primary;
-            return $this->image(array('files', $image['watch_id'], 'thumbs', $image['filename']), $options);
+            return $this->image($image['filenameThumb'], $options);
         }
         return 'No Image Available';
     }

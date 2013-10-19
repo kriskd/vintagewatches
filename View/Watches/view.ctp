@@ -20,9 +20,11 @@
                         <?php echo $watch['Watch']['description']; ?>
                     </div>
                 </div>
-                <p class="text-center bottom">
-                    <?php echo $this->Element('add_to_cart', compact('watch', 'controller') + array('class' => 'btn btn-gold btn-lg')); ?>
-                </p>
+                <div class="row footer clearfix">
+                    <p class="text-center bottom">
+                        <?php echo $this->Element('add_to_cart', compact('watch', 'controller') + array('class' => 'btn btn-gold btn-lg')); ?>
+                    </p>
+                </div>
             </div>
         </div>
     </div>

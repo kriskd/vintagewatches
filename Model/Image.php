@@ -39,8 +39,8 @@ class Image extends AppModel {
                     ),
                     'filenameThumb' => array(
                         'method' => AttachmentBehavior::FIT,
-                        'width' => 75,
-                        'height' => 75,
+                        'width' => 100,
+                        'height' => 100,
                         'fill' => array(255, 255, 255),
                         'vertical' => 'center',
                         'horizontal' => 'center',

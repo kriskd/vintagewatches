@@ -7,7 +7,7 @@
 			<?php $images = $watch['Image']; ?>
 			<?php foreach($images as $image): ?>
 				<div class="image-thumb">
-					<?php echo $this->Html->link($this->Html->thumbImage($watch['Watch']['id'], $image['filename']),
+					<?php echo $this->Html->link($this->Html->thumbImage($watch['Watch']['id'], $image['filenameThumb']),
                                                  '#delete-' . $watch['Watch']['id'] . '-' . $image['id'],
                                                  array('escape' => false, 'data-toggle' => 'modal')
                                                  );
@@ -20,7 +20,7 @@
                                     <h4 class="modal-title">Confirm Image Delete</h4>
                                 </div>
                                 <div class="modal-body">
-                                    <?php echo $this->Html->thumbImage($watch['Watch']['id'], $image['filename'],
+                                    <?php echo $this->Html->thumbImage($watch['Watch']['id'], $image['filenameThumb'],
                                                                         array('escape' => false)
                                                  ); ?>
                                 </div>
@@ -57,6 +57,7 @@
 	<?php endif; ?>
     
     <div class="jumbotron">
+        <?php /*
         <?php echo $this->Form->create('Image', array('type' => 'file',
                                   'url' => array('action' => 'picture', $watch['Watch']['id']),
                                   )); ?>
@@ -69,10 +70,19 @@
                                      'label' => false,
                                      'class' => 'image-upload')); ?>
         <?php echo $this->Form->end(array('label' => 'Upload Image', 'class' => 'btn btn-primary')); ?>
+        */ ?>
+        <?php echo $this->Form->create('Image', array('type' => 'file', 'url' => array('action' => 'upload'))); ?>
+        <?php echo $this->Form->label('Add Image'); ?>
+        <?php echo $this->Form->button('Choose File', array('type' => 'button',
+                                                    'class' => 'btn btn-default fake-upload',
+                                                    )
+                                                ); ?>
+        <?php echo $this->Form->input('filename', array('type' => 'file', 'label' => false, 'class' => 'image-upload')); ?>
+        <?php echo $this->Form->input('watch_id', array('type' => 'hidden', 'value' => $watch['Watch']['id'])); ?>
+        <?php echo $this->Form->input('image', array('type' => 'file',
+                         'label' => false,
+                         'class' => 'image-upload')); ?>
+        <?php echo $this->Form->end(array('label' => 'Upload Image', 'class' => 'btn btn-primary')); ?>
     </div>
-    
-    <?php echo $this->Form->create('Image', array('type' => 'file', 'url' => array('action' => 'upload', $watch['Watch']['id']))); ?>
-    <?php echo $this->Form->input('filename', array('type' => 'file')); ?>
-    <?php echo $this->Form->input('watch_id', array('type' => 'hidden', 'value' => $watch['Watch']['id'])); ?>
-    <?php echo $this->Form->end('Submit'); ?>
+
 </div>

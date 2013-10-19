@@ -58,11 +58,11 @@ class ImagesController extends Controller
     }
     
     public function admin_delete($watchId, $imageId)
-    {
+    {   
         if (!$this->Image->exists($imageId)) {
             throw new NotFoundException(__('Invalid image'));
         }
-        $image = $this->Image->find('first', array('conditions' => array('id' => $imageId), 'recursive' => -1));
+        /*$image = $this->Image->find('first', array('conditions' => array('id' => $imageId), 'recursive' => -1));
         $filename = $image['Image']['filename'];
         $imagePath = WWW_ROOT . 'files' . DS . $watchId;
         $thumbPath = $imagePath . DS . 'thumbs';
@@ -72,8 +72,8 @@ class ImagesController extends Controller
             if ($file->exists()) {
                 $file->delete();
             }
-        }
-        $this->Image->delete($imageId, false);
+        }*/
+        var_dump($this->Image->delete($imageId)); exit;
         
         $this->redirect($this->referer());
     }
