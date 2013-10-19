@@ -6757,6 +6757,11 @@ body {
   color: #665600;
   padding: 20px;
 }
+#content .recent-watches img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 #content .recent-watches hr {
   border-top-color: #665600;
 }
@@ -7045,6 +7050,12 @@ body {
   text-align: center;
   font-weight: bold;
   margin-top: 5px;
+}
+#content .orders .cart-details .watch img,
+#content .orders .order-details .watch img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 #content .orders .cart-details {
   background: #eeeeee;
