@@ -79,7 +79,7 @@
     ],
     "require": {
         "composer/installers": "dev-master",
-        "mjohnson/transit": "~1.4",
+        "mjohnson/transit": "1.4.4",
         "Uploader": "4.3.6",
         "TwitterBootstrap": "2.1.*",
         "DebugKit": "2.2.1",
