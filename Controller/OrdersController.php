@@ -54,7 +54,11 @@ class OrdersController extends AppController
 	
 	$options = $this->Order->getCustomerOrderOptions($email, $postalCode);
 	$this->Paginator->settings = array_merge($this->paginate['Order'], $options); 
-	$orders = $this->Paginator->paginate('Order'); 
+	$orders = $this->Paginator->paginate('Order');
+	
+	if (!empty($orders)) {
+	    $this->set('orders', $orders);
+	}
 
 	//Set flash message if we have an email and postalCode but no orders
 	if ((!(empty($email)) && !empty($postalCode)) && empty($orders)) { 
@@ -64,7 +68,7 @@ class OrdersController extends AppController
 	
 	$title = 'Order History';
 	
-	$this->set(compact('orders', 'email', 'title'));
+	$this->set(compact('email', 'title'));
     }
     
     public function view($id = null)
