@@ -6975,7 +6975,7 @@ body {
 #content .watches.view .info .description:after {
   clear: both;
 }
-@media (min-width: 992px) {
+@media (min-width: 1200px) {
   #content .watches.view .info {
     position: relative;
     min-height: 525px;
@@ -6989,6 +6989,10 @@ body {
   #content .watches.view .info .bottom a {
     margin: auto;
   }
+}
+#content .watches.view .carousel-control .glyphicon-chevron-left,
+#content .watches.view .carousel-control .glyphicon-chevron-right {
+  left: 40%;
 }
 #content .watches.view .carousel-control.left,
 #content .watches.view .carousel-control.right {

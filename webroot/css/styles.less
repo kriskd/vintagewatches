@@ -492,7 +492,7 @@ body {
                 
             }
             //min-height and push add to cart to bottom for md and lg only
-            @media (min-width: @screen-md) {
+            @media (min-width: @screen-lg) {
                 position: relative;
                 min-height: 525px;
                 .bottom {
@@ -505,6 +505,9 @@ body {
                     }
                 }
             }
+        }
+        .carousel-control .glyphicon-chevron-left, .carousel-control .glyphicon-chevron-right {
+            left: 40%;
         }
         .carousel-control.left, .carousel-control.right {
             background-image: none;
