@@ -28,29 +28,6 @@ $(document).ready(function(){
         $('.watches-header .glyphicon-eye-open').hide();
         setCookie('hideWatchIntro', 0, 90);
     });
-
-    /**
-     * Billing country autocomplete
-     */
-    $(document).on('keyup', '#AddressBillingCountryName', function(){
-        $('#AddressBillingCountryName').autocomplete({
-            source: '/orders/checkout.json',
-            minLength: 3,
-            select: function(event,ui){
-                $(this).val(ui.item.value); 
-                $('.billing-country-name').empty().append(ui.item.value);
-                $('#AddressBillingCountry').attr('value', ui.item.id);
-                $('#AddressShippingCountry').attr('value', ui.item.id);
-            }
-        });
-    });
-    
-    /**
-     * Show shipping address form when ship to different address is selected
-     */
-    $(document).on('click', '#AddressShipping-address', function(){
-        $('.address-form-shipping').toggle(this.checked);
-    });
     
     /**
      * Check if a country is selected
@@ -60,6 +37,7 @@ $(document).ready(function(){
     if ($('.select-country input:radio').is(':checked')) {
         var country = $('.select-country input:radio:checked').val();
         computeTotal(country);
+        $('.shipping').removeClass('hide').addClass('show');
     }
     
     /**
@@ -77,6 +55,11 @@ $(document).ready(function(){
         //Display correcting address form and shipping amount based on country
         var country = $(this).val();
         computeTotal(country);
+        //Show shipping block
+        $('.shipping').removeClass('hide').addClass('show');
+        //Hide address and credit card blocks
+        $('.address').removeClass('show').addClass('hide');
+        $('.credit-card').removeClass('show').addClass('hide');
     });
 
     /**
@@ -104,6 +87,9 @@ $(document).ready(function(){
         var country = $('.select-country input:radio:checked').val();
         var shippingOption = $(this).val(); 
         getAddressForm(country, shippingOption);
+        //Show address and credit card blocks
+        $('.address').removeClass('hide').addClass('show');
+        $('.credit-card').removeClass('hide').addClass('show');
     });
     
     if ($('.shipping .radio input').is(':checked')) { 
@@ -112,13 +98,42 @@ $(document).ready(function(){
         var country = $('.select-country input:radio:checked').val();
         var shippingOption = $('.shipping .radio input:radio:checked').val();
         getAddressForm(country, shippingOption);
+        //Show address and credit card blocks
+        $('.address').removeClass('hide').addClass('show');
+        $('.credit-card').removeClass('hide').addClass('show');
     }
     else { 
         //Hide special order instructions
         $('.shipping-instructions').hide();
         //Disable submit if no shipping option selected
         $('.submit-payment').attr('disabled', 'disabled');
+        //Hide address and credit card blocks
+        $('.address').removeClass('show').addClass('hide');
+        $('.credit-card').removeClass('show').addClass('hide');
     }
+    
+    /**
+     * Billing country autocomplete
+     */
+    $(document).on('keyup', '#AddressBillingCountryName', function(){
+        $('#AddressBillingCountryName').autocomplete({
+            source: '/orders/checkout.json',
+            minLength: 3,
+            select: function(event,ui){
+                $(this).val(ui.item.value); 
+                $('.billing-country-name').empty().append(ui.item.value);
+                $('#AddressBillingCountry').attr('value', ui.item.id);
+                $('#AddressShippingCountry').attr('value', ui.item.id);
+            }
+        });
+    });
+    
+    /**
+     * Show shipping address form when ship to different address is selected
+     */
+    $(document).on('click', '#AddressShipping-address', function(){
+        $('.address-form-shipping').toggle(this.checked);
+    });
     
     //Get the country from the combo US/Canada form
     $(document).on('change', '.us-ca', function(){

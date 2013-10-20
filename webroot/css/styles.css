@@ -7050,6 +7050,17 @@ body {
   padding: 0 10px;
   line-height: 40px;
 }
+.container .content .orders h2 small,
+.container .content .orders h3 small {
+  color: white;
+  font-weight: bold;
+  line-height: 40px;
+}
+.container .content .orders h2 small .glyphicon,
+.container .content .orders h3 small .glyphicon {
+  position: relative;
+  top: 2px;
+}
 .container .content .orders h6 {
   margin: 0;
 }
@@ -7210,6 +7221,9 @@ body {
 }
 .container .content .orders .review-cart label {
   font-weight: normal;
+}
+.container .content .orders .review-cart .choose-ship .tooltip-inner {
+  width: 200px;
 }
 .container .content .orders .shipping .shipping-inner {
   display: none;
