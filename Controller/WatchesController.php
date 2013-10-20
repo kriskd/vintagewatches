@@ -13,13 +13,13 @@ class WatchesController extends AppController {
 					'Watch.id' => 'desc'
 				),
 				'contain' => array(
-                                'Image',
-                                'Brand' => array(
-                                    'fields' => array(
-                                        'id', 'name'
-                                    )
-                                )
-                            )
+					'Image',
+					'Brand' => array(
+					    'fields' => array(
+						'id', 'name'
+					    )
+					)
+				)
 			);
     
 	public $uses = array('Watch', 'Image');
@@ -42,10 +42,10 @@ class WatchesController extends AppController {
 	public function index() {
 		//Get only active and unsold watches
 		$this->paginate['conditions'] = $this->Watch->getWatchesConditions(1, 0);
-        if (!empty($this->params->named)) {
-            $brand_id = $this->params->named['brand'];
-            $this->paginate['conditions']['brand_id'] = $brand_id;
-        }
+		if (!empty($this->params->named)) {
+		    $brand_id = $this->params->named['brand'];
+		    $this->paginate['conditions']['brand_id'] = $brand_id;
+		}
 		$this->paginate['fields'] = array('id', 'stockId', 'price', 'name', 'description');
 		$this->Paginator->settings = $this->paginate;
 		$this->set('title', 'Store');
@@ -64,7 +64,19 @@ class WatchesController extends AppController {
 		if (!$this->Watch->sellable($id)) {
 			$this->redirect(array('controller' => 'pages', 'action' => 'home', 'display'));
 		}
-		$options = array('conditions' => array('Watch.' . $this->Watch->primaryKey => $id));
+		$options = array(
+				'conditions' => array(
+					'Watch.' . $this->Watch->primaryKey => $id
+				),
+				'contain' => array(
+					'Image',
+					'Brand' => array(
+					    'fields' => array(
+						'id', 'name'
+					    )
+					)
+				)
+			);
 		$watch = $this->Watch->find('first', $options);
 		$this->set('watch', $watch);
 		
@@ -92,7 +104,7 @@ class WatchesController extends AppController {
 			'Active Watches' => array('active' => 1, 'sold' => null),
 			'Inactive Watches' => array('active' => 0, 'sold' => null)
 		);
-		//var_dump($this->paginate()); exit;
+		
 		$this->set(array('watches' => $this->paginate()) + compact('active', 'sold', 'buttons')); 
 	}
 
@@ -141,7 +153,7 @@ class WatchesController extends AppController {
 			throw new NotFoundException(__('Invalid watch'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
-            $this->request->data['Watch']['id'] = $id; 
+			$this->request->data['Watch']['id'] = $id; 
 			if ($this->Watch->save($this->request->data)) {
 				$this->Session->setFlash(__('The watch has been saved'), 'success');
 				$this->redirect(array('action' => 'edit', $id));
@@ -149,10 +161,10 @@ class WatchesController extends AppController {
 				$this->Session->setFlash(__('The watch could not be saved. Please, try again.'));
 			}
 		} else {
-            $this->brandList();
+			$this->brandList();
 			$options = array('conditions' => array('Watch.' . $this->Watch->primaryKey => $id));
 			$this->request->data = $this->Watch->find('first', $options);
-            $this->set('watch', $this->Watch->find('first', $options));
+			$this->set('watch', $this->Watch->find('first', $options));
 		}
 	}
 
@@ -192,9 +204,9 @@ class WatchesController extends AppController {
 		$this->redirect(array('action' => 'index', 'admin' => true));
 	}
     
-    public function brandList()
-    {
-        $brands = array('' => 'Select One') + $this->Watch->Brand->find('list', array('order' => 'Brand.name'));
-        $this->set(compact('brands'));
-    }
+	public function brandList()
+	{
+	    $brands = array('' => 'Select One') + $this->Watch->Brand->find('list', array('order' => 'Brand.name'));
+	    $this->set(compact('brands'));
+	}
 }
