@@ -42,7 +42,7 @@ class WatchesController extends AppController {
 	public function index() {
 		//Get only active and unsold watches
 		$this->paginate['conditions'] = $this->Watch->getWatchesConditions(1, 0);
-		if (!empty($this->params->named)) {
+		if (!empty($this->params->named['brand'])) {
 		    $brand_id = $this->params->named['brand'];
 		    $this->paginate['conditions']['brand_id'] = $brand_id;
 		}
