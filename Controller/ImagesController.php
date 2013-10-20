@@ -30,7 +30,7 @@ class ImagesController extends Controller
         $this->redirect($this->referer());
     }
     
-    public function admin_delete($watchId, $imageId)
+    public function admin_delete($imageId)
     {   
         if (!$this->Image->exists($imageId)) {
             throw new NotFoundException(__('Invalid image'));
