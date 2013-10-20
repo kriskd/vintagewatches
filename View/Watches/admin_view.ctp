@@ -6,16 +6,8 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 info">
             <div class="info-inner">
-                <div class="row head">
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                        <h4><?php echo $watch['Brand']['name']; ?> 
-                        <?php echo h($watch['Watch']['stockId']); ?></h4>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 right">
-                        <h4><?php echo h($this->Number->currency($watch['Watch']['price'], 'USD')); ?></h4>
-                    </div>
-                </div>
-                <div class="row body">
+                <?php echo $this->Element('watch_view_head', compact('watch')); ?>
+		<div class="row body">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 description">
                         <?php echo $this->Text->truncate($watch['Watch']['description'], 300, array('exact' => false, 'html' => false)); ?>
 			<dl>
@@ -45,9 +37,9 @@
 			</dl>
                     </div>
                 </div>
-                <div class="row footer clearfix">
+                <div class="row">
                     <p class="text-center bottom">
-                        <?php echo $this->Html->link('Edit Watch', array('action' => 'edit', $watch['Watch']['id']), array('class' => 'btn btn-primary')); ?>
+                        <?php echo $this->Html->link('Edit Watch', array('action' => 'edit', $watch['Watch']['id']), array('class' => 'btn btn-primary', 'admin' => true)); ?>
                     </p>
                 </div>
             </div>
