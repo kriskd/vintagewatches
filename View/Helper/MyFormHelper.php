@@ -116,7 +116,15 @@ class MyFormHelper extends FormHelper
                                                               'size' => '7',
                                                               );
                 if ($stripe == true) {
-                    $this->nameToOptionsMap['countryName'] = array('label' => 'Country');
+                    $tooltip = $this->Html->link('<i class="glyphicon glyphicon-question-sign"></i>', '#', array(
+                                                                    'title' => 'Enter any portion of the country name and select your country from the options that appear.',
+                                                                    'class' => 'launch-tooltip',
+                                                                    'data-toggle' => 'tooltip',
+                                                                    'data-placement' => 'top',
+                                                                    'escape' => false
+                                                                )
+                                               );
+                    $this->nameToOptionsMap['countryName'] = array('label' => 'Country ' . $tooltip);
                 }
                 $this->nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => '');
                 break;
