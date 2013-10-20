@@ -6542,7 +6542,31 @@ body {
   min-height: 100%;
 }
 .container .content {
-  margin-bottom: 70px;
+  margin-bottom: 50px;
+}
+.container .content:before,
+.container .content:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+.container .content:after {
+  clear: both;
+}
+.container .content:before,
+.container .content:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+.container .content:after {
+  clear: both;
 }
 .container .content a:link:not(.btn),
 .container .content a:visited:not(.btn),
