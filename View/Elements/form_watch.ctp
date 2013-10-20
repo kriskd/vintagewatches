@@ -57,7 +57,7 @@
                 css:'body{font:12px Verdana,Arial}', // (optional) attach CSS to the editor
                 bodyid:'editor', // (optional) attach an ID to the editor body
                 footerclass:'tinyeditor-footer', // (optional) CSS class of the footer
-                //toggle:{text:'source',activetext:'wysiwyg',cssclass:'toggle'}, // (optional) toggle to markup view options
+                toggle:{text:'source',activetext:'wysiwyg',cssclass:'toggle'}, // (optional) toggle to markup view options
                 resize:{cssclass:'resize'} // (optional) display options for the editor resize
             }); 
             $(document).on('submit', '#WatchAdminEditForm, #WatchAdminAddForm', function(){
