@@ -6458,7 +6458,7 @@ td.visible-print {
   -webkit-font-smoothing: antialiased;
 }
 body {
-  padding: 70px 0;
+  padding-top: 70px;
 }
 .glyphicon {
   font-size: 120%;
@@ -6526,6 +6526,9 @@ body {
   .navbar .navbar-header .navbar-brand {
     font-size: 18px;
   }
+}
+.footer .navbar {
+  margin-bottom: 0px;
 }
 #content a:link:not(.btn),
 #content a:visited:not(.btn),
@@ -6657,15 +6660,15 @@ body {
 #content dl dd {
   margin-left: 170px;
 }
-#content .paging {
-  font-size: 90%;
-  font-weight: bold;
-}
-#content .paging span {
-  padding: 5px;
-}
-#content .paging .disabled {
+#content .pagination .disabled {
   display: none;
+}
+#content .pagination .active a {
+  background-color: #b29600;
+  border-color: #b29600;
+}
+#content .pagination .active a:hover {
+  color: white;
 }
 #content #s3captcha-images:before,
 #content #s3captcha-images:after {

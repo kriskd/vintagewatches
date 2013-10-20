@@ -55,8 +55,8 @@
 			<?php echo $this->Session->flash(); ?>
 			<?php echo $this->fetch('content'); ?>
 		</div>
-		<?php echo $this->Element('footer'); ?>
 	</div>
+	<?php echo $this->Element('footer'); ?>
 	<?php //echo $this->element('sql_dump'); ?>
 </body>
 </html>

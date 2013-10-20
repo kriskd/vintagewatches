@@ -36,7 +36,7 @@
 }
 
 body {
-    padding: 70px 0;
+    padding-top: 70px;
 }
 
 .glyphicon {
@@ -137,6 +137,12 @@ body {
                 font-size: 18px;
             }
         }
+    }
+}
+
+.footer {
+    .navbar {
+        margin-bottom: 0px;
     }
 }
 
@@ -252,14 +258,18 @@ body {
             margin-left: 170px; 
         }
     }
-    .paging {
-        font-size: 90%;
-        font-weight: bold;
-        span {
-            padding: 5px;
-        }
+    .pagination {
         .disabled {
             display: none;
+        }
+        .active {
+            a {
+                background-color: @gold;
+                border-color: @gold;
+            }
+            a:hover {
+                color: white;
+            }
         }
     }
     
@@ -502,9 +512,6 @@ body {
                     margin-bottom: 20px;
                     .clearfix();
                 }
-                .footer {
-                    
-                }
                 //min-height and push add to cart to bottom for lg only
                 @media (min-width: @screen-lg) {
                     position: relative;
@@ -691,7 +698,6 @@ body {
             width: 500px;
         }
     }
-    
     .pages.admin-edit {
         .input {
             
@@ -701,7 +707,6 @@ body {
             margin-bottom: 20px;
         }
     }
-    
     .brands {
         .input {
             margin-bottom: 10px;

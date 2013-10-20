@@ -7,10 +7,16 @@
     ?>
 </p>
 */ ?>
-<div class="paging">
+<ul class="pagination">
     <?php
-        echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
-        echo $this->Paginator->numbers(array('separator' => ''));
-        echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
+        echo $this->Paginator->prev(html_entity_decode('&laquo;'), array('tag' => 'li'), null, array('class' => 'prev disabled', 'escape' => false));
+        echo $this->Paginator->numbers(array(
+                                             'tag' => 'li',
+                                             'separator' => '',
+                                             'currentClass' => 'active',
+                                             'currentTag' => 'a'
+                                             )
+                                       );
+        echo $this->Paginator->next(html_entity_decode('&raquo;'), array('tag' => 'li'), null, array('class' => 'next disabled', 'escape' => false));
     ?>
-</div>
+</ul>
