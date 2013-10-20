@@ -482,11 +482,16 @@ body {
             }
         }
         .info {
-            //Extra padding so info is same width as images when aligned vertically
-            padding-left: 25px;
-            padding-right: 25px;
-            //Extra padding not needed on lg screens when floated next to images
-            @media (min-width: @screen-lg) {
+            //Padding adjustment for gold border
+            @media (max-width: @screen-xs-max) {
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+            @media (min-width: @screen-sm) and (max-width: @screen-sm-max) {
+                padding-left: 25px;
+                padding-right: 25px;
+            }
+            @media (min-width: @screen-md) {
                 padding-left: 0px;
                 padding-right: 0px;
             }

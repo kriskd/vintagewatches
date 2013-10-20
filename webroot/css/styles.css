@@ -6944,11 +6944,19 @@ body {
 #content .watches.view .carousel #carousel-watch img {
   margin: auto;
 }
-#content .watches.view .info {
-  padding-left: 25px;
-  padding-right: 25px;
+@media (max-width: 767px) {
+  #content .watches.view .info {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
 }
-@media (min-width: 1200px) {
+@media (min-width: 768px) and (max-width: 991px) {
+  #content .watches.view .info {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+}
+@media (min-width: 992px) {
   #content .watches.view .info {
     padding-left: 0px;
     padding-right: 0px;
