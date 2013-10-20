@@ -482,26 +482,36 @@ body {
             }
         }
         .info {
-            border: 10px solid @gold;
-            padding: 15px;
-            .description {
-                margin-bottom: 20px;
-                .clearfix();
-            }
-            .footer {
-                
-            }
-            //min-height and push add to cart to bottom for md and lg only
+            //Extra padding so info is same width as images when aligned vertically
+            padding-left: 25px;
+            padding-right: 25px;
+            //Extra padding not needed on lg screens when floated next to images
             @media (min-width: @screen-lg) {
-                position: relative;
-                min-height: 525px;
-                .bottom {
-                    position: absolute;
-                    bottom: 0px;
-                    width: 100%;
-                    padding-right: 15px;
-                    a {
-                        margin: auto;
+                padding-left: 0px;
+                padding-right: 0px;
+            }
+            .info-inner {
+                border: 10px solid @gold;
+                padding: 15px;
+                .description {
+                    margin-bottom: 20px;
+                    .clearfix();
+                }
+                .footer {
+                    
+                }
+                //min-height and push add to cart to bottom for md and lg only
+                @media (min-width: @screen-lg) {
+                    position: relative;
+                    min-height: 525px;
+                    .bottom {
+                        position: absolute;
+                        bottom: 0px;
+                        width: 100%;
+                        padding-right: 15px;
+                        a {
+                            margin: auto;
+                        }
                     }
                 }
             }

@@ -6945,48 +6945,58 @@ body {
   margin: auto;
 }
 #content .watches.view .info {
-  border: 10px solid #b29600;
-  padding: 15px;
-}
-#content .watches.view .info .description {
-  margin-bottom: 20px;
-}
-#content .watches.view .info .description:before,
-#content .watches.view .info .description:after {
-  content: " ";
-  /* 1 */
-
-  display: table;
-  /* 2 */
-
-}
-#content .watches.view .info .description:after {
-  clear: both;
-}
-#content .watches.view .info .description:before,
-#content .watches.view .info .description:after {
-  content: " ";
-  /* 1 */
-
-  display: table;
-  /* 2 */
-
-}
-#content .watches.view .info .description:after {
-  clear: both;
+  padding-left: 25px;
+  padding-right: 25px;
 }
 @media (min-width: 1200px) {
   #content .watches.view .info {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+}
+#content .watches.view .info .info-inner {
+  border: 10px solid #b29600;
+  padding: 15px;
+}
+#content .watches.view .info .info-inner .description {
+  margin-bottom: 20px;
+}
+#content .watches.view .info .info-inner .description:before,
+#content .watches.view .info .info-inner .description:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+#content .watches.view .info .info-inner .description:after {
+  clear: both;
+}
+#content .watches.view .info .info-inner .description:before,
+#content .watches.view .info .info-inner .description:after {
+  content: " ";
+  /* 1 */
+
+  display: table;
+  /* 2 */
+
+}
+#content .watches.view .info .info-inner .description:after {
+  clear: both;
+}
+@media (min-width: 1200px) {
+  #content .watches.view .info .info-inner {
     position: relative;
     min-height: 525px;
   }
-  #content .watches.view .info .bottom {
+  #content .watches.view .info .info-inner .bottom {
     position: absolute;
     bottom: 0px;
     width: 100%;
     padding-right: 15px;
   }
-  #content .watches.view .info .bottom a {
+  #content .watches.view .info .info-inner .bottom a {
     margin: auto;
   }
 }
