@@ -194,13 +194,14 @@ class OrdersController extends AppController
 		    $this->emailOrder($order);
 		    $title = 'Thank You For Your Order';
 		    $this->set(compact('order', 'title'));   
-		    $this->Session->setFlash('<i class="icon-ok icon-large"></i> Thank you for your order.', 'default', array('class' => 'alert alert-success'));
+		    $this->Session->setFlash('<span class="glyphicon glyphicon-ok"></span> Thank you for your order.',
+					     'default', array('class' => 'alert alert-success'));
 		    $this->render('confirm');
 		} else {
 		    //Decline
 		    $this->Session->write('Address', array('data' => $addresses));
-		    $this->Session->setFlash('<i class="icon-warning-sign icon-large"></i> ' . $result,
-					     'default', array('class' => 'alert alert-error'));
+		    $this->Session->setFlash('<span class="glyphicon glyphicon-warning-sign"></span> ' . $result,
+					     'default', array('class' => 'alert alert-danger'));
 		}
 	    }
 	    else{ 
