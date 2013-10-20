@@ -35,6 +35,9 @@
     -webkit-font-smoothing: antialiased;
 }
 
+html, body {
+    height: 100%;
+}
 body {
     padding-top: 70px;
 }
@@ -144,572 +147,579 @@ body {
     .navbar {
         margin-bottom: 0px;
     }
+    height: 50px;
+    margin-top: -50px;
 }
 
-#content {
-    a:link:not(.btn), a:visited:not(.btn), a:active:not(.btn) {
-        color: @goldDark;
-    }
-    a:hover:not(.btn) {
-        color: @gold;
-    }
-    .label-warning {
-        background-color: @gold;
-    }
-    
-    .glyphicon-question-sign {
-        color: @red;
-    }
-    .launch-tooltip, .launch-tooltip:hover {
-        text-decoration: none;
-        color: @gray-dark;
-    }
-    
-    .form-group {
-        margin-bottom: 0;
-    }
-    
-    input:focus:invalid {
-        border-color: #ee6f6b;
-        color: #b94a48;
-    }
-    
-    input[type=submit] {
-        margin-top: 20px;
-    }
-    
-    h1, h2, h3, h4, h5, h6 {
-        font-weight: bold;
-    }
-    
-    //Make the checkbox match the label
-    .checkbox-inline {
-        input {
-            margin-top: 10px;
-        }
-    }
-    
-    table {
-        background: @gray-lighter;
-        th {
+.container {
+    //This is to keep the footer at the bottom on short pages
+    min-height: 100%;
+    .content {
+        margin-bottom: 70px;
+        a:link:not(.btn), a:visited:not(.btn), a:active:not(.btn) {
             color: @goldDark;
-            border-bottom: 1px solid @gray-light;
-            text-align: center;
         }
-        td, th {
-            padding: 10px;
+        a:hover:not(.btn) {
+            color: @gold;
         }
-        .total-row td {
-            border-top: 1px solid @gray-light;
+        .label-warning {
+            background-color: @gold;
         }
-    }
-    .table {
-        display: table;
-        background: @gray-lighter;
-        span {
-            padding: 10px;
+        
+        .glyphicon-question-sign {
+            color: @red;
         }
-        .table-head {
-            color: @goldDark;
-            border-bottom: 1px solid @gray-light;
-            display: table-cell;
-            text-align: center;
+        .launch-tooltip, .launch-tooltip:hover {
+            text-decoration: none;
+            color: @gray-dark;
+        }
+        
+        .form-group {
+            margin-bottom: 0;
+        }
+        
+        input:focus:invalid {
+            border-color: #ee6f6b;
+            color: #b94a48;
+        }
+        
+        input[type=submit] {
+            margin-top: 20px;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
             font-weight: bold;
         }
-        .table-row {
-            display: table-row;
-            color: @gray-dark;
-            text-decoration:  none;
-        }
-        .table-cell {
-            display: table-cell;
-            vertical-align: top;
-        }
-        .row-hover {
-            background: #fff;
-            cursor: pointer;
-        }
-    }
-    .table-bordered {
-        border: 1px solid @gray;
-        .border-top-radius(5px);
-        .border-right-radius(5px);
-        .border-bottom-radius(5px);
-        .border-left-radius(5px);
-    }
-    span.required {
-        color: @red;
-    }
-    .error-message {
-        color: @red;
-        font-size: 90%;
-        margin-top: 10px;
-    }
-    
-    dl {
-        .clearfix();
-        dt {
-            float: left;
-            width: 160px;
-            text-align: right;
-            padding-right: 10px;
-        }
-        dd {
-            margin-left: 170px; 
-        }
-    }
-    .pagination {
-        .disabled {
-            display: none;
-        }
-        .active {
-            a {
-                background-color: @gold;
-                border-color: @gold;
-            }
-            a:hover {
-                color: white;
+        
+        //Make the checkbox match the label
+        .checkbox-inline {
+            input {
+                margin-top: 10px;
             }
         }
-    }
-    
-    #s3captcha-images {
-        .clearfix();
-        .s3captcha {
-            float: left;
-            .img {
-                width: 50px;
-                height: 50px;
-                background-position: bottom left;
-                background-repeat: no-repeat;
-                cursor: pointer;
-                margin-right: 2px;
-            }
-            .umbrella {
-                background-image: url(/css/images/s3icons/new/umbrella.png);
-            }
-            .key {
-                background-image: url(/css/images/s3icons/new/key.png);
-            }
-            .clock {
-                background-image: url(/css/images/s3icons/new/clock.png);
-            }
-            .television {
-                background-image: url(/css/images/s3icons/new/television.png);
-            }
-            .leaf {
-                background-image: url(/css/images/s3icons/new/leaf.png);
-            }
-        }
-    }
-    
-    .page {
-        .row {
-            margin-bottom: 20px;
-        }
-        .header {
-            .header-inner {
-                padding: 0 1em;
-                border: 2px solid @goldDark;
-                background: @gray-light;
-                h1, h4 {
-                    color: @goldDark;
-                }
-                .border-top-radius(5px);
-                .border-right-radius(5px);
-                .border-bottom-radius(5px);
-                .border-left-radius(5px);
-            }
-            .col-sm-4 {
-                margin-top: 20px;
-                font-style: italic;
-                font-weight: bold;
-            }
-        }
-    }
-    
-    .recent-watches {
-        border: 1px solid @goldDark;
-        .border-top-radius(5px);
-        .border-right-radius(5px);
-        .border-bottom-radius(5px);
-        .border-left-radius(5px);
-        background: @gray-lighter;
-        padding: 10px;
-        h3 {
-            margin: 0px 0px -10px 0px;
-            text-align: center;
-            color: @goldDark;
-        }
-        h4 {
-            text-align: center;
-            color: @goldDark;
-            padding: 20px;
-        }
-        img {
-            .center-block();
-        }
-        hr {
-            border-top-color: @goldDark;
-        }
-    }
-    .watches.index {
-        .header {
-            margin-bottom: 20px;
-            overflow: hidden;
-            .btn-primary {
-                margin-right: 10px;
-            }
-        }
-        .add-watch {
-               float: left;
-        }
-        .btn-group {
-            float: right;
-        }
-        //This fixes the watch "boxes" from overflowing into L & R margins
-        .row {
-            margin-left: 0;
-            margin-right: 0;
-        }
-        .watches-header {
-            .clearfix();
-            position: relative;
-            .show-text {
-                position: absolute;
-                bottom: 0;
-                right: 0;
-            }
-            .glyphicon-eye-open {
-                display: none;
-            }
-        }
-        .watch-index-intro {
-            border: 1px solid @goldDark;
-            .border-top-radius(5px);
-            .border-right-radius(5px);
-            .border-bottom-radius(5px);
-            .border-left-radius(5px);
+        
+        table {
             background: @gray-lighter;
-            padding: 10px;
-            margin-bottom: 10px;
-            .hide-text {
-                margin: 0 0 10px 10px;
-            }
-        }
-        .watch {
-            border: 1px solid @goldDark;
-            .border-top-radius(5px);
-            .border-right-radius(5px);
-            .border-bottom-radius(5px);
-            .border-left-radius(5px);
-            padding: 0px 0px 10px 0px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            background: @gray-lighter;
-            .watch-thumb {
-                padding-top: 10px;
-                margin-bottom: 10px;
-                img {
-                    .center-block();
-                }
-            }
-            .watch-cart-button {
-                text-align: center;
-            }
-            .watch-attrs {
-                //#gradient.vertical(@gray-darker; @gray; 0%; 90%);
-                #gradient.vertical(@gray; @gray-light; 0%; 90%);
-                //#gradient.vertical(@goldDark; @gold; 0%; 90%);
-                //background: @gray;
-                font-weight: bold;
-                font-size: 110%;
-                color: #fff;
-                padding: 5px 10px;
-                margin-bottom: 5px;
-                .price {
-                    text-align: right;
-                }
-                a:link, a:visited, a:hover, a:active {
-                    color: white;
-                }
-                .brand {
-                    background: @gray-lighter;
-                    a:link, a:visited, a:hover, a:active {
-                        text-transform: uppercase;
-                        font-size: 105%;
-                        color: @gold;
-                    }
-                }
-            }
-            .watch-details {
-                
-            }
-        }
-    }
-    .watches.form {
-        #WatchAdminEditForm {
-            margin-bottom: 20px;
-        }
-        .fake-upload {
-            display: block;
-        }
-        .image-upload {
-            display: none;
-        }
-        .jumbotron {
-            width: 50%;
-        }
-        .watch-images {
-            margin-bottom: 20px;
-            .clearfix();
-            .image-thumb {
-                width: 133px;
-                text-align: center;
-                float: left;
-                margin: 5px;
-                a {
-                    display: block;
-                }
-                .modal {
-                    a {
-                        display: inline;
-                    }
-                }
-            }
-        }
-    }
-    .watches.view {
-        .carousel {
-            #carousel-watch {
-                //width: 700px;
-                //height: 525px;
-                margin: auto;
-                img {
-                    margin: auto;
-                }
-                margin-bottom: 20px;
-            }
-        }
-        .info {
-            //Padding adjustment for gold border
-            @media (max-width: @screen-xs-max) {
-                padding-left: 15px;
-                padding-right: 15px;
-            }
-            @media (min-width: @screen-sm) and (max-width: @screen-sm-max) {
-                padding-left: 25px;
-                padding-right: 25px;
-            }
-            @media (min-width: @screen-md) {
-                padding-left: 0px;
-                padding-right: 0px;
-            }
-            .info-inner {
-                border: 10px solid @gold;
-                padding: 15px;
-                .description {
-                    margin-bottom: 20px;
-                    .clearfix();
-                }
-                //min-height and push add to cart to bottom for lg only
-                @media (min-width: @screen-lg) {
-                    position: relative;
-                    min-height: 525px;
-                    .bottom {
-                        position: absolute;
-                        bottom: 0px;
-                        width: 100%;
-                        padding-right: 15px;
-                        a {
-                            margin: auto;
-                        }
-                    }
-                }
-            }
-        }
-        .carousel-control .glyphicon-chevron-left, .carousel-control .glyphicon-chevron-right {
-            left: 40%;
-        }
-        .carousel-control.left, .carousel-control.right {
-            background-image: none;
-        }
-        .carousel-indicators {
-            li {
-                border: 1px solid #000;
-            }
-            .active {
-                background-color: #000;
-            }
-        }
-    }
-    .orders {
-        h2, h3 {
-            color: #fff;
-            background: @goldDark;
-            .border-top-radius(5px);
-            .border-right-radius(5px);
-            .border-bottom-radius(5px);
-            .border-left-radius(5px);
-            padding: 0 10px;
-            line-height: 40px;
-        }
-        h6 {
-            margin: 0;
-        }
-        section {
-            margin-bottom: 25px; 
-        }
-        .control-label {
-            margin-right: 5px;
-            width: 160px;
-            float: left;
-            text-align: right;
-        }
-        @media (max-width: @screen-sm) {
-            .control-label {
-                text-align: left;
-            }
-        }
-        .cart-details, .order-details {
-            .row {
-                margin: 0 -8px 10px -8px;
-            }
-            padding: 8px;
-            .head, .watch, .choose-ship {
-                padding: 0 0 15px 0; 
-            }
-            .head {
+            th {
                 color: @goldDark;
+                border-bottom: 1px solid @gray-light;
+                text-align: center;
+            }
+            td, th {
+                padding: 10px;
+            }
+            .total-row td {
+                border-top: 1px solid @gray-light;
+            }
+        }
+        .table {
+            display: table;
+            background: @gray-lighter;
+            span {
+                padding: 10px;
+            }
+            .table-head {
+                color: @goldDark;
+                border-bottom: 1px solid @gray-light;
+                display: table-cell;
                 text-align: center;
                 font-weight: bold;
-                margin-top: 5px;
             }
-            .watch {
-                img {
-                    .center-block();
-                }
+            .table-row {
+                display: table-row;
+                color: @gray-dark;
+                text-decoration:  none;
             }
-        }
-        .cart-details {
-            background: @gray-lighter;
-            border: 1px solid @goldDark;
-            .border-top-radius(5px);
-            .border-right-radius(5px);
-            .border-bottom-radius(5px);
-            .border-left-radius(5px);
-                .head, .watch, .choose-ship {
-                border-bottom: 1px solid #ddd;
-                padding: 0 0 15px 0; 
+            .table-cell {
+                display: table-cell;
+                vertical-align: top;
             }
-            .glyphicon-trash {
-                text-align: center;
+            .row-hover {
+                background: #fff;
+                cursor: pointer;
             }
         }
-        .checkout-form {
-            padding: 5px;
-            background: @gray-lighter;
+        .table-bordered {
             border: 1px solid @gray;
             .border-top-radius(5px);
             .border-right-radius(5px);
             .border-bottom-radius(5px);
             .border-left-radius(5px);
-            .clearfix();
-            .error-message {
-                margin: 0 0 2px 188px;
-            }
-            input {
-                margin: 5px;
-            }
-            .input {
-                line-height: 20px;
-            }
-            .card-expiry-month {
-                float: left;
-            }
-            label[for=CardCvc] {
-                padding-top: 10px;
-            }
-            label[for=CardMonth] {
-                padding-top: 5px;
-                margin-right: 10px;
-            }
-            select option {
-                color: #555;
-            }
-            .payment-errors {
-                display: none;
-            }
-            .card-number-div {
-                height: 52px;
-            }
-            .submit {
-                text-align: center;
-                .clearfix();
-            }
         }
-        label {
+        span.required {
+            color: @red;
+        }
+        .error-message {
+            color: @red;
             font-size: 90%;
-            font-weight: bold;
+            margin-top: 10px;
         }
-        .review-cart {
-            form {
-                border: none;
+        
+        dl {
+            .clearfix();
+            dt {
+                float: left;
+                width: 160px;
+                text-align: right;
+                padding-right: 10px;
             }
-            label {
-                font-weight: normal;
+            dd {
+                margin-left: 170px; 
             }
         }
-        .shipping {
-            .shipping-inner {
+        .pagination {
+            .disabled {
                 display: none;
             }
-        }
-        .address {
-            .address-form-billing {
-                .checkbox {
-                    padding: 10px 0 0 0;
+            .active {
+                a {
+                    background-color: @gold;
+                    border-color: @gold;
+                }
+                a:hover {
+                    color: white;
                 }
             }
-            .radio.inline {
-                margin-right: 30px;
+        }
+        
+        #s3captcha-images {
+            .clearfix();
+            .s3captcha {
+                float: left;
+                .img {
+                    width: 50px;
+                    height: 50px;
+                    background-position: bottom left;
+                    background-repeat: no-repeat;
+                    cursor: pointer;
+                    margin-right: 2px;
+                }
+                .umbrella {
+                    background-image: url(/css/images/s3icons/new/umbrella.png);
+                }
+                .key {
+                    background-image: url(/css/images/s3icons/new/key.png);
+                }
+                .clock {
+                    background-image: url(/css/images/s3icons/new/clock.png);
+                }
+                .television {
+                    background-image: url(/css/images/s3icons/new/television.png);
+                }
+                .leaf {
+                    background-image: url(/css/images/s3icons/new/leaf.png);
+                }
             }
-            input, select {
-                margin: 5px;
+        }
+        
+        .page {
+            .row {
+                margin-bottom: 20px;
             }
-            .navbar-inner {
-                padding: 0 10px;
+            .header {
+                .header-inner {
+                    padding: 0 1em;
+                    border: 2px solid @goldDark;
+                    background: @gray-light;
+                    h1, h4 {
+                        color: @goldDark;
+                    }
+                    .border-top-radius(5px);
+                    .border-right-radius(5px);
+                    .border-bottom-radius(5px);
+                    .border-left-radius(5px);
+                }
+                .col-sm-4 {
+                    margin-top: 20px;
+                    font-style: italic;
+                    font-weight: bold;
+                }
             }
-            .billing-country-name {
-                padding-top: 5px;
-                margin-left: 10px
+        }
+        
+        .recent-watches {
+            border: 1px solid @goldDark;
+            .border-top-radius(5px);
+            .border-right-radius(5px);
+            .border-bottom-radius(5px);
+            .border-left-radius(5px);
+            background: @gray-lighter;
+            padding: 10px;
+            h3 {
+                margin: 0px 0px -10px 0px;
+                text-align: center;
+                color: @goldDark;
             }
-            .shipping-instructions {
+            h4 {
+                text-align: center;
+                color: @goldDark;
+                padding: 20px;
+            }
+            img {
+                .center-block();
+            }
+            hr {
+                border-top-color: @goldDark;
+            }
+        }
+        .watches.index {
+            .header {
+                margin-bottom: 20px;
+                overflow: hidden;
+                .btn-primary {
+                    margin-right: 10px;
+                }
+            }
+            .add-watch {
+                   float: left;
+            }
+            .btn-group {
+                float: right;
+            }
+            //This fixes the watch "boxes" from overflowing into L & R margins
+            .row {
+                margin-left: 0;
+                margin-right: 0;
+            }
+            .watches-header {
+                .clearfix();
+                position: relative;
+                .show-text {
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                }
+                .glyphicon-eye-open {
+                    display: none;
+                }
+            }
+            .watch-index-intro {
+                border: 1px solid @goldDark;
+                .border-top-radius(5px);
+                .border-right-radius(5px);
+                .border-bottom-radius(5px);
+                .border-left-radius(5px);
+                background: @gray-lighter;
+                padding: 10px;
+                margin-bottom: 10px;
+                .hide-text {
+                    margin: 0 0 10px 10px;
+                }
+            }
+            .watch {
+                border: 1px solid @goldDark;
+                .border-top-radius(5px);
+                .border-right-radius(5px);
+                .border-bottom-radius(5px);
+                .border-left-radius(5px);
+                padding: 0px 0px 10px 0px;
+                overflow: hidden;
+                margin-bottom: 20px;
+                background: @gray-lighter;
+                .watch-thumb {
+                    padding-top: 10px;
+                    margin-bottom: 10px;
+                    img {
+                        .center-block();
+                    }
+                }
+                .watch-cart-button {
+                    text-align: center;
+                }
+                .watch-attrs {
+                    //#gradient.vertical(@gray-darker; @gray; 0%; 90%);
+                    #gradient.vertical(@gray; @gray-light; 0%; 90%);
+                    //#gradient.vertical(@goldDark; @gold; 0%; 90%);
+                    //background: @gray;
+                    font-weight: bold;
+                    font-size: 110%;
+                    color: #fff;
+                    padding: 5px 10px;
+                    margin-bottom: 5px;
+                    .price {
+                        text-align: right;
+                    }
+                    a:link, a:visited, a:hover, a:active {
+                        color: white;
+                    }
+                    .brand {
+                        background: @gray-lighter;
+                        a:link, a:visited, a:hover, a:active {
+                            text-transform: uppercase;
+                            font-size: 105%;
+                            color: @gold;
+                        }
+                    }
+                }
+                .watch-details {
+                    
+                }
+            }
+        }
+        .watches.form {
+            #WatchAdminEditForm {
+                margin-bottom: 20px;
+            }
+            .fake-upload {
+                display: block;
+            }
+            .image-upload {
                 display: none;
+            }
+            .jumbotron {
+                width: 50%;
+            }
+            .watch-images {
+                margin-bottom: 20px;
+                .clearfix();
+                .image-thumb {
+                    width: 133px;
+                    text-align: center;
+                    float: left;
+                    margin: 5px;
+                    a {
+                        display: block;
+                    }
+                    .modal {
+                        a {
+                            display: inline;
+                        }
+                    }
+                }
+            }
+        }
+        .watches.view {
+            .carousel {
+                #carousel-watch {
+                    //width: 700px;
+                    //height: 525px;
+                    margin: auto;
+                    img {
+                        margin: auto;
+                    }
+                    margin-bottom: 20px;
+                }
+            }
+            .info {
+                //Padding adjustment for gold border
+                @media (max-width: @screen-xs-max) {
+                    padding-left: 15px;
+                    padding-right: 15px;
+                }
+                @media (min-width: @screen-sm) and (max-width: @screen-sm-max) {
+                    padding-left: 25px;
+                    padding-right: 25px;
+                }
+                @media (min-width: @screen-md) {
+                    padding-left: 0px;
+                    padding-right: 0px;
+                }
+                .info-inner {
+                    border: 10px solid @gold;
+                    padding: 15px;
+                    .description {
+                        margin-bottom: 20px;
+                        .clearfix();
+                    }
+                    //min-height and push add to cart to bottom for lg only
+                    @media (min-width: @screen-lg) {
+                        position: relative;
+                        min-height: 525px;
+                        .bottom {
+                            position: absolute;
+                            bottom: 0px;
+                            width: 100%;
+                            padding-right: 15px;
+                            a {
+                                margin: auto;
+                            }
+                        }
+                    }
+                }
+            }
+            .carousel-control .glyphicon-chevron-left, .carousel-control .glyphicon-chevron-right {
+                left: 40%;
+            }
+            .carousel-control.left, .carousel-control.right {
+                background-image: none;
+            }
+            .carousel-indicators {
+                li {
+                    border: 1px solid #000;
+                }
+                .active {
+                    background-color: #000;
+                }
+            }
+        }
+        .orders {
+            h2, h3 {
+                color: #fff;
+                background: @goldDark;
+                .border-top-radius(5px);
+                .border-right-radius(5px);
+                .border-bottom-radius(5px);
+                .border-left-radius(5px);
+                padding: 0 10px;
+                line-height: 40px;
+            }
+            h6 {
+                margin: 0;
+            }
+            section {
+                margin-bottom: 25px; 
+            }
+            .control-label {
+                margin-right: 5px;
+                width: 160px;
+                float: left;
+                text-align: right;
+            }
+            @media (max-width: @screen-sm) {
+                .control-label {
+                    text-align: left;
+                }
+            }
+            .cart-details, .order-details {
+                .row {
+                    margin: 0 -8px 10px -8px;
+                }
+                padding: 8px;
+                .head, .watch, .choose-ship {
+                    padding: 0 0 15px 0; 
+                }
+                .head {
+                    color: @goldDark;
+                    text-align: center;
+                    font-weight: bold;
+                    margin-top: 5px;
+                }
+                .watch {
+                    img {
+                        .center-block();
+                    }
+                }
+            }
+            .cart-details {
+                background: @gray-lighter;
+                border: 1px solid @goldDark;
+                .border-top-radius(5px);
+                .border-right-radius(5px);
+                .border-bottom-radius(5px);
+                .border-left-radius(5px);
+                    .head, .watch, .choose-ship {
+                    border-bottom: 1px solid #ddd;
+                    padding: 0 0 15px 0; 
+                }
+                .glyphicon-trash {
+                    text-align: center;
+                }
+            }
+            .checkout-form {
+                padding: 5px;
+                background: @gray-lighter;
+                border: 1px solid @gray;
+                .border-top-radius(5px);
+                .border-right-radius(5px);
+                .border-bottom-radius(5px);
+                .border-left-radius(5px);
+                .clearfix();
+                .error-message {
+                    margin: 0 0 2px 188px;
+                }
+                input {
+                    margin: 5px;
+                }
+                .input {
+                    line-height: 20px;
+                }
+                .card-expiry-month {
+                    float: left;
+                }
+                label[for=CardCvc] {
+                    padding-top: 10px;
+                }
+                label[for=CardMonth] {
+                    padding-top: 5px;
+                    margin-right: 10px;
+                }
+                select option {
+                    color: #555;
+                }
+                .payment-errors {
+                    display: none;
+                }
+                .card-number-div {
+                    height: 52px;
+                }
+                .submit {
+                    text-align: center;
+                    .clearfix();
+                }
+            }
+            label {
+                font-size: 90%;
+                font-weight: bold;
+            }
+            .review-cart {
+                form {
+                    border: none;
+                }
+                label {
+                    font-weight: normal;
+                }
+            }
+            .shipping {
+                .shipping-inner {
+                    display: none;
+                }
+            }
+            .address {
+                .address-form-billing {
+                    .checkbox {
+                        padding: 10px 0 0 0;
+                    }
+                }
+                .radio.inline {
+                    margin-right: 30px;
+                }
+                input, select {
+                    margin: 5px;
+                }
+                .navbar-inner {
+                    padding: 0 10px;
+                }
+                .billing-country-name {
+                    padding-top: 5px;
+                    margin-left: 10px
+                }
+                .shipping-instructions {
+                    display: none;
+                }
+                textarea {
+                    display: none;
+                    height: 150px
+                }
+            }
+        }
+        .confirm {
+            .notes {
+                width: 500px;
+            }
+        }
+        .pages.admin-edit {
+            .input {
+                
             }
             textarea {
-                display: none;
-                height: 150px
+                height: 300px;
+                margin-bottom: 20px;
             }
         }
-    }
-    .confirm {
-        .notes {
-            width: 500px;
-        }
-    }
-    .pages.admin-edit {
-        .input {
-            
-        }
-        textarea {
-            height: 300px;
-            margin-bottom: 20px;
-        }
-    }
-    .brands {
-        .input {
-            margin-bottom: 10px;
+        .brands {
+            .input {
+                margin-bottom: 10px;
+            }
         }
     }
 }

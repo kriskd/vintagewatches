@@ -50,8 +50,7 @@
 <body>
 	<?php echo $this->Element('navigation'); ?>
 	<div class="container">
-		<?php echo $this->Element('header'); ?>
-		<div id="content">
+		<div class="content">
 			<?php echo $this->Session->flash(); ?>
 			<?php echo $this->fetch('content'); ?>
 		</div>
