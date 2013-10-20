@@ -20,7 +20,7 @@
                         <?php echo $watch['Watch']['description']; ?>
                     </div>
                 </div>
-                <div class="row footer clearfix">
+                <div class="row">
                     <p class="text-center bottom">
                         <?php echo $this->Element('add_to_cart', compact('watch', 'controller') + array('class' => 'btn btn-gold btn-lg')); ?>
                     </p>
