@@ -28,14 +28,25 @@ class Image extends AppModel {
                 'stopSave' => true,
                 'allowEmpty' => true,
                 'transforms' => array(
-                    'filename' => array(
+                    'filenameLarge' => array(
                         'method' => AttachmentBehavior::FIT,
                         'width' => 700,
                         'height' => 525,
                         'fill' => array(255, 255, 255),
                         'vertical' => 'center',
                         'horizontal' => 'center',
-                        'nameCallback' => 'fitName'
+                        'nameCallback' => 'fitName',
+                        'append' => '-lg'
+                    ),
+                    'filenameMedium' => array(
+                        'method' => AttachmentBehavior::FIT,
+                        'width' => 500,
+                        'height' => 375,
+                        'fill' => array(255, 255, 255),
+                        'vertical' => 'center',
+                        'horizontal' => 'center',
+                        'nameCallback' => 'fitName',
+                        'append' => '-md'
                     ),
                     'filenameThumb' => array(
                         'method' => AttachmentBehavior::FIT,

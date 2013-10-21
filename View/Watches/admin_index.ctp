@@ -35,7 +35,7 @@
         </div>
         <?php foreach ($watches as $watch): ?>
             <?php $row = ''; ?>
-            <?php $row .= $this->Html->tag('span', $this->Html->thumbImagePrimary($watch), array('class' => 'table-cell')); ?>
+            <?php $row .= $this->Html->tag('span', $this->Html->thumbPrimary($watch), array('class' => 'table-cell')); ?>
             <?php $brand = isset($watch['Brand']['name']) ? $watch['Brand']['name'] : ''; ?>
             <?php $row .= $this->Html->tag('span', $brand, array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['stockId']), array('class' => 'table-cell')); ?>

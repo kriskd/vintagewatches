@@ -6779,6 +6779,17 @@ body {
   font-style: italic;
   font-weight: bold;
 }
+.container .content #carousel-home {
+  height: 700px;
+}
+.container .content #carousel-home img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.container .content #carousel-home .watch-details {
+  padding: 15px;
+}
 .container .content .recent-watches {
   border: 1px solid #665600;
   border-top-right-radius: 5px;

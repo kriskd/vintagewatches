@@ -35,10 +35,33 @@ class MyHtmlHelper extends HtmlHelper
         return $this->image($imageFilename, $options);
     }
     
+    public function watchImage($watchId, $imageFilename, $options = array())
+    {   
+        if (file_exists(WWW_ROOT . $imageFilename)) { 
+            return $this->image($imageFilename, $options);
+        }
+        return $this->image($imageFilename, $options);
+    }
+    
+    public function thumbPrimary($watch, $options = array())
+    {
+        return $this->imagePrimary($watch, 'Thumb', $options);
+    }
+    
+    public function mediumPrimary($watch, $options = array())
+    {
+        return $this->imagePrimary($watch, 'Medium', $options);
+    }
+    
+    public function largePrimary($watch, $options = array())
+    {
+        return $this->imagePrimary($watch, 'Large', $options);
+    }
+    
     /**
      * Returns primary image if one is designated or the first image if not
      */
-    public function thumbImagePrimary($watch, $options = array())
+    protected function imagePrimary($watch, $type, $options = array())
     {   
         if (!empty($watch['Image'])) {
             $images = $watch['Image'];
@@ -49,16 +72,8 @@ class MyHtmlHelper extends HtmlHelper
                     return $primaryExists;
                 }, null);
             $image = empty($primary) ? current($images) : $primary;
-            return $this->image($image['filenameThumb'], $options);
+            return $this->image($image['filename'.$type], $options);
         }
         return 'No Image Available';
-    }
-    
-    public function watchImage($watchId, $imageFilename, $options = array())
-    {   
-        if (file_exists(WWW_ROOT . $imageFilename)) { 
-            return $this->image($imageFilename, $options);
-        }
-        return $this->image($imageFilename, $options);
     }
 }

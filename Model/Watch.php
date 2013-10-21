@@ -153,15 +153,18 @@ class Watch extends AppModel {
                                );
         }
 	
-	public function getRecentWatches($count = 3)
+	public function getWatches($count = null)
 	{
-	    return $this->find('all', array('conditions' => array('active' => 1),
-					    'limit' => $count,
+            $options = array('conditions' => array(
+                                            'active' => 1),
 					    'order' => 'created DESC',
 					    'fields' => array('id', 'price', 'name', 'description'),
-					    'contain' => 'Image' 
-					    )
-			       );
+					    'contain' => array('Image', 'Brand')
+					    );
+            if ($count != null) {
+                $options['limit'] = $count;
+            }
+	    return $this->find('all', $options);
 	}
         
         public function storeOpen()

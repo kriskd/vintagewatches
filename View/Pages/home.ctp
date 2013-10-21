@@ -13,12 +13,44 @@
     </div>
     <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-            <?php foreach ($page['Content'] as $content): ?>
-                <?php echo $content['value']; ?>
-            <?php endforeach; ?>
+            <?php $watches = $this->Watch->getWatches(); ?>
+            <?php if (!empty($watches)): ?>
+                <div id="carousel-home" class="carousel slide">
+                    <ol class="carousel-indicators">
+                        <?php for ($i=0; $i<count($watches); $i++): ?>
+                            <li data-target="#carousel-watch" data-slide-to="<?php echo $i; ?>" class="<?php echo $i == 0 ? 'active' : ''; ?>"></li>
+                        <?php endfor; ?>
+                    </ol>
+                    <div class="carousel-inner">
+                        <?php $first = true; ?>
+                        <?php foreach ($watches as $watch): ?>
+                            <div class="item <?php echo $first == true ? 'active' : ''; ?>">
+                                <?php $first = false; ?>
+                                <?php echo $this->Html->mediumPrimary($watch, array('class' => 'img-responsive', 'url' => array('controller' => 'watches', 'action' => 'view', $watch['Watch']['id']))); ?>
+                                <div class="watch-details">
+                                    <h4><?php echo $watch['Watch']['name']; ?></h4>
+                                    <p>
+                                        <?php echo $this->Text->truncate($watch['Watch']['description'], 1500, array('exact' => false, 'html' => false)); ?>
+                                    </p>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                    <?php echo $this->Html->link($this->Html->tag('span', '', array('class' => 'glyphicon glyphicon-chevron-left')),
+                                                 '#carousel-home', array('class' => 'left carousel-control',
+                                                                          'data-slide' => 'prev',
+                                                                          'escape' => false)); ?>
+                    <?php echo $this->Html->link($this->Html->tag('span', '', array('class' => 'glyphicon glyphicon-chevron-right')),
+                                                 '#carousel-home', array('class' => 'right carousel-control',
+                                                                          'data-slide' => 'next',
+                                                                          'escape' => false)); ?>
+                </div>
+            <?php endif; ?>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-            <?php echo $this->Element('recent_watches'); ?>
+            <?php foreach ($page['Content'] as $content): ?>
+                <?php echo $this->Text->truncate($content['value'], 1500, array('exact' => false, 'html' => false)); ?>
+            <?php endforeach; ?>
         </div>
     </div>
 </div>

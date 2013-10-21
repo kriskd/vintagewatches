@@ -63,7 +63,11 @@ class PagesController extends AppController {
 		}
 		$title = $page['Page']['name'];
 		$this->set(compact('page', 'title'));
-		$this->render('home');
+		if (strcasecmp($slug, 'home')==0) {
+			$this->render('home');
+		} else {
+			$this->render('page');
+		}
 		
 		/*$count = count($path);
 		if (!$count) {
