@@ -46,7 +46,7 @@ class PagesController extends AppController {
 			'recursive' => -1
 		);
     
-    public $users = array('Page', 'Content', 'Contact');
+	public $uses = array('Page', 'Content', 'Contact');
 
 /**
  * Displays a view
@@ -55,20 +55,21 @@ class PagesController extends AppController {
  * @return void
  */
 	public function display() {
-		$path = func_get_args(); 
-		$slug = current($path); 
-		$page = $this->Page->find('first', array('conditions' => array('slug' => $slug)));
+		$path = func_get_args();
 		if (empty($path)) {
 			$this->redirect('/');
 		}
-		$title = $page['Page']['name'];
-		$this->set(compact('page', 'title'));
+		$slug = current($path); 
+		$page = $this->Page->find('first', array('conditions' => array('slug' => $slug)));
+		if (!empty($page)) {
+			$title = $page['Page']['name'];
+			$this->set(compact('page', 'title'));
+		}
 		if (strcasecmp($slug, 'home')==0) {
 			$this->render('home');
 		} else {
 			$this->render('page');
 		}
-		
 		/*$count = count($path);
 		if (!$count) {
 			$this->redirect('/');

@@ -92,6 +92,18 @@ class Page extends AppModel {
 			'counterQuery' => ''
 		)
 	);
+	
+	/**
+	 * If marking a page as homepage content, set homepage to 0 for all other pages.
+	 */
+	public function beforeSave($options = array())
+	{
+	    if ($this->data[$this->alias]['homepage']==1) {
+		$this->updateAll(
+		    array('homepage' => 0)
+		);
+	    }
+	}
         
         public function getNavigation()
         {
