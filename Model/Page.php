@@ -107,11 +107,13 @@ class Page extends AppModel {
         
         public function getNavigation()
         {
-            return $this->find('list', array('fields' => array('slug', 'name'),
-                                               'recursive' => -1,
-                                               'conditions' => array('slug !=' => 'home', 'active' => 1),
-                                               'order' => 'name',
-                                               ));
+            return $this->find('list', array(
+					'fields' => array('slug', 'name'),
+                                        'recursive' => -1,
+                                        'conditions' => array('slug !=' => 'home', 'active' => 1),
+                                        'order' => array('homepage' => 'DESC', 'name' => 'ASC'),
+                                    )
+			        );
         }
 
 }
