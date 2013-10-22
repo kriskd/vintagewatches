@@ -1,4 +1,3 @@
 <div class="pages admin-add">
-    <h1>Add a Page</h1>
-    <?php echo $this->Element('form_page', compact('contents')); ?>
+    <?php echo $this->Element('form_page', compact('contents') + array('action' => 'Add')); ?>
 </div>

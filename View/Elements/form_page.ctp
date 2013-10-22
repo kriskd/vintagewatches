@@ -4,7 +4,7 @@
                                                                 )
                                              )); ?>
     <fieldset>
-        <legend>Edit <?php echo isset($page['Page']['name']) ? $page['Page']['name'] : ''; ?> Page</legend>
+        <legend><?php echo $action; ?> <?php echo isset($page['Page']['name']) ? $page['Page']['name'] : ''; ?> Page</legend>
         <?php echo $this->Form->input('Page.id', array('type' => 'hidden')); ?>
         <?php echo $this->Form->input('Page.name'); ?>
         <?php echo $this->Form->input('Page.slug'); ?>
