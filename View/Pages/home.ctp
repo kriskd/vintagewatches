@@ -19,12 +19,11 @@
                     <ol class="carousel-indicators">
                         <?php for ($i=0; $i<count($watches); $i++): ?>
                             <?php echo $this->Html->tag('li', '', array(
-                                                                            'data-target' => '#carousel-watch',
-                                                                            'data-slide-to' => $i,
-                                                                            'class' => $i == 0 ? 'active' : ''
+                                                                        'data-target' => '#carousel-watch',
+                                                                        'data-slide-to' => $i,
+                                                                        'class' => $i == 0 ? 'active' : ''
                                                                         )
                                                                   ); ?>
-                            <li data-target="#carousel-watch" data-slide-to="<?php echo $i; ?>" class="<?php echo $i == 0 ? 'active' : ''; ?>"></li>
                         <?php endfor; ?>
                     </ol>
                     <div class="carousel-inner">
