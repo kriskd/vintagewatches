@@ -19,7 +19,7 @@
                     <ol class="carousel-indicators">
                         <?php for ($i=0; $i<count($watches); $i++): ?>
                             <?php echo $this->Html->tag('li', '', array(
-                                                                        'data-target' => '#carousel-watch',
+                                                                        'data-target' => '#carousel-home',
                                                                         'data-slide-to' => $i,
                                                                         'class' => $i == 0 ? 'active' : ''
                                                                         )

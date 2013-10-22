@@ -6785,16 +6785,16 @@ body {
 .container .content #carousel-home .carousel-indicators {
   top: 350px;
 }
-.container .content #carousel-home img {
+.container .content #carousel-home .carousel-inner img {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
-.container .content #carousel-home .watch-details {
+.container .content #carousel-home .carousel-inner .watch-details {
   height: 325px;
   padding: 15px;
 }
-.container .content #carousel-home .watch-details .see-all {
+.container .content #carousel-home .carousel-inner .watch-details .see-all {
   position: absolute;
   bottom: 0px;
   width: 100%;
