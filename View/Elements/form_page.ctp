@@ -22,7 +22,7 @@
                             'div' => 'checkbox-inline',
                             'class' => ''
                         ); ?>
-        <?php if ($page['Page']['homepage'] == 1): ?>
+        <?php if (isset($page['Page']['homepage']) && $page['Page']['homepage'] == 1): ?>
             <?php $options['disabled'] = 'disabled'; ?>
         <?php endif; ?>
         <?php echo $this->Form->input('Page.homepage', $options); ?>
