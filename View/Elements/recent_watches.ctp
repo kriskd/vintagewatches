@@ -9,11 +9,12 @@
         <hr />
         <div class="row">
             <div class="col-xs-6 col-sm-12 col-md-6">
-                <?php echo $this->Html->thumbImagePrimary($watch,
-                                                          array('class' => 'center-block',
-                                                                'url' => array('controller' => 'watches',
-                                                                               'action' => 'view', $watch['Watch']['id']))
-                                                          ); ?>
+                <?php echo $this->Html->thumbPrimary($watch,
+                                                        array(
+                                                            'url' => array(
+                                                                        'controller' => 'watches',
+                                                                        'action' => 'view', $watch['Watch']['id']))
+                                                        ); ?>
             </div>
             <div class="col-xs-6 col-sm-12 col-md-6">
                 <h5><?php echo $watch['Watch']['name']; ?></h5>
