@@ -13,11 +13,17 @@
     </div>
     <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-            <?php $watches = $this->Watch->getWatches(); ?>
+            <?php $watches = $this->Watch->getWatches();  ?>
             <?php if (!empty($watches)): ?>
-                <div id="carousel-home" class="carousel slide">
+                <div id="carousel-home" class="carousel slide"> 
                     <ol class="carousel-indicators">
                         <?php for ($i=0; $i<count($watches); $i++): ?>
+                            <?php echo $this->Html->tag('li', '', array(
+                                                                            'data-target' => '#carousel-watch',
+                                                                            'data-slide-to' => $i,
+                                                                            'class' => $i == 0 ? 'active' : ''
+                                                                        )
+                                                                  ); ?>
                             <li data-target="#carousel-watch" data-slide-to="<?php echo $i; ?>" class="<?php echo $i == 0 ? 'active' : ''; ?>"></li>
                         <?php endfor; ?>
                     </ol>
@@ -28,10 +34,20 @@
                                 <?php $first = false; ?>
                                 <?php echo $this->Html->mediumPrimary($watch, array('class' => 'img-responsive', 'url' => array('controller' => 'watches', 'action' => 'view', $watch['Watch']['id']))); ?>
                                 <div class="watch-details">
-                                    <h4><?php echo $watch['Watch']['name']; ?></h4>
+                                    <div class="row">
+                                        <div class="col-lg-10">
+                                            <h4><?php echo $this->Html->link($watch['Watch']['name'], array('controller' => 'watches', 'action' => 'view', $watch['Watch']['id'])); ?></h4>
+                                        </div>
+                                        <div class="col-lg-2 right">
+                                            <h4><?php echo $this->Number->currency($watch['Watch']['price'], 'USD'); ?></h4>
+                                        </div>
+                                    </div>
                                     <p>
                                         <?php echo $this->Text->truncate($watch['Watch']['description'], 1500, array('exact' => false, 'html' => false)); ?>
                                     </p>
+                                    <h4 class="text-center see-all">
+                                        <?php echo $this->Html->link('See All Watches', array('controller' => 'watches', 'action' => 'index')); ?>
+                                    </h4>
                                 </div>
                             </div>
                         <?php endforeach; ?>

@@ -6780,7 +6780,10 @@ body {
   font-weight: bold;
 }
 .container .content #carousel-home {
-  height: 700px;
+  position: relative;
+}
+.container .content #carousel-home .carousel-indicators {
+  top: 350px;
 }
 .container .content #carousel-home img {
   display: block;
@@ -6788,7 +6791,13 @@ body {
   margin-right: auto;
 }
 .container .content #carousel-home .watch-details {
+  height: 325px;
   padding: 15px;
+}
+.container .content #carousel-home .watch-details .see-all {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
 }
 .container .content .recent-watches {
   border: 1px solid #665600;
