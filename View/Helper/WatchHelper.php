@@ -3,9 +3,9 @@ class WatchHelper extends AppHelper
 {
     public $helpers = array('Html', 'Form');
     
-    public function getWatches($count = null)
+    public function getWatches($count = null, $image = false)
     {
-        return ClassRegistry::init('Watch')->getWatches($count);
+        return ClassRegistry::init('Watch')->getWatches($count, $image);
     }
     
     public function closeOpenStore()

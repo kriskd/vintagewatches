@@ -153,17 +153,37 @@ class Watch extends AppModel {
                                );
         }
 	
-	public function getWatches($count = null)
+        /**
+         * $count Number of watches to return
+         * $image If watch image is required to exist
+         */
+	public function getWatches($count = null, $image = false)
 	{
             $options = array('conditions' => array(
-                                            'active' => 1),
-					    'order' => 'created DESC',
-					    'fields' => array('id', 'price', 'name', 'description'),
-					    'contain' => array('Image', 'Brand')
-					    );
+                                            'active' => 1
+                                        ),
+                                        'order' => 'created DESC',
+                                        'fields' => array('id', 'price', 'name', 'description'),
+                                        'contain' => array('Image', 'Brand')
+                                    );
             if ($count != null) {
                 $options['limit'] = $count;
             }
+            
+            if ($image == true) {
+                $options['joins'] = array(
+                                        array(
+                                            'table' => 'images',
+                                            'alias' => 'Image',
+                                            'type' => 'INNER',
+                                            'conditions' => array(
+                                                'Image.watch_id = Watch.id'
+                                        )
+                                    )
+                                );
+                $options['group'] = array('Watch.id');
+            }
+            
 	    return $this->find('all', $options);
 	}
         
