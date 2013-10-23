@@ -195,7 +195,7 @@ class Watch extends AppModel {
                                                             'order_id' => null
                                                     )
                                                 )
-                                             );
+                                            );
             
             return $watchCount > 0 ? true : false;
 	}
