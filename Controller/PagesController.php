@@ -46,7 +46,7 @@ class PagesController extends AppController {
 			'recursive' => -1
 		);
     
-	public $uses = array('Page', 'Content', 'Contact');
+	public $uses = array('Page', 'Content', 'Watch');
 
 /**
  * Displays a view
@@ -60,14 +60,29 @@ class PagesController extends AppController {
 			$this->redirect('/');
 		}
 		$slug = current($path); 
-		$page = $this->Page->find('first', array('conditions' => array('slug' => $slug)));
-		if (!empty($page)) {
-			$title = $page['Page']['name'];
-			$this->set(compact('page', 'title'));
-		}
+
+		//The router passes in the slug "home" for the homepage
 		if (strcasecmp($slug, 'home')==0) {
-			$this->render('home');
+			//Get the hompeage content and send to view
+			$page = $this->Page->find('first', array('conditions' => array('homepage' => 1)));
+			$this->set(compact('page'));
+			//Get all active watches that have images
+			$watches = $this->Watch->getWatches(null, true);
+			//If we don't have watches, render the "blog" style homepage
+			if (empty($watches)) {
+				$this->render('page');
+			//Otherwise send the watches to the view and render homepage carousel
+			} else {
+				$this->set(compact('watches'));
+				$this->render('home');
+			}
+		//Standard content page
 		} else {
+			$page = $this->Page->find('first', array('conditions' => array('slug' => $slug)));
+			if (!empty($page)) {
+				$title = $page['Page']['name'];
+				$this->set(compact('page', 'title'));
+			}
 			$this->render('page');
 		}
 		/*$count = count($path);
