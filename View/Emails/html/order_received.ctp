@@ -6,7 +6,7 @@
         <?php foreach($order['Watch'] as $watch): ?>
             <tr>
                 <td>
-                    <?php echo $this->Html->thumbImagePrimary($watch, array('fullBase' => true)); ?>
+                    <?php echo $this->Html->thumbPrimary($watch, array('fullBase' => true)); ?>
                 </td>
                 <td><?php echo $watch['stockId']; ?></td>
                 <td><?php echo $watch['name']; ?></td>

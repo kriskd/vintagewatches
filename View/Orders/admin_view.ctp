@@ -49,7 +49,7 @@
         <?php foreach($order['Watch'] as $watch): ?>
             <tr>
                 <td>
-                    <?php echo $this->Html->thumbImagePrimary($watch); ?>
+                    <?php echo $this->Html->thumbPrimary($watch); ?>
                 </td>
                 <td><?php echo $watch['stockId']; ?></td>
                 <td><?php echo $watch['name']; ?></td>

@@ -18,7 +18,7 @@
     <?php foreach($order['Watch'] as $watch): ?>
         <div class="row watch">
             <div class="image col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                <?php echo $this->Html->thumbImagePrimary($watch, array(
+                <?php echo $this->Html->thumbPrimary($watch, array(
                                                                     'class' => 'img-responsive'
                                                                 )
                                                           ); ?>
