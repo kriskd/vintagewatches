@@ -1206,7 +1206,7 @@
             height = 375;
         }
         $('#carousel-home .carousel-indicators').css('top', height-25);
-        $('.carousel-control .glyphicon').css('top', height-25);
+        $('#carousel-home .carousel-control .glyphicon').css('top', height-25);
     }
     
     var hideWatchIntroCookie = getCookie('hideWatchIntro'); 
