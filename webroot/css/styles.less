@@ -347,8 +347,20 @@ body {
                     .center-block();
                 }
                 .watch-details {
-                    height: 325px;
+                    height: auto;
                     padding: 15px;
+                    @media (min-width: @screen-sm) and (max-width: @screen-sm-max) {
+                        height: 500px;
+                    }
+                    @media (min-width: @screen-md) {
+                        height: 400px;
+                    }
+                    @media (min-width: @screen-lg) {
+                        height: 325px;
+                    }
+                    .description {
+                        margin-bottom: 20px;
+                    }
                     .see-all {
                         position: absolute;
                         bottom: 0px;

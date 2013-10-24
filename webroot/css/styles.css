@@ -6791,8 +6791,26 @@ body {
   margin-right: auto;
 }
 .container .content #carousel-home .carousel-inner .watch-details {
-  height: 325px;
+  height: auto;
   padding: 15px;
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .container .content #carousel-home .carousel-inner .watch-details {
+    height: 500px;
+  }
+}
+@media (min-width: 992px) {
+  .container .content #carousel-home .carousel-inner .watch-details {
+    height: 400px;
+  }
+}
+@media (min-width: 1200px) {
+  .container .content #carousel-home .carousel-inner .watch-details {
+    height: 325px;
+  }
+}
+.container .content #carousel-home .carousel-inner .watch-details .description {
+  margin-bottom: 20px;
 }
 .container .content #carousel-home .carousel-inner .watch-details .see-all {
   position: absolute;

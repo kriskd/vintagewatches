@@ -12,6 +12,21 @@ $(document).ready(function(){
     
     $('#OrderShipDate').datepicker({dateFormat: 'yy-mm-dd'});
     
+    //Set position of indicators on homepage carousel, not a perfect solution
+    setHomeCarouselImageHeight();
+    $(window).on('resize', function(){
+        setHomeCarouselImageHeight();
+    });
+    
+    function setHomeCarouselImageHeight () {
+        var height = $('#carousel-home .carousel-inner img').height();
+        if (height == 0) {
+            height = 375;
+        }
+        $('#carousel-home .carousel-indicators').css('top', height-25);
+        $('.carousel-control .glyphicon').css('top', height-25);
+    }
+    
     var hideWatchIntroCookie = getCookie('hideWatchIntro'); 
     if (hideWatchIntroCookie != null && hideWatchIntroCookie == 1) {
         $('.watch-index-intro').hide();
