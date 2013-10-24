@@ -74,7 +74,6 @@
                                                         'escape' => false)
                                                 ); ?>
                     <ul class="dropdown-menu">
-                        <?php $navigation = $this->Navigation->getPageLinks(); ?>
                         <?php if (!(empty($navigation))): ?>
                             <?php foreach ($navigation as $slug => $name): ?>
                                 <li><?php echo $this->Html->link($name, array('controller' => 'pages',

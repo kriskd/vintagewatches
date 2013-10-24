@@ -3,11 +3,6 @@
 class NavigationHelper extends AppHelper
 {
     public $helpers = array('Html');
-        
-    public function getPageLinks()
-    {
-        return ClassRegistry::init('Page')->getNavigation();
-    }
     
     /**
      * Create nav link only when not on that page and not in admin

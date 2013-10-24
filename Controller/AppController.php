@@ -55,6 +55,8 @@ class AppController extends Controller {
                                'Navigation'
                             );
     
+    public $uses = array('Page');
+    
     /**
      * Send the Controller object to the View so Helpers can initialize a Component with it
      */
@@ -65,7 +67,9 @@ class AppController extends Controller {
             $this->set('loggedIn', true);
         }
         
-        $this->set('controller', $this);
+        $navigation = $this->Page->getNavigation();
+        
+        $this->set(array('controller' => $this) + compact('navigation'));
         parent::beforeRender();
     }
     

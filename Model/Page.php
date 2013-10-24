@@ -110,7 +110,7 @@ class Page extends AppModel {
             return $this->find('list', array(
 					'fields' => array('slug', 'name'),
                                         'recursive' => -1,
-                                        'conditions' => array('slug !=' => 'home', 'active' => 1),
+                                        'conditions' => array('active' => 1),
                                         'order' => array('homepage' => 'DESC', 'name' => 'ASC'),
                                     )
 			        );
