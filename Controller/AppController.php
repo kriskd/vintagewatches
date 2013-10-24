@@ -55,7 +55,7 @@ class AppController extends Controller {
                                'Navigation'
                             );
     
-    public $uses = array('Page');
+    public $uses = array('Page', 'Watch');
     
     /**
      * Send the Controller object to the View so Helpers can initialize a Component with it
@@ -67,9 +67,13 @@ class AppController extends Controller {
             $this->set('loggedIn', true);
         }
         
+        //Page navigation
         $navigation = $this->Page->getNavigation();
         
-        $this->set(array('controller' => $this) + compact('navigation'));
+        //Bool for store opened or closed
+        $storeOpen = $this->Watch->storeOpen();
+        
+        $this->set(array('controller' => $this) + compact('navigation', 'storeOpen'));
         parent::beforeRender();
     }
     

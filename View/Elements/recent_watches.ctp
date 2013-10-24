@@ -1,5 +1,4 @@
 <div class="recent-watches">
-    <?php $recentWatches = $this->Watch->getWatches(3); ?>
     <?php if (count($recentWatches) <= 0): ?>
         <h4>Bruce's Vintage Watches is Currently Closed.</h4>
         <?php return; ?>

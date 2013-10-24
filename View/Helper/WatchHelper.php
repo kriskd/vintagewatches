@@ -3,15 +3,11 @@ class WatchHelper extends AppHelper
 {
     public $helpers = array('Html', 'Form');
     
-    public function getWatches($count = null, $image = false)
+    /**
+     * $storeOpen bool for store opened or closed
+     */
+    public function closeOpenStore($storeOpen)
     {
-        return ClassRegistry::init('Watch')->getWatches($count, $image);
-    }
-    
-    public function closeOpenStore()
-    {
-        $storeOpen = ClassRegistry::init('Watch')->storeOpen();
-        
         if ($storeOpen === true) {
             return $this->Html->link('Close Store', array('action' => 'close'), array('class' => 'btn btn-danger'));
         }
