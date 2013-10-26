@@ -62,10 +62,11 @@ class AppController extends Controller {
      */
     public function beforeRender()
     {   
-        $this->set('loggedIn', false);
+        $loggedIn = false;
         if($this->Auth->loggedIn()){
-            $this->set('loggedIn', true);
+            $loggedIn = true;
         }
+        $this->set('loggedIn', $loggedIn);
         
         //Page navigation
         $navigation = $this->Page->getNavigation();
@@ -76,7 +77,7 @@ class AppController extends Controller {
         //Bool for cart empty
         $cartEmpty = $this->Cart->cartEmpty();
         
-        $this->set(array('controller' => $this) + compact('navigation', 'storeOpen', 'cartEmpty'));
+        $this->set(array('controller' => $this, 'name' => $this->name) + compact('navigation', 'storeOpen', 'cartEmpty'));
         parent::beforeRender();
     }
     

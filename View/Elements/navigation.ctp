@@ -54,10 +54,10 @@
                                              array('controller' => 'watches', 'action' => 'index'),
                                              array('escape' => false),
                                              false); ?>
-                <li class="<?php echo strcasecmp($controller->name, 'orders')==0 && $this->params->prefix != 'admin' ? 'active' : '' ?>">
+                <li class="<?php echo strcasecmp($name, 'orders')==0 && $this->params->prefix != 'admin' ? 'active' : '' ?>">
                     <?php if ($cartEmpty == false): ?>
                         <?php echo $this->Html->link('Checkout <i class="glyphicon glyphicon-shopping-cart"></i> ' . $this->Cart->cartCount('Items in Your Cart: ', '', $controller),
-                                                         array('controller' => 'orders', 'action' => 'checkout'),
+                                                         array('controller' => 'orders', 'action' => 'checkout', 'admin' => false),
                                                          array('escape' => false),
                                                          false); ?>
                     <?php endif; ?>
