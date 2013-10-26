@@ -135,7 +135,7 @@ class Address extends AppModel {
 		'country' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Please enter a country.',
+				'message' => 'Country must be selected from dropdown options. Type any portion of the country name and choose your country from the options that appear.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
