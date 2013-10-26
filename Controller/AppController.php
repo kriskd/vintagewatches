@@ -52,7 +52,8 @@ class AppController extends Controller {
                                     'logoutRedirect' => array('controller' => 'users', 'action' => 'login', 'admin' => false),
                                     ),
                                'Paginator',
-                               'Navigation'
+                               'Navigation',
+                               'CakePHP-GiftWrap.Presenter'
                             );
     
     public $uses = array('Page', 'Watch');
@@ -73,6 +74,8 @@ class AppController extends Controller {
         
         //Bool for store opened or closed
         $storeOpen = $this->Watch->storeOpen();
+        $this->Presenter->uses('NavigationPresenter');
+        $this->Presenter->set('storeOpen', $storeOpen);
         
         //Bool for cart empty
         $cartEmpty = $this->Cart->cartEmpty();
