@@ -9,18 +9,6 @@ class MyHtmlHelper extends HtmlHelper
         parent::__construct($View, $settings);
     }
     
-    public function adminLink($title, $url = null, $options = array(), $confirmMessage = false, $controller = null)
-    {
-        $auth = new AuthComponent(new ComponentCollection());
-        $auth->initialize($controller);
-        if($this->params->prefix != 'admin' && !$auth->loggedIn()){
-            return null;
-        }
-        $url['admin'] = true;
-        
-        return '<li>' . parent::link($title, $url, $options, $confirmMessage) . '</li>';
-    }
-    
     public function image($path, $options = array())
     {
         if (is_array($path)) {
