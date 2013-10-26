@@ -250,16 +250,18 @@ class OrdersController extends AppController
         if (!$this->Watch->exists($id)) {
             throw new NotFoundException(__('Invalid watch'));
         }
-
+	
         if($this->Session->check('Cart.items') == true){
             $items = $this->Session->read('Cart.items'); 
             if(in_array($id, $items)){
                 $key = array_search($id, $items);
                 unset($items[$key]); 
                 $this->Session->write('Cart.items', $items);
-                $this->redirect(array('action' => 'checkout'));
             }
         }
+	
+	$this->redirect(array('action' => 'checkout'));
+	$this->layout = false;
     }
     
     /**
