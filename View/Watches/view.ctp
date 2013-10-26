@@ -14,7 +14,7 @@
                 </div>
                 <div class="row">
                     <p class="text-center bottom">
-                        <?php echo $this->Element('add_to_cart', compact('watch', 'controller') + array('class' => 'btn btn-gold btn-lg')); ?>
+                        <?php echo $this->Element('add_to_cart', compact('watch') + array('class' => 'btn btn-gold btn-lg')); ?>
                     </p>
                 </div>
             </div>

@@ -5,7 +5,7 @@ class CartComponent extends Component
 {
     public $components = array('Session');
     
-    protected $items = null;
+    public $items = null;
     
     public function initialize(Controller $controller)
     {

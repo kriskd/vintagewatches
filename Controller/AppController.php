@@ -41,7 +41,7 @@ class AppController extends Controller {
                             'Html' => array('className' => 'MyHtml'),
                             'Form' => array('className' => 'MyForm'),
                             'Number' => array('className' => 'MyNumber'),
-                            'Cart', 'Watch');
+                            'Watch');
     
     public $components = array('Stripe' => array('className' => 'Stripe.Stripe'),
                                'DebugKit.Toolbar', 'Session', 'Cart', 'RequestHandler',
@@ -61,12 +61,12 @@ class AppController extends Controller {
      * Send the Controller object to the View so Helpers can initialize a Component with it
      */
     public function beforeRender()
-    {   
+    {
+        //Logged in
         $loggedIn = false;
         if($this->Auth->loggedIn()){
             $loggedIn = true;
         }
-        $this->set('loggedIn', $loggedIn);
         
         //Page navigation
         $navigation = $this->Page->getNavigation();
@@ -77,7 +77,15 @@ class AppController extends Controller {
         //Bool for cart empty
         $cartEmpty = $this->Cart->cartEmpty();
         
-        $this->set(array('controller' => $this, 'name' => $this->name) + compact('navigation', 'storeOpen', 'cartEmpty'));
+        //Cart count
+        $cartCount = $this->Cart->cartItemCount();
+        
+        //Watch IDs in cart
+        $cartItems = $this->Cart->items;
+        
+        $vars = compact('loggedIn', 'navigation', 'storeOpen', 'cartEmpty', 'cartCount', 'cartItems');
+        
+        $this->set(array('controller' => $this, 'name' => $this->name) + $vars);
         parent::beforeRender();
     }
     
