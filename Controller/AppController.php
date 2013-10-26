@@ -73,7 +73,10 @@ class AppController extends Controller {
         //Bool for store opened or closed
         $storeOpen = $this->Watch->storeOpen();
         
-        $this->set(array('controller' => $this) + compact('navigation', 'storeOpen'));
+        //Bool for cart empty
+        $cartEmpty = $this->Cart->cartEmpty();
+        
+        $this->set(array('controller' => $this) + compact('navigation', 'storeOpen', 'cartEmpty'));
         parent::beforeRender();
     }
     

@@ -29,23 +29,6 @@ class NavigationHelper extends AppHelper
         return '<li>' . $this->Html->link($title, $url, $options, $confirmMessage) . '</li>';
     }
     
-    /**
-     * Create cart link only if items in the cart
-     */
-    public function cartLink($title, $url = null, $options = array(), $confirmMessage = false, $controller = null)
-    {
-        if ($this->_storeOpen() == false) return null;
-        
-        $cart = new CartComponent(new ComponentCollection());
-        $cart->initialize($controller);
-        if($cart->cartEmpty() == true){
-            return null;
-        }
-        $url['admin'] = false;
-        
-        return $this->Html->link($title, $url, $options, $confirmMessage);
-    }
-    
     protected function _storeOpen()
     {
         return ClassRegistry::init('Watch')->storeOpen();

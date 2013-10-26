@@ -60,11 +60,12 @@
                                              array('escape' => false),
                                              false); ?>
                 <li class="<?php echo strcasecmp($controller->name, 'orders')==0 && $this->params->prefix != 'admin' ? 'active' : '' ?>">
-                    <?php echo $this->Navigation->cartLink('Checkout <i class="glyphicon glyphicon-shopping-cart"></i> ' . $this->Cart->cartCount('Items in Your Cart: ', '', $controller),
-                                                     array('controller' => 'orders', 'action' => 'checkout'),
-                                                     array('escape' => false),
-                                                     false,
-                                                     $controller); ?>
+                    <?php if ($cartEmpty == false): ?>
+                        <?php echo $this->Html->link('Checkout <i class="glyphicon glyphicon-shopping-cart"></i> ' . $this->Cart->cartCount('Items in Your Cart: ', '', $controller),
+                                                         array('controller' => 'orders', 'action' => 'checkout'),
+                                                         array('escape' => false),
+                                                         false); ?>
+                    <?php endif; ?>
                 </li>
     
                 <li class="dropdown">
