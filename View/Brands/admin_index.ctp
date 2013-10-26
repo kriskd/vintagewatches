@@ -1,6 +1,6 @@
 <div class="brands index">
 	<h2><?php echo __('Brands'); ?></h2>
-    <?php echo $this->Form->create(); ?>
+    <?php echo $this->Form->create('Brand', array('autocomplete' => 'off')); ?>
     <?php if (!empty($brands)): ?>
         <p><strong>Edit/Delete Brands</strong></p>
         <?php foreach ($brands as $brand): ?>
