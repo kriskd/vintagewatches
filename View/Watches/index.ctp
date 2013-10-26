@@ -57,7 +57,7 @@
             Happy shopping!
         </p>
     </div>
-    <?php foreach ($watches as $i => $watch): ?>
+    <?php foreach ($presenter['watches'] as $i => $watch): ?>
         <div class="row">
             <div class="watch">
                 <div class="row watch-attrs">

@@ -27,16 +27,14 @@
                     </li>
                 <?php endif; ?>
                 <?php //Wrapped in <li> in Component ?>
-                <?php echo $this->Navigation->storeLink('<i class="glyphicon glyphicon-tags"></i>&nbsp;&nbsp;Store',
-                                             array('controller' => 'watches', 'action' => 'index'),
-                                             array('escape' => false),
-                                             false); ?>
-                <li class="<?php echo strcasecmp($name, 'orders')==0 && $this->params->prefix != 'admin' ? 'active' : '' ?>">
+                <?php echo $presenter->nav->storeLink(); ?>
+                <?php // echo $this->Navigation->storeLink(); ?>
+                <li class="<?php echo strcasecmp($controller->name, 'orders')==0 && $this->params->prefix != 'admin' ? 'active' : '' ?>">
                     <?php if ($cartEmpty == false): ?>
                         <?php echo $this->Html->link('Checkout <i class="glyphicon glyphicon-shopping-cart"></i> Items in Your Cart: ' . $cartCount,
-                                                         array('controller' => 'orders', 'action' => 'checkout', 'admin' => false),
-                                                         array('escape' => false),
-                                                         false); ?>
+                                                     array('controller' => 'orders', 'action' => 'checkout'),
+                                                     array('escape' => false),
+                                                     false); ?>
                     <?php endif; ?>
                 </li>
     

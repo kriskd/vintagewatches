@@ -50,7 +50,7 @@ class WatchesController extends AppController {
 		$this->Paginator->settings = $this->paginate;
 		$this->set('title', 'Store');
 		
-		$this->set('watches', $this->Paginator->paginate('Watch'));
+		$this->Presenter->set('watches', $this->Paginator->paginate('Watch'));
 	}
 
 /**
@@ -164,7 +164,7 @@ class WatchesController extends AppController {
 			$this->brandList();
 			$options = array('conditions' => array('Watch.' . $this->Watch->primaryKey => $id));
 			$this->request->data = $this->Watch->find('first', $options);
-			$this->set('watch', $this->Watch->find('first', $options));
+			$this->Presenter->set('model', $this->Watch->find('first', $options));
 		}
 	}
 

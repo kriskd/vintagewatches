@@ -9,7 +9,6 @@ class NavigationHelper extends AppHelper
      */
     public function storeLink($title, $url = null, $options = array(), $confirmMessage = false)
     {
-        if ($this->_storeOpen() == false) return null;
         
         if(is_string($url)){
             $url = Router::parse($this->url($url));

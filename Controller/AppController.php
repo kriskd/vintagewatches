@@ -74,8 +74,8 @@ class AppController extends Controller {
         
         //Bool for store opened or closed
         $storeOpen = $this->Watch->storeOpen();
-        $this->Presenter->uses('NavigationPresenter');
-        $this->Presenter->set('storeOpen', $storeOpen);
+        $data = array('storeOpen' =>  $storeOpen);
+        $this->viewVars['presenter']->nav = $this->Presenter->create('Navigation', $data);
         
         //Bool for cart empty
         $cartEmpty = $this->Cart->cartEmpty();
