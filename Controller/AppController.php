@@ -81,9 +81,9 @@ class AppController extends Controller {
         $cartCount = $this->Cart->cartItemCount();
         
         //Watch IDs in cart
-        $cartItems = $this->Cart->cartItems(); 
+        $cartItemIds = $this->Cart->cartItemIds(); 
         
-        $vars = compact('loggedIn', 'navigation', 'storeOpen', 'cartEmpty', 'cartCount', 'cartItems');
+        $vars = compact('loggedIn', 'navigation', 'storeOpen', 'cartEmpty', 'cartCount', 'cartItemIds');
         
         $this->set(array('controller' => $this, 'name' => $this->name) + $vars);
         parent::beforeRender();
