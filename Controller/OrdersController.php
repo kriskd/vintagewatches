@@ -461,21 +461,47 @@ class OrdersController extends AppController
  */
     public function admin_edit($id = null) { 
 	if (!$this->Order->exists($id)) {
-		throw new NotFoundException(__('Invalid order'));
+	    throw new NotFoundException(__('Invalid order'));
 	}
-	if ($this->request->is('post') || $this->request->is('put')) {
+	
+	if ($this->request->is('post') || $this->request->is('put')) { 
+	    //Create an empty shipping address record with same country as billing
+	    if (isset($this->request->data['Order']['add_shipping_address'])
+		    && $this->request->data['Order']['add_shipping_address'] == 1) { 
+		$billingCountry = $this->request->data['Address'][0]['country'];
+		$this->Order->Address->create();
+		$this->Order->Address->save(array(
+						'order_id' => $id,
+						'type' => 'shipping',
+						'country' => $billingCountry
+					    ),
+					    array(
+						'validate' => false
+					    )
+					);
+	    }
+	    
+	    //Delete shipping address
+	    if (isset($this->request->data['Order']['delete_shipping_address'])) {
+		$address_id = $this->request->data['Order']['delete_shipping_address'];
+		//var_dump($address_id); exit;
+		$this->Address->delete($address_id);
+		unset($this->request->data['Order']['delete_shipping_address']);
+	    }
+	    
 	    $this->request->data['Order']['id'] = $id; 
-		if ($this->Order->saveAssociated($this->request->data)) { 
-			$this->Session->setFlash(__('The order has been saved'), 'success');
-			$this->redirect(array('action' => 'edit', $id));
-		} else {
-			$this->Session->setFlash(__('The order could not be saved. Please, try again.'));
-		}
+	    if ($this->Order->saveAssociated($this->request->data)) { 
+		$this->Session->setFlash(__('The order has been saved'), 'success');
+		$this->redirect(array('action' => 'edit', $id));
+	    } else {
+		$this->Session->setFlash(__('The order could not be saved. Please, try again.'));
+	    }
 	}
 	
 	$options = array('conditions' => array('Order.' . $this->Order->primaryKey => $id));
 	$this->request->data = $this->Order->find('first', $options);
-	$order = $this->Order->find('first', $options);
+	$order = $this->Order->find('first', $options); 
+	
 	$this->set('order', $order); 
 	
 	$addressFields = array('firstName', 'lastName', 'company', 'address1', 'address2', 'city', 'state',

@@ -23,7 +23,17 @@
             <?php foreach ($order['Address'] as $i => $address): ?>
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
                     <fieldset>
-                        <legend><?php echo ucfirst($address['type']); ?> Name and Address</legend>
+                        <legend>
+                            <?php echo ucfirst($address['type']); ?> Name and Address
+                            <?php if (strcasecmp($address['type'], 'shipping')==0): ?>
+                                
+                                <div class="pull-right">
+                                    <?php //Shipping address delete isn't working and I don't know why ?>
+                                    <?php //echo $this->Form->shippingDelete($order); ?>
+                                    <!--<small>Delete</small>-->
+                                </div>
+                            <?php endif; ?>
+                        </legend>
                         <?php echo $this->Form->input('Address.'.$i.'.id', array('type' => 'hidden', 'value' => $address['id'])); ?>
                         <?php foreach ($addressFields as $field): ?>
                                 <?php $options = array('value' => $address[$field]); ?>
@@ -40,7 +50,14 @@
                         <?php endforeach; ?>
                     </fieldset>
                 </div>
-            <?php endforeach; ?>  
+            <?php endforeach; ?>
+            <?php if(count($order['Address'])<2): ?>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                    <fieldset>
+                        <legend><?php echo $this->Form->checkbox('add_shipping_address'); ?> Add Shipping Address</legend>
+                    </fieldset> 
+                </div>
+            <?php endif; ?>
         </div>
     <?php echo $this->Form->end(array('label' => 'Save', 'class' => 'btn btn-primary')); ?>
 </div>

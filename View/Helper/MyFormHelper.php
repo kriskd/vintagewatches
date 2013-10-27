@@ -174,6 +174,20 @@ class MyFormHelper extends FormHelper
         return $form;
     }
     
+    /*
+     * Pass in the Order, return a checkbox to delete the shipping address
+     */
+    public function shippingDelete($order)
+    {
+        $shippingAddress = array_filter($order['Address'], function($item){
+	    return strcasecmp($item['type'], 'shipping')==0;
+	});
+
+        $current = current($shippingAddress);
+        $id = $current['id'];
+        return $this->checkbox('delete_shipping_address', array('value' => $id, 'hiddenField' => false));
+    }
+    
     protected function _getCommonFields($options)
     {
         $this->nameToOptionsMap['state'] = array('label' => 'State or Province',
