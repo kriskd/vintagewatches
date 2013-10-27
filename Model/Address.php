@@ -184,7 +184,7 @@ class Address extends AppModel {
 	public $belongsTo = array(
 		'Order' => array(
 			'className' => 'Order',
-			'foreignKey' => 'id',
+			'foreignKey' => 'order_id',
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
