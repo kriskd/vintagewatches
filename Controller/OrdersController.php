@@ -5,13 +5,12 @@ class OrdersController extends AppController
 {
     public $uses = array('Watch', 'Address', 'Order');
     
-    public $paginate = array('Order' => array(
-					    'limit' => 10,
-					    'order' => array(
-							'Order.id' => 'desc'
-					    )
-					)
-				    );
+    public $paginate = array(
+			    'limit' => 10,
+			    'order' => array(
+					'Order.id' => 'desc'
+			    )
+			);
     
     protected $cartItemIds = array();
     protected $cartWatches = array();
@@ -59,8 +58,8 @@ class OrdersController extends AppController
 	    $this->Session->write('Address.postalCode', $postalCode);
 	}
 	
-	$options = $this->Order->getCustomerOrderOptions($email, $postalCode);
-	$this->Paginator->settings = array_merge($this->paginate['Order'], $options); 
+	$options = $this->Order->getCustomerOrderOptions($email, $postalCode); 
+	$this->Paginator->settings = array_merge($this->paginate, $options); 
 	$orders = $this->Paginator->paginate('Order');
 	
 	if (!empty($orders)) {
@@ -355,8 +354,93 @@ class OrdersController extends AppController
     
     public function admin_index()
     {
-	$this->Paginator->settings = $this->paginate;
-	$this->set('orders', $this->paginate('Order'));
+	$filter = '';
+	$value = '';
+	$options = array();
+	
+	$filters = array(
+		'' => 'Show All',
+		'Order.email' => 'Email',
+		'Address.postalCode' => 'Billing Postal Code',
+		'Watch.stockId' => 'Watch Stock ID',
+		'Brand.name' => 'Watch Brand'
+	    );
+	
+	if ($this->request->query) {
+	    $filter = !empty($this->request->query['filter']) ? $this->request->query['filter'] : '';
+	    $value = !empty($this->request->query['value']) ? $this->request->query['value'] : '';
+	    if (!empty($filter) && !empty($value)){
+		$options['conditions'] = array($filter => $value);
+		switch ($filter) {
+		    case 'Address.postalCode':
+			$options['joins'] = array(
+			    array(
+				'table' => 'addresses',
+				'alias' => 'Address',
+				'type' => 'INNER',
+				'conditions' => array(
+				    'Address.order_id = Order.id'
+				)
+			    )
+			);
+			$options['contain'] = array('Address' => array(
+								    'fields' => 'id', 'type', 'postalCode' 
+								)
+						    );
+			$options['conditions']['Address.type'] = 'billing';
+			break;
+		    case 'Watch.stockId':
+			$options['joins'] = array(
+			    array(
+				'table' => 'watches',
+				'alias' => 'Watch',
+				'type' => 'INNER',
+				'conditions' => array(
+				    'Watch.order_id = Order.id'
+				)
+			    )
+			);
+			$options['contain'] = array('Watch' => array(
+								'fields' => 'id', 'stockId'
+							    )
+							);
+			break;
+		    case 'Brand.name':
+			$options['joins'] = array(
+			    array(
+				'table' => 'watches',
+				'alias' => 'Watch',
+				'type' => 'INNER',
+				'conditions' => array(
+				    'Watch.order_id = Order.id'
+				)
+			    ),
+			    array(
+				'table' => 'brands',
+				'alias' => 'Brand',
+				'type' => 'INNER',
+				'conditions' => array(
+				    'Watch.brand_id = Brand.id'
+				)
+			    )
+			);
+			$options['contain'] = array(
+						'Watch' => array(
+								'fields' => 'id', 'stockId',
+								'Brand'
+							    ),
+							);
+			break;
+		}
+	    }
+	} 
+
+	$this->paginate['fields'] = array('id', 'email', 'stripe_id', 'stripe_amount', 'shipDate', 'created');
+	$this->Paginator->settings = array_merge($this->paginate, $options); 
+	$this->set(array(
+		    'orders' => $this->Paginator->paginate('Order')
+		    ) + compact('filters', 'filter', 'value')
+		);
     }
     
     public function admin_view($id = null)

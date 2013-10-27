@@ -1194,6 +1194,20 @@
     
     $('#OrderShipDate').datepicker({dateFormat: 'yy-mm-dd'});
     
+    //Disable and enable filter input field based on filter option
+    orderAdmin($('.admin-index select').val());
+    $(document).on('change', '.admin-index select', function(){
+        orderAdmin($(this).val());
+    });
+    
+    function orderAdmin(filterValue) { 
+        if (filterValue == '') {
+            $('.admin-index .input input').val('').prop('disabled', true);
+        } else {
+            $('.admin-index .input input').prop('disabled', false);
+        }
+    }
+    
     //Set position of indicators on homepage carousel, not a perfect solution
     setHomeCarouselImageHeight();
     $(window).on('resize', function(){
