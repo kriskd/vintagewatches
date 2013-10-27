@@ -13,6 +13,9 @@ class OrdersController extends AppController
 					)
 				    );
     
+    protected $cartItemIds = array();
+    protected $cartWatches = array();
+    
     public function beforeFilter()
     {
 	$storeOpen = $this->Watch->storeOpen();
@@ -20,6 +23,10 @@ class OrdersController extends AppController
 	if ($storeOpen == false && empty($this->request->params['admin'])) {
 	    $this->redirect(array('controller' => 'pages', 'action' => 'home', 'admin' => false));
 	}
+	
+	$this->cartItemIds = $this->Cart->cartItemIds();
+        $this->cartWatches = $this->Watch->getCartWatches($this->cartItemIds);
+	
 	parent::beforeFilter();
     }
     
@@ -98,9 +105,7 @@ class OrdersController extends AppController
         if($this->Cart->cartEmpty() == true){
             $this->redirect(array('controller' => 'watches', 'action' => 'index'));
         }
-	
-        $watches = $this->Cart->getCartItems(); 
-	$total = 0;
+
         $months = array_combine(range(1,12), range(1,12));
         $year = date('Y'); 
         for($i=date('Y'); $i<=date('Y')+10; $i++){
@@ -146,7 +151,7 @@ class OrdersController extends AppController
 	    $data['Address'] = $addressesToSave;
 
 	    $checkoutData = ($this->Session->check('Cart.shipping') == true) &&
-			    ($this->Session->check('Cart.items') == true) &&
+			    ($this->Cart->cartItemCount() > 0) &&
 			    ($this->Session->check('Cart.total')== true) &&
 			    ($this->Session->read('Cart.total') > 0);
 	    
@@ -177,16 +182,13 @@ class OrdersController extends AppController
 		    //Get the order_id
 		    $order_id = $this->Order->id;
 		    
-		    $items = $this->Session->read('Cart.items');
-		    $watches = $this->Watch->getCartWatches($items);
-		    
 		    //Get the purchased items from the Session, add the order_id and
 		    //update the items with the order_id
 		    $purchasedWatches = array_map(function($item) use ($order_id){
 					    $item['Watch']['order_id'] = $order_id;
 					    $item['Watch']['active'] = 0;
 					    return $item;
-					} , $watches);
+					} , $this->cartWatches);
 		    $this->Watch->saveMany($purchasedWatches);
 		    
 		    $this->Session->delete('Cart');
@@ -222,7 +224,7 @@ class OrdersController extends AppController
         }
 	
 	$title = 'Checkout';
-        $this->set(compact('watches', 'months', 'years', 'total', 'title'));
+        $this->set(compact('months', 'years', 'total', 'title') + array('watches' => $this->cartWatches));
     }
     
     public function add($id = null)
@@ -285,7 +287,7 @@ class OrdersController extends AppController
 		    break;
 	    }
 
-	    $subTotal = $this->Cart->getCartSubTotal(); 
+	    $subTotal = $this->Order->getSubTotal($this->cartWatches); 
 	    $total = $subTotal + $shipping;
 	    $this->Session->write('Cart.shipping', $shipping);
 	    $this->Session->write('Cart.total', $total);
