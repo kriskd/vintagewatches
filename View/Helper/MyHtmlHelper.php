@@ -1,6 +1,5 @@
 <?php
 App::uses('HtmlHelper', 'View/Helper');
-App::uses('CartComponent', 'Controller/Component');
 
 class MyHtmlHelper extends HtmlHelper
 {
