@@ -5,7 +5,7 @@ class CartComponent extends Component
 {
     public $components = array('Session');
     
-    public $items = null;
+    protected $items = array();
     
     public function initialize(Controller $controller)
     {
@@ -28,6 +28,14 @@ class CartComponent extends Component
             return count($this->items);
         }
         return null;
+    }
+    
+    /**
+     * Returns an array of Watch IDs in the cart
+     */
+    public function cartItems()
+    {
+        return $this->items;
     }
     
     public function inCart($id = null)
