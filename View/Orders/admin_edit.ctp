@@ -28,9 +28,8 @@
                             <?php if (strcasecmp($address['type'], 'shipping')==0): ?>
                                 
                                 <div class="pull-right">
-                                    <?php //Shipping address delete isn't working and I don't know why ?>
-                                    <?php //echo $this->Form->shippingDelete($order); ?>
-                                    <!--<small>Delete</small>-->
+                                    <?php echo $this->Form->shippingDelete($order); ?>
+                                    <small>Delete</small>
                                 </div>
                             <?php endif; ?>
                         </legend>

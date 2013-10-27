@@ -180,8 +180,8 @@ class MyFormHelper extends FormHelper
     public function shippingDelete($order)
     {
         $shippingAddress = array_filter($order['Address'], function($item){
-	    return strcasecmp($item['type'], 'shipping')==0;
-	});
+            return strcasecmp($item['type'], 'shipping')==0;
+        });
 
         $current = current($shippingAddress);
         $id = $current['id'];

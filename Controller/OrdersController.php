@@ -483,9 +483,21 @@ class OrdersController extends AppController
 	    
 	    //Delete shipping address
 	    if (isset($this->request->data['Order']['delete_shipping_address'])) {
+		//Get the address_id and delete it
 		$address_id = $this->request->data['Order']['delete_shipping_address'];
-		//var_dump($address_id); exit;
 		$this->Address->delete($address_id);
+		//Since it's deleted we now have to get it out of the request array for save to work
+		//Get the addresses
+		$addresses = $this->request->data['Address'];
+		//Pluck out the shipping address
+		$shippingAddress = array_filter($addresses, function($item) use ($address_id) {
+		    return $item['id'] == $address_id;
+		});
+		//If it's an array of address info, delete it from the request data
+		if (is_array($shippingAddress)) {
+		    unset($this->request->data['Address'][key($shippingAddress)]); 
+		}
+		//Get rid of address id to delete passed in from form
 		unset($this->request->data['Order']['delete_shipping_address']);
 	    }
 	    
