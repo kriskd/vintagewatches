@@ -33,7 +33,7 @@ class CartComponent extends Component
     /**
      * Returns an array of Watch IDs in the cart
      */
-    public function cartItems()
+    public function cartItemIds()
     {
         return $this->items;
     }
@@ -44,15 +44,5 @@ class CartComponent extends Component
             return true;
         }
         return false;
-    }
-    
-    public function getCartItems()
-    {   
-        return ClassRegistry::init('Watch')->getCartWatches($this->items);
-    }
-    
-    public function getCartSubTotal()
-    {
-        return ClassRegistry::init('Order')->getSubTotal($this->getCartItems());
     }
 }
