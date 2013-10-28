@@ -14,6 +14,15 @@ class CartComponent extends Component
         }
     }
     
+    /**
+     * Clear the Cart session, reset $items array
+     */
+    public function emptyCart()
+    {
+        $this->items = array();
+        $this->Session->delete('Cart');
+    }
+    
     public function cartEmpty()
     {
         if(!empty($this->items)){

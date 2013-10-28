@@ -190,7 +190,7 @@ class OrdersController extends AppController
 					} , $this->cartWatches);
 		    $this->Watch->saveMany($purchasedWatches);
 		    
-		    $this->Session->delete('Cart');
+		    $this->Cart->emptyCart();
 		    $order = $this->Order->getOrder($order_id);
 		    $this->emailOrder($order);
 		    $title = 'Thank You For Your Order';
