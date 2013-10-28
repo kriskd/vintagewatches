@@ -18,34 +18,11 @@
             <ul class="nav navbar-nav">
                 <?php if($loggedIn == true): ?>
                     <li class="dropdown <?php echo $this->params->prefix == 'admin' ? 'active' : ''; ?>">
-                        <?php echo $this->Html->link('<i class="icon-wrench icon-large"></i> Admin<span class="caret"></span>',
+                        <?php echo $this->Html->link('<i class="glyphicon glyphicon-wrench"></i> Admin<span class="caret"></span>',
                                                      array('controller' => 'orders', 'action' => 'index', 'admin' => true),
                                                      array('data-toggle' => 'dropdown', 'escape' => false)); ?>
                         <ul class="dropdown-menu">
-                            <li><?php echo $this->Html->link('<i class="glyphicon glyphicon-usd"></i> Orders',
-                                                              array('controller' => 'orders', 'action' => 'index', 'admin' => true),
-                                                              array('escape' => false)
-                                                        ); ?></li>
-                            <li><?php echo $this->Html->link('<i class="glyphicon glyphicon-cog"></i> Watches',
-                                                              array('controller' => 'watches', 'action' => 'index', 'admin' => true),
-                                                              array('escape' => false)
-                                                        ); ?></li>
-                            <li><?php echo $this->Html->link('<i class="glyphicon glyphicon-star"></i> Brands',
-                                                              array('controller' => 'brands', 'action' => 'index', 'admin' => true),
-                                                              array('escape' => false)
-                                                        ); ?></li>
-                            <li><?php echo $this->Html->link('<i class="glyphicon glyphicon-book"></i> Pages',
-                                                              array('controller' => 'pages', 'action' => 'index', 'admin' => true),
-                                                              array('escape' => false)
-                                                        ); ?></li>
-                            <li><?php echo $this->Html->link('<i class="glyphicon glyphicon-envelope"></i> Contacts',
-                                                              array('controller' => 'contacts', 'action' => 'index', 'admin' => true),
-                                                              array('escape' => false)
-                                                        ); ?></li>
-                            <li><?php echo $this->Html->link('<i class="glyphicon glyphicon-off"></i> Logout',
-                                                             array('controller' => 'users', 'action' => 'logout', 'admin' => false),
-                                                             array('escape' => false)
-                                                             ); ?></li>
+                            <?php echo $this->Navigation->adminLinks(); ?>
                         </ul>
                     </li>
                 <?php endif; ?>
@@ -64,7 +41,7 @@
                 </li>
     
                 <li class="dropdown">
-                    <?php echo $this->Html->link('Support<span class="caret"></span>', '#',
+                    <?php echo $this->Html->link('<span class="glyphicon glyphicon-info-sign"></span> Support<span class="caret"></span>', '#',
                                                  array('class' => 'dropdown-toggle',
                                                         'data-toggle' => 'dropdown',
                                                         'escape' => false)

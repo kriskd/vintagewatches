@@ -26,7 +26,35 @@ class NavigationHelper extends AppHelper
         }
         $url['admin'] = false;
         
-        return '<li>' . $this->Html->link($title, $url, $options, $confirmMessage) . '</li>';
+        return $this->Html->tag('li', $this->Html->link($title, $url, $options, $confirmMessage));
+    }
+    
+    public function adminLinks()
+    {
+        $html = '';
+        
+        $links = array(
+            '<span class="glyphicon glyphicon-usd"></span> Orders' =>
+                array('controller' => 'orders', 'action' => 'index', 'admin' => true),
+            '<span class="glyphicon glyphicon-cog"></span> Watches' =>
+                array('controller' => 'watches', 'action' => 'index', 'admin' => true),
+            '<span class="glyphicon glyphicon-star"></span> Brands' => 
+                array('controller' => 'brands', 'action' => 'index', 'admin' => true),
+            '<span class="glyphicon glyphicon-book"></span> Pages' =>
+                array('controller' => 'pages', 'action' => 'index', 'admin' => true),
+            '<span class="glyphicon glyphicon-envelope"></span> Contacts' => 
+                array('controller' => 'contacts', 'action' => 'index', 'admin' => true),
+            '<span class="glyphicon glyphicon-off"></span> Logout' =>
+                array('controller' => 'users', 'action' => 'logout', 'admin' => false),
+        );
+        
+        foreach ($links as $link => $attrs) {
+            $html .= $this->Html->tag('li',
+                        $this->Html->link($link, $attrs, array('escape' => false))
+                    );
+        }
+        
+        return $html;
     }
     
     protected function _storeOpen()
