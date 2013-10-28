@@ -1,21 +1,21 @@
-<table>
+<table style="width: 600px;">
     <tr>
-        <td style="background: #999; border: 2px solid #665600; padding: 1em; width: 75%">
+        <td bgcolor="#999999" style="border: 2px solid #665600; padding: 0px 10px; width: 450px">
             <p style="font-size: 36px; font-weight: bold; color: #665600">Bruce's Vintage Watches</p>
-            <p style="font-size: 18px; font-weight: bold; color: #665600">Fine Timepieces at a reasonable prices from a name you trust.</p>
+            <p style="font-size: 18px; font-weight: bold; color: #665600">Fine timepieces at a reasonable prices from a name you trust.</p>
         </td>
         <td>
-            <p style="font-weight: bold; margin-left: 20px; width: 25%">
+            <p style="font-weight: bold; margin-left: 20px; width: 150px">
                 In business since 1989 and offering medium- to high-grade watches with an unconditional seven-day money back guarantee. 
             </p>
         </td>
     </tr>
 </table>
-<h1>Order Summary</h1>
-<table>
+<h1 style="font-size: 36px;">Order Summary</h1>
+<table style="width: 600px;">
     <tr>
-        <td colspan=4 style="background: #665600;">
-            <h2 style="font-size: 30px; color: #fff">Purchases</h2>
+        <td colspan=4 style="padding: 0px 10px;">
+            <p style="font-size: 30px; color: #665600">Purchases</p>
         </td>
     </tr>
     <tr style="padding: 5px"><th></th><th>Stock ID</th><th>Name</th><th>Price</th></tr>
@@ -43,8 +43,8 @@
     </tr>
     <?php if(!empty($order['Order']['notes'])): ?>
         <tr>
-            <td colspan=4 style="background: #665600;">
-                <h2 style="font-size: 30px; color: #fff">Special Order Instructions</h2>
+            <td colspan=4 style="padding: 0px 10px;">
+                <p style="font-size: 30px; color: #665600">Special Order Instructions</p>
             </td>
         </tr>
         <tr>
@@ -56,8 +56,8 @@
         </tr>
     <?php endif; ?>
     <tr>
-        <td colspan=4 style="background: #665600;">
-            <h2 style="font-size: 30px; color: #fff">Customer Contact Information</h2>
+        <td colspan=4 style="padding: 0px 10px;">
+            <p style="font-size: 30px; color: #665600">Customer Contact Information</p>
         </td>
     </tr>
     <tr style="padding: 5px">
@@ -72,8 +72,8 @@
     <?php endif; ?>
     <?php foreach($order['Address'] as $address): ?>
         <tr>
-            <td colspan=4 style="background: #665600;">
-                <h3 style="font-size: 24px; color: #fff"><?php echo ucfirst($address['type']); ?> Address</h3>
+            <td colspan=4 style="padding: 0px 10px;">
+                <p style="font-size: 24px; color: #665600"><?php echo ucfirst($address['type']); ?> Address</p>
             </td>
         </tr>
         <tr style="padding: 5px">
