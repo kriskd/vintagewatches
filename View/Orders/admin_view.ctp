@@ -79,7 +79,7 @@
         <?php endif; ?>
     </dl>
     <?php if(!empty($order['Order']['notes'])): ?>
-        <h2>Special Order Instrucations</h2>
+        <h2>Special Order Instructions</h2>
         <div class="notes">
             <?php echo nl2br($order['Order']['notes']); ?>
         </div>
