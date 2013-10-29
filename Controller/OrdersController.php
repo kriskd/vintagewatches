@@ -148,11 +148,10 @@ class OrdersController extends AppController
 	    }
 	    
 	    $data['Address'] = $addressesToSave;
-
-	    $checkoutData = ($this->Session->check('Cart.shipping') == true) &&
+	    
+	    $checkoutData = ($this->Cart->getShipping() > 0) &&
 			    ($this->Cart->cartItemCount() > 0) &&
-			    ($this->Session->check('Cart.total')== true) &&
-			    ($this->Session->read('Cart.total') > 0);
+			    ($this->Cart->getTotal() > 0);
 	    
 	    if(!$checkoutData){
 		//There is no data to checkout with
@@ -160,12 +159,12 @@ class OrdersController extends AppController
 	    }
 	    
 	    //Get the shipping amount from the session and add to Order
-	    $shippingAmount = $this->Session->read('Cart.shipping');
+	    $shippingAmount = $this->Cart->getShipping();
 	    $data['Order']['shippingAmount'] = $shippingAmount;
 	    
 	    $valid = $this->Order->validateAssociated($data); 
 	    if($valid == true){
-		$amount = $this->Session->read('Cart.total'); 
+		$amount = $this->Cart->getTotal(); 
 		$stripeToken = $this->request->data['stripeToken'];
 		$stripeData = array('amount' => $amount,
 			      'stripeToken' => $stripeToken);
@@ -231,17 +230,13 @@ class OrdersController extends AppController
 	if (!$this->Watch->sellable($id)) {
 		$this->redirect(array('action' => 'checkout'));
 	}
-        $items = array();
-        if($this->Session->check('Cart.items') == true){
-            $items = $this->Session->read('Cart.items');
-            if(in_array($id, $items)){
-                $this->Session->setFlash('That item is already in your cart.');
-                $this->redirect(array('controller' => 'watches', 'action' => 'index'));
-            }
-        }
-
-        $items[] = $id; 
-        $this->Session->write('Cart.items', $items);
+        
+	if($this->Cart->inCart($id)){
+	    $this->Session->setFlash('That item is already in your cart.');
+	    $this->redirect(array('controller' => 'watches', 'action' => 'index'));
+	}
+	
+        $this->Cart->add($id);
         
         $this->redirect(array('action' => 'checkout'));
     }
@@ -252,17 +247,9 @@ class OrdersController extends AppController
             throw new NotFoundException(__('Invalid watch'));
         }
 	
-        if($this->Session->check('Cart.items') == true){
-            $items = $this->Session->read('Cart.items'); 
-            if(in_array($id, $items)){
-                $key = array_search($id, $items);
-                unset($items[$key]); 
-                $this->Session->write('Cart.items', $items);
-            }
-        }
+        $this->Cart->remove($id);
 	
 	$this->redirect(array('action' => 'checkout'));
-	$this->layout = false;
     }
     
     /**
@@ -287,11 +274,12 @@ class OrdersController extends AppController
 	    }
 
 	    $subTotal = $this->Order->getSubTotal($this->cartWatches); 
-	    $total = $subTotal + $shipping;
-	    $this->Session->write('Cart.shipping', $shipping);
-	    $this->Session->write('Cart.total', $total);
+	    $this->Cart->setShipping($shipping);
+	    $this->Cart->setTotal($subTotal);
 	    
-	    $this->set(array('data' => compact('shipping', 'total')));
+	    $this->set(array('data' => array('shipping' => $this->Cart->getShipping(),
+					     'total' => $this->Cart->getTotal()))
+		       );
 	    $this->layout = 'ajax';
 	}
     }
