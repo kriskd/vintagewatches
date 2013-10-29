@@ -31,7 +31,7 @@
             "package": {
                 "name": "Stripe",
                 "type": "cakephp-plugin",
-                "version": "1.0.2",
+                "version": "2.0.0",
                 "source": {
                     "url": "https://github.com/chronon/CakePHP-StripeComponent-Plugin",
                     "type": "git",
@@ -43,7 +43,7 @@
             "type": "package",
             "package": {
                 "name": "stripe/stripe-php",
-                "version": "1.8.3",
+                "version": "1.9.0",
                 "source": {
                     "url": "https://github.com/stripe/stripe-php",
                     "type": "git",
@@ -54,47 +54,33 @@
         {
             "type": "package",
             "package": {
-                "name": "kriskd/cakephp2.0-image-upload",
-                "version": "dev-master",
-                "source": {
-                    "url": "https://github.com/kriskd/cakephp2.0-image-upload",
-                    "type": "git",
-                    "reference": "origin/master"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "Uploader",
+                "name": "Datasources",
                 "type": "cakephp-plugin",
-                "version": "4.3.6",
+                "version": "2.3",
                 "source": {
-                    "url": "https://github.com/milesj/uploader",
+                    "url": "https://github.com/cakephp/datasources",
                     "type": "git",
-                    "reference" : "origin/master"
+                    "reference": "2.3"
                 }
             }
         }
     ],
     "require": {
         "composer/installers": "dev-master",
-        "mjohnson/transit": "1.4.4",
-        "Uploader": "4.3.6",
+        "mjohnson/uploader": "4.*",
         "TwitterBootstrap": "2.1.*",
         "DebugKit": "2.2.1",
-        "Stripe": "1.0.2",
-        "stripe/stripe-php": "1.8.3",
+        "Stripe": "2.0.0",
+        "stripe/stripe-php": "1.9.0",
         "twitter/bootstrap": "3.0.0",
-        "kriskd/cakephp2.0-image-upload": "dev-master"
+        "Datasources": "2.3"
     },
     "config": {
         "vendor-dir": "Vendor"
     },
     "extra": {
         "installer-paths": {
-            "Plugin/Stripe/Vendor/Stripe": ["stripe/stripe-php"],
-            "Controller/Component": ["kriskd/cakephp2.0-image-upload"]
+            "Plugin/Stripe/Vendor/Stripe": ["stripe/stripe-php"]
         }
     }
 }
