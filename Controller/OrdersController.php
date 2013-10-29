@@ -166,8 +166,20 @@ class OrdersController extends AppController
 	    if($valid == true){
 		$amount = $this->Cart->getTotal(); 
 		$stripeToken = $this->request->data['stripeToken'];
-		$stripeData = array('amount' => $amount,
-			      'stripeToken' => $stripeToken);
+		
+		//Create a description of brands to send to Stripe
+		$watches = $this->cartWatches; 
+		$brands = array();
+		foreach($watches as $watch) {
+		    $brands[] = $watch['Brand']['name'];
+		}
+		$description = implode(',', $brands);
+		
+		$stripeData = array(
+				'amount' => $amount,
+				'stripeToken' => $stripeToken,
+				'description' => $description
+			    );
 		$result = $this->Stripe->charge($stripeData);
 		
 		if(is_array($result) && $result['stripe_paid'] == true){
