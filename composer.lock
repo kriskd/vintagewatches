@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "4b7f6c75f8337ac0e8b63fad28b37547",
+    "hash": "4ff72add5e359ce6a0b3db9fa754c093",
     "packages": [
         {
             "name": "Datasources",
@@ -24,6 +24,17 @@
                 "reference": "origin/master"
             },
             "type": "cakephp-plugin"
+        },
+        {
+            "name": "HtmlPurifier",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/burzum/HtmlPurifier",
+                "reference": "origin/master"
+            },
+            "type": "cakephp-plugin",
+            "time": "2012-10-25 20:40:29"
         },
         {
             "name": "Stripe",
@@ -292,7 +303,8 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "composer/installers": 20
+        "composer/installers": 20,
+        "htmlpurifier": 20
     },
     "platform": [
 

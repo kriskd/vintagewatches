@@ -63,6 +63,19 @@
                     "reference": "2.3"
                 }
             }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "HtmlPurifier",
+                "type": "cakephp-plugin",
+                "version": "dev-master",
+                "source": {
+                    "url": "https://github.com/burzum/HtmlPurifier",
+                    "type": "git",
+                    "reference": "origin/master"
+                }
+            }
         }
     ],
     "require": {
@@ -73,7 +86,8 @@
         "Stripe": "2.0.0",
         "stripe/stripe-php": "1.9.0",
         "twitter/bootstrap": "3.0.0",
-        "Datasources": "2.3"
+        "Datasources": "2.3",
+        "HtmlPurifier": "dev-master"
     },
     "config": {
         "vendor-dir": "Vendor"
