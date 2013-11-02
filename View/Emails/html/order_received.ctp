@@ -2,7 +2,7 @@
     <tr>
         <td bgcolor="#999999" style="border: 2px solid #665600; padding: 0px 10px; width: 450px">
             <p style="font-size: 36px; font-weight: bold; color: #665600">Bruce's Vintage Watches</p>
-            <p style="font-size: 18px; font-weight: bold; color: #665600">Fine timepieces at a reasonable prices from a name you trust.</p>
+            <p style="font-size: 18px; font-weight: bold; color: #665600">Fine timepieces at reasonable prices from a name you trust.</p>
         </td>
         <td>
             <p style="font-weight: bold; margin-left: 20px; width: 150px">
