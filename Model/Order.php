@@ -172,4 +172,19 @@ class Order extends AppModel {
 			)
 		    );
     }
+    
+    public function getShippingAmount($country = null)
+    {
+	switch($country){
+	    case 'us':
+		return '8';
+		break;
+	    case 'ca':
+		return '38';
+		break;
+	    default:
+		return '45';
+		break;
+	}
+    }
 }

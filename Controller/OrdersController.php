@@ -270,28 +270,18 @@ class OrdersController extends AppController
     public function getShipping()
     {	
 	if($this->request->is('ajax')){
-	    $shipping = null;
 	    $query = $this->request->query; 
 	    $country = $query['country'];
-	    switch($country){
-		case 'us':
-		    $shipping = '8';
-		    break;
-		case 'ca':
-		    $shipping = '38';
-		    break;
-		case 'other';
-		    $shipping = '45';
-		    break;
-	    }
-
+	    $this->Cart->setShipping($this->Order->getShippingAmount($country));
 	    $subTotal = $this->Order->getSubTotal($this->cartWatches); 
-	    $this->Cart->setShipping($shipping);
 	    $this->Cart->setTotal($subTotal);
 	    
-	    $this->set(array('data' => array('shipping' => $this->Cart->getShipping(),
-					     'total' => $this->Cart->getTotal()))
-		       );
+	    $this->set(array('data' => array(
+					'shipping' => $this->Cart->getShipping(),
+					'total' => $this->Cart->getTotal()
+				    )
+				)
+			    );
 	    $this->layout = 'ajax';
 	}
     }
