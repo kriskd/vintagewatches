@@ -1,6 +1,7 @@
 <div class="recent-watches">
     <?php if (count($recentWatches) <= 0): ?>
         <h4>Bruce's Vintage Watches is Currently Closed.</h4>
+        </div>
         <?php return; ?>
     <?php endif; ?>
     <h3>Recent Watches</h3>
