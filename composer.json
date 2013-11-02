@@ -47,7 +47,7 @@
                 "source": {
                     "url": "https://github.com/cakephp/datasources",
                     "type": "git",
-                    "reference": "2.3"
+                    "reference": "origin/2.3"
                 }
             }
         },

@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "e30ebaacad6f12a186e7a17d679ec349",
+    "hash": "01e3208aa1855bfb4bdf6318cb12e292",
     "packages": [
         {
             "name": "Datasources",
