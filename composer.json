@@ -3,19 +3,6 @@
         {
             "type": "package",
             "package": {
-                "name": "DebugKit",
-                "type": "cakephp-plugin",
-                "version": "2.2.1",
-                "source": {
-                    "url": "https://github.com/cakephp/debug_kit",
-                    "type": "git",
-                    "reference": "origin/master"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
                 "name": "TwitterBootstrap",
                 "type": "cakephp-plugin",
                 "version": "2.1",
@@ -82,7 +69,7 @@
         "composer/installers": "dev-master",
         "mjohnson/uploader": "4.*",
         "TwitterBootstrap": "2.1.*",
-        "DebugKit": "2.2.1",
+        "cakephp/debug_kit": "2.2.*@dev",
         "Stripe": "2.0.0",
         "stripe/stripe-php": "1.9.0",
         "twitter/bootstrap": "3.0.0",
