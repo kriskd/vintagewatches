@@ -6,7 +6,10 @@
                                                     'admin' => true
                                                 ),
                                                 array(
-                                                    'class' => 'btn btn-primary'
+                                                    'class' => 'btn btn-primary launch-tooltip',
+                                                    'data-toggle' => 'tooltip',
+                                                    'data-placement' => 'top',
+                                                    'title' => 'Resend customer\'s order info, will include ship date if available.'
                                                 )
                                      ); ?>
         <?php echo $this->Html->link('Edit', array(
