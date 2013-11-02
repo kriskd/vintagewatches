@@ -1278,7 +1278,7 @@
      */
     function computeTotal(country) {
         $.ajax({
-            url: '/orders/getShipping.json',
+            url: '/orders/totalCart.json',
             data: {"country" : country},
             dataType: 'json',
             cache: false,

@@ -265,9 +265,9 @@ class OrdersController extends AppController
     }
     
     /**
-     * Get country shipping and total
+     * Get shipping and total
      */
-    public function getShipping()
+    public function totalCart()
     {	
 	if($this->request->is('ajax')){
 	    $query = $this->request->query; 
@@ -295,7 +295,6 @@ class OrdersController extends AppController
 	    $query = $this->request->query; 
 	    $country = $query['country'];
 	    $shipping = $query['shipping'];
-	    //$statesProvinces = array('states' => $this->_getStates(), 'provinces' => $this->_getCanadianProvinces());
 	    $statesProvinces = array('states' => $this->State->getList(), 'provinces' => $this->Province->getList());
 	    $data = compact('shipping', 'country', 'statesProvinces');
 
