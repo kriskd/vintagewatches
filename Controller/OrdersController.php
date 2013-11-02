@@ -526,6 +526,22 @@ class OrdersController extends AppController
 	
 	$this->set(compact('addressFields', 'statesUS', 'statesCA', 'countries'));
     }
+    
+    /**
+     * Resend an order to a customer
+     */
+    public function admin_resend($id = null)
+    {
+	$this->Order->id = $id;
+	if (!$this->Order->exists()) {
+		throw new NotFoundException(__('Invalid order'));
+	}
+	
+	$order = $this->Order->getOrder($id);
+	$this->emailOrder($order);
+	$this->Session->setFlash('Order Confirmation Resent', 'success');
+	$this->redirect($this->referer());
+    }
 
 /**
  * admin_delete method
@@ -550,23 +566,35 @@ class OrdersController extends AppController
     
     public function emailOrder($order = null)
     {
-	$Email = new CakeEmail('smtp');
-	$Email->template('order_received', 'default')
-	      ->emailFormat('html')
-	      ->to(Configure::read('ordersEmail'))
-	      ->from(Configure::read('fromEmail'))
-	      ->subject('Order No. ' . $order['Order']['id'])
-	      ->viewVars(array('order' => $order))
-	      ->helpers(array('Html' => array('className' => 'MyHtml'),
-			      'Number' => array('className' => 'MyNumber')))
-	      ->send();
+	$url = $this->referer(null, true);
+	$route = Router::parse($url);
+	$action = $route['action'];
+	
+	if (strcasecmp($action, 'checkout')==0) {
+	    $Email = new CakeEmail('smtp');
+	    $Email->template('order_received', 'default')
+		  ->emailFormat('html')
+		  ->to(Configure::read('ordersEmail'))
+		  ->from(Configure::read('fromEmail'))
+		  ->subject('Order No. ' . $order['Order']['id'])
+		  ->viewVars(array('order' => $order))
+		  ->helpers(array('Html' => array('className' => 'MyHtml'),
+				  'Number' => array('className' => 'MyNumber')))
+		  ->send();
+	}
+	
+	if (empty($order['Order']['shipDate'])) {
+	    $subject = 'Thank you for your order from Bruce\'s Vintage Watches';
+	} else {
+	    $subject = 'Your order from Bruce\'s Vintage Watches was shipped on ' . date('F j, Y', strtotime($order['Order']['shipDate']));
+	}
 	
 	$Email = new CakeEmail('smtp');
 	$Email->template('order_received', 'default')
 	      ->emailFormat('html')
 	      ->to($order['Order']['email'])
 	      ->from(Configure::read('fromEmail'))
-	      ->subject('Thank you for your order from Bruce\'s Vintage Watches')
+	      ->subject($subject)
 	      ->viewVars(array('order' => $order))
 	      ->helpers(array('Html' => array('className' => 'MyHtml'),
 			      'Number' => array('className' => 'MyNumber')))

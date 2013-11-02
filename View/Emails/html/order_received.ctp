@@ -115,4 +115,19 @@
             <td colspan=2><?php echo $address['country']; ?></td>
         </tr>
     <?php endforeach; ?>
+    <?php if (!empty($order['Order']['shipDate'])): ?>
+        <tr>
+            <td colspan=4 style="padding: 0px 10px;">
+                <p style="font-size: 24px; color: #665600">Ship Date</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan=2>
+                <strong>Date Shipped</strong>
+            </td>
+            <td colspan=2>
+                <?php echo date('F j, Y', strtotime($order['Order']['shipDate'])); ?>
+            </td>
+        </tr>
+    <?php endif; ?>
 </table>

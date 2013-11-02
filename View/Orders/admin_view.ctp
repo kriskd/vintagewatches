@@ -1,6 +1,14 @@
 <div class="orders admin-view">
     <h1>
         Order <?php echo $order['Order']['id']; ?> Detail
+        <?php echo $this->Html->link('Resend', array(
+                                                    'action' => 'resend', $order['Order']['id'],
+                                                    'admin' => true
+                                                ),
+                                                array(
+                                                    'class' => 'btn btn-primary'
+                                                )
+                                     ); ?>
         <?php echo $this->Html->link('Edit', array(
                                                 'action' => 'edit', $order['Order']['id'],
                                                 'admin' => true
@@ -122,4 +130,11 @@
         <dt>CVC Check</dt>
         <dd><?php echo $order['Order']['stripe_cvc_check']; ?></dd>
     </dl>
+    <?php if(!empty($order['Order']['shipDate'])): ?>
+        <h2>Ship Date</h2>
+        <dl>
+            <dt>Date</dt>
+            <dd><?php echo $order['Order']['shipDate']; ?></dd>
+        </dl>
+    <?php endif; ?>
 </div>
