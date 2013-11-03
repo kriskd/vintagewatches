@@ -51,7 +51,6 @@ class WatchesController extends AppController {
 		$this->set('title', 'Store');
 		
 		$this->set('watches', $this->Paginator->paginate('Watch'));
-        //$this->set('_serialize', array('watches'));
 	}
 
 /**
