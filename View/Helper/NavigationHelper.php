@@ -9,7 +9,6 @@ class NavigationHelper extends AppHelper
      */
     public function storeLink($title, $url = null, $options = array(), $confirmMessage = false)
     {
-        
         if(is_string($url)){
             $url = Router::parse($this->url($url));
         } 
@@ -54,10 +53,5 @@ class NavigationHelper extends AppHelper
         }
         
         return $html;
-    }
-    
-    protected function _storeOpen()
-    {
-        return ClassRegistry::init('Watch')->storeOpen();
     }
 }
