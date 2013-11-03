@@ -83,6 +83,33 @@ class WatchesController extends AppController {
 		
 		$this->set(array('title' => $watch['Watch']['name']));
 	}
+    
+    public function xml()
+    {
+        $watches = $this->Watch->getWatches();
+        //debug($watches); exit;
+        foreach($watches as $i => $watch) {
+            //debug($this->Watch->imagePrimaryUrl($watch));
+            $xmlArray[$i] = array(
+                            'watch' => array(
+                                'stockId' => $watch['Watch']['stockId'],
+                                //'price' => $watch['Watch']['price'],
+                                //'name' => h($watch['Watch']['name']),
+                                //'description' => h(strip_tags($watch['Watch']['description'])),
+                            )
+                        );
+            $image = $this->Watch->imagePrimaryUrl($watch);
+            if (!empty($image)) {
+                //$xmlArray[$i]['watch']['image'] = $image;
+            }
+        } 
+        $xmlArray = array('watches' => $xmlArray); //debug($xmlArray); exit;
+        $xmlObject = Xml::fromArray($xmlArray/*, array('format' => 'tags')*/); // You can use Xml::build() too
+        $xmlString = $xmlObject->asXML(); //debug($xmlString); exit;
+        $this->set('xml', $xmlString);
+        
+        $this->layout = 'xml';
+    }
 
 /**
  * admin_index method

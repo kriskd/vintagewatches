@@ -167,7 +167,7 @@ class Watch extends AppModel {
                                             'active' => 1
                                         ),
                                         'order' => 'created DESC',
-                                        'fields' => array('id', 'price', 'name', 'description'),
+                                        'fields' => array('id', 'stockId', 'price', 'name', 'description'),
                                         'contain' => array('Image', 'Brand')
                                     );
             if ($count != null) {
@@ -203,4 +203,24 @@ class Watch extends AppModel {
             
             return $watchCount > 0 ? true : false;
 	}
+        
+        /**
+        * Returns primary image
+        * Repeated in helper, need to find better way
+        */
+        public function imagePrimaryUrl($watch)
+        {   
+            if (!empty($watch['Image'])) {
+                $images = $watch['Image'];
+                $primary = array_reduce($images, function($primaryExists, $item){
+                        if ($item['primary'] == 1) {
+                            $primaryExists = $item;
+                        }
+                        return $primaryExists;
+                    }, null);
+                $image = empty($primary) ? current($images) : $primary;
+                return Router::url($image['filename'], true);
+            }
+            return null;
+        }
 }
