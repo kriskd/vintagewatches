@@ -208,7 +208,7 @@ class OrdersController extends AppController
 			$detects = array();
 			foreach($methods as $id => $method) {
 			    $detect = $this->MobileDetect->detect($method);
-			    if ($detect == false) {
+			    if ($detect == true) {
 				$detects[] = $id;
 			    }
 			}
