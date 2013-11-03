@@ -58,7 +58,7 @@
                 "type": "cakephp-plugin",
                 "version": "dev-master",
                 "source": {
-                    "url": "https://github.com/burzum/HtmlPurifier",
+                    "url": "https://github.com/kriskd/HtmlPurifier",
                     "type": "git",
                     "reference": "origin/master"
                 }
