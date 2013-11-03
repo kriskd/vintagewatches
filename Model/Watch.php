@@ -168,7 +168,12 @@ class Watch extends AppModel {
                                         ),
                                         'order' => 'created DESC',
                                         'fields' => array('id', 'stockId', 'price', 'name', 'description'),
-                                        'contain' => array('Image', 'Brand')
+                                        'contain' => array(
+                                                        'Image',
+                                                        'Brand' => array(
+                                                            'name'
+                                                        )
+                                                    )
                                     );
             if ($count != null) {
                 $options['limit'] = $count;

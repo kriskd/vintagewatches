@@ -87,15 +87,17 @@ class WatchesController extends AppController {
     public function xml()
     {
         App::import('Vendor', 'zeroasterisk/CakePHP-ArrayToXml-Lib/libs/array_to_xml');
-        $watches = $this->Watch->getWatches();
+        $watches = $this->Watch->getWatches(); 
         
         foreach($watches as $i => $watch) {
             $xmlArray[$i] = array(
                             'watch' => array(
-                                'stockId' => $watch['Watch']['stockId'],
-                                'price' => $watch['Watch']['price'],
-                                'name' => h($watch['Watch']['name']),
+                                'g:id' => $watch['Watch']['stockId'],
+                                'title' => h($watch['Watch']['name']),
                                 'description' => h(strip_tags($watch['Watch']['description'])),
+                                'g:google_product_category' => h('Apparel & Accessories > Jewelry > Watches > Analog Watches'),
+                                'g:brand' => $watch['Brand']['name'],
+                                'g:price' => $watch['Watch']['price'] . ' USD',
                             )
                         );
             $image = $this->Watch->imagePrimaryUrl($watch);
@@ -103,7 +105,7 @@ class WatchesController extends AppController {
                 $xmlArray[$i]['watch']['image'] = $image;
             }
         }
-        //$xmlArray = array('watches' => $xmlArray); 
+
         $xmlString = ArrayToXml::simplexml($xmlArray, 'watches'); 
         
         $this->set('xml', $xmlString);
