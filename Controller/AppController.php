@@ -85,6 +85,7 @@ class AppController extends Controller {
         
         //Watch IDs in cart
         $cartItemIds = $this->Cart->cartItemIds(); 
+        $this->viewVars['presenter']->cart = $this->Presenter->create('Cart', compact('cartItemIds'));
         
         $vars = compact('loggedIn', 'navigation', 'storeOpen', 'cartEmpty', 'cartCount', 'cartItemIds');
         

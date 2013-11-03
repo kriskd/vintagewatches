@@ -79,6 +79,13 @@ class WatchesController extends AppController {
 			);
 		$watch = $this->Watch->find('first', $options);
 		$this->set('watch', $watch);
+        
+        // Warning (2): Creating default object from empty value [APP/Controller/WatchesController.php, line 84]
+        // $this->viewVars['presenter']->cart = $this->Presenter->create('Cart', array('itemId' => $id));
+        
+        // Try this instead
+        $this->Presenter->uses('CartPresenter');
+        $this->Presenter->setPresenter('id', $id, 'CartPresenter');
 		
 		$this->set(array('title' => $watch['Watch']['name']));
 	}

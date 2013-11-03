@@ -1,3 +1,4 @@
+<?php echo $presenter->cart->addToCart(); ?>
 <?php if(in_array($watch['Watch']['id'], $cartItemIds)): ?>
     <span class="label label-warning">This item is in your cart</span>
 <?php else: ?>
