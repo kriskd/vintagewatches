@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "73bd343e84ba878c3477bf13f27fbdf3",
+    "hash": "1b005c6914b3c6d3442482c53905f7a0",
     "packages": [
         {
             "name": "Datasources",
@@ -52,12 +52,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/debug_kit.git",
-                "reference": "fef3f83baaa585b48e3896c911f8156f2ee618cb"
+                "reference": "ba9af45c2abaa78867581d330c87acfe23b07923"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/fef3f83baaa585b48e3896c911f8156f2ee618cb",
-                "reference": "fef3f83baaa585b48e3896c911f8156f2ee618cb",
+                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/ba9af45c2abaa78867581d330c87acfe23b07923",
+                "reference": "ba9af45c2abaa78867581d330c87acfe23b07923",
                 "shasum": ""
             },
             "require": {
@@ -93,7 +93,7 @@
                 "debug",
                 "kit"
             ],
-            "time": "2013-10-28 17:17:50"
+            "time": "2013-11-03 21:52:17"
         },
         {
             "name": "chronon/mobile_detect",
@@ -421,6 +421,17 @@
                 "css"
             ],
             "time": "2013-08-19 21:18:20"
+        },
+        {
+            "name": "zeroasterisk/CakePHP-ArrayToXml-Lib",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zeroasterisk/CakePHP-ArrayToXml-Lib",
+                "reference": "origin/master"
+            },
+            "type": "library",
+            "time": "2011-11-04 20:47:02"
         }
     ],
     "packages-dev": [
@@ -433,7 +444,8 @@
     "stability-flags": {
         "composer/installers": 20,
         "cakephp/debug_kit": 20,
-        "htmlpurifier": 20
+        "htmlpurifier": 20,
+        "zeroasterisk/cakephp-arraytoxml-lib": 20
     },
     "platform": [
 

@@ -63,6 +63,18 @@
                     "reference": "origin/master"
                 }
             }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "zeroasterisk/CakePHP-ArrayToXml-Lib",
+                "version": "dev-master",
+                "source": {
+                    "url": "https://github.com/zeroasterisk/CakePHP-ArrayToXml-Lib",
+                    "type": "git",
+                    "reference": "origin/master"
+                }
+            }
         }
     ],
     "require": {
@@ -75,7 +87,8 @@
         "twitter/bootstrap": "3.0.0",
         "Datasources": "2.3",
         "HtmlPurifier": "dev-master",
-        "chronon/mobile_detect": "1.1.0"
+        "chronon/mobile_detect": "1.1.0",
+        "zeroasterisk/CakePHP-ArrayToXml-Lib": "dev-master"
     },
     "config": {
         "vendor-dir": "Vendor"
