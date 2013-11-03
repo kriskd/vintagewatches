@@ -79,12 +79,12 @@ class Order extends AppModel {
  *
  * @var array
  */
-	/*public $hasAndBelongsToMany = array(
-		'Watch' => array(
-			'className' => 'Watch',
-			'joinTable' => 'orders_watches',
+	public $hasAndBelongsToMany = array(
+		'Detect' => array(
+			'className' => 'Detect',
+			'joinTable' => 'detects_orders',
 			'foreignKey' => 'order_id',
-			'associationForeignKey' => 'watch_id',
+			'associationForeignKey' => 'detect_id',
 			'unique' => 'keepExisting',
 			'conditions' => '',
 			'fields' => '',
@@ -92,10 +92,8 @@ class Order extends AppModel {
 			'limit' => '',
 			'offset' => '',
 			'finderQuery' => '',
-			'deleteQuery' => '',
-			'insertQuery' => ''
 		)
-	);*/
+	);
         
     /**
      * $items array Array of Watch objects

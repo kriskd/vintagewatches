@@ -74,7 +74,8 @@
         "stripe/stripe-php": "1.9.0",
         "twitter/bootstrap": "3.0.0",
         "Datasources": "2.3",
-        "HtmlPurifier": "dev-master"
+        "HtmlPurifier": "dev-master",
+        "chronon/mobile_detect": "1.1.0"
     },
     "config": {
         "vendor-dir": "Vendor"

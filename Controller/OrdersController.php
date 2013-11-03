@@ -104,7 +104,7 @@ class OrdersController extends AppController
         if($this->Cart->cartEmpty() == true){
             $this->redirect(array('controller' => 'watches', 'action' => 'index'));
         }
-
+	
         $months = array_combine(range(1,12), range(1,12));
         $year = date('Y'); 
         for($i=date('Y'); $i<=date('Y')+10; $i++){
@@ -200,6 +200,27 @@ class OrdersController extends AppController
 					    return $item;
 					} , $this->cartWatches);
 		    $this->Watch->saveMany($purchasedWatches);
+		    
+		    $this->MobileDetect = $this->Components->load('MobileDetect.MobileDetect');
+		    // If mobile or tablet, get device details
+		    if ($this->MobileDetect->detect('isMobile') || $this->MobileDetect->detect('isTablet')) {
+			$methods = $this->Order->Detect->find('list', array('fields' => array('Detect.id', 'Detect.method')));
+			$detects = array();
+			foreach($methods as $id => $method) {
+			    $detect = $this->MobileDetect->detect($method);
+			    if ($detect == false) {
+				$detects[] = $id;
+			    }
+			}
+			
+			$this->Order->saveAll(array(
+						'Order' => array(
+						    'id' => $order_id
+						),
+						'Detect' => $detects
+					    )
+					);  
+		    }
 		    
 		    $this->Cart->emptyCart();
 		    $order = $this->Order->getOrder($order_id);

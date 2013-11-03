@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "01e3208aa1855bfb4bdf6318cb12e292",
+    "hash": "73bd343e84ba878c3477bf13f27fbdf3",
     "packages": [
         {
             "name": "Datasources",
@@ -94,6 +94,49 @@
                 "kit"
             ],
             "time": "2013-10-28 17:17:50"
+        },
+        {
+            "name": "chronon/mobile_detect",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/chronon/CakePHP-MobileDetectComponent-Plugin.git",
+                "reference": "d5cd7456c5a08a728c43ee4e8b784ec7ff189cad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/chronon/CakePHP-MobileDetectComponent-Plugin/zipball/d5cd7456c5a08a728c43ee4e8b784ec7ff189cad",
+                "reference": "d5cd7456c5a08a728c43ee4e8b784ec7ff189cad",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "*",
+                "mobiledetect/mobiledetectlib": "2.6.0",
+                "php": ">=5.3.0"
+            },
+            "type": "cakephp-plugin",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gregory Gaskill",
+                    "email": "one@chronon.com",
+                    "homepage": "http://technokracy.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A CakePHP plugin component for identifying mobile devices using the Mobile_Detect project.",
+            "homepage": "https://github.com/chronon/CakePHP-MobileDetectComponent-Plugin",
+            "keywords": [
+                "cakephp",
+                "component",
+                "mobile",
+                "mobile detect",
+                "plugin"
+            ],
+            "time": "2013-04-21 23:04:35"
         },
         {
             "name": "composer/installers",
@@ -238,16 +281,16 @@
         },
         {
             "name": "mjohnson/uploader",
-            "version": "4.3.6",
+            "version": "4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/milesj/uploader.git",
-                "reference": "3d385f0fe09bff711ee33cde33bbc24bee7d827f"
+                "reference": "cd5b91840a6910cd93bfd3a9791285be98460ffe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/milesj/uploader/zipball/3d385f0fe09bff711ee33cde33bbc24bee7d827f",
-                "reference": "3d385f0fe09bff711ee33cde33bbc24bee7d827f",
+                "url": "https://api.github.com/repos/milesj/uploader/zipball/cd5b91840a6910cd93bfd3a9791285be98460ffe",
+                "reference": "cd5b91840a6910cd93bfd3a9791285be98460ffe",
                 "shasum": ""
             },
             "require": {
@@ -284,7 +327,53 @@
                 "uploader",
                 "validation"
             ],
-            "time": "2013-10-18 04:38:12"
+            "time": "2013-11-03 01:29:04"
+        },
+        {
+            "name": "mobiledetect/mobiledetectlib",
+            "version": "2.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/serbanghita/Mobile-Detect.git",
+                "reference": "426411a9b1be3f28ef79647bf165e94d63bef7fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/426411a9b1be3f28ef79647bf165e94d63bef7fc",
+                "reference": "426411a9b1be3f28ef79647bf165e94d63bef7fc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "Mobile_Detect.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Serban Ghita",
+                    "email": "serbanghita@gmail.com",
+                    "homepage": "http://mobiledetect.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Mobile_Detect is a lightweight PHP class for detecting mobile devices. It uses the User-Agent string combined with specific HTTP headers to detect the mobile environment.",
+            "homepage": "https://github.com/serbanghita/Mobile-Detect",
+            "keywords": [
+                "detect mobile devices",
+                "mobile",
+                "mobile detect",
+                "mobile detector",
+                "php mobile detect"
+            ],
+            "time": "2013-04-14 22:27:11"
         },
         {
             "name": "stripe/stripe-php",
