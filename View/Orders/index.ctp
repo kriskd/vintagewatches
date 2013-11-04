@@ -10,49 +10,39 @@
 </div>
         <?php return; ?>
     <?php endif; ?>
-    <h4>Orders for <?php echo $email; ?></h4>
+    <h4>Orders for <?php echo $email; ?> <span>Click on order row for more details.</span></h4>
     <div class="row">
-        <div class="col-lg-3">
-            <?php echo $this->Paginator->sort('created', 'Date Ordered'); ?>
-        </div>
-        <div class="col-lg-2">
-            <?php echo $this->Paginator->sort('id', 'Order No.'); ?>
-        </div>
-        <div class="col-lg-2">
-            <?php echo $this->Paginator->sort('stripe_amount', 'Total Paid'); ?>
-        </div>
-        <div class="col-lg-3">
-            <?php echo $this->Paginator->sort('shipDate', 'Ship Date'); ?>
-        </div>
-        <div class="col-lg-2">
-            
+        <div class="col-lg-8 col-md-10 col-sm-12 col-xs-12">
+            <div class="table">
+                <div class="table-row row">
+                    <span class="table-head col-lg-4">
+                        <?php echo $this->Paginator->sort('created', 'Date Ordered'); ?>
+                    </span>
+                    <span class="table-head col-lg-2">
+                        <?php echo $this->Paginator->sort('id', 'Order No.'); ?>
+                    </span>
+                    <span class="table-head col-lg-2">
+                        <?php echo $this->Paginator->sort('stripe_amount', 'Total Paid'); ?>
+                    </span>
+                    <span class="table-head col-lg-4">
+                        <?php echo $this->Paginator->sort('shipDate', 'Ship Date'); ?>
+                    </span>
+                </div>
+                <?php foreach ($orders as $order): ?>
+                    <?php $row = $this->Html->tag('span', date('F j, Y', strtotime($order['Order']['created'])), array('class' => 'table-cell text-center col-lg-4')); ?>
+                    <?php $row .= $this->Html->tag('span', $order['Order']['id'], array('class' => 'table-cell text-center col-lg-2')); ?>
+                    <?php $row .= $this->Html->tag('span', $this->Number->stripe($order['Order']['stripe_amount']), array('class' => 'table-cell text-right col-lg-2')); ?>
+                    <?php if (empty($order['Order']['shipDate'])): ?>
+                        <?php $date = ''; ?>
+                    <?php else: ?>
+                        <?php $date =date('F j, Y', strtotime($order['Order']['shipDate'])); ?>
+                    <?php endif ; ?>
+                    <?php $row .= $this->Html->tag('span', $date, array('class' => 'table-cell text-center col-lg-4')); ?>
+                    <?php echo $this->Html->link($row, array('action' => 'view', $order['Order']['id']), array('class' => 'table-row row', 'escape' => false)); ?>
+                <?php endforeach; ?>
+            </div>
         </div>
     </div>
-    <?php foreach ($orders as $order): ?>
-        <div class="row">
-            <div class="col-lg-3">
-                <?php echo date('F j, Y', strtotime($order['Order']['created'])); ?>
-            </div>
-            <div class="col-lg-2">
-                <?php echo $order['Order']['id']; ?>
-            </div>
-            <div class="col-lg-2">
-                <?php echo $this->Number->stripe($order['Order']['stripe_amount']); ?>
-            </div>
-            <div class="col-lg-3">
-                <?php if (!empty($order['Order']['shipDate'])): ?>
-                    <?php echo date('F j, Y', strtotime($order['Order']['shipDate'])); ?>
-                <?php endif; ?>
-            </div>
-            <div class="col-lg-2">
-                <?php echo $this->Html->link('View',
-                                             array(
-                                                'action' => 'view', $order['Order']['id']
-                                            ),
-                                             array('class' => 'btn btn-gold')); ?>
-            </div>
-        </div>
-    <?php endforeach; ?>
     <?php echo $this->Element('paginator'); ?>
-    <?php echo $this->Html->link('Search for different orders.', array('action' => 'index', true)); ?>
+    <?php echo $this->Html->link('Search for Different Orders', array('action' => 'index', true), array('class' => 'btn btn-gold')); ?>
 </div>

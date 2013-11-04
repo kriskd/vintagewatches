@@ -1,9 +1,17 @@
 <div class="orders admin-index">
     <h1>Order Admin</h1>
-    <?php echo $this->Form->create(false, array('type' => 'get')); ?>
-        <?php echo $this->Form->input('filter', $filters + array('class' => 'form-control', 'selected' => $filter)); ?>
-        <?php echo $this->Form->input('value', array('class' => 'form-control', 'value' => $value)); ?>
-    <?php echo $this->Form->end(array('label' => 'Submit', 'class' => 'btn btn-primary')); ?>
+    <div class="row">
+        <div class="col-lg-5">
+            <?php echo $this->Form->create(false, array('type' => 'get')); ?>
+            <?php echo $this->Form->input('filter', $filters + array('class' => 'form-control', 'selected' => $filter)); ?>
+        </div>
+        <div class="col-lg-5">
+            <?php echo $this->Form->input('value', array('class' => 'form-control', 'value' => $value)); ?>
+        </div>
+        <div class="col-lg-2">
+            <?php echo $this->Form->end(array('label' => 'Submit', 'class' => 'btn btn-primary')); ?>
+        </div>
+    </div>
     <div class="table">
         <div class="table-row">
             <span class="table-head"><?php echo $this->Paginator->sort('id'); ?></span>

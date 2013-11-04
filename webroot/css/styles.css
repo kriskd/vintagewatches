@@ -6624,17 +6624,29 @@ body {
 }
 .container .content .table {
   display: table;
+  border: 2px solid #665600;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
   background: #eeeeee;
 }
 .container .content .table span {
   padding: 10px;
 }
 .container .content .table .table-head {
-  color: #665600;
+  color: #fff;
+  background: #665600;
   border-bottom: 1px solid #999999;
   display: table-cell;
   text-align: center;
   font-weight: bold;
+}
+.container .content .table .table-head a:link,
+.container .content .table .table-head a:visited,
+.container .content .table .table-head a:hover,
+.container .content .table .table-head a:active {
+  color: #fff;
 }
 .container .content .table .table-row {
   display: table-row;
@@ -7289,6 +7301,10 @@ body {
   display: none;
   height: 150px;
 }
+.container .content .orders.index h4 span {
+  font-size: 80%;
+  font-style: italic;
+}
 .container .content .confirm .notes {
   width: 500px;
 }
@@ -7298,4 +7314,10 @@ body {
 }
 .container .content .brands .input {
   margin-bottom: 10px;
+}
+.container .content .orders.admin-index .row {
+  margin-bottom: 20px;
+}
+.container .content .orders.admin-index .row input[type=submit] {
+  margin-top: 25px;
 }

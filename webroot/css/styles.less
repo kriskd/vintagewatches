@@ -214,16 +214,25 @@ body {
         }
         .table {
             display: table;
+            border: 2px solid @goldDark;
+            .border-top-radius(5px);
+            .border-right-radius(5px);
+            .border-bottom-radius(5px);
+            .border-left-radius(5px);
             background: @gray-lighter;
             span {
                 padding: 10px;
             }
             .table-head {
-                color: @goldDark;
+                color: #fff;
+                background: @goldDark;
                 border-bottom: 1px solid @gray-light;
                 display: table-cell;
                 text-align: center;
                 font-weight: bold;
+                a:link, a:visited, a:hover, a:active {
+                    color: #fff;
+                }
             }
             .table-row {
                 display: table-row;
@@ -744,6 +753,14 @@ body {
                 }
             }
         }
+        .orders.index {
+            h4 {
+                span {
+                    font-size: 80%;
+                    font-style: italic;
+                }
+            }
+        }
         .confirm {
             .notes {
                 width: 500px;
@@ -763,5 +780,13 @@ body {
                 margin-bottom: 10px;
             }
         }
-    }
+        .orders.admin-index {
+            .row {
+                margin-bottom: 20px;
+                input[type=submit] {
+                    margin-top: 25px;
+                }
+            }
+        }
+     }
 }
