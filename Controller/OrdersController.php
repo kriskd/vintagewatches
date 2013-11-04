@@ -158,9 +158,8 @@ class OrdersController extends AppController
 		$this->redirect(array('controller' => 'watches', 'action' => 'index'));
 	    }
 	    
-	    //Get the shipping amount from the session and add to Order
-	    $shippingAmount = $this->Cart->getShipping();
-	    $data['Order']['shippingAmount'] = $shippingAmount;
+	    //Add shipping to the order
+	    $data['Order']['shippingAmount'] = $this->Cart->getShipping();
 	    
 	    $valid = $this->Order->validateAssociated($data); 
 	    if($valid == true){
