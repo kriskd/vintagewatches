@@ -7308,6 +7308,9 @@ body {
 .container .content .confirm .notes {
   width: 500px;
 }
+.container .content .pages.admin-index .btn-primary {
+  margin-top: 25px;
+}
 .container .content .pages.admin-edit textarea {
   height: 300px;
   margin-bottom: 20px;
