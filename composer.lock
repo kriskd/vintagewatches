@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "95d6653aae2e4b6843f17f575eb08d10",
+    "hash": "dc5f569830b4aa439d51707eaafc3aee",
     "packages": [
         {
             "name": "Datasources",
@@ -20,11 +20,11 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/burzum/HtmlPurifier",
+                "url": "https://github.com/kriskd/HtmlPurifier",
                 "reference": "origin/master"
             },
             "type": "cakephp-plugin",
-            "time": "2012-10-25 20:40:29"
+            "time": "2013-11-02 21:37:53"
         },
         {
             "name": "Stripe",
@@ -52,12 +52,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/debug_kit.git",
-                "reference": "ba9af45c2abaa78867581d330c87acfe23b07923"
+                "reference": "38851657828bd4eca01062fcc6003a97da35634d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/ba9af45c2abaa78867581d330c87acfe23b07923",
-                "reference": "ba9af45c2abaa78867581d330c87acfe23b07923",
+                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/38851657828bd4eca01062fcc6003a97da35634d",
+                "reference": "38851657828bd4eca01062fcc6003a97da35634d",
                 "shasum": ""
             },
             "require": {
@@ -93,7 +93,7 @@
                 "debug",
                 "kit"
             ],
-            "time": "2013-11-03 21:52:17"
+            "time": "2013-11-04 02:41:24"
         },
         {
             "name": "chronon/mobile_detect",
@@ -387,16 +387,16 @@
         },
         {
             "name": "twitter/bootstrap",
-            "version": "v3.0.0",
+            "version": "v3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "e8a1df5f060bf7e6631554648e0abde150aedbe4"
+                "reference": "867e2bef8d9c9b901022899227b306a532f5baf3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/e8a1df5f060bf7e6631554648e0abde150aedbe4",
-                "reference": "e8a1df5f060bf7e6631554648e0abde150aedbe4",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/867e2bef8d9c9b901022899227b306a532f5baf3",
+                "reference": "867e2bef8d9c9b901022899227b306a532f5baf3",
                 "shasum": ""
             },
             "type": "library",
@@ -406,12 +406,12 @@
             ],
             "authors": [
                 {
-                    "name": "sugeng tigefa",
-                    "email": "tigefa@gmail.com"
-                },
-                {
                     "name": "Jacob Thornton",
                     "email": "jacobthornton@gmail.com"
+                },
+                {
+                    "name": "Mark Otto",
+                    "email": "markdotto@gmail.com"
                 }
             ],
             "description": "Sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.",
@@ -420,7 +420,7 @@
                 "bootstrap",
                 "css"
             ],
-            "time": "2013-08-19 21:18:20"
+            "time": "2013-10-30 17:03:56"
         },
         {
             "name": "zeroasterisk/CakePHP-ArrayToXml-Lib",
