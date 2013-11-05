@@ -6855,19 +6855,6 @@ body {
 .container .content .recent-watches hr {
   border-top-color: #665600;
 }
-.container .content .watches.index .header {
-  margin-bottom: 20px;
-  overflow: hidden;
-}
-.container .content .watches.index .header .btn-primary {
-  margin-right: 10px;
-}
-.container .content .watches.index .add-watch {
-  float: left;
-}
-.container .content .watches.index .btn-group {
-  float: right;
-}
 .container .content .watches.index .row {
   margin-left: 0;
   margin-right: 0;
@@ -6975,6 +6962,22 @@ body {
   text-transform: uppercase;
   font-size: 105%;
   color: #b29600;
+}
+.container .content .watches.admin-index .header {
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.container .content .watches.admin-index .header .btn-primary {
+  margin-right: 10px;
+}
+.container .content .watches.admin-index .watch-btns {
+  margin-top: 25px;
+}
+.container .content .watches.admin-index .btn-group > .btn {
+  float: none;
+}
+.container .content .watches.admin-index .btn-group .btn + .btn {
+  margin-left: -5px;
 }
 .container .content .watches.form #WatchAdminEditForm {
   margin-bottom: 20px;

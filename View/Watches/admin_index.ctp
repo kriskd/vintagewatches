@@ -1,25 +1,44 @@
-<div class="watches index">
-	<h2><?php echo __('Watches'); ?></h2>
+<div class="watches admin-index">
+    <div class="row">
+        <div class="col-lg-6">
+            <h2><?php echo __('Watches'); ?></h2>
+        </div>
+        <div class="col-lg-6 watch-btns right">
+            <?php echo $this->Html->link('Add Watch', array('action' => 'add'), array('class' => 'btn btn-primary add-watch')); ?>
+            <?php echo $this->Watch->closeOpenStore($storeOpen); ?>
+        </div>
+    </div>
     <section class="header">
-        <?php echo $this->Html->link('Add Watch', array('action' => 'add'), array('class' => 'btn btn-primary add-watch')); ?>
-        <?php echo $this->Watch->closeOpenStore($storeOpen); ?>
-        <div class="btn-group">
-            <?php foreach ($buttons as $button => $attrs): ?>
-                <?php $class = array('btn', 'btn-default'); ?>
-                <?php if ($sold === $attrs['sold'] && $active === $attrs['active']): ?>
-                    <?php $class[] = 'active'; ?>
-                <?php endif; ?>
-                <?php echo $this->Html->link($button, array(
-                                    'action' => 'index',
-                                    'active' => $attrs['active'],
-                                    'sold' => $attrs['sold']
-                                ),
-                                array(
-                                    'class' => implode(' ', $class),
-                                    'admin' => true
-                                )
-                             ); ?>
-            <?php endforeach; ?>
+        <div class="row">
+            <div class="col-lg-4">
+                <?php echo $this->Form->create('Watch', array('type' => 'get')); ?>
+                    <?php echo $this->Form->input('Brand.id', array(
+                                                                'options' => $brands,
+                                                                'class' => 'form-control',
+                                                                'label' => false,
+                                                                'selected' => $brand_id
+                                                            )
+                                                  ); ?>
+                <?php echo $this->Form->end(); ?>
+            </div>
+            <div class="col-lg-8 btn-group right">
+                <?php foreach ($buttons as $button => $attrs): ?>
+                    <?php $class = array('btn', 'btn-default'); ?>
+                    <?php if ($sold === $attrs['sold'] && $active === $attrs['active']): ?>
+                        <?php $class[] = 'active'; ?>
+                    <?php endif; ?>
+                    <?php echo $this->Html->link($button, array(
+                                        'action' => 'index',
+                                        'active' => $attrs['active'],
+                                        'sold' => $attrs['sold']
+                                    ),
+                                    array(
+                                        'class' => implode(' ', $class),
+                                        'admin' => true
+                                    )
+                                 ); ?>
+                <?php endforeach; ?>
+            </div>
         </div>
     </section>
     <div class="table">

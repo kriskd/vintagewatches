@@ -1240,6 +1240,10 @@
         setCookie('hideWatchIntro', 0, 90);
     });
     
+    $(document).on('change', '#WatchAdminIndexForm', function(){
+        $(this).submit(); 
+    });
+    
     /**
      * Check if a country is selected
      * Enable/disable submit button

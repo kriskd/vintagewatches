@@ -117,13 +117,21 @@ class WatchesController extends AppController {
  * @return void
  */
 	public function admin_index()
-	{	
+	{
 		$active = isset($this->params['named']['active']) ? (int)$this->params['named']['active'] : null;
 		$sold = isset($this->params['named']['sold']) ? (int)$this->params['named']['sold'] : null;
 		
-		$this->paginate['conditions'] = $this->Watch->getWatchesConditions($active, $sold);
+		$brand_id = '';
+		if (!empty($this->params->query['id'])) {
+		    $brand_id = $this->params->query['id'];
+		    $this->paginate['conditions']['brand_id'] = $brand_id;
+		}
+		
+		$this->paginate['conditions'][] = $this->Watch->getWatchesConditions($active, $sold);
 		$this->paginate['fields'] = array('id', 'stockId', 'price', 'name', 'description', 'created', 'modified');
 		$this->Paginator->settings = $this->paginate;
+		
+		$brands = array('' => 'Show All') + $this->Watch->Brand->find('list', array('order' => 'name')); 
 		
 		$buttons = array(
 			'All Watches' => array('active' => null, 'sold' => null),
@@ -133,7 +141,7 @@ class WatchesController extends AppController {
 			'Inactive Watches' => array('active' => 0, 'sold' => null)
 		);
 		
-		$this->set(array('watches' => $this->paginate()) + compact('active', 'sold', 'buttons')); 
+		$this->set(array('watches' => $this->paginate()) + compact('active', 'sold', 'buttons', 'brands', 'brand_id')); 
 	}
 
 /**
