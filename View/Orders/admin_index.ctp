@@ -1,14 +1,14 @@
 <div class="orders admin-index">
     <h1>Order Admin</h1>
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
             <?php echo $this->Form->create(false, array('type' => 'get')); ?>
             <?php echo $this->Form->input('filter', $filters + array('class' => 'form-control', 'selected' => $filter)); ?>
         </div>
-        <div class="col-lg-5">
+        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
             <?php echo $this->Form->input('value', array('class' => 'form-control', 'value' => $value)); ?>
         </div>
-        <div class="col-lg-2">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
             <?php echo $this->Form->end(array('label' => 'Submit', 'class' => 'btn btn-primary')); ?>
         </div>
     </div>
