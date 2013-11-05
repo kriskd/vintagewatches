@@ -1,16 +1,16 @@
 <div class="watches admin-index">
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
             <h2><?php echo __('Watches'); ?></h2>
         </div>
-        <div class="col-lg-6 watch-btns right">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 watch-btns right">
             <?php echo $this->Html->link('Add Watch', array('action' => 'add'), array('class' => 'btn btn-primary add-watch')); ?>
             <?php echo $this->Watch->closeOpenStore($storeOpen); ?>
         </div>
     </div>
     <section class="header">
         <div class="row">
-            <div class="col-lg-4">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                 <?php echo $this->Form->create('Watch', array('type' => 'get')); ?>
                     <?php echo $this->Form->input('Brand.id', array(
                                                                 'options' => $brands,
@@ -21,7 +21,7 @@
                                                   ); ?>
                 <?php echo $this->Form->end(); ?>
             </div>
-            <div class="col-lg-8 btn-group right">
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 btn-group right">
                 <?php foreach ($buttons as $button => $attrs): ?>
                     <?php $class = array('btn', 'btn-default'); ?>
                     <?php if ($sold === $attrs['sold'] && $active === $attrs['active']): ?>
