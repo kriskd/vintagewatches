@@ -1,5 +1,5 @@
 @import "less/bootstrap.less";
-@grid-float-breakpoint:     @screen-md;
+@grid-float-breakpoint:     @screen-md-min;
 @import "navbar.less";
 
 
@@ -88,7 +88,7 @@ body {
 }
 
 //Small screens - credit card logos are in the navbar-header and don't become part of dropdown
-@media (min-width: @screen-xs) and (max-width: @screen-sm-max) {
+@media (min-width: @screen-xs-min) and (max-width: @screen-sm-max) {
     .navbar {
         .navbar-right {
             img {
@@ -125,7 +125,7 @@ body {
     }
 }
 
-@media (min-width: @screen-lg) {
+@media (min-width: @screen-lg-min) {
     .navbar {
         .navbar-right {
             img {
@@ -357,13 +357,13 @@ body {
                 .watch-details {
                     height: auto;
                     padding: 15px;
-                    @media (min-width: @screen-sm) and (max-width: @screen-sm-max) {
+                    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
                         height: 500px;
                     }
-                    @media (min-width: @screen-md) {
+                    @media (min-width: @screen-md-min) {
                         height: 400px;
                     }
-                    @media (min-width: @screen-lg) {
+                    @media (min-width: @screen-lg-min) {
                         height: 325px;
                     }
                     .description {
@@ -557,11 +557,11 @@ body {
                     padding-left: 15px;
                     padding-right: 15px;
                 }
-                @media (min-width: @screen-sm) and (max-width: @screen-sm-max) {
+                @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
                     padding-left: 25px;
                     padding-right: 25px;
                 }
-                @media (min-width: @screen-md) {
+                @media (min-width: @screen-md-min) {
                     padding-left: 0px;
                     padding-right: 0px;
                 }
@@ -572,7 +572,7 @@ body {
                         margin-bottom: 45px;
                     }
                     //min-height and push add to cart to bottom for lg only
-                    @media (min-width: @screen-lg) {
+                    @media (min-width: @screen-lg-min) {
                         position: relative;
                         min-height: 525px;
                         .bottom {
@@ -634,7 +634,7 @@ body {
                 float: left;
                 text-align: right;
             }
-            @media (max-width: @screen-sm) {
+            @media (max-width: @screen-sm-min) {
                 .control-label {
                     text-align: left;
                 }
