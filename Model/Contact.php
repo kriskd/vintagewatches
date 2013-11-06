@@ -12,6 +12,15 @@ class Contact extends AppModel {
  * @var string
  */
 	public $displayField = 'name';
+        
+        public $actsAs = array(
+            'HtmlPurifier.HtmlPurifier' => array( 
+                'config' => 'StripAll',
+                'fields' => array(
+                    'name', 'email', 'comment'
+                )
+            )
+        );
 
 /**
  * Validation rules

@@ -27,6 +27,15 @@ class Order extends AppModel {
 		)
 	    )
         );
+    
+    public $actsAs = array(
+	'HtmlPurifier.HtmlPurifier' => array( 
+	    'config' => 'StripAll',
+	    'fields' => array(
+		'email', 'phone', 'notes', 'orderNotes',
+	    )
+	)
+    );
 
     /**
      * Remove the order_id on the watch after order is deleted

@@ -10,6 +10,16 @@ class Address extends AppModel {
     public $virtualFields = array(
         'name' => 'CONCAT(Address.firstName, " ", Address.lastName)'
     );
+    
+    public $actsAs = array(
+	'HtmlPurifier.HtmlPurifier' => array( 
+	    'config' => 'StripAll',
+	    'fields' => array(
+		'firstName', 'lastName', 'company', 'address1',
+		'address2', 'city', 'state', 'postalCode', 'country'
+	    )
+	)
+    );
 
 /**
  * Validation rules
