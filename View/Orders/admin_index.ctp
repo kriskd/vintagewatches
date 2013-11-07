@@ -20,6 +20,7 @@
             <span class="table-head"><?php echo $this->Paginator->sort('stripe_amount'); ?></span>
             <span class="table-head"><?php echo $this->Paginator->sort('shipDate', 'Ship Date'); ?></span>
             <span class="table-head"><?php echo $this->Paginator->sort('created'); ?></span>
+            <span class="table-head"><?php echo $this->Paginator->sort('modified'); ?></span>
         </div>
         <?php foreach($orders as $order): ?>
             <?php $row = $this->Html->tag('span', $order['Order']['id'], array('class' => 'table-cell')); ?>
@@ -28,6 +29,7 @@
             <?php $row .= $this->Html->tag('span', $this->Number->stripe($order['Order']['stripe_amount']), array('class' => 'table-cell right')); ?>
             <?php $row .= (isset($order['Order']['shipDate'])) ? $this->Html->tag('span', $order['Order']['shipDate'], array('class' => 'table-cell text-center')) : $this->Html->tag('span', '', array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', $order['Order']['created'], array('class' => 'table-cell text-center')); ?>
+            <?php $row .= $this->Html->tag('span', $order['Order']['modified'], array('class' => 'table-cell text-center')); ?>
             <?php echo $this->Html->link($row, array('action' => 'admin_view', $order['Order']['id'], 'admin' => true), array('class' => 'table-row', 'escape' => false)); ?>
         <?php endforeach; ?>
     </div>

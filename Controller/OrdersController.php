@@ -445,7 +445,7 @@ class OrdersController extends AppController
 	    }
 	} 
 
-	$this->paginate['fields'] = array('id', 'email', 'stripe_id', 'stripe_amount', 'shipDate', 'created');
+	$this->paginate['fields'] = array('id', 'email', 'stripe_id', 'stripe_amount', 'shipDate', 'created', 'modified');
 	$this->Paginator->settings = array_merge($this->paginate, $options); 
 	$this->set(array(
 		    'orders' => $this->Paginator->paginate('Order')
