@@ -7046,6 +7046,21 @@ body {
   padding: 5px 10px;
   margin-bottom: 5px;
 }
+@media (min-width: 480px) and (max-width: 991px) {
+  .container .content .watches.index .watch .watch-attrs .stockid {
+    text-align: left;
+  }
+}
+@media (min-width: 992px) {
+  .container .content .watches.index .watch .watch-attrs .stockid {
+    text-align: center;
+  }
+}
+@media (min-width: 1200px) {
+  .container .content .watches.index .watch .watch-attrs .stockid {
+    text-align: center;
+  }
+}
 .container .content .watches.index .watch .watch-attrs .price {
   text-align: right;
 }

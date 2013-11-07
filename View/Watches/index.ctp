@@ -66,13 +66,13 @@
                                                      array('action' => 'index', 'brand' => strtolower($watch['Brand']['id'])),
                                                      array('escape' => false)); ?>
                     </div>*/ ?>
-                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 name">
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 name">
                         <?php echo $this->Html->link(h($watch['Watch']['name']), array('action' => 'view', $watch['Watch']['id']), array('escape' => false)); ?>
                     </div>
-                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 stockid">
-                        <?php echo h($watch['Watch']['stockId']); ?>
+                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 stockid">
+                        Stock Number <?php echo h($watch['Watch']['stockId']); ?>
                     </div>
-                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 price">
+                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 price">
                         <?php echo h($this->Number->currency($watch['Watch']['price'], 'USD')); ?>
                     </div>
                 </div>
