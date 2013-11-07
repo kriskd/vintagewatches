@@ -35,13 +35,7 @@ class AppModel extends Model {
     
     public $actsAs = array(
                         'Containable',
-                        'HtmlPurifier.HtmlPurifier' => array(
-                            'config' => 'MyPurifier',
-                            'fields' => array(
-                                'value', 'description'
-                                )
-                            )
-                        );
+                    );
     
     
     /**

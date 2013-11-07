@@ -12,6 +12,15 @@ class Watch extends AppModel {
  * @var string
  */
 	public $displayField = 'name';
+        
+        public $actsAs = array(
+                    'HtmlPurifier.HtmlPurifier' => array(
+                        'config' => 'MyPurifier',
+                        'fields' => array(
+                                'description'
+                            )
+                        )
+                    );
 
 /**
  * Validation rules

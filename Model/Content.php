@@ -6,6 +6,15 @@ App::uses('AppModel', 'Model');
  * @property Page $Page
  */
 class Content extends AppModel {
+    
+    public $displayField = 'name';	public $actsAs = array(
+                'HtmlPurifier.HtmlPurifier' => array(
+                    'config' => 'MyPurifier',
+                    'fields' => array(
+                            'value'
+                        )
+                    )
+                );
 
 /**
  * Validation rules
