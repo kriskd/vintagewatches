@@ -18,7 +18,7 @@
             <ul class="nav navbar-nav">
                 <?php if($loggedIn == true): ?>
                     <li class="dropdown <?php echo $this->params->prefix == 'admin' ? 'active' : ''; ?>">
-                        <?php echo $this->Html->link('<i class="glyphicon glyphicon-wrench"></i> Admin<span class="caret"></span>',
+                        <?php echo $this->Html->link('<span class="glyphicon glyphicon-wrench"></span> Admin<span class="caret"></span>',
                                                      array('controller' => 'orders', 'action' => 'index', 'admin' => true),
                                                      array('data-toggle' => 'dropdown', 'escape' => false)); ?>
                         <ul class="dropdown-menu">
