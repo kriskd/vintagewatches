@@ -128,8 +128,10 @@
         <dd><?php echo $order['Order']['stripe_id']; ?></dd>
         <dt>Last 4 CCD Digits</dt>
         <dd><?php echo $order['Order']['stripe_last4']; ?></dd>
-        <dt>Address/Zip Check</dt>
-        <dd><?php echo $order['Order']['stripe_address_zip_check']; ?></dd>
+        <dt>Address Check</dt>
+        <dd><?php echo $order['Order']['stripe_address_check']; ?></dd>
+        <dt>Zip Check</dt>
+        <dd><?php echo $order['Order']['stripe_zip_check']; ?></dd>
         <dt>CVC Check</dt>
         <dd><?php echo $order['Order']['stripe_cvc_check']; ?></dd>
     </dl>
