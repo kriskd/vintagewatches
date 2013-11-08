@@ -62,6 +62,18 @@ $(document).ready(function(){
         $(this).submit(); 
     });
     
+    $(document).on('change', '#Address0Country, #Address1Country', function(){
+        var id = $(this).attr('id');
+        var addressId = id.match(/\d/);
+        var country = $(this).val();
+        console.log(id + ' ' + addressId + ' ' + country);
+        if (country !='US' && country !='CA') {
+            $('#Address' + addressId + 'State').removeAttr('required').parent('.input').hide();
+        } else {
+            $('#Address' + addressId + 'State').attr('required', 'required').parent('.input').show();
+        }
+    });
+    
     /**
      * Check if a country is selected
      * Enable/disable submit button

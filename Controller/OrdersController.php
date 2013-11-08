@@ -511,7 +511,15 @@ class OrdersController extends AppController
 		unset($this->request->data['Order']['delete_shipping_address']);
 	    }
 	    
-	    $this->request->data['Order']['id'] = $id; 
+	    //Unset state if not US or Canada
+	    foreach ($this->request->data['Address'] as &$address) {
+		if (!in_array($address['country'], array('US', 'CA'))) {
+		    unset($address['state']);
+		}
+	    }
+	    unset($address);
+
+	    $this->request->data['Order']['id'] = $id;
 	    if ($this->Order->saveAssociated($this->request->data)) { 
 		$this->Session->setFlash(__('The order has been saved'), 'success');
 		$this->redirect(array('action' => 'edit', $id));
