@@ -90,7 +90,11 @@ class AppController extends Controller {
     }
     
     public function beforeFilter()
-    {   
+    {
+        if (prod() == true && (isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'])) {
+	    $this->redirect('http://' . env('SERVER_NAME') . $this->here);
+	}
+        
         $this->Cookie->domain = env('HTTP_BASE');
         
         if (empty($this->params['prefix'])) {
