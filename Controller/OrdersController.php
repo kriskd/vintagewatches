@@ -12,6 +12,9 @@ class OrdersController extends AppController
 			    )
 			);
     
+    public $components = array(
+			    'Security'
+			);
     protected $cartItemIds = array();
     protected $cartWatches = array();
     
@@ -25,6 +28,8 @@ class OrdersController extends AppController
 	
 	$this->cartItemIds = $this->Cart->cartItemIds();
         $this->cartWatches = $this->Watch->getCartWatches($this->cartItemIds);
+	
+	$this->Security->unlockedActions = array('checkout', 'totalCart', 'getAddress', 'getCountry', 'admin_edit');
 	
 	parent::beforeFilter();
     }
@@ -101,6 +106,10 @@ class OrdersController extends AppController
     
     public function checkout()
     {
+	if (prod() == true)  {
+	    $this->Security->requireSecure();
+	}
+	
         if($this->Cart->cartEmpty() == true){
             $this->redirect(array('controller' => 'watches', 'action' => 'index'));
         }
