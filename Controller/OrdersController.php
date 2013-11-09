@@ -26,6 +26,12 @@ class OrdersController extends AppController
 	$this->cartItemIds = $this->Cart->cartItemIds();
         $this->cartWatches = $this->Watch->getCartWatches($this->cartItemIds);
 	
+	if (prod() == true) {
+	    if (strcasecmp($this->action, 'checkout' == 0)) {
+		$this->redirect('https://' . env('SERVER_NAME') . $this->here);
+	    }
+	}
+	
 	parent::beforeFilter();
     }
     
@@ -101,12 +107,6 @@ class OrdersController extends AppController
     
     public function checkout()
     {
-	if (prod() == true)  {
-	    $url = Router::url($this->here, true);
-	    $pieces = parse_url($url);
-	    $this->redirect('https://' . $pieces['host'] . $pieces['path']);
-	}
-	
         if($this->Cart->cartEmpty() == true){
             $this->redirect(array('controller' => 'watches', 'action' => 'index'));
         }
