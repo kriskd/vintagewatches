@@ -91,8 +91,10 @@ class AppController extends Controller {
     
     public function beforeFilter()
     {
+        $secure = array('orders/checkout', 'orders/totalCart', 'orders/getAddress', 'orders/getCountry');
+        
         //Redirect to non-secure if https and not on checkout
-        if (prod() == true && (isset($_SERVER['HTTPS']) || $_SERVER['HTTPS']) && strcasecmp(trim($this->here, '/'), 'orders/checkout')!=0) {
+        if (prod() == true && (isset($_SERVER['HTTPS']) || $_SERVER['HTTPS']) && !in_array(trim($this->here, '/'), $secure)) {
 	    $this->redirect('http://' . env('SERVER_NAME') . $this->here);
 	}
         
