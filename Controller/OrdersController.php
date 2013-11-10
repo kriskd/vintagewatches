@@ -375,6 +375,7 @@ class OrdersController extends AppController
 	$filters = array(
 		'' => 'Show All',
 		'Order.email' => 'Email',
+		'Address.lastName' => 'Billing Last Name',
 		'Address.postalCode' => 'Billing Postal Code',
 		'Watch.stockId' => 'Watch Stock ID',
 		'Brand.name' => 'Watch Brand'
@@ -386,6 +387,7 @@ class OrdersController extends AppController
 	    if (!empty($filter) && !empty($value)){
 		$options['conditions'] = array($filter => $value);
 		switch ($filter) {
+		    case 'Address.lastName':
 		    case 'Address.postalCode':
 			$options['joins'] = array(
 			    array(
@@ -398,7 +400,7 @@ class OrdersController extends AppController
 			    )
 			);
 			$options['contain'] = array('Address' => array(
-								    'fields' => 'id', 'type', 'postalCode' 
+								    'fields' => 'id', 'type', 'lastName', 'postalCode' 
 								)
 						    );
 			$options['conditions']['Address.type'] = 'billing';
