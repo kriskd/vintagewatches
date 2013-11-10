@@ -20,14 +20,17 @@
                                                                 'action' => 'index'
                                                                 )
                                                             ); ?></li>
-                                    <?php if ($cartEmpty == false): ?>
-                                        <li>Items in Your Cart: <?php echo $cartCount; ?></li>
-                                        <?php echo $this->Html->link('Checkout',
-                                                                         array('controller' => 'orders', 'action' => 'checkout', 'admin' => false),
-                                                                         array('escape' => false),
-                                                                         false); ?>
-                                    <?php endif; ?>
                                 </ul>
+                                <?php if ($cartEmpty == false): ?>
+                                    <h4>Items in Your Cart: <?php echo $cartCount; ?></h4>
+                                    <ul>
+                                        <li><?php echo $this->Html->link('Checkout',
+                                                                     array('controller' => 'orders', 'action' => 'checkout', 'admin' => false),
+                                                                     array('escape' => false),
+                                                                     false); ?></li>
+                                    </ul>
+                                <?php endif; ?>
+                                
                             </div>
                             <?php if (!empty($brands)): ?>
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
