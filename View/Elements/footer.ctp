@@ -21,7 +21,7 @@
                                                                 )
                                                             ); ?></li>
                                     <?php if ($cartEmpty == false): ?>
-                                        <li>Items in Your Cart: ' . $cartCount</li>
+                                        <li>Items in Your Cart: <?php echo $cartCount; ?></li>
                                         <?php echo $this->Html->link('Checkout',
                                                                          array('controller' => 'orders', 'action' => 'checkout', 'admin' => false),
                                                                          array('escape' => false),
