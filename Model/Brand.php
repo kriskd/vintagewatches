@@ -74,5 +74,27 @@ class Brand extends AppModel {
             } 
             return false;
         }
-
+        
+        /**
+         * Get brands that have active watches
+         */
+        public function getBrandsWithWatches()
+        {
+            $options['joins'] = array(
+                        array(
+                            'table' => 'watches',
+                            'alias' => 'Watch',
+                            'type' => 'INNER',
+                            'conditions' => array(
+                                'Watch.brand_id = Brand.id',
+                                'Watch.active' => 1,
+                                'Watch.order_id' => null
+                        )
+                    )
+                );
+            $options['group'] = array('Brand.id');
+            $options['order'] = array('Brand.name');
+            
+            return $this->find('list', $options);
+        }
 }

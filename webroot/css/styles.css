@@ -6593,14 +6593,6 @@ body {
   float: right;
   margin-top: 10px;
 }
-.navbar .navbar-fixed-bottom .navbar-text {
-  float: none;
-}
-.navbar .navbar-fixed-bottom p {
-  text-align: center;
-  font-size: 90%;
-  font-weight: bold;
-}
 @media (min-width: 480px) and (max-width: 991px) {
   .navbar .navbar-right img {
     display: none;
@@ -6635,17 +6627,66 @@ body {
   }
 }
 .footer {
-  height: 50px;
-  margin-top: -50px;
+  height: 250px;
+  margin-top: -250px;
+}
+.footer a:link:not(.btn),
+.footer a:visited:not(.btn),
+.footer a:active:not(.btn) {
+  color: #665600;
+}
+.footer a:hover:not(.btn) {
+  color: #b29600;
 }
 .footer .navbar {
   margin-bottom: 0px;
+  border-radius: 0px;
+}
+.footer .navbar-default .constant-contact {
+  width: 260px;
+  text-align: center;
+}
+.footer .navbar-default .constant-contact .constant-contact-head {
+  text-align: left;
+  line-height: 18px;
+}
+.footer .navbar-default .constant-contact table {
+  text-align: center;
+  margin: auto;
+  background: #ffffcc;
+  border: 2px solid #000000;
+  width: 253px;
+}
+.footer .navbar-default .constant-contact table td {
+  padding: 10px 3px;
+  text-align: center;
+}
+.footer .navbar-default .constant-contact table .constant-contact-title {
+  font-weight: bold;
+  font-family: Arial;
+  font-size: 13px;
+  color: #000000;
+}
+.footer .navbar-default .constant-contact table .constant-contact-body {
+  border-top: 2px solid #000000;
+}
+.footer .navbar-default .constant-contact table .constant-contact-body form {
+  margin-bottom: 2px;
+}
+.footer .navbar-default .constant-contact table .constant-contact-body form label {
+  font-weight: normal;
+  font-family: Arial;
+  font-size: 13px;
+  color: #000000;
+}
+.footer .navbar-default .constant-contact table .constant-contact-body form input[name=ea] {
+  width: 150px;
 }
 .container {
   min-height: 100%;
 }
 .container .content {
-  margin-bottom: 55px;
+  margin-bottom: 255px;
 }
 .container .content:before,
 .container .content:after {
@@ -6988,6 +7029,13 @@ body {
 }
 .container .content .watches.index .watches-header:after {
   clear: both;
+}
+.container .content .watches.index .watches-header h2 {
+  color: #665600;
+}
+.container .content .watches.index .watches-header h3 a:link,
+.container .content .watches.index .watches-header h3 a:visited {
+  color: #b29600;
 }
 .container .content .watches.index .watches-header .show-text {
   position: absolute;

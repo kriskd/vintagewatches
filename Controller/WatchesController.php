@@ -45,6 +45,8 @@ class WatchesController extends AppController {
 		if (!empty($this->params->named['brand'])) {
 		    $brand_id = $this->params->named['brand'];
 		    $this->paginate['conditions']['brand_id'] = $brand_id;
+            $brand = $this->Brand->field('name', array('id' => $brand_id));
+            $this->set(compact('brand'));
 		}
 		$this->paginate['fields'] = array('id', 'stockId', 'price', 'name', 'description');
 		$this->Paginator->settings = $this->paginate;

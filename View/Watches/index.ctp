@@ -1,7 +1,11 @@
 <div class="watches index">
     <div class="watches-header row">
         <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
-            <h2 class="pull-left"><?php echo __('Welcome to the Watches Page'); ?></h2>
+            <h2><?php echo __('Bruce\'s Vintage Watches'); ?></h2>
+            <?php if (isset($brand)): ?>
+                <h4>You are currently viewing <?php echo $brand; ?> watches.
+                <?php echo $this->Html->link('View All Watches', array('action' => 'index')); ?>.</h4>
+            <?php endif; ?>
         </div>
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 show-text">
             <?php echo $this->Html->link($this->Html->tag('span', '', array(

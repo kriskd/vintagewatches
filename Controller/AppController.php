@@ -55,7 +55,7 @@ class AppController extends Controller {
                                'Navigation'
                             );
     
-    public $uses = array('Page', 'Watch');
+    public $uses = array('Page', 'Watch', 'Brand');
     
     /**
      * Send the Controller object to the View so Helpers can initialize a Component with it
@@ -81,9 +81,12 @@ class AppController extends Controller {
         $cartCount = $this->Cart->cartItemCount();
         
         //Watch IDs in cart
-        $cartItemIds = $this->Cart->cartItemIds(); 
+        $cartItemIds = $this->Cart->cartItemIds();
         
-        $vars = compact('loggedIn', 'navigation', 'storeOpen', 'cartEmpty', 'cartCount', 'cartItemIds');
+        //Brands with watches
+        $brands = $this->Brand->getBrandsWithWatches();
+        
+        $vars = compact('loggedIn', 'navigation', 'storeOpen', 'cartEmpty', 'cartCount', 'cartItemIds', 'brands');
         
         $this->set(array('controller' => $this, 'name' => $this->name) + $vars);
         parent::beforeRender();
