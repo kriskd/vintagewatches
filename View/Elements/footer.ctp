@@ -2,15 +2,15 @@
     <nav class="navbar navbar-default" role="navigation">
         <div class="container">
             <div class="row">
-                <div class="sitemap col-lg-9">
+                <div class="sitemap col-lg-9 col-md-8 col-sm-7 col-xs-12">
                     <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-sm">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <h3>Sitemap</h3>
                         </div>
                     </div>
                     <div class="row">
                         <?php if ($storeOpen == true): ?>
-                            <div class="col-lg-4">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                 <h4>All Watches</h4>
                                 <ul>
                                     <li><?php echo $this->Html->link(
@@ -30,8 +30,8 @@
                                 </ul>
                             </div>
                             <?php if (!empty($brands)): ?>
-                                <div class="col-lg-4">
-                                    <h4>Watches By Brand</h4>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <h4>By Brand</h4>
                                     <ul>
                                         <?php foreach ($brands as $id => $brand): ?>
                                             <?php echo $this->Html->tag('li', $this->Html->link($brand, array(
@@ -44,7 +44,7 @@
                                 </div>
                             <?php endif; ?>
                         <?php endif; ?>
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                             <h4>Support</h4>
                             <ul>
                                 <?php echo $this->Element('support'); ?>
@@ -52,7 +52,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="pull-right constant-contact col-lg-3">
+                <div class="constant-contact col-lg-3 col-md-4 col-sm-5 col-xs-12">
                     <!-- BEGIN: Constant Contact Basic Opt-in Email List Form -->
                     <h5 class="constant-contact-head">Join my mailing list and be among the first to know about new watches
                     added to my website!</h5>
@@ -62,7 +62,7 @@
                         </tr>
                         <tr>
                             <td class="constant-contact-body">
-                                <form name="ccoptin" action="http://visitor.r20.constantcontact.com/d.jsp" target="_blank" method="post" class="form-inline">
+                                <form name="ccoptin" action="http://visitor.r20.constantcontact.com/d.jsp" target="_blank" method="post" class="form-inline" role="form">
                                     <input type="hidden" name="llr" value="9wat99bab">
                                     <input type="hidden" name="m" value="1101485671130">
                                     <input type="hidden" name="p" value="oi">
