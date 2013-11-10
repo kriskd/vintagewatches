@@ -2,7 +2,7 @@
     <nav class="navbar navbar-default" role="navigation">
         <div class="container">
             <div class="row">
-                <div class="sitemap col-lg-9 col-md-8 col-sm-7 col-xs-12">
+                <div class="sitemap col-lg-9 col-md-8 col-sm-7 col-xs-5 col-xxs-12">
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <h3>Sitemap</h3>
@@ -55,7 +55,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="constant-contact col-lg-3 col-md-4 col-sm-5 col-xs-12">
+                <div class="constant-contact col-lg-3 col-md-4 col-sm-5 col-xs-7 col-xxs-12">
                     <!-- BEGIN: Constant Contact Basic Opt-in Email List Form -->
                     <h5 class="constant-contact-head">Join my mailing list and be among the first to know about new watches
                     added to my website!</h5>
