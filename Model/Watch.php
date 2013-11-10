@@ -128,7 +128,8 @@ class Watch extends AppModel {
                                         'conditions' => array('Watch.id' => $ids),
                                         'fields' => array('id', 'stockId', 'price', 'name'),
                                         'contain' => array(
-                                                        'Brand' => array('fields' => 'name')
+                                                        'Brand' => array('fields' => 'name'),
+                                                        'Image'
                                                     )
                                     )
                                 );
