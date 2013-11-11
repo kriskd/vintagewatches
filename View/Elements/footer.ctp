@@ -26,7 +26,12 @@
                                                                      false); ?></li>
                                     </ul>
                                 <?php endif; ?>
-                                
+                                <h4>eBay</h4>
+                                <?php echo $this->Html->image('http://pics.ebay.com/aw/pics/ebay_my_button.gif', array(
+                                                                                    'url' => 'http://cgi6.ebay.com/ws/ebayISAPI.dll?ViewListedItemsLinkButtons&userid=brtime',
+                                                                                    'alt' => 'My items on eBay'
+                                                                                )
+                                ); ?>
                             </div>
                             <?php if (!empty($brands)): ?>
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
