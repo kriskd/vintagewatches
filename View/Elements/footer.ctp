@@ -35,7 +35,7 @@
                             </div>
                             <?php if (!empty($brands)): ?>
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                    <h4>By Brand</h4>
+                                    <h4>Brands Available Now</h4>
                                     <ul>
                                         <?php foreach ($brands as $id => $brand): ?>
                                             <?php echo $this->Html->tag('li', $this->Html->link($brand, array(
