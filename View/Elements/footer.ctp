@@ -33,11 +33,11 @@
                                                                                 )
                                 ); ?>
                             </div>
-                            <?php if (!empty($brands)): ?>
+                            <?php if (!empty($brandsWithWatches)): ?>
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                     <h4>Brands Available Now</h4>
                                     <ul>
-                                        <?php foreach ($brands as $id => $brand): ?>
+                                        <?php foreach ($brandsWithWatches as $id => $brand): ?>
                                             <?php echo $this->Html->tag('li', $this->Html->link($brand, array(
                                                                                                         'controller' => 'watches',
                                                                                                         'action' => 'index',
