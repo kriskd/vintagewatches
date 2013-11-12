@@ -3,14 +3,14 @@
     <?php echo $this->Form->create('Brand', array('autocomplete' => 'off')); ?>
     <?php if (!empty($brands)): ?>
         <p><strong>Edit/Delete Brands</strong></p>
-        <?php foreach ($brands as $brand): ?>
-            <?php echo $this->Form->input('Brand.'.$brand['Brand']['id'].'.name', array(
-                                                                                    'value' => $brand['Brand']['name'],
-                                                                                    'class' => 'form-control',
-                                                                                    'label' => false
-                                                                                    )
+        <?php foreach ($brands as $id =>$brand): ?>
+            <?php echo $this->Form->input('Brand.'.$id.'.name', array(
+                                                                'value' => $brand,
+                                                                'class' => 'form-control',
+                                                                'label' => false
+                                                                )
                                           ); ?>
-            <?php echo $this->Form->input('Brand.'.$brand['Brand']['id'].'.id'); ?>
+            <?php echo $this->Form->input('Brand.'.$id.'.id'); ?>
         <?php endforeach; ?>
     <?php endif; ?>
     <?php echo $this->Form->input('Brand.name', array('label' => 'Add Brand', 'class' => 'form-control', 'value' => '')); ?>

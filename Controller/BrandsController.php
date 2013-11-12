@@ -68,11 +68,11 @@ class BrandsController extends AppController {
                 $this->Brand->saveMany($saveMany);
             }
 		}
-        $brands = $this->Brand->find('all', array(
+        $brands = $this->Brand->find('list', array(
                             'recursive' => -1,
                             'order' => 'name'
                         )
-                    );
+                    ); 
 		$this->set('brands', $brands);
 	}
 }
