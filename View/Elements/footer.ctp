@@ -41,6 +41,7 @@
                                             <?php echo $this->Html->tag('li', $this->Html->link($brand, array(
                                                                                                         'controller' => 'watches',
                                                                                                         'action' => 'index',
+                                                                                                        'admin' => false,
                                                                                                         'brand' => $id
                                                                                                     ))); ?>
                                         <?php endforeach; ?>
