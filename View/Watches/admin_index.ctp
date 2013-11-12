@@ -11,7 +11,11 @@
     <section class="header">
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                <?php echo $this->Form->create('Watch', array('type' => 'get')); ?>
+                <?php echo $this->Form->create('Watch', array('type' => 'get', 'url' => array(
+                                                                                    'action' => 'index',
+                                                                                    'admin' => true,
+                                                                                    '?' => $this->params->query
+                                                                                ))); ?>
                     <?php echo $this->Form->input('Brand.id', array(
                                                                 'options' => $brands,
                                                                 'class' => 'form-control',
