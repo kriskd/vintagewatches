@@ -52,12 +52,12 @@
     
     <div class="jumbotron">
         <?php echo $this->Form->create('Image', array('type' => 'file', 'url' => array('action' => 'upload', $watch['Watch']['id']))); ?>
-        <?php echo $this->Form->label('Add Image'); ?>
-        <?php echo $this->Form->button('Choose File', array('type' => 'button',
+        <?php echo $this->Form->label('Add Images'); ?>
+        <?php echo $this->Form->button('Choose Files', array('type' => 'button',
                                                     'class' => 'btn btn-default fake-upload',
                                                     )
                                                 ); ?>
-        <?php echo $this->Form->input('filename', array('type' => 'file', 'label' => false, 'class' => 'image-upload')); ?>
+        <?php echo $this->Form->input('filename.', array('type' => 'file', 'multiple', 'label' => false, 'class' => 'image-upload')); ?>
         <?php echo $this->Form->input('watch_id', array('type' => 'hidden', 'value' => $watch['Watch']['id'])); ?>
         <?php echo $this->Form->end(array('label' => 'Upload Image', 'class' => 'btn btn-primary')); ?>
     </div>
