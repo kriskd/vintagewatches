@@ -1,4 +1,15 @@
 <div class="contacts index">
+    <p>Dear friends and customers:</p>
+    <p> 
+	Please use this form to contact me, Bruce Shawkey (I'm the only here at Bruce's
+	Vintage Watches!) about anything watch-related that may be on your mind. I of
+	course want to hear about any concerns you might be having with recent orders,
+	or watches you have bought from me, or problems with the website. But I'd also
+	enjoy reading happy news from you, too, like watches you'd like to sell or trade,
+	or ideas you have for the website, and so forth. Whatever the news, good or
+	not-so good, I'll get back to you via email within 24 hours, and often more
+	quickly. Cheers, Bruce Shawkey.
+    </p>
     <?php echo $this->Form->create('Contact', array('role' => 'form')); ?>
     <?php echo $this->Form->input('name', array('class' => 'form-control')); ?>
     <?php echo $this->Form->input('email', array('class' => 'form-control')); ?>
