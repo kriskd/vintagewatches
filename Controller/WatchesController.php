@@ -129,6 +129,11 @@ class WatchesController extends AppController {
 		    $brand_id = $this->params->query['id'];
 		    $this->paginate['conditions']['brand_id'] = $brand_id;
 		}
+        
+        //No pagingation if we are doing another filter
+        if (!empty($active) || !empty($sold) || !empty($brand_id)) {
+            unset($this->params->query['page']);
+        }
 		
 		$this->paginate['conditions'][] = $this->Watch->getWatchesConditions($active, $sold);
 		$this->paginate['fields'] = array('id', 'stockId', 'price', 'name', 'description', 'created', 'modified');
@@ -145,6 +150,7 @@ class WatchesController extends AppController {
 			'Inactive Watches' => array('active' => 0, 'sold' => null)
 		);
         
+        //Clean out any empty filters
         $this->params->query = array_filter($this->params->query, function($item){
                                     return !empty($item);
                                 });

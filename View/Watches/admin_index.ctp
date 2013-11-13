@@ -13,7 +13,9 @@
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <?php echo $this->Form->create('Watch', array('type' => 'get')); ?>
                     <?php foreach($this->params->query as $key => $value): ?>
-                        <?php echo $this->Form->input('Watch.'.$key, array('type' => 'hidden', 'value' => $value)); ?>
+                        <?php if (strcasecmp($key, 'page')!=0): ?>
+                            <?php echo $this->Form->input('Watch.'.$key, array('type' => 'hidden', 'value' => $value)); ?>
+                        <?php endif; ?>
                     <?php endforeach; ?>
                     <?php echo $this->Form->input('Brand.id', array(
                                                                 'options' => $brands,
