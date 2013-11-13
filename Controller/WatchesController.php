@@ -121,8 +121,8 @@ class WatchesController extends AppController {
 	public function admin_index()
 	{   
         $this->paginate['paramType'] = 'querystring';
-		$active = isset($this->params['named']['active']) ? (int)$this->params['named']['active'] : null;
-		$sold = isset($this->params['named']['sold']) ? (int)$this->params['named']['sold'] : null;
+		$active = isset($this->params->query['active']) ? (int)$this->params->query['active'] : null;
+		$sold = isset($this->params->query['sold']) ? (int)$this->params->query['sold'] : null;
 		
 		$brand_id = '';
 		if (!empty($this->params->query['id'])) { 
@@ -144,6 +144,10 @@ class WatchesController extends AppController {
 			'Active Watches' => array('active' => 1, 'sold' => null),
 			'Inactive Watches' => array('active' => 0, 'sold' => null)
 		);
+        
+        $this->params->query = array_filter($this->params->query, function($item){
+                                    return !empty($item);
+                                });
 		
 		$this->set(array('watches' => $this->paginate()) + compact('active', 'sold', 'buttons', 'brands', 'brand_id')); 
 	}
