@@ -66,6 +66,16 @@
 			ga('send', 'pageview');
 		</script>
 	<?php endif; ?>
+	<noscript>
+		<div class="no-js">
+			You do not have Javascript enabled in your web browser.&nbsp;
+			<?php echo $this->Html->link('Learn how to enable Javacript.',
+						     'http://enable-javascript.com/',
+						     array('class' => 'no-js',
+							   'target' => '_blank')
+						); ?>
+		</div>
+	</noscript>
 </head>
 <body class="<?php echo $checkout==true ? ' checkout' : ''; ?>">
 	<?php echo $this->Element('navigation'); ?>

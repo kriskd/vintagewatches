@@ -6560,6 +6560,25 @@ td.visible-print {
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.33);
   -webkit-font-smoothing: antialiased;
 }
+.no-js {
+  text-align: center;
+  background: #b29600;
+  color: black;
+  margin: -17px 0 10px;
+  font-weight: bold;
+  padding: 5px;
+}
+.no-js a:link,
+.no-js a:visited,
+.no-js a:hover,
+.no-js a:active {
+  text-decoration: underline;
+}
+.no-js a:visited,
+.no-js a:hover,
+.no-js a:active {
+  color: #333333;
+}
 html,
 body {
   height: 100%;
