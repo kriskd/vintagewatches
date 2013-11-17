@@ -1,92 +1,95 @@
 <div class="footer">
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container">
-            <div class="row">
-                <div class="sitemap col-lg-9 col-md-8 col-sm-7 col-xs-5 col-xxs-12">
-                    <h3>Sitemap</h3>
-                    <div class="row">
-                        <?php if ($storeOpen == true): ?>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                <h4>All Watches</h4>
-                                <ul>
-                                    <li><?php echo $this->Html->link(
-                                                            'Store',
-                                                            array(
-                                                                'controller' => 'watches',
-                                                                'action' => 'index'
-                                                                )
-                                                            ); ?></li>
-                                </ul>
-                                <?php if ($cartEmpty == false): ?>
-                                    <h4>Items in Your Cart: <?php echo $cartCount; ?></h4>
-                                    <ul>
-                                        <li><?php echo $this->Html->link('Checkout',
-                                                                     array('controller' => 'orders', 'action' => 'checkout', 'admin' => false),
-                                                                     array('escape' => false),
-                                                                     false); ?></li>
-                                    </ul>
-                                <?php endif; ?>
-                                <h4>eBay</h4>
-                                <?php echo $this->Html->image('http://pics.ebay.com/aw/pics/ebay_my_button.gif', array(
-                                                                                    'url' => 'http://cgi6.ebay.com/ws/ebayISAPI.dll?ViewListedItemsLinkButtons&userid=brtime',
-                                                                                    'alt' => 'My items on eBay'
-                                                                                )
-                                ); ?>
-                            </div>
-                            <?php if (!empty($brandsWithWatches)): ?>
+    <?php //No fat footer on checkout page ?>
+    <?php if ($checkout == false): ?>
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container">
+                <div class="row">
+                    <div class="sitemap col-lg-9 col-md-8 col-sm-7 col-xs-5 col-xxs-12">
+                        <h3>Sitemap</h3>
+                        <div class="row">
+                            <?php if ($storeOpen == true): ?>
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                                    <h4>Brands Available Now</h4>
+                                    <h4>All Watches</h4>
                                     <ul>
-                                        <?php foreach ($brandsWithWatches as $id => $brand): ?>
-                                            <?php echo $this->Html->tag('li', $this->Html->link($brand, array(
-                                                                                                        'controller' => 'watches',
-                                                                                                        'action' => 'index',
-                                                                                                        'admin' => false,
-                                                                                                        'brand' => $id
-                                                                                                    ))); ?>
-                                        <?php endforeach; ?>
+                                        <li><?php echo $this->Html->link(
+                                                                'Store',
+                                                                array(
+                                                                    'controller' => 'watches',
+                                                                    'action' => 'index'
+                                                                    )
+                                                                ); ?></li>
                                     </ul>
+                                    <?php if ($cartEmpty == false): ?>
+                                        <h4>Items in Your Cart: <?php echo $cartCount; ?></h4>
+                                        <ul>
+                                            <li><?php echo $this->Html->link('Checkout',
+                                                                         array('controller' => 'orders', 'action' => 'checkout', 'admin' => false),
+                                                                         array('escape' => false),
+                                                                         false); ?></li>
+                                        </ul>
+                                    <?php endif; ?>
+                                    <h4>eBay</h4>
+                                    <?php echo $this->Html->image('http://pics.ebay.com/aw/pics/ebay_my_button.gif', array(
+                                                                                        'url' => 'http://cgi6.ebay.com/ws/ebayISAPI.dll?ViewListedItemsLinkButtons&userid=brtime',
+                                                                                        'alt' => 'My items on eBay'
+                                                                                    )
+                                    ); ?>
                                 </div>
+                                <?php if (!empty($brandsWithWatches)): ?>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <h4>Brands Available Now</h4>
+                                        <ul>
+                                            <?php foreach ($brandsWithWatches as $id => $brand): ?>
+                                                <?php echo $this->Html->tag('li', $this->Html->link($brand, array(
+                                                                                                            'controller' => 'watches',
+                                                                                                            'action' => 'index',
+                                                                                                            'admin' => false,
+                                                                                                            'brand' => $id
+                                                                                                        ))); ?>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    </div>
+                                <?php endif; ?>
                             <?php endif; ?>
-                        <?php endif; ?>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                            <h4>Support</h4>
-                            <ul>
-                                <?php echo $this->Element('support'); ?>
-                            </ul>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <h4>Support</h4>
+                                <ul>
+                                    <?php echo $this->Element('support'); ?>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="constant-contact col-lg-3 col-md-4 col-sm-5 col-xs-7 col-xxs-12">
-                    <h3>Mailing List</h3>
-                    <!-- BEGIN: Constant Contact Basic Opt-in Email List Form -->
-                    <h5 class="constant-contact-head">Join my mailing list and be among the first to know about new watches
-                    added to my website!</h5>
-                    <table>
-                        <tr>
-                            <td class="constant-contact-title">Join My Mailing List</td>
-                        </tr>
-                        <tr>
-                            <td class="constant-contact-body">
-                                <form name="ccoptin" action="http://visitor.r20.constantcontact.com/d.jsp" target="_blank" method="post" class="form-inline" role="form">
-                                    <input type="hidden" name="llr" value="9wat99bab">
-                                    <input type="hidden" name="m" value="1101485671130">
-                                    <input type="hidden" name="p" value="oi">
-                                    <label>Email:</label>
-                                    <input type="text" name="ea" size="20" value="" class="form-control input-sm">
-                                    <input type="submit" name="go" value="Go" class="submit btn btn-default btn-sm">
-                                </form>
-                            </td>
-                        </tr>
-                    </table>
-                    <!-- END: Constant Contact Basic Opt-in Email List Form -->
-                    <!-- BEGIN: SafeSubscribe -->
-                    <img src="https://imgssl.constantcontact.com/ui/images1/safe_subscribe_logo.gif" border="0" width="168" height="14" alt=""/>
-                    <!-- END: SafeSubscribe -->
+                    <div class="constant-contact col-lg-3 col-md-4 col-sm-5 col-xs-7 col-xxs-12">
+                        <h3>Mailing List</h3>
+                        <!-- BEGIN: Constant Contact Basic Opt-in Email List Form -->
+                        <h5 class="constant-contact-head">Join my mailing list and be among the first to know about new watches
+                        added to my website!</h5>
+                        <table>
+                            <tr>
+                                <td class="constant-contact-title">Join My Mailing List</td>
+                            </tr>
+                            <tr>
+                                <td class="constant-contact-body">
+                                    <form name="ccoptin" action="http://visitor.r20.constantcontact.com/d.jsp" target="_blank" method="post" class="form-inline" role="form">
+                                        <input type="hidden" name="llr" value="9wat99bab">
+                                        <input type="hidden" name="m" value="1101485671130">
+                                        <input type="hidden" name="p" value="oi">
+                                        <label>Email:</label>
+                                        <input type="text" name="ea" size="20" value="" class="form-control input-sm">
+                                        <input type="submit" name="go" value="Go" class="submit btn btn-default btn-sm">
+                                    </form>
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- END: Constant Contact Basic Opt-in Email List Form -->
+                        <!-- BEGIN: SafeSubscribe -->
+                        <img src="https://imgssl.constantcontact.com/ui/images1/safe_subscribe_logo.gif" border="0" width="168" height="14" alt=""/>
+                        <!-- END: SafeSubscribe -->
+                    </div>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    <?php endif; ?>
     <nav class="navbar navbar-inverse" role="navigation">
         <div class="container">
             <p class="navbar-text">Bruce's Vintage Watches &bull; P.O. Box 74 &bull; Evansville, WI 53536</p>

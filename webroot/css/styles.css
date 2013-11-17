@@ -6567,6 +6567,13 @@ body {
 body {
   padding-top: 70px;
 }
+body.checkout .footer {
+  height: 52px;
+  margin-top: -52px;
+}
+body.checkout .container .content {
+  margin-bottom: 57px;
+}
 .glyphicon {
   font-size: 120%;
 }

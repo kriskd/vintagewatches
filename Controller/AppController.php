@@ -86,7 +86,14 @@ class AppController extends Controller {
         //Brands with watches
         $brandsWithWatches = $this->Brand->getBrandsWithWatches();
         
-        $vars = compact('loggedIn', 'navigation', 'storeOpen', 'cartEmpty', 'cartCount', 'cartItemIds', 'brandsWithWatches');
+        //Set var to determine if on checkout page
+        $route = Router::parse($this->here);
+        $checkout = false;
+        if (strcasecmp($route['controller'], 'orders')==0 && strcasecmp($route['action'], 'checkout')==0) {
+            $checkout = true;
+        }
+        
+        $vars = compact('loggedIn', 'navigation', 'storeOpen', 'cartEmpty', 'cartCount', 'cartItemIds', 'brandsWithWatches', 'checkout');
         
         $this->set(array('controller' => $this, 'name' => $this->name) + $vars);
         parent::beforeRender();

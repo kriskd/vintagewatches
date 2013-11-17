@@ -67,7 +67,7 @@
 		</script>
 	<?php endif; ?>
 </head>
-<body>
+<body class="<?php echo $checkout==true ? ' checkout' : ''; ?>">
 	<?php echo $this->Element('navigation'); ?>
 	<div class="container">
 		<div class="content">
