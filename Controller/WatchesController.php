@@ -232,10 +232,10 @@ class WatchesController extends AppController {
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Watch->delete()) {
-			$this->Session->setFlash(__('Watch deleted'));
+			$this->Session->setFlash(__('Watch deleted'), 'success');
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('Watch was not deleted'));
+		$this->Session->setFlash(__('Watch was not deleted'), 'danger');
 		$this->redirect(array('action' => 'index'));
 	}
 	
