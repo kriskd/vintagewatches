@@ -115,7 +115,8 @@ class Watch extends AppModel {
 	public $hasMany = array(
 		    'Image' => array(
 			'className' => 'Image',
-			'foreignKey' => 'watch_id'
+			'foreignKey' => 'watch_id',
+                        'dependent' => true, //Delete associated images
 		    ),
 		);
         
@@ -154,6 +155,9 @@ class Watch extends AppModel {
 	    return $conditions;
 	}
         
+        /**
+         * Returns the watch only if active and is not on an order
+         */
         public function sellable($id)
         {
             return $this->find('first', array(
