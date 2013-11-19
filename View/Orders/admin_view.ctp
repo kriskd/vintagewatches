@@ -56,9 +56,12 @@
         <dd><?php echo $order['Order']['created']; ?></dd>
     </dl>
     <table class="table table-bordered">
-        <tr><th></th><th>Stock ID</th><th>Name</th><th>Price</th></tr>
+        <tr><th></th><th></th><th>Stock ID</th><th>Name</th><th>Price</th></tr>
         <?php foreach($order['Watch'] as $watch): ?>
             <tr>
+                <td>
+                    <?php echo $this->Html->link('Go To Watch', array('controller' => 'watches', 'action' => 'view', $watch['id']), array('class' => 'btn btn-primary')); ?>
+                </td>
                 <td>
                     <?php echo $this->Html->thumbPrimary($watch); ?>
                 </td>
@@ -70,10 +73,12 @@
         <tr class="total-row">
             <td></td>
             <td></td>
+            <td></td>
             <td class="text-right">Shipping</td>
             <td class="total-formatted-amount text-right"><?php echo $this->Number->currency($order['Order']['shippingAmount'], 'USD'); ?></td>
         </tr>
         <tr class="total-row">
+            <td></td>
             <td></td>
             <td></td>
             <td class="text-right">Total</td>
