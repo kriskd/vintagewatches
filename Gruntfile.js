@@ -32,8 +32,17 @@ module.exports = function(grunt) {
 		less:	{
 			my_target: {
 				files: {
-					'webroot/css/styles.css': 'webroot/css/styles.less'
+					'webroot/css/build/styles.css': 'webroot/css/src/styles.less'
 				}
+			}
+		},
+		cssmin: {
+			my_target: {
+				expand: true,
+				cwd: 'webroot/css/build/',
+				src: ['*.css', '!*.min.css'],
+				dest: 'webroot/css/build/',
+				ext: '.min.css'
 			}
 		},
                 watch: {
@@ -42,7 +51,7 @@ module.exports = function(grunt) {
 			    tasks: ['concat', 'uglify']
 			},
 			css: {
-				files: ['webroot/css/styles.less'],
+				files: ['webroot/css/src/styles.less'],
 				tasks: ['less']
 			}
                 },
@@ -50,6 +59,7 @@ module.exports = function(grunt) {
 
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
         grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-less');
 

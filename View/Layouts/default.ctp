@@ -42,7 +42,7 @@
 
 		//echo $this->Html->css('cake.generic');
 		echo $this->Html->css('//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css');
-		echo $this->Html->css('styles');
+		echo $this->Html->css('/css/build/styles.min');
 		
 		echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js');
 		echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js');
