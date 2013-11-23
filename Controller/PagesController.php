@@ -67,9 +67,10 @@ class PagesController extends AppController {
 			$this->redirect('/');
 		}
 		$slug = current($path); 
-
+		
 		//The router passes in the slug "home" for the homepage
 		if (strcasecmp($slug, 'home')==0) {
+			$this->set('title', 'Fine timepieces at reasonable prices from a name you trust.');
 			//Get the hompeage content and send to view
 			$page = $this->Page->find('first', array('conditions' => array('homepage' => 1)));
 			$this->set(compact('page'));
