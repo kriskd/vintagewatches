@@ -68,12 +68,13 @@
 	<?php endif; ?>
 	<noscript>
 		<div class="no-js">
-			You do not have Javascript enabled in your web browser.&nbsp;
-			<?php echo $this->Html->link('Learn how to enable Javacript.',
-						     '//enable-javascript.com/',
-						     array('class' => 'no-js',
-							   'target' => '_blank')
-						); ?>
+			You do not have Javascript enabled in your web browser, which
+			is required by this site. Please enable it now.
+			<?php //echo $this->Html->link('Learn how to enable Javacript.',
+						     //'http://enable-javascript.com/',
+						     //array('class' => 'no-js',
+							   //'target' => '_blank')
+						//); ?>
 		</div>
 	</noscript>
 </head>
