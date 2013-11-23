@@ -90,9 +90,14 @@
                 <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 watch-details">
                     <div class="watch-thumb">
                         <?php echo $this->Html->thumbPrimary($watch,
-                                                          array('url' => array('controller' => 'watches',
-                                                                               'action' => 'view', $watch['Watch']['id']))
-                                                          ); ?>
+                                                            array(
+                                                                'url' => array(
+                                                                            'controller' => 'watches',
+                                                                            'action' => 'view', $watch['Watch']['id']
+                                                                        ),
+                                                                'alt' => $watch['Watch']['name']
+                                                            )
+                                                        ); ?>
                     </div>
                     <div class="watch-cart-button">
                         <?php echo $this->Element('add_to_cart', compact('watch', 'controller') + array('class' => 'btn btn-gold')); ?>

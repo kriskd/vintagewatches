@@ -14,7 +14,7 @@
         <?php foreach ($watches as $watch): ?>
             <div class="item <?php echo $first == true ? 'active' : ''; ?>">
                 <?php $first = false; ?>
-                <?php echo $this->Html->mediumPrimary($watch, array('class' => 'img-responsive', 'url' => array('controller' => 'watches', 'action' => 'view', $watch['Watch']['id']))); ?>
+                <?php echo $this->Html->mediumPrimary($watch, array('alt' => $watch['Watch']['name'], 'class' => 'img-responsive', 'url' => array('controller' => 'watches', 'action' => 'view', $watch['Watch']['id']))); ?>
                 <div class="watch-details">
                     <div class="row">
                         <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9">
