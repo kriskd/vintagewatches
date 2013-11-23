@@ -1,5 +1,5 @@
 <section class="address hide">
-    <h3>Address<small class="pull-right"><span class="glyphicon glyphicon-arrow-right"></span> Enter Address(es)</small></h3>
+    <h3>Address<small class="pull-right hidden-xs"><span class="glyphicon glyphicon-arrow-right"></span> Enter Address(es)</small></h3>
     <div class="address-forms"></div>
     <div class="shipping-instructions">
         <h5>Email and Phone Number</h5>

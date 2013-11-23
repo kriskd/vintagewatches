@@ -1,5 +1,5 @@
 <section class="credit-card hide">
-    <h3><small class="pull-right"><span class="glyphicon glyphicon-arrow-right"></span> Enter Credit Card</small>Credit Card</h3>
+    <h3><small class="pull-right hidden-xs"><span class="glyphicon glyphicon-arrow-right"></span> Enter Credit Card</small>Credit Card</h3>
         <div class="checkout-form">
             <div class="payment-errors alert alert-error"></div>
             <div class="row">

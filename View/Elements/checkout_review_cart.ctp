@@ -7,19 +7,19 @@
                 the form.
             </div>
         <?php endif; ?>
-        <h3>Review Cart<small class="pull-right"><span class="glyphicon glyphicon-arrow-right"></span> Choose Ship to Country</small></h3>
+        <h3>Review Cart<small class="pull-right hidden-xs"><span class="glyphicon glyphicon-arrow-right"></span> Choose Ship to Country</small></h3>
         <div class="cart-details">
             <div class="row head">
                 <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
                     
                 </div>
-                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <div class="col-lg-2 col-md-2 col-sm-2 hidden-xs">
                     Stock ID
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
                     Name
                 </div>
-                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
                     Price
                 </div>
             </div>
@@ -40,10 +40,10 @@
                                                                         )
                                                                   ); ?>
                     </div>
-                    <div class="text-center col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <div class="text-center col-lg-2 col-md-2 col-sm-2 hidden-xs">
                         <?php echo h($watch['Watch']['stockId']); ?>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
                         <?php echo $this->Html->link(htmlspecialchars($watch['Watch']['name'], ENT_NOQUOTES, 'UTF-8'),
                                                      array(
                                                            'controller' => 'watches',
@@ -51,7 +51,7 @@
                                                            )
                                                      ); ?>
                     </div>
-                    <div class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <div class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-3">
                         <?php echo h($this->Number->currency($watch['Watch']['price'], 'USD')); ?>
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 <section class="shipping hide">
-    <h3>Shipping<small class="pull-right"><span class="glyphicon glyphicon-arrow-right"></span> Choose Billing/Shipping Option</small></h3>
+    <h3>Shipping<small class="pull-right hidden-xs"><span class="glyphicon glyphicon-arrow-right"></span> Choose Billing/Shipping Option</small></h3>
         <div class="shipping-inner">
         <h4>Choose one of the following shipping options:</h4>
         <?php echo $this->Form->input('Shipping.option', array('type' => 'radio',
