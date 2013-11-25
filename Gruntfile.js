@@ -52,7 +52,7 @@ module.exports = function(grunt) {
 			},
 			css: {
 				files: ['webroot/css/src/styles.less'],
-				tasks: ['less']
+				tasks: ['less', 'cssmin']
 			}
                 },
 	});
