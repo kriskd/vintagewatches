@@ -34,6 +34,98 @@
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.33);
     -webkit-font-smoothing: antialiased;
 }
+@media (max-width: @screen-xs-min) {
+    .col-xxs-12 {
+        width: 100%;
+    }
+    .col-xxs-11 {
+        width: 91.66666666666666%;
+    }
+    .col-xxs-10 {
+        width: 83.33333333333334%;
+    }
+    .col-xxs-9 {
+        width: 75%;
+    }
+    .col-xxs-8 {
+        width: 66.66666666666666%;
+        padding: 0 15px;
+    }
+    .col-xxs-7 {
+        width: 58.333333333333336%;
+    }
+    .col-xxs-6 {
+        width: 50%;
+    }
+    .col-xxs-5 {
+        width: 41.66666666666667%;
+    }
+    .col-xxs-4 {
+        width: 33.33333333333333%;
+    }
+    .col-xxs-3 {
+        width: 25%;
+    }
+    .col-xxs-2 {
+        width: 16.666666666666664%;
+    }
+    .col-xxs-1 {
+        width: 8.333333333333332%;
+        padding: 0px;
+    }
+}
+.visible-xxs {
+    .responsive-invisibility();
+    @media (max-width: @screen-xs-min) {
+      .responsive-visibility();
+    }
+    &.visible-xs {
+      @media (min-width: @screen-xs-min) and (max-width: @screen-xs-max) {
+        .responsive-visibility();
+      }
+    }
+    &.visible-sm {
+      @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+        .responsive-visibility();
+      }
+    }
+    &.visible-md {
+      @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+        .responsive-visibility();
+      }
+    }
+    &.visible-lg {
+      @media (min-width: @screen-lg-min) {
+        .responsive-visibility();
+      }
+    }
+}
+.hidden-xxs {
+    .responsive-visibility();
+    @media (max-width: @screen-xs-min) {
+        .responsive-invisibility();
+    }
+    &.hidden-xs {
+        @media (min-width: @screen-xs-min) and (max-width: @screen-xs-max) {
+            .responsive-invisibility();
+        }
+    }
+    &.hidden-sm {
+        @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+            .responsive-invisibility();
+        }
+    }
+    &.hidden-md {
+        @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+            .responsive-invisibility();
+        }
+    }
+    &.hidden-lg {
+        @media (min-width: @screen-lg-min) {
+            .responsive-invisibility();
+        }
+    }
+}
 .no-js {
     text-align: center;
     background: @gold;
@@ -169,12 +261,9 @@ body.checkout {
         border-radius: 0px;
     }
     .navbar-default {
-        .col-xxs-12 {
-            @media (max-width: @screen-xs-min) {
-                width: 100%;
-                h3 {
-                    text-align: center;
-                }
+        @media (max-width: @screen-xs-min) {
+            h3 {
+                text-align: center;
             }
         }
         h3 {
@@ -835,6 +924,9 @@ body.checkout {
                 font-weight: bold;
             }
             .review-cart {
+                @media (max-width: @screen-xs-min) {
+                    
+                }
                 form {
                     border: none;
                 }

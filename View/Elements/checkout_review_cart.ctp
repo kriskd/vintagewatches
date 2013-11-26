@@ -10,22 +10,35 @@
         <h3>Review Cart<small class="pull-right hidden-xs"><span class="glyphicon glyphicon-arrow-right"></span> Choose Ship to Country</small></h3>
         <div class="cart-details">
             <div class="row head">
-                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 col-xxs-9">
                     
                 </div>
-                <div class="col-lg-2 col-md-2 col-sm-2 hidden-xs">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hidden-xxs">
                     Stock ID
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 hidden-xxs">
                     Name
                 </div>
-                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 col-xxs-3">
                     Price
                 </div>
             </div>
             <?php foreach($watches as $watch): ?>
+                <div class="row">
+                    <div class="hidden-xs visible-xxs col-xxs-8">
+                        <strong>
+                            <?php echo $this->Html->link($watch['Brand']['name'] . ' - Stock Number ' . $watch['Watch']['stockId'], array(
+                                                           'controller' => 'watches',
+                                                           'action' => 'view', $watch['Watch']['id']
+                                                           )); ?>
+                        </strong>
+                    </div>
+                    <div class="hidden-xs visible-xxs col-xxs-4">
+                        
+                    </div>
+                </div>
                 <div class="row watch">
-                    <div class="text-center col-lg-1 col-md-1 col-sm-1 col-xs-1">
+                    <div class="text-center col-lg-1 col-md-1 col-sm-1 col-xs-1 col-xxs-1">
                         <?php echo $this->Html->link('<i class="glyphicon glyphicon-trash"></i>',
                                                                              array('action' => 'remove', $watch['Watch']['id']),
                                                                              array('escape' => false, 'class' => 'launch-tooltip',
@@ -34,16 +47,20 @@
                                                                                    'title' => 'Remove from Cart')
                                                                              ); ?>
                     </div>
-                    <div class="image col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    <div class="image col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxs-7">
                         <?php echo $this->Html->thumbPrimary($watch, array(
-                                                                            'class' => 'img-responsive'
+                                                                            'class' => 'img-responsive',
+                                                                            'url' => array(
+                                                                                'controller' => 'watches',
+                                                                                'action' => 'view', $watch['Watch']['id']
+                                                                            )
                                                                         )
                                                                   ); ?>
                     </div>
-                    <div class="text-center col-lg-2 col-md-2 col-sm-2 hidden-xs">
+                    <div class="text-center col-lg-2 col-md-2 col-sm-2 col-xs-2 hidden-xxs">
                         <?php echo h($watch['Watch']['stockId']); ?>
                     </div>
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 hidden-xxs">
                         <?php echo $this->Html->link(htmlspecialchars($watch['Watch']['name'], ENT_NOQUOTES, 'UTF-8'),
                                                      array(
                                                            'controller' => 'watches',
@@ -51,13 +68,29 @@
                                                            )
                                                      ); ?>
                     </div>
-                    <div class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-3">
+                    <div class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-2 col-xxs-4">
                         <?php echo h($this->Number->currency($watch['Watch']['price'], 'USD')); ?>
                     </div>
                 </div>
+                <?php /*
+                <div class="row">
+                    <div class="hidden-xs visible-xxs col-xxs-8">
+                        <small>
+                            <?php echo $this->Html->link(htmlspecialchars($watch['Watch']['name'], ENT_NOQUOTES, 'UTF-8'),
+                                                         array(
+                                                               'controller' => 'watches',
+                                                               'action' => 'view', $watch['Watch']['id']
+                                                               )
+                                                         ); ?>
+                        </small>
+                    </div>
+                    <div class="hidden-xs visible-xxs col-xxs-4">
+                        
+                    </div>
+                </div>*/ ?>
             <?php endforeach; ?>
             <div class="row choose-ship">
-                <div class="text-right col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                <div class="text-right col-lg-10 col-md-10 col-sm-10 col-xs-10 col-xxs-8">
                     <?php $tooltip = $this->Html->link('<span class="glyphicon glyphicon-question-sign"></span>', '#',
                                                        array(
                                                             'class' => 'launch-tooltip',
@@ -84,15 +117,15 @@
                                                                                    )); ?>
                     </div>
                 </div>
-                <div class="shipping-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <div class="shipping-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-2 col-xxs-4">
                     
                 </div>
             </div>
             <div class="row">
-                <div class="text-right col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                <div class="text-right col-lg-10 col-md-10 col-sm-10 col-xs-10 col-xxs-8">
                     Total
                 </div>
-                <div class="total-formatted-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <div class="total-formatted-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-2 col-xxs-4">
                     
                 </div>
             </div>
