@@ -6851,6 +6851,7 @@ body.checkout .container .content {
   background: #ffffcc;
   width: 253px;
   padding: 10px 0;
+  margin: auto;
 }
 .footer .navbar-default .announcement-list .announcement-list-signup .title {
   font-weight: bold;
