@@ -9,23 +9,23 @@
         <?php endif; ?>
         <h3>Review Cart<small class="pull-right hidden-xs"><span class="glyphicon glyphicon-arrow-right"></span> Choose Ship to Country</small></h3>
         <div class="cart-details">
-            <div class="row head">
-                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 col-xxs-9">
+            <div class="row head hidden-xxs">
+                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
                     
                 </div>
-                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 hidden-xxs">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                     Stock ID
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 hidden-xxs">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
                     Name
                 </div>
-                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 col-xxs-3">
+                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                     Price
                 </div>
             </div>
             <?php foreach($watches as $watch): ?>
-                <div class="row">
-                    <div class="hidden-xs visible-xxs col-xxs-8">
+                <div class="row hidden-xs visible-xxs">
+                    <div class="col-xxs-8">
                         <strong>
                             <?php echo $this->Html->link($watch['Brand']['name'] . ' - Stock Number ' . $watch['Watch']['stockId'], array(
                                                            'controller' => 'watches',
