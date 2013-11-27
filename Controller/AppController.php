@@ -61,7 +61,30 @@ class AppController extends Controller {
      * Send the Controller object to the View so Helpers can initialize a Component with it
      */
     public function beforeRender()
-    {
+    {   
+        $announcementListReponse = $this->request->query('code');
+        switch($announcementListReponse) {
+            case 1:
+                $this->Session->setFlash('Thank you for subscribing.', 'success');
+                break;
+            case 2:
+            case -2:
+                $this->Session->setFlash('You have unsubscribed from the list.', 'success');
+                break;
+            case 3:
+                $this->Session->setFlash('You are not QUITE subscribed yet. Please now check your email right now for the last step to confirm your subscription to our list!', 'info');
+                break;
+            case -1:
+                $this->Session->setFlash('You are already on the list.', 'info');
+                break;
+            case -3:
+                $this->Session->setFlash('Invalid email address, try again.', 'danger');
+                break;
+            case -4:
+                $this->Session->setFlash('Email is required.', 'danger');
+                break;
+        }
+        
         //Logged in
         $loggedIn = false;
         if($this->Auth->loggedIn()){
@@ -86,14 +109,17 @@ class AppController extends Controller {
         //Brands with watches
         $brandsWithWatches = $this->Brand->getBrandsWithWatches();
         
+        //Current Url
+        $currentUrl = 'http://' . env('SERVER_NAME') . $this->here;
+        
         //Set var to determine if on checkout page
-        $route = Router::parse($this->here);
+        $route = Router::parse($this->here); 
         $checkout = false;
         if (strcasecmp($route['controller'], 'orders')==0 && strcasecmp($route['action'], 'checkout')==0) {
             $checkout = true;
         }
         
-        $vars = compact('loggedIn', 'navigation', 'storeOpen', 'cartEmpty', 'cartCount', 'cartItemIds', 'brandsWithWatches', 'checkout');
+        $vars = compact('loggedIn', 'navigation', 'storeOpen', 'cartEmpty', 'cartCount', 'cartItemIds', 'brandsWithWatches', 'checkout', 'currentUrl');
         
         $this->set(array('controller' => $this, 'name' => $this->name) + $vars);
         parent::beforeRender();

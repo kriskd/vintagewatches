@@ -6838,47 +6838,45 @@ body.checkout .container .content {
 .footer .navbar-default .sitemap ul li {
   list-style: none;
 }
-.footer .navbar-default .constant-contact {
+.footer .navbar-default .announcement-list {
   text-align: center;
+  margin-bottom: 5px;
 }
-.footer .navbar-default .constant-contact .constant-contact-head {
+.footer .navbar-default .announcement-list .announcement-list-head {
   text-align: left;
   line-height: 18px;
 }
-.footer .navbar-default .constant-contact table {
-  text-align: center;
-  margin: auto;
+.footer .navbar-default .announcement-list .announcement-list-signup {
+  border: 2px solid #000;
   background: #ffffcc;
-  border: 2px solid #000000;
   width: 253px;
+  padding: 10px 0;
 }
-.footer .navbar-default .constant-contact table td {
-  padding: 10px 3px;
-  text-align: center;
-}
-.footer .navbar-default .constant-contact table .constant-contact-title {
+.footer .navbar-default .announcement-list .announcement-list-signup .title {
   font-weight: bold;
   font-family: Arial;
   font-size: 13px;
-  color: #000000;
+  border-bottom: 2px solid #000;
+  padding-bottom: 10px;
 }
-.footer .navbar-default .constant-contact table .constant-contact-body {
-  border-top: 2px solid #000000;
-}
-.footer .navbar-default .constant-contact table .constant-contact-body form {
-  margin-bottom: 2px;
-}
-.footer .navbar-default .constant-contact table .constant-contact-body form .form-control {
+.footer .navbar-default .announcement-list .announcement-list-signup form {
+  margin-bottom: 5px;
   display: inline;
 }
-.footer .navbar-default .constant-contact table .constant-contact-body form label {
+.footer .navbar-default .announcement-list .announcement-list-signup form .form-control {
+  display: inline;
+}
+.footer .navbar-default .announcement-list .announcement-list-signup form label {
   font-weight: normal;
   font-family: Arial;
   font-size: 13px;
-  color: #000000;
+  margin-right: 5px;
 }
-.footer .navbar-default .constant-contact table .constant-contact-body form input[name=ea] {
+.footer .navbar-default .announcement-list .announcement-list-signup form input[name=email] {
   width: 150px;
+}
+.footer .navbar-default .announcement-list .announcement-list-signup form .buttons {
+  margin-top: 5px;
 }
 .container {
   min-height: 100%;

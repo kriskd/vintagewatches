@@ -59,32 +59,29 @@
                             </div>
                         </div>
                     </div>
-                    <div class="constant-contact col-lg-3 col-md-4 col-sm-5 col-xs-7 col-xxs-12">
+                    <div class="announcement-list col-lg-3 col-md-4 col-sm-5 col-xs-7 col-xxs-12">
                         <h3>Mailing List</h3>
-                        <!-- BEGIN: Constant Contact Basic Opt-in Email List Form -->
-                        <h5 class="constant-contact-head">Join my mailing list and be among the first to know about new watches
+                        <h5 class="announcement-list-head">Join my mailing list and be among the first to know about new watches
                         added to my website!</h5>
-                        <table>
-                            <tr>
-                                <td class="constant-contact-title">Join My Mailing List</td>
-                            </tr>
-                            <tr>
-                                <td class="constant-contact-body">
-                                    <form name="ccoptin" action="http://visitor.r20.constantcontact.com/d.jsp" target="_blank" method="post" class="form-inline" role="form">
-                                        <input type="hidden" name="llr" value="9wat99bab">
-                                        <input type="hidden" name="m" value="1101485671130">
-                                        <input type="hidden" name="p" value="oi">
-                                        <label>Email:</label>
-                                        <input type="text" name="ea" size="20" value="" class="form-control input-sm">
-                                        <input type="submit" name="go" value="Go" class="submit btn btn-default btn-sm">
-                                    </form>
-                                </td>
-                            </tr>
-                        </table>
-                        <!-- END: Constant Contact Basic Opt-in Email List Form -->
-                        <!-- BEGIN: SafeSubscribe -->
-                        <img src="https://imgssl.constantcontact.com/ui/images1/safe_subscribe_logo.gif" border="0" width="168" height="14" alt=""/>
-                        <!-- END: SafeSubscribe -->
+                        <div class="announcement-list-signup">
+                            <p class="title">Join My Mailing List</p>
+                            <form action="http://scripts.dreamhost.com/add_list.cgi" method="post" class="form-inline" role="form">
+                                <input type="hidden" name="list" value="bruce" />
+                                <input type="hidden" name="domain" value="brucesvintagewatches.com" />
+                                <input type="hidden" name="url" value="http://SubscribedURL" /> 
+                                <input type="hidden" name="unsuburl" value="<?php echo $currentUrl; ?>" /> 
+                                <input type="hidden" name="alreadyonurl" value="<?php echo $currentUrl; ?>" /> 
+                                <input type="hidden" name="notonurl" value="<?php echo $currentUrl; ?>" /> 
+                                <input type="hidden" name="invalidurl" value="<?php echo $currentUrl; ?>" /> 
+                                <input type="hidden" name="emailconfirmurl" value="<?php echo $currentUrl; ?>" /> 
+                                <label>Email:</label>
+                                <input type="text" name="email" class="form-control input-sm">
+                                <div class="buttons">
+                                    <input type="submit" name="submit" value="Join" class="submit btn btn-default btn-sm" />
+                                    <input type="submit" name="unsub" value="Unsubscribe" class="submit btn btn-default btn-sm" />
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
