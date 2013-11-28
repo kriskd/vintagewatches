@@ -1,17 +1,17 @@
 <section class="address hide">
-    <h3>Address<small class="pull-right hidden-xs"><span class="glyphicon glyphicon-arrow-right"></span> Enter Address(es)</small></h3>
+    <h3>Address<small class="pull-right hidden-xxs"><span class="glyphicon glyphicon-arrow-right"></span> Enter Address(es)</small></h3>
     <div class="address-forms"></div>
     <div class="shipping-instructions">
         <h5>Email and Phone Number</h5>
         <div class="checkout-form">
-            <?php echo $this->Form->input('Order.email', array('label' => array('class' => 'control-label col-xs-2'),
+            <?php echo $this->Form->input('Order.email', array('label' => array('class' => 'control-label col-xs-12 col-sm-4 col-md-4 col-lg-4'),
                                                                'class' => 'form-control',
-                                                               'between' => '<div class="clearfix"><div class="col-xs-11 col-sm-6 col-md-6 col-lg-6">',
+                                                               'between' => '<div class="clearfix"><div class="col-xs-11 col-sm-7 col-md-7 col-lg-7">',
                                                                'after' => '</div></div>',
                                                                'div' => 'form-group row')); ?>
-            <?php echo $this->Form->input('Order.phone', array('label' => array('class' => 'control-label col-xs-2'),
+            <?php echo $this->Form->input('Order.phone', array('label' => array('class' => 'control-label col-xs-12 col-sm-4 col-md-4 col-lg-4'),
                                                                'class' => 'form-control',
-                                                               'between' => '<div class="clearfix"><div class="col-xs-11 col-sm-6 col-md-6 col-lg-6">',
+                                                               'between' => '<div class="clearfix"><div class="col-xs-11 col-sm-7 col-md-7 col-lg-7">',
                                                                'after' => '</div></div>',
                                                                'div' => 'form-group row')); ?>
         </div>

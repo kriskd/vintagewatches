@@ -7,7 +7,7 @@
                 the form.
             </div>
         <?php endif; ?>
-        <h3>Review Cart<small class="pull-right hidden-xs"><span class="glyphicon glyphicon-arrow-right"></span> Choose Ship to Country</small></h3>
+        <h3>Review Cart<small class="pull-right hidden-xxs"><span class="glyphicon glyphicon-arrow-right"></span> Choose Ship to Country</small></h3>
         <div class="cart-details">
             <div class="row head hidden-xxs">
                 <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">

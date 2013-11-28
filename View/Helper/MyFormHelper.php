@@ -62,10 +62,10 @@ class MyFormHelper extends FormHelper
         
         $this->setNameToOptionsMap();
         $requiredAttrs = array('firstName', 'lastName', 'address1', 'city', 'state', 'postalCode', 'countryName', 'country');
-        $this->inputDefaults(array('label' => array('class' => 'control-label col-xs-2'),
+        $this->inputDefaults(array('label' => array('class' => 'control-label col-xs-12 col-sm-4 col-md-4 col-lg-4'),
                                     'div' => 'form-group row',
                                     'class' => 'form-control',
-                                    'between' => '<div class="clearfix"><div class="col-xs-11 col-sm-6 col-md-6 col-lg-6">',
+                                    'between' => '<div class="clearfix"><div class="col-xs-11 col-sm-7 col-md-7 col-lg-7">',
                                     'after' => '</div></div>'
                                     )
                             );

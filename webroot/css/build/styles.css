@@ -7506,9 +7506,6 @@ body.checkout .container .content {
   margin-bottom: 25px;
 }
 .container .content .orders .control-label {
-  margin-right: 5px;
-  width: 160px;
-  float: left;
   text-align: right;
 }
 @media (max-width: 768px) {
@@ -7604,15 +7601,22 @@ body.checkout .container .content {
 .container .content .orders .checkout-form .input {
   line-height: 20px;
 }
-.container .content .orders .checkout-form .card-expiry-month {
-  float: left;
+@media (min-width: 768px) {
+  .container .content .orders .checkout-form .card-expiry-month {
+    margin-left: 5px;
+  }
 }
 .container .content .orders .checkout-form label[for=CardCvc] {
   padding-top: 10px;
 }
 .container .content .orders .checkout-form label[for=CardMonth] {
   padding-top: 5px;
-  margin-right: 10px;
+  width: 100%;
+}
+@media (min-width: 480px) and (max-width: 767px) {
+  .container .content .orders .checkout-form label[for=CardMonth] {
+    display: block;
+  }
 }
 .container .content .orders .checkout-form select option {
   color: #555;
@@ -7653,9 +7657,6 @@ body.checkout .container .content {
 .container .content .orders label {
   font-size: 90%;
   font-weight: bold;
-}
-@media (max-width: 480px) {
-  
 }
 .container .content .orders .review-cart form {
   border: none;
