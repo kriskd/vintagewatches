@@ -25,9 +25,9 @@
             <?php echo $this->Form->addressForm('shipping', $data, false, true); ?>
             <?php if($data['country'] == 'other'): ?>
                 <div class="form-group">
-                    <?php echo $this->Form->label('Address.shipping.' . $data['country'], 'Country', array('class' => 'control-label col-xs-2')); ?>
+                    <?php echo $this->Form->label('Address.shipping.' . $data['country'], 'Country', array('class' => 'control-label col-xs-12 col-sm-4 col-md-4 col-lg-4')); ?>
                     <div class="clearfix">
-                        <div class="col-xs-6">
+                        <div class="col-xs-11 col-sm-7 col-md-7 col-lg-7">
                             <div class="billing-country-name"></div>
                         </div>
                     </div>
