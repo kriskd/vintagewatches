@@ -55,10 +55,10 @@
                                                         'empty' => 'MM',
                                                         'options' => $months,
                                                         'data-stripe' => 'exp-month',
-                                                        'class' => 'form-control',
+                                                        'class' => 'form-control card-expiry-month',
                                                         'label' => false,
                                                         'multiple' => false,
-                                                        'div' => 'col-xxs-6 col-xs-6 col-sm-3 col-md-3 col-lg-3 card-expiry-month',
+                                                        'div' => 'col-xxs-6 col-xs-6 col-sm-3 col-md-3 col-lg-3',
                                                         //'between' => '<div class="col-xxs-6 col-xs-6 col-sm-3 col-md-3 col-lg-3">',
                                                         //'after' => '</div>'
                                                         ));
