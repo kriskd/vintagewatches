@@ -17,7 +17,7 @@
         </div>
         <?php echo $this->Form->input('Order.notes',
                                       array('label' => '<h5>Special Order Instructions ' . $this->Html->link(
-                                                        '<i class="glyphicon glyphicon-question-sign"></i>', '#',
+                                                        '<span class="glyphicon glyphicon-question-sign"></span>', '#',
                                                         array('class' => 'launch-tooltip',
                                                                  'data-toggle' => 'tooltip',
                                                                  'data-placement' => 'top',
