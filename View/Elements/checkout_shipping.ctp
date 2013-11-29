@@ -4,7 +4,7 @@
         <h4>Choose one of the following shipping options:</h4>
         <?php echo $this->Form->input('Shipping.option', array('type' => 'radio',
                                                      'options' => array('billing' => 'Shipping Address Will be the Same as my Billing Address' .
-                                                                        $this->Html->link(' <i class="glyphicon glyphicon-question-sign"></i>', '#',
+                                                                        $this->Html->link(' <span class="glyphicon glyphicon-question-sign"></span>', '#',
                                                                             array('class' => 'launch-tooltip',
                                                                              'data-toggle' => 'tooltip',
                                                                              'data-placement' => 'top',
