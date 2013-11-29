@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "dc5f569830b4aa439d51707eaafc3aee",
+    "hash": "150949bbe16ec754451f867b2f96342f",
     "packages": [
         {
             "name": "Datasources",
@@ -24,7 +24,7 @@
                 "reference": "origin/master"
             },
             "type": "cakephp-plugin",
-            "time": "2013-11-02 21:37:53"
+            "time": "2013-11-07 01:15:48"
         },
         {
             "name": "Stripe",
@@ -52,12 +52,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/debug_kit.git",
-                "reference": "38851657828bd4eca01062fcc6003a97da35634d"
+                "reference": "a6d601c1f9f5e380aeef1587f702d41577e15327"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/38851657828bd4eca01062fcc6003a97da35634d",
-                "reference": "38851657828bd4eca01062fcc6003a97da35634d",
+                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/a6d601c1f9f5e380aeef1587f702d41577e15327",
+                "reference": "a6d601c1f9f5e380aeef1587f702d41577e15327",
                 "shasum": ""
             },
             "require": {
@@ -93,7 +93,7 @@
                 "debug",
                 "kit"
             ],
-            "time": "2013-11-04 02:41:24"
+            "time": "2013-11-14 15:32:47"
         },
         {
             "name": "chronon/mobile_detect",
@@ -387,19 +387,24 @@
         },
         {
             "name": "twitter/bootstrap",
-            "version": "v3.0.1",
+            "version": "v3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "867e2bef8d9c9b901022899227b306a532f5baf3"
+                "reference": "3887f540b978d593f433bfef15888bc2d103de72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/867e2bef8d9c9b901022899227b306a532f5baf3",
-                "reference": "867e2bef8d9c9b901022899227b306a532f5baf3",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/3887f540b978d593f433bfef15888bc2d103de72",
+                "reference": "3887f540b978d593f433bfef15888bc2d103de72",
                 "shasum": ""
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0.x-dev"
+                }
+            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
@@ -420,7 +425,7 @@
                 "bootstrap",
                 "css"
             ],
-            "time": "2013-10-30 17:03:56"
+            "time": "2013-11-06 21:19:18"
         },
         {
             "name": "zeroasterisk/CakePHP-ArrayToXml-Lib",
