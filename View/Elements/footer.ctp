@@ -65,6 +65,7 @@
                         added to my website!</h5>
                         <div class="announcement-list-signup">
                             <p class="title">Join My Mailing List</p>
+                            <p class="announce-error">Please enter a valid email address.</p>
                             <form action="http://scripts.dreamhost.com/add_list.cgi" method="post" class="form-inline" role="form">
                                 <input type="hidden" name="list" value="bruce" />
                                 <input type="hidden" name="domain" value="brucesvintagewatches.com" />

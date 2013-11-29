@@ -1244,6 +1244,14 @@
         $(this).submit(); 
     });
     
+    $(document).on('click', '.announcement-list-signup input[type=submit]', function(e){
+        var val = $('input[name=email]').val();
+        if (val=='') {
+            $('.announcement-list-signup .announce-error').show();
+            e.preventDefault();
+        } 
+    });
+    
     $(document).on('change', '#Address0Country, #Address1Country', function(){
         var id = $(this).attr('id');
         var addressId = id.match(/\d/);
