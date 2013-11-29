@@ -124,7 +124,7 @@ class MyFormHelper extends FormHelper
                                                                     'escape' => false
                                                                 )
                                                );
-                    $this->nameToOptionsMap['countryName'] = array('label' => 'Country ' . $tooltip);
+                    $this->nameToOptionsMap['countryName'] = array('label' => 'Country ' . $tooltip, 'placeholder' => 'Full Name, No Abbreviations.');
                 }
                 $this->nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => '');
                 break;
@@ -145,7 +145,7 @@ class MyFormHelper extends FormHelper
                 $options['required'] = false;
             }
             //All others
-            $common = array('options', 'empty', 'class', 'size', 'value', 'type');
+            $common = array('options', 'empty', 'class', 'size', 'value', 'type', 'placeholder');
             foreach($common as $item){
                 if(isset($attrs[$item])){
                     $options[$item] = $attrs[$item];

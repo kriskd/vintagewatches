@@ -21,6 +21,16 @@
     </div>
     <div class="address-form-shipping">
         <h5>Shipping Address</h5>
+        <?php if (strcasecmp($billingData['country'], 'other')==0): ?>
+            <p class="country-ship-rule">
+                Orders must be shipped with in the same country as the billing
+                address. <?php echo $this->Html->link('Contact me', array(
+                                                                        'controller' => 'contacts',
+                                                                        'action' => 'index'
+                                                                    )); ?> 
+                about options to ship your order outside of your billing country.
+            </p>
+        <?php endif; ?>
         <div class="checkout-form">
             <?php echo $this->Form->addressForm('shipping', $data, false, true); ?>
             <?php if($data['country'] == 'other'): ?>

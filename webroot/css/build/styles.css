@@ -7721,6 +7721,13 @@ body.checkout .container .content {
   display: none;
   height: 150px;
 }
+.container .content .orders .address .address-form-shipping .country-ship-rule {
+  font-size: 90%;
+  font-style: italic;
+}
+.container .content .orders .address .address-form-shipping .country-ship-rule a {
+  text-decoration: underline;
+}
 .container .content .orders.index h4 span {
   font-size: 80%;
   font-style: italic;
