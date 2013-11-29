@@ -831,9 +831,6 @@ body.checkout {
                 margin-bottom: 25px; 
             }
             .control-label {
-                //margin-right: 5px;
-                //width: 160px;
-                //float: left;
                 text-align: right;
             }
             @media (max-width: @screen-sm-min) {
@@ -885,8 +882,30 @@ body.checkout {
                 .border-bottom-radius(5px);
                 .border-left-radius(5px);
                 .clearfix();
-                .error-message {
-                    margin: 0 0 2px 188px;
+                @media (max-width: @screen-xs-min) {
+                    .error-message {
+                        margin: 0 0 2px 21px;
+                    }
+                }
+                @media (min-width: @screen-xs-min) and (max-width: @screen-xs-max) {
+                    .error-message {
+                        margin: 0 0 2px 21px;
+                    }
+                }
+                @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+                    .error-message {
+                        margin: 0 0 2px 257px;
+                    }
+                }
+                @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+                    .error-message {
+                        margin: 0 0 2px 175px;
+                    }
+                }
+                @media (min-width: @screen-lg-min) {
+                    .error-message {
+                        margin: 0 0 2px 207px;
+                    }
                 }
                 input {
                     margin: 5px;

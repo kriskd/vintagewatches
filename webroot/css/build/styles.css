@@ -205,7 +205,7 @@ table {
   img {
     max-width: 100% !important;
   }
-  @page  {
+  @page {
     margin: 2cm .5cm;
   }
   p,
@@ -547,10 +547,8 @@ dd {
   .dl-horizontal dd:after {
     content: " ";
     /* 1 */
-  
     display: table;
     /* 2 */
-  
   }
   .dl-horizontal dd:after {
     clear: both;
@@ -559,10 +557,8 @@ dd {
   .dl-horizontal dd:after {
     content: " ";
     /* 1 */
-  
     display: table;
     /* 2 */
-  
   }
   .dl-horizontal dd:after {
     clear: both;
@@ -675,10 +671,8 @@ pre code {
 .container:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container:after {
   clear: both;
@@ -687,10 +681,8 @@ pre code {
 .container:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container:after {
   clear: both;
@@ -703,10 +695,8 @@ pre code {
 .row:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .row:after {
   clear: both;
@@ -715,10 +705,8 @@ pre code {
 .row:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .row:after {
   clear: both;
@@ -1564,7 +1552,6 @@ input[type="checkbox"] {
   margin: 4px 0 0;
   margin-top: 1px \9;
   /* IE8-9 */
-
   line-height: normal;
 }
 input[type="file"] {
@@ -1846,10 +1833,8 @@ textarea.input-lg {
 .form-horizontal .form-group:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .form-horizontal .form-group:after {
   clear: both;
@@ -1858,10 +1843,8 @@ textarea.input-lg {
 .form-horizontal .form-group:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .form-horizontal .form-group:after {
   clear: both;
@@ -3027,10 +3010,8 @@ input[type="button"].btn-block {
 .btn-toolbar:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .btn-toolbar:after {
   clear: both;
@@ -3039,10 +3020,8 @@ input[type="button"].btn-block {
 .btn-toolbar:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .btn-toolbar:after {
   clear: both;
@@ -3146,10 +3125,8 @@ input[type="button"].btn-block {
 .btn-group-vertical > .btn-group:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .btn-group-vertical > .btn-group:after {
   clear: both;
@@ -3158,10 +3135,8 @@ input[type="button"].btn-block {
 .btn-group-vertical > .btn-group:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .btn-group-vertical > .btn-group:after {
   clear: both;
@@ -3362,10 +3337,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .nav:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .nav:after {
   clear: both;
@@ -3374,10 +3347,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .nav:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .nav:after {
   clear: both;
@@ -3599,10 +3570,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar:after {
   clear: both;
@@ -3611,10 +3580,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar:after {
   clear: both;
@@ -3628,10 +3595,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-header:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar-header:after {
   clear: both;
@@ -3640,10 +3605,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-header:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar-header:after {
   clear: both;
@@ -3666,10 +3629,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-collapse:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar-collapse:after {
   clear: both;
@@ -3678,10 +3639,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-collapse:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar-collapse:after {
   clear: both;
@@ -4243,10 +4202,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .pager:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .pager:after {
   clear: both;
@@ -4255,10 +4212,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .pager:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .pager:after {
   clear: both;
@@ -4737,10 +4692,8 @@ a.list-group-item.active:focus .list-group-item-text {
 .panel-body:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .panel-body:after {
   clear: both;
@@ -4749,10 +4702,8 @@ a.list-group-item.active:focus .list-group-item-text {
 .panel-body:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .panel-body:after {
   clear: both;
@@ -5110,10 +5061,8 @@ button.close {
 .modal-footer:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .modal-footer:after {
   clear: both;
@@ -5122,10 +5071,8 @@ button.close {
 .modal-footer:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .modal-footer:after {
   clear: both;
@@ -5556,10 +5503,8 @@ button.close {
 .clearfix:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .clearfix:after {
   clear: both;
@@ -6020,10 +5965,8 @@ td.visible-print {
 .navbar:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar:after {
   clear: both;
@@ -6032,10 +5975,8 @@ td.visible-print {
 .navbar:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar:after {
   clear: both;
@@ -6049,10 +5990,8 @@ td.visible-print {
 .navbar-header:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar-header:after {
   clear: both;
@@ -6061,10 +6000,8 @@ td.visible-print {
 .navbar-header:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar-header:after {
   clear: both;
@@ -6087,10 +6024,8 @@ td.visible-print {
 .navbar-collapse:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar-collapse:after {
   clear: both;
@@ -6099,10 +6034,8 @@ td.visible-print {
 .navbar-collapse:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar-collapse:after {
   clear: both;
@@ -6889,10 +6822,8 @@ body.checkout .container .content {
 .container .content:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content:after {
   clear: both;
@@ -6901,10 +6832,8 @@ body.checkout .container .content {
 .container .content:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content:after {
   clear: both;
@@ -7021,10 +6950,8 @@ body.checkout .container .content {
 .container .content dl:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content dl:after {
   clear: both;
@@ -7033,10 +6960,8 @@ body.checkout .container .content {
 .container .content dl:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content dl:after {
   clear: both;
@@ -7064,10 +6989,8 @@ body.checkout .container .content {
 .container .content #s3captcha-images:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content #s3captcha-images:after {
   clear: both;
@@ -7076,10 +6999,8 @@ body.checkout .container .content {
 .container .content #s3captcha-images:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content #s3captcha-images:after {
   clear: both;
@@ -7207,10 +7128,8 @@ body.checkout .container .content {
 .container .content .watches.index .watches-header:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content .watches.index .watches-header:after {
   clear: both;
@@ -7219,10 +7138,8 @@ body.checkout .container .content {
 .container .content .watches.index .watches-header:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content .watches.index .watches-header:after {
   clear: both;
@@ -7384,10 +7301,8 @@ body.checkout .container .content {
 .container .content .watches.form .watch-images:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content .watches.form .watch-images:after {
   clear: both;
@@ -7396,10 +7311,8 @@ body.checkout .container .content {
 .container .content .watches.form .watch-images:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content .watches.form .watch-images:after {
   clear: both;
@@ -7572,10 +7485,8 @@ body.checkout .container .content {
 .container .content .orders .checkout-form:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content .orders .checkout-form:after {
   clear: both;
@@ -7584,16 +7495,36 @@ body.checkout .container .content {
 .container .content .orders .checkout-form:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content .orders .checkout-form:after {
   clear: both;
 }
-.container .content .orders .checkout-form .error-message {
-  margin: 0 0 2px 188px;
+@media (max-width: 480px) {
+  .container .content .orders .checkout-form .error-message {
+    margin: 0 0 2px 21px;
+  }
+}
+@media (min-width: 480px) and (max-width: 767px) {
+  .container .content .orders .checkout-form .error-message {
+    margin: 0 0 2px 21px;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .container .content .orders .checkout-form .error-message {
+    margin: 0 0 2px 257px;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .container .content .orders .checkout-form .error-message {
+    margin: 0 0 2px 175px;
+  }
+}
+@media (min-width: 1200px) {
+  .container .content .orders .checkout-form .error-message {
+    margin: 0 0 2px 207px;
+  }
 }
 .container .content .orders .checkout-form input {
   margin: 5px;
@@ -7634,10 +7565,8 @@ body.checkout .container .content {
 .container .content .orders .checkout-form .submit:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content .orders .checkout-form .submit:after {
   clear: both;
@@ -7646,10 +7575,8 @@ body.checkout .container .content {
 .container .content .orders .checkout-form .submit:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content .orders .checkout-form .submit:after {
   clear: both;
