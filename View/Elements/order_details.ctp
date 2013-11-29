@@ -33,23 +33,23 @@
                 <?php echo h($this->Number->currency($watch['price'], 'USD')); ?>
             </div>
         </div>
-        <div class="row choose-ship">
-            <div class="text-right col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                Shipping
-            </div>
-            <div class="shipping-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                <?php echo $this->Number->currency($order['Order']['shippingAmount'], 'USD'); ?>
-            </div>
-        </div>
-        <div class="row">
-            <div class="text-right col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                Total
-            </div>
-            <div class="total-formatted-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                <?php echo $this->Number->stripe($order['Order']['stripe_amount']); ?>
-            </div>
-        </div>
     <?php endforeach; ?>
+    <div class="row choose-ship">
+        <div class="text-right col-lg-10 col-md-10 col-sm-10 col-xs-10">
+            Shipping
+        </div>
+        <div class="shipping-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <?php echo $this->Number->currency($order['Order']['shippingAmount'], 'USD'); ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="text-right col-lg-10 col-md-10 col-sm-10 col-xs-10">
+            Total
+        </div>
+        <div class="total-formatted-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <?php echo $this->Number->stripe($order['Order']['stripe_amount']); ?>
+        </div>
+    </div>
     <?php if(!empty($order['Order']['notes'])): ?>
         <h2>Special Order Instructions</h2>
         <div class="notes">
