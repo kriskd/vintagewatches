@@ -61,15 +61,15 @@ class PagesController extends AppController {
  * @param mixed What page to display
  * @return void
  */
-	public function display() {
+	public function display() { 
 		$path = func_get_args();
 		if (empty($path)) {
 			$this->redirect('/');
 		}
-		$slug = current($path); 
+		$slug = current($path); //var_dump(strcasecmp($slug, 'sitemap')); exit;
 		
 		//The router passes in the slug "home" for the homepage
-		if (strcasecmp($slug, 'home')==0) {
+		if (strcasecmp($slug, 'home')==0) { 
 			$this->set('title', 'Fine timepieces at reasonable prices from a name you trust.');
 			//Get the hompeage content and send to view
 			$page = $this->Page->find('first', array('conditions' => array('homepage' => 1)));
@@ -84,6 +84,45 @@ class PagesController extends AppController {
 				$this->set(compact('watches'));
 				$this->render('home');
 			}
+		} elseif (strcasecmp($slug, 'sitemap')==0) { 
+			App::import('Vendor', 'zeroasterisk/CakePHP-ArrayToXml-Lib/libs/array_to_xml');
+			$watchXml = $pageXml = array();
+			
+			$watches = $this->Watch->getWatches(); 
+			foreach($watches as $watch) {
+				$watchXml[] = array(
+						'url' => array(
+							'loc' => 'http://' . env('SERVER_NAME') . DS . 'watches' . DS . 'view' . DS . $watch['Watch']['id'],
+							'lastmod' => $watch['Watch']['modified']
+						)
+					);
+			}
+			
+			$pages = $this->Page->getNavigation(); 
+			foreach ($pages as $page) {
+				$pageXml[] = array(
+					'url' => array(
+						'loc' => 'http://' . env('SERVER_NAME') . DS . 'pages' . DS . $page['Page']['slug'],
+						'lastmod' => $page['Page']['modified']
+					)	
+				);
+			}
+			$pageXml[] = array(
+				'url' => array(
+					'loc' => 'http://' . env('SERVER_NAME') . DS . 'orders'
+				)
+			);
+			$pageXml[] = array(
+				'url' => array(
+					'loc' => 'http://' . env('SERVER_NAME') . DS . 'contact-us'
+				)
+			);
+			
+			$xmlString = ArrayToXml::simplexml(array_merge($watchXml, $pageXml), 'urlset', array('xmlns' => 'http://www.sitemaps.org/schemas/sitemap/0.9')); 
+			
+			$this->set('xml', $xmlString);
+			$this->render('sitemap');
+			$this->layout = 'xml';
 		//Standard content page
 		} else {
 			$page = $this->Page->find('first', array('conditions' => array('slug' => $slug)));
