@@ -6755,18 +6755,7 @@ body.checkout .container .content {
     font-size: 18px;
   }
 }
-@media (min-width: 992px) and (max-width: 1199px) {
-  .navbar .navbar-right img {
-    display: block;
-  }
-  .navbar .navbar-header .credit-card-logos {
-    display: none;
-  }
-  .navbar .navbar-header .navbar-brand {
-    font-size: 18px;
-  }
-}
-@media (min-width: 1200px) {
+@media (min-width: 992px) {
   .navbar .navbar-right img {
     display: block;
   }
