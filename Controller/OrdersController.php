@@ -268,7 +268,8 @@ class OrdersController extends AppController
 	}
         
 	if($this->Cart->inCart($id)){
-	    $this->Session->setFlash('That item is already in your cart.');
+	    $this->Session->setFlash('That item is already in your cart.',
+				     'info', array('class' => 'alert alert-info'));
 	    $this->redirect(array('controller' => 'watches', 'action' => 'index'));
 	}
 	
