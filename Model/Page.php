@@ -107,8 +107,8 @@ class Page extends AppModel {
         
         public function getNavigation()
         {
-            return $this->find('list', array(
-					'fields' => array('slug', 'name'),
+            return $this->find('all', array(
+					'fields' => array('slug', 'name', 'modified'),
                                         'recursive' => -1,
                                         'conditions' => array('active' => 1),
                                         'order' => array('homepage' => 'DESC', 'name' => 'ASC'),

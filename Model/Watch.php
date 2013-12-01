@@ -181,7 +181,7 @@ class Watch extends AppModel {
                                             'active' => 1
                                         ),
                                         'order' => 'created DESC',
-                                        'fields' => array('id', 'stockId', 'price', 'name', 'description'),
+                                        'fields' => array('id', 'stockId', 'price', 'name', 'description', 'modified'),
                                         'contain' => array(
                                                         'Image',
                                                         'Brand' => array(
