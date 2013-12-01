@@ -205,7 +205,7 @@ table {
   img {
     max-width: 100% !important;
   }
-  @page  {
+  @page {
     margin: 2cm .5cm;
   }
   p,
@@ -547,10 +547,8 @@ dd {
   .dl-horizontal dd:after {
     content: " ";
     /* 1 */
-  
     display: table;
     /* 2 */
-  
   }
   .dl-horizontal dd:after {
     clear: both;
@@ -559,10 +557,8 @@ dd {
   .dl-horizontal dd:after {
     content: " ";
     /* 1 */
-  
     display: table;
     /* 2 */
-  
   }
   .dl-horizontal dd:after {
     clear: both;
@@ -675,10 +671,8 @@ pre code {
 .container:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container:after {
   clear: both;
@@ -687,10 +681,8 @@ pre code {
 .container:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container:after {
   clear: both;
@@ -703,10 +695,8 @@ pre code {
 .row:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .row:after {
   clear: both;
@@ -715,10 +705,8 @@ pre code {
 .row:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .row:after {
   clear: both;
@@ -804,6 +792,9 @@ pre code {
 .col-xs-pull-1 {
   right: 8.333333333333332%;
 }
+.col-xs-pull-0 {
+  right: 0%;
+}
 .col-xs-push-12 {
   left: 100%;
 }
@@ -840,6 +831,9 @@ pre code {
 .col-xs-push-1 {
   left: 8.333333333333332%;
 }
+.col-xs-push-0 {
+  left: 0%;
+}
 .col-xs-offset-12 {
   margin-left: 100%;
 }
@@ -875,6 +869,9 @@ pre code {
 }
 .col-xs-offset-1 {
   margin-left: 8.333333333333332%;
+}
+.col-xs-offset-0 {
+  margin-left: 0%;
 }
 @media (min-width: 768px) {
   .container {
@@ -955,6 +952,9 @@ pre code {
   .col-sm-pull-1 {
     right: 8.333333333333332%;
   }
+  .col-sm-pull-0 {
+    right: 0%;
+  }
   .col-sm-push-12 {
     left: 100%;
   }
@@ -991,6 +991,9 @@ pre code {
   .col-sm-push-1 {
     left: 8.333333333333332%;
   }
+  .col-sm-push-0 {
+    left: 0%;
+  }
   .col-sm-offset-12 {
     margin-left: 100%;
   }
@@ -1026,6 +1029,9 @@ pre code {
   }
   .col-sm-offset-1 {
     margin-left: 8.333333333333332%;
+  }
+  .col-sm-offset-0 {
+    margin-left: 0%;
   }
 }
 @media (min-width: 992px) {
@@ -1107,6 +1113,9 @@ pre code {
   .col-md-pull-1 {
     right: 8.333333333333332%;
   }
+  .col-md-pull-0 {
+    right: 0%;
+  }
   .col-md-push-12 {
     left: 100%;
   }
@@ -1143,6 +1152,9 @@ pre code {
   .col-md-push-1 {
     left: 8.333333333333332%;
   }
+  .col-md-push-0 {
+    left: 0%;
+  }
   .col-md-offset-12 {
     margin-left: 100%;
   }
@@ -1178,6 +1190,9 @@ pre code {
   }
   .col-md-offset-1 {
     margin-left: 8.333333333333332%;
+  }
+  .col-md-offset-0 {
+    margin-left: 0%;
   }
 }
 @media (min-width: 1200px) {
@@ -1259,6 +1274,9 @@ pre code {
   .col-lg-pull-1 {
     right: 8.333333333333332%;
   }
+  .col-lg-pull-0 {
+    right: 0%;
+  }
   .col-lg-push-12 {
     left: 100%;
   }
@@ -1295,6 +1313,9 @@ pre code {
   .col-lg-push-1 {
     left: 8.333333333333332%;
   }
+  .col-lg-push-0 {
+    left: 0%;
+  }
   .col-lg-offset-12 {
     margin-left: 100%;
   }
@@ -1330,6 +1351,9 @@ pre code {
   }
   .col-lg-offset-1 {
     margin-left: 8.333333333333332%;
+  }
+  .col-lg-offset-0 {
+    margin-left: 0%;
   }
 }
 table {
@@ -1564,7 +1588,6 @@ input[type="checkbox"] {
   margin: 4px 0 0;
   margin-top: 1px \9;
   /* IE8-9 */
-
   line-height: normal;
 }
 input[type="file"] {
@@ -1598,18 +1621,6 @@ output {
   color: #555555;
   vertical-align: middle;
 }
-.form-control:-moz-placeholder {
-  color: #999999;
-}
-.form-control::-moz-placeholder {
-  color: #999999;
-}
-.form-control:-ms-input-placeholder {
-  color: #999999;
-}
-.form-control::-webkit-input-placeholder {
-  color: #999999;
-}
 .form-control {
   display: block;
   width: 100%;
@@ -1633,6 +1644,18 @@ output {
   outline: 0;
   -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+.form-control:-moz-placeholder {
+  color: #999999;
+}
+.form-control::-moz-placeholder {
+  color: #999999;
+}
+.form-control:-ms-input-placeholder {
+  color: #999999;
+}
+.form-control::-webkit-input-placeholder {
+  color: #999999;
 }
 .form-control[disabled],
 .form-control[readonly],
@@ -1846,10 +1869,8 @@ textarea.input-lg {
 .form-horizontal .form-group:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .form-horizontal .form-group:after {
   clear: both;
@@ -1858,10 +1879,8 @@ textarea.input-lg {
 .form-horizontal .form-group:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .form-horizontal .form-group:after {
   clear: both;
@@ -3027,10 +3046,8 @@ input[type="button"].btn-block {
 .btn-toolbar:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .btn-toolbar:after {
   clear: both;
@@ -3039,10 +3056,8 @@ input[type="button"].btn-block {
 .btn-toolbar:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .btn-toolbar:after {
   clear: both;
@@ -3146,10 +3161,8 @@ input[type="button"].btn-block {
 .btn-group-vertical > .btn-group:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .btn-group-vertical > .btn-group:after {
   clear: both;
@@ -3158,10 +3171,8 @@ input[type="button"].btn-block {
 .btn-group-vertical > .btn-group:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .btn-group-vertical > .btn-group:after {
   clear: both;
@@ -3362,10 +3373,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .nav:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .nav:after {
   clear: both;
@@ -3374,10 +3383,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .nav:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .nav:after {
   clear: both;
@@ -3599,10 +3606,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar:after {
   clear: both;
@@ -3611,10 +3616,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar:after {
   clear: both;
@@ -3628,10 +3631,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-header:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar-header:after {
   clear: both;
@@ -3640,10 +3641,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-header:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar-header:after {
   clear: both;
@@ -3666,10 +3665,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-collapse:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar-collapse:after {
   clear: both;
@@ -3678,10 +3675,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-collapse:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar-collapse:after {
   clear: both;
@@ -4243,10 +4238,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .pager:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .pager:after {
   clear: both;
@@ -4255,10 +4248,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .pager:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .pager:after {
   clear: both;
@@ -4737,10 +4728,8 @@ a.list-group-item.active:focus .list-group-item-text {
 .panel-body:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .panel-body:after {
   clear: both;
@@ -4749,10 +4738,8 @@ a.list-group-item.active:focus .list-group-item-text {
 .panel-body:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .panel-body:after {
   clear: both;
@@ -5110,10 +5097,8 @@ button.close {
 .modal-footer:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .modal-footer:after {
   clear: both;
@@ -5122,10 +5107,8 @@ button.close {
 .modal-footer:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .modal-footer:after {
   clear: both;
@@ -5556,10 +5539,8 @@ button.close {
 .clearfix:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .clearfix:after {
   clear: both;
@@ -6020,10 +6001,8 @@ td.visible-print {
 .navbar:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar:after {
   clear: both;
@@ -6032,10 +6011,8 @@ td.visible-print {
 .navbar:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar:after {
   clear: both;
@@ -6049,10 +6026,8 @@ td.visible-print {
 .navbar-header:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar-header:after {
   clear: both;
@@ -6061,10 +6036,8 @@ td.visible-print {
 .navbar-header:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar-header:after {
   clear: both;
@@ -6087,10 +6060,8 @@ td.visible-print {
 .navbar-collapse:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar-collapse:after {
   clear: both;
@@ -6099,10 +6070,8 @@ td.visible-print {
 .navbar-collapse:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .navbar-collapse:after {
   clear: both;
@@ -6894,10 +6863,8 @@ body.checkout .container .content {
 .container .content:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content:after {
   clear: both;
@@ -6906,10 +6873,8 @@ body.checkout .container .content {
 .container .content:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content:after {
   clear: both;
@@ -7026,10 +6991,8 @@ body.checkout .container .content {
 .container .content dl:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content dl:after {
   clear: both;
@@ -7038,10 +7001,8 @@ body.checkout .container .content {
 .container .content dl:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content dl:after {
   clear: both;
@@ -7069,10 +7030,8 @@ body.checkout .container .content {
 .container .content #s3captcha-images:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content #s3captcha-images:after {
   clear: both;
@@ -7081,10 +7040,8 @@ body.checkout .container .content {
 .container .content #s3captcha-images:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content #s3captcha-images:after {
   clear: both;
@@ -7212,10 +7169,8 @@ body.checkout .container .content {
 .container .content .watches.index .watches-header:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content .watches.index .watches-header:after {
   clear: both;
@@ -7224,10 +7179,8 @@ body.checkout .container .content {
 .container .content .watches.index .watches-header:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content .watches.index .watches-header:after {
   clear: both;
@@ -7389,10 +7342,8 @@ body.checkout .container .content {
 .container .content .watches.form .watch-images:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content .watches.form .watch-images:after {
   clear: both;
@@ -7401,10 +7352,8 @@ body.checkout .container .content {
 .container .content .watches.form .watch-images:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content .watches.form .watch-images:after {
   clear: both;
@@ -7513,7 +7462,7 @@ body.checkout .container .content {
 .container .content .orders .control-label {
   text-align: right;
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .container .content .orders .control-label {
     text-align: left;
   }
@@ -7577,10 +7526,8 @@ body.checkout .container .content {
 .container .content .orders .checkout-form:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content .orders .checkout-form:after {
   clear: both;
@@ -7589,10 +7536,8 @@ body.checkout .container .content {
 .container .content .orders .checkout-form:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content .orders .checkout-form:after {
   clear: both;
@@ -7661,10 +7606,8 @@ body.checkout .container .content {
 .container .content .orders .checkout-form .submit:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content .orders .checkout-form .submit:after {
   clear: both;
@@ -7673,10 +7616,8 @@ body.checkout .container .content {
 .container .content .orders .checkout-form .submit:after {
   content: " ";
   /* 1 */
-
   display: table;
   /* 2 */
-
 }
 .container .content .orders .checkout-form .submit:after {
   clear: both;
