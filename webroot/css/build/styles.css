@@ -7015,30 +7015,33 @@ body.checkout .container .content {
 .container .content .pagination .active a:hover {
   color: white;
 }
-.container .content #s3captcha-images:before,
-.container .content #s3captcha-images:after {
+.container .content .contacts .verify {
+  margin-top: 10px;
+}
+.container .content .contacts #s3captcha-images:before,
+.container .content .contacts #s3captcha-images:after {
   content: " ";
   /* 1 */
   display: table;
   /* 2 */
 }
-.container .content #s3captcha-images:after {
+.container .content .contacts #s3captcha-images:after {
   clear: both;
 }
-.container .content #s3captcha-images:before,
-.container .content #s3captcha-images:after {
+.container .content .contacts #s3captcha-images:before,
+.container .content .contacts #s3captcha-images:after {
   content: " ";
   /* 1 */
   display: table;
   /* 2 */
 }
-.container .content #s3captcha-images:after {
+.container .content .contacts #s3captcha-images:after {
   clear: both;
 }
-.container .content #s3captcha-images .s3captcha {
+.container .content .contacts #s3captcha-images .s3captcha {
   float: left;
 }
-.container .content #s3captcha-images .s3captcha .img {
+.container .content .contacts #s3captcha-images .s3captcha .img {
   width: 50px;
   height: 50px;
   background-position: bottom left;
@@ -7046,19 +7049,19 @@ body.checkout .container .content {
   cursor: pointer;
   margin-right: 2px;
 }
-.container .content #s3captcha-images .s3captcha .umbrella {
+.container .content .contacts #s3captcha-images .s3captcha .umbrella {
   background-image: url(/css/images/s3icons/new/umbrella.png);
 }
-.container .content #s3captcha-images .s3captcha .key {
+.container .content .contacts #s3captcha-images .s3captcha .key {
   background-image: url(/css/images/s3icons/new/key.png);
 }
-.container .content #s3captcha-images .s3captcha .clock {
+.container .content .contacts #s3captcha-images .s3captcha .clock {
   background-image: url(/css/images/s3icons/new/clock.png);
 }
-.container .content #s3captcha-images .s3captcha .television {
+.container .content .contacts #s3captcha-images .s3captcha .television {
   background-image: url(/css/images/s3icons/new/television.png);
 }
-.container .content #s3captcha-images .s3captcha .leaf {
+.container .content .contacts #s3captcha-images .s3captcha .leaf {
   background-image: url(/css/images/s3icons/new/leaf.png);
 }
 .container .content .page .row {
