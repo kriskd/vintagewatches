@@ -109,6 +109,10 @@ class AppController extends Controller {
         //Brands with watches
         $brandsWithWatches = $this->Brand->getBrandsWithWatches();
         
+        //All brands for meta keywords
+        $allBrands = $this->Brand->find('list');
+        $allBrands = implode(',', $allBrands);
+        
         //Current Url
         $currentUrl = 'http://' . env('SERVER_NAME') . $this->here;
         
@@ -119,7 +123,7 @@ class AppController extends Controller {
             $checkout = true;
         }
         
-        $vars = compact('loggedIn', 'navigation', 'storeOpen', 'cartEmpty', 'cartCount', 'cartItemIds', 'brandsWithWatches', 'checkout', 'currentUrl');
+        $vars = compact('loggedIn', 'navigation', 'storeOpen', 'cartEmpty', 'cartCount', 'cartItemIds', 'brandsWithWatches', 'checkout', 'currentUrl', 'allBrands');
         
         $this->set(array('controller' => $this, 'name' => $this->name) + $vars);
         parent::beforeRender();

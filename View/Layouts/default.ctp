@@ -29,15 +29,14 @@
 	</title>
 	<?php
 		echo $this->html->meta('description', 'Bruce\'s Vintage Wristwatches sells vintage watches,
-				       with an emphasis on wristwatches. Many popular brands may be for sale
-				       at any given time, including Omega, Longines, Girard Perregaux,
-				       Universal Geneve, Gruen, Mido, Bulova, Elgin, and more. Also offered
-				       are many brands of chronographs and other complicated watches, such
-				       as triple date, and triple date moonphase. Emphasis is on affordable
-				       vintage watches in the $100 to $1,000 price range. All watches for
-				       sale come with a 7-day unconditional money-back guarantee. The
-				       company also offers trades, or will buy your vintage watches outright.
-				       Most major credit/debit cards are accepted. ');
+				       with an emphasis on wristwatches. Also offered are many brands of
+				       chronographs and other complicated watches, such as triple date, and
+				       triple date moonphase. Emphasis is on affordable vintage watches in
+				       the $100 to $1,000 price range. All watches for sale come with a 7-day
+				       unconditional money-back guarantee. The company also offers trades,
+				       or will buy your vintage watches outright. Most major credit/debit
+				       cards are accepted.');
+		echo $this->Html->meta('keywords', $allBrands);
 		echo $this->Html->meta('icon');
 
 		//echo $this->Html->css('cake.generic');
