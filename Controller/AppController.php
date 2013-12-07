@@ -57,6 +57,8 @@ class AppController extends Controller {
     
     public $uses = array('Page', 'Watch', 'Brand');
     
+    public $brandsWithWatches;
+    
     /**
      * Send the Controller object to the View so Helpers can initialize a Component with it
      */
@@ -106,9 +108,6 @@ class AppController extends Controller {
         //Watch IDs in cart
         $cartItemIds = $this->Cart->cartItemIds();
         
-        //Brands with watches
-        $brandsWithWatches = $this->Brand->getBrandsWithWatches();
-        
         //All brands for meta keywords
         $allBrands = $this->Brand->find('list');
         $allBrands = implode(',', $allBrands);
@@ -123,9 +122,9 @@ class AppController extends Controller {
             $checkout = true;
         }
         
-        $vars = compact('loggedIn', 'navigation', 'storeOpen', 'cartEmpty', 'cartCount', 'cartItemIds', 'brandsWithWatches', 'checkout', 'currentUrl', 'allBrands');
+        $vars = compact('loggedIn', 'navigation', 'storeOpen', 'cartEmpty', 'cartCount', 'cartItemIds', 'checkout', 'currentUrl', 'allBrands');
         
-        $this->set(array('controller' => $this, 'name' => $this->name) + $vars);
+        $this->set(array('name' => $this->name, 'brandsWithWatches' => $this->brandsWithWatches) + $vars);
         parent::beforeRender();
     }
     
@@ -143,7 +142,10 @@ class AppController extends Controller {
         if (empty($this->params['prefix'])) {
             //Not an admin page
             $this->Auth->allow($this->action);
-        } 
+        }
+                
+        //Brands with watches
+        $this->brandsWithWatches = $this->Brand->getBrandsWithWatches();
     }
     
     public function isAuthorized($user)

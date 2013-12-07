@@ -42,9 +42,8 @@
                                             <?php foreach ($brandsWithWatches as $id => $brand): ?>
                                                 <?php echo $this->Html->tag('li', $this->Html->link($brand, array(
                                                                                                             'controller' => 'watches',
-                                                                                                            'action' => 'index',
+                                                                                                            'action' => 'index', strtolower(Inflector::slug($brand, '-')),
                                                                                                             'admin' => false,
-                                                                                                            'brand' => $id
                                                                                                         ))); ?>
                                             <?php endforeach; ?>
                                         </ul>

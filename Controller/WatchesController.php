@@ -39,12 +39,16 @@ class WatchesController extends AppController {
  *
  * @return void
  */
-	public function index() {
+	public function index($brand_slug = null) { 
 		//Get only active and unsold watches
 		$this->paginate['conditions'] = $this->Watch->getWatchesConditions(1, 0);
-		if (!empty($this->params->named['brand'])) {
-			$brand_id = $this->params->named['brand'];
-			if ($brand = $this->Brand->field('name', array('id' => $brand_id))) {
+		if (!empty($brand_slug)) {
+			$brand = array_filter($this->brandsWithWatches, function($item) use ($brand_slug) {
+				return strcasecmp(Inflector::slug($item, '-'), $brand_slug)==0;
+			});
+			$brand_id = key($brand); 
+			$brand = current($brand);
+			if ($brand_id = $this->Brand->field('id', array('name' => $brand))) {
 				$this->paginate['conditions']['brand_id'] = $brand_id;
 				$this->set(compact('brand'));
 			}
