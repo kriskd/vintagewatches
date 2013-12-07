@@ -16,10 +16,10 @@ class OrdersController extends AppController
     protected $cartWatches = array();
     
     public function beforeFilter()
-    {
+    {	
 	$storeOpen = $this->Watch->storeOpen();
-	//Redirect if store is closed and going to a non-admin order page
-	if ($storeOpen == false && empty($this->request->params['admin'])) {
+	//Redirect if store is closed and going to a non-admin order page and not index or view
+	if ($storeOpen == false && empty($this->request->params['admin']) && !in_array($this->request->params['action'], array('index', 'view'))) {
 	    $this->redirect(array('controller' => 'pages', 'action' => 'home', 'admin' => false));
 	}
 	
