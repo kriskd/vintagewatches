@@ -46,11 +46,13 @@ class WatchesController extends AppController {
 			$brand = array_filter($this->brandsWithWatches, function($item) use ($brand_slug) {
 				return strcasecmp(Inflector::slug($item, '-'), $brand_slug)==0;
 			});
-			$brand_id = key($brand); 
-			$brand = current($brand);
-			if ($brand_id = $this->Brand->field('id', array('name' => $brand))) {
-				$this->paginate['conditions']['brand_id'] = $brand_id;
-				$this->set(compact('brand'));
+			if (is_array($brand)) {
+				$brand_id = key($brand); 
+				$brand = current($brand);
+				if ($brand_id = $this->Brand->field('id', array('name' => $brand))) {
+					$this->paginate['conditions']['brand_id'] = $brand_id;
+					$this->set(compact('brand'));
+				}
 			}
 		}
 		$this->paginate['fields'] = array('id', 'stockId', 'price', 'name', 'description');
