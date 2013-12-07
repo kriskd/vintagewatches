@@ -68,53 +68,52 @@
             Happy shopping!
         </p>
     </div>
-    <?php foreach ($watches as $i => $watch): ?>
-        <div class="row">
-            <div class="watch">
-                <div class="row watch-attrs">
-                    <?php /*<div class="col-xs-12 col-sm-12 col-md-6 col-lg-1 brand">
-                        <?php echo $this->Html->link(h($watch['Brand']['name']),
-                                                     array('action' => 'index', 'brand' => strtolower($watch['Brand']['id'])),
-                                                     array('escape' => false)); ?>
-                    </div>*/ ?>
-                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 name">
-                        <?php echo $this->Html->link(h($watch['Watch']['name']), array('action' => 'view', $watch['Watch']['id']), array('escape' => false)); ?>
+    <?php if (!empty($watches)): ?>
+        <?php foreach ($watches as $watch): ?>
+            <div class="row">
+                <div class="watch">
+                    <div class="row watch-attrs">
+                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 name">
+                            <?php echo $this->Html->link(h($watch['Watch']['name']), array('action' => 'view', $watch['Watch']['id']), array('escape' => false)); ?>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 stockid">
+                            Stock Number <?php echo h($watch['Watch']['stockId']); ?>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 price">
+                            <?php echo h($this->Number->currency($watch['Watch']['price'], 'USD')); ?>
+                        </div>
                     </div>
-                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 stockid">
-                        Stock Number <?php echo h($watch['Watch']['stockId']); ?>
+                    <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 watch-details">
+                        <div class="watch-thumb">
+                            <?php echo $this->Html->thumbPrimary($watch,
+                                                                array(
+                                                                    'url' => array(
+                                                                                'controller' => 'watches',
+                                                                                'action' => 'view', $watch['Watch']['id']
+                                                                            ),
+                                                                    'alt' => $watch['Watch']['name']
+                                                                )
+                                                            ); ?>
+                        </div>
+                        <div class="watch-cart-button">
+                            <?php echo $this->Element('add_to_cart', compact('watch', 'controller') + array('class' => 'btn btn-gold')); ?>
+                        </div>
                     </div>
-                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 price">
-                        <?php echo h($this->Number->currency($watch['Watch']['price'], 'USD')); ?>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 watch-details">
-                    <div class="watch-thumb">
-                        <?php echo $this->Html->thumbPrimary($watch,
-                                                            array(
-                                                                'url' => array(
-                                                                            'controller' => 'watches',
-                                                                            'action' => 'view', $watch['Watch']['id']
-                                                                        ),
-                                                                'alt' => $watch['Watch']['name']
-                                                            )
-                                                        ); ?>
-                    </div>
-                    <div class="watch-cart-button">
-                        <?php echo $this->Element('add_to_cart', compact('watch', 'controller') + array('class' => 'btn btn-gold')); ?>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <?php $description = $this->Text->truncate($watch['Watch']['description'], 350, array('html' => true, 'exact' => false)); ?>
-                            <?php $more = $this->Html->link('<strong>More details</strong>', array('action' => 'view', $watch['Watch']['id']), array('escape' => false)); ?>
-                            <?php echo $description . $more; ?>
+                    <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <?php $description = $this->Text->truncate($watch['Watch']['description'], 350, array('html' => true, 'exact' => false)); ?>
+                                <?php $more = $this->Html->link('<strong>More details</strong>', array('action' => 'view', $watch['Watch']['id']), array('escape' => false)); ?>
+                                <?php echo $description . $more; ?>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    <?php endforeach; ?>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <p>There are currently no <?php echo isset($brand) ? $brand . ' ' : ''; ?>watches available.</p>
+    <?php endif; ?>
     <div class="row">
         <?php echo $this->Element('paginator'); ?>
     </div>

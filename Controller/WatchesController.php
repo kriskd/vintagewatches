@@ -43,14 +43,16 @@ class WatchesController extends AppController {
 		//Get only active and unsold watches
 		$this->paginate['conditions'] = $this->Watch->getWatchesConditions(1, 0);
 		if (!empty($this->params->named['brand'])) {
-		    $brand_id = $this->params->named['brand'];
-		    $this->paginate['conditions']['brand_id'] = $brand_id;
-            $brand = $this->Brand->field('name', array('id' => $brand_id));
-            $this->set(compact('brand'));
+			$brand_id = $this->params->named['brand'];
+			if ($brand = $this->Brand->field('name', array('id' => $brand_id))) {
+				$this->paginate['conditions']['brand_id'] = $brand_id;
+				$this->set(compact('brand'));
+			}
 		}
 		$this->paginate['fields'] = array('id', 'stockId', 'price', 'name', 'description');
 		$this->Paginator->settings = $this->paginate;
-		$this->set('title', 'Store');
+		$title = empty($brand) ? 'Store' : $brand . ' Watches';
+		$this->set('title', $title);
 		
 		$this->set('watches', $this->Paginator->paginate('Watch'));
 	}
