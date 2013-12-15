@@ -79,6 +79,11 @@
 </head>
 <body class="<?php echo $checkout==true ? ' checkout' : ''; ?>">
 	<?php echo $this->Element('navigation'); ?>
+	<?php if (stage() == true): ?>
+		<div class="stage">
+			Staging Site
+		</div>
+	<?php endif; ?>
 	<div class="container">
 		<div class="content">
 			<?php echo $this->Session->flash(); ?>
