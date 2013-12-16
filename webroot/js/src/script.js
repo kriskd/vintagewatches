@@ -243,6 +243,17 @@ $(document).ready(function(){
         })
     }
     
+    $(document).on('click', '.invoices .add-line-item', function(){
+        $.ajax({
+            url: '/invoices/getLineItem',
+            dataType: 'html',
+            cache: false,
+            success: function(data){
+                $('.invoices .line-items').append(data);
+            }
+        });
+    });
+    
     $('.payment-form').submit(function(){ 
         $('.submit-payment').attr('disabled', 'disabled');
         var form = $(this); 
