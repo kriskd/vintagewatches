@@ -186,7 +186,7 @@ class OrdersController extends AppController
 		$result = $this->Stripe->charge($stripeData);
 		
 		if(is_array($result) && $result['stripe_paid'] == true){
-		    unset($this->Order->Address->validate['order_id']);
+		    unset($this->Order->Address->validate['foregin_id']);
 		    $this->Order->saveAssociated($data); 
 		    
 		    //Write the results of the Stripe payment processing to the table
@@ -396,7 +396,7 @@ class OrdersController extends AppController
 				'alias' => 'Address',
 				'type' => 'INNER',
 				'conditions' => array(
-				    'Address.order_id = Order.id'
+				    'Address.foreign_id = Order.id'
 				)
 			    )
 			);
@@ -488,7 +488,7 @@ class OrdersController extends AppController
 		$billingCountry = $this->request->data['Address'][0]['country'];
 		$this->Order->Address->create();
 		$this->Order->Address->save(array(
-						'order_id' => $id,
+						'foreign_id' => $id,
 						'type' => 'shipping',
 						'country' => $billingCountry
 					    ),
