@@ -13,6 +13,15 @@ class Invoice extends AppModel {
  * @var array
  */
 	public $validate = array(
+                'email' => array(
+                    'notempty' => array(
+                        'rule' => array('notempty'),
+                        'message' => 'Please enter your email.'),
+                    'email' => array(
+                        'rule' => array('email'),
+                        'message' => 'Please supply a valid email address.'
+                    )
+                ),
 		'slug' => array(
 			'alphaNumeric' => array(
 				'rule' => array('alphaNumeric'),
@@ -68,6 +77,19 @@ class Invoice extends AppModel {
 			'foreignKey' => 'invoice_id',
 			'dependent' => false,
 			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+                'Address' => array(
+			'className' => 'Address',
+			'foreignKey' => 'foreign_id',
+			'dependent' => true, //Delete associated addreseses
+			'conditions' => array('Address.class' => 'Invoice'),
 			'fields' => '',
 			'order' => '',
 			'limit' => '',
