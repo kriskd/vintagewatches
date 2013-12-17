@@ -243,9 +243,13 @@ $(document).ready(function(){
         })
     }
     
+    /**
+     * Add line item to invoice in admin
+     */
     $(document).on('click', '.invoices .add-line-item', function(){
+        var count = $('.line-item').length;
         $.ajax({
-            url: '/invoices/getLineItem',
+            url: '/invoices/getLineItem/' + count,
             dataType: 'html',
             cache: false,
             success: function(data){

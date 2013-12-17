@@ -48,6 +48,13 @@ class Order extends AppModel {
 	    array('Watch.order_id' => $order_id)
 	);
     }
+    
+    /**
+     * Remove any empty results
+     */
+    public function afterFind($results, $primary = false) {
+	return Hash::filter($results);
+    }
 
 /**
  * hasMany associations
@@ -57,9 +64,9 @@ class Order extends AppModel {
 	public $hasMany = array(
 		'Address' => array(
 			'className' => 'Address',
-			'foreignKey' => 'order_id',
+			'foreignKey' => 'foreign_id',
 			'dependent' => true, //Delete associated addreseses
-			'conditions' => '',
+			'conditions' => array('Address.class' => 'Order'),
 			'fields' => '',
 			'order' => '',
 			'limit' => '',

@@ -45,7 +45,7 @@ class Address extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-                'order_id' => array(
+                'foreign_id' => array(
                         'notempty' => array(
 				'rule' => array('notempty'),
 				//'message' => 'Your custom message here',
@@ -178,7 +178,7 @@ class Address extends AppModel {
          */
         public function beforeSave($options = array())
         {
-            if (!in_array($this->data['Address']['country'], array('US', 'CA'))) {
+            if (isset($this->data['Address']['country']) && !in_array($this->data['Address']['country'], array('US', 'CA'))) {
                 $this->data['Address']['state'] = null;
             }
             return true;
@@ -194,10 +194,31 @@ class Address extends AppModel {
 	public $belongsTo = array(
 		'Order' => array(
 			'className' => 'Order',
-			'foreignKey' => 'order_id',
-			'conditions' => '',
+			'foreignKey' => 'foreign_id',
+			'conditions' => array('Address.class' => 'Order'),
+			'fields' => '',
+			'order' => ''
+		),
+		'Invoice' => array(
+			'className' => 'Invoice',
+			'foreignKey' => 'foreign_id',
+			'conditions' => array('Address.class' => 'Course'),
 			'fields' => '',
 			'order' => ''
 		)
 	);
+	
+	/**
+	 * Remove all validation rules. Used when creating an invoice since user might not be known.
+	 */
+	public function removeAllRules()
+	{
+	    $this->validator()->remove('firstName');
+	    $this->validator()->remove('lastName');
+	    $this->validator()->remove('address1');
+	    $this->validator()->remove('city');
+	    $this->validator()->remove('state');
+	    $this->validator()->remove('postalCode');
+	    $this->validator()->remove('country');
+	}
 }

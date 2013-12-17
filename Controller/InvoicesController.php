@@ -133,15 +133,24 @@ class InvoicesController extends AppController {
  * @return void
  */
 	public function admin_add() {
+		$this->Invoice->Address->removeAllRules();
 		if ($this->request->is('post')) {
 			$this->Invoice->create();
-			if ($this->Invoice->save($this->request->data)) {
+			$slugChars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+			$slug = substr(str_shuffle($slugChars), 0, 32);
+			$this->request->data['Invoice']['slug'] = $slug;
+			$this->request->data['Address'][0]['class'] = 'Invoice';
+			$this->request->data['Address'][0]['type'] = 'billing'; 
+			if ($this->Invoice->saveAll($this->request->data)) {
 				$this->Session->setFlash(__('The invoice has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The invoice could not be saved. Please, try again.'));
 			}
 		}
+		// Count of line items starting at 0
+		$i=0;
+		$this->set('i', $i);
 	}
 
 /**
@@ -189,11 +198,12 @@ class InvoicesController extends AppController {
 		return $this->redirect(array('action' => 'index'));
 	}
 	
-	public function getLineItem()
+	public function getLineItem($count = 0)
 	{
 		if(!$this->request->is('ajax')){
 			$this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));	
 		}
+		$this->set('i', $count);
 		$this->layout = 'ajax';
 	}
 	
