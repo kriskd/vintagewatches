@@ -55,6 +55,18 @@ class Order extends AppModel {
     public function afterFind($results, $primary = false) {
 	return Hash::filter($results);
     }
+    
+    public function beforeValidate($options = array())
+    {
+	if (isset($this->data['Address'])) {
+	    $addresses = $this->data['Address'];
+	    $this->data['Address'] = array_map(function($item) {
+		    $item['class'] = 'Order';
+		    return $item;
+		}, $addresses);
+	}
+	return true;
+    }
 
 /**
  * hasMany associations
