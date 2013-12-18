@@ -14,6 +14,13 @@ class InvoicesController extends AppController {
  * @var array
  */
 	public $components = array('Paginator');
+	
+	public $paginate = array(
+			'limit' => 10,
+			'order' => array(
+				    'Invoice.id' => 'desc'
+			)
+		);
 
 /**
  * index method
@@ -109,6 +116,7 @@ class InvoicesController extends AppController {
  */
 	public function admin_index() {
 		$this->Invoice->recursive = 0;
+		$this->Paginator->settings = $this->paginate;
 		$this->set('invoices', $this->Paginator->paginate());
 	}
 
