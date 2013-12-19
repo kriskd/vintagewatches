@@ -99,5 +99,17 @@ class Invoice extends AppModel {
 			'counterQuery' => ''
 		)
 	);
+        
+        public function beforeValidate($options = array())
+        {
+            if (isset($this->data['Address'])) {
+                $addresses = $this->data['Address'];
+                $this->data['Address'] = array_map(function($item) {
+                        $item['class'] = 'Invoice';
+                        return $item;
+                    }, $addresses);
+            }
+            return true;
+        }
 
 }

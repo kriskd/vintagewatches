@@ -147,7 +147,6 @@ class InvoicesController extends AppController {
 			$slugChars = 'abcdefghijklmnopqrstuvwxyz0123456789';
 			$slug = substr(str_shuffle($slugChars), 0, 32);
 			$this->request->data['Invoice']['slug'] = $slug;
-			$this->request->data['Address'][0]['class'] = 'Invoice';
 			$this->request->data['Address'][0]['type'] = 'billing'; 
 			if ($this->Invoice->saveAll($this->request->data)) {
 				$this->Session->setFlash(__('The invoice has been saved.'));
