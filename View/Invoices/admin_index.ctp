@@ -27,7 +27,7 @@
             <?php $row .= $this->Html->tag('span', '', array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', $invoice['Invoice']['created'], array('class' => 'table-cell text-center')); ?>
             <?php $row .= $this->Html->tag('span', $invoice['Invoice']['modified'], array('class' => 'table-cell text-center')); ?>
-            <?php echo $this->Html->link($row, array('action' => 'admin_edit', $invoice['Invoice']['id'], 'admin' => true), array('class' => 'table-row', 'escape' => false)); ?>
+            <?php echo $this->Html->link($row, array('action' => 'admin_view', $invoice['Invoice']['id'], 'admin' => true), array('class' => 'table-row', 'escape' => false)); ?>
         <?php endforeach; ?>
     </div>
     <?php echo $this->Element('paginator'); ?>
