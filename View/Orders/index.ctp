@@ -31,7 +31,7 @@
                 <?php foreach ($orders as $order): ?>
                     <?php $row = $this->Html->tag('span', date('F j, Y', strtotime($order['Order']['created'])), array('class' => 'table-cell text-center col-lg-4')); ?>
                     <?php $row .= $this->Html->tag('span', $order['Order']['id'], array('class' => 'table-cell text-center col-lg-2')); ?>
-                    <?php $row .= $this->Html->tag('span', $this->Number->stripe($order['Order']['stripe_amount']), array('class' => 'table-cell text-right col-lg-2')); ?>
+                    <?php $row .= $this->Html->tag('span', $this->Number->stripe($order['Payment']['stripe_amount']), array('class' => 'table-cell text-right col-lg-2')); ?>
                     <?php if (empty($order['Order']['shipDate'])): ?>
                         <?php $date = ''; ?>
                     <?php else: ?>

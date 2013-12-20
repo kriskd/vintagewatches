@@ -107,7 +107,7 @@ class Order extends AppModel {
                         'className' => 'Payment',
                         'foreignKey' => 'foreign_id',
                         'conditions' => array('Payment.class' => 'Order'),
-                        'dependent' => true
+                        'dependent' => true //Delete associated payment
                 )
         );
 
@@ -175,7 +175,7 @@ class Order extends AppModel {
 	$db = $this->Address->getDataSource();
 	$subQuery = $db->buildStatement(
 	    array(
-		'fields' => array('Address.order_id'),
+		'fields' => array('Address.foreign_id'),
 		'table' => $db->fullTableName($this->Address),
 		'alias' => 'Address',
 		'conditions' => $conditionsSubQuery
@@ -193,7 +193,7 @@ class Order extends AppModel {
 
 	return array('conditions' => $conditions,
 			'fields' => array(
-				'id', 'email', 'phone', 'shippingAmount', 'stripe_amount',
+				'id', 'email', 'phone', 'shippingAmount', 
 				'notes', 'created', 'shipDate'
 			    ),
 			'contain' => array(
@@ -201,6 +201,11 @@ class Order extends AppModel {
 			    'Watch' => array(
 				'fields' => array('id', 'order_id', 'stockId', 'price', 'name'),
 				'Image'
+			    ),
+			    'Payment' => array(
+				'fields' => array(
+				    'stripe_amount'
+				)
 			    )
 			),
 			'order' => array(

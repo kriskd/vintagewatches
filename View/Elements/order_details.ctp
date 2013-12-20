@@ -47,7 +47,7 @@
             Total
         </div>
         <div class="total-formatted-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <?php echo $this->Number->stripe($order['Order']['stripe_amount']); ?>
+            <?php echo $this->Number->stripe($order['Payment']['stripe_amount']); ?>
         </div>
     </div>
     <?php if(!empty($order['Order']['notes'])): ?>
