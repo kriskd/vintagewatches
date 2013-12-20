@@ -21,6 +21,8 @@ class InvoicesController extends AppController {
 				    'Invoice.id' => 'desc'
 			)
 		);
+	
+	public $helpers = array('Invoice');
 
 /**
  * index method
@@ -147,12 +149,12 @@ class InvoicesController extends AppController {
 			$slugChars = 'abcdefghijklmnopqrstuvwxyz0123456789';
 			$slug = substr(str_shuffle($slugChars), 0, 32);
 			$this->request->data['Invoice']['slug'] = $slug;
-			$this->request->data['Address'][0]['type'] = 'billing'; 
-			if ($this->Invoice->saveAll($this->request->data)) {
-				$this->Session->setFlash(__('The invoice has been saved.'));
+			$this->request->data['Address'][0]['type'] = 'billing'; //var_dump($this->request->data); exit;
+			if ($this->Invoice->saveAssociated($this->request->data)) {
+				$this->Session->setFlash(__('The invoice has been saved.'), 'success');
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The invoice could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The invoice could not be saved. Please, try again.'), 'danger');
 			}
 		}
 		// Count of line items starting at 0
@@ -171,17 +173,17 @@ class InvoicesController extends AppController {
 		if (!$this->Invoice->exists($id)) {
 			throw new NotFoundException(__('Invalid invoice'));
 		}
-		if ($this->request->is(array('post', 'put'))) {
-			if ($this->Invoice->save($this->request->data)) {
-				$this->Session->setFlash(__('The invoice has been saved.'));
+		if ($this->request->is(array('post', 'put'))) { 
+			if ($this->Invoice->saveAssociated($this->request->data)) {
+				$this->Session->setFlash(__('The invoice has been saved.'), 'success');
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The invoice could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The invoice could not be saved. Please, try again.'), 'danger');
 			}
 		} else {
 			$options = array('conditions' => array('Invoice.' . $this->Invoice->primaryKey => $id));
 			$this->request->data = $this->Invoice->find('first', $options);
-		}
+		} 
 	}
 
 /**

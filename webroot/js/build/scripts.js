@@ -1436,6 +1436,11 @@
             cache: false,
             success: function(data){
                 $('.invoices .line-items').append(data);
+                // Remove all required spans and add to avoid multiple span on elements already in DOM
+                $('.invoices .input.required label').each(function(){
+                    $(this).find('span').remove();
+                    $(this).append(' <span class="required">*</span>');
+                });
             }
         });
     });

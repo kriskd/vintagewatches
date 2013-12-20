@@ -50,6 +50,10 @@ class InvoiceItem extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
+                        'not_negative' => array(
+                                'rule'    => array('comparison', '>=', 0),
+                                'message' => 'Must be a positive number.'
+                        )
 		),
 	);
 

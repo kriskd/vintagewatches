@@ -7694,3 +7694,16 @@ body.admin .container .content {
 .container .content .orders.admin-index .row input[type=submit] {
   margin-top: 25px;
 }
+.container .content .invoices.view ul {
+  list-style: none;
+}
+.container .content .invoices.view .head {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.container .content .invoices.view .items div {
+  margin-bottom: 10px;
+}
+.container .content .invoices.view .shipping {
+  margin-bottom: 10px;
+}
