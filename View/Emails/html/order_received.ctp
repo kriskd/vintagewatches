@@ -39,7 +39,7 @@
         <td></td>
         <td></td>
         <td style="text-align: right">Total</td>
-        <td style="text-align: right"><?php echo $this->Number->stripe($order['Order']['stripe_amount']); ?></td>
+        <td style="text-align: right"><?php echo $this->Number->stripe($order['Payment']['stripe_amount']); ?></td>
     </tr>
     <?php if(!empty($order['Order']['notes'])): ?>
         <tr>
