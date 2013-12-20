@@ -8,7 +8,8 @@ App::uses('AppModel', 'Model');
 class Address extends AppModel {
     
     public $virtualFields = array(
-        'name' => 'CONCAT(Address.firstName, " ", Address.lastName)'
+        'name' => 'CONCAT(Address.firstName, " ", Address.lastName)',
+	'cityStZip' => 'CONCAT(Address.city, ", ", Address.state, " ", Address.postalCode)'
     );
     
     public $actsAs = array(
