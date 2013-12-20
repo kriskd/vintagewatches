@@ -220,7 +220,7 @@ class Address extends AppModel {
 		'Invoice' => array(
 			'className' => 'Invoice',
 			'foreignKey' => 'foreign_id',
-			'conditions' => array('Address.class' => 'Course'),
+			'conditions' => array('Address.class' => 'Invoice'),
 			'fields' => '',
 			'order' => ''
 		)
