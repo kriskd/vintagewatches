@@ -186,11 +186,11 @@ class OrdersController extends AppController
 		$result = $this->Stripe->charge($stripeData);
 		
 		if(is_array($result) && $result['stripe_paid'] == true){
-		    unset($this->Order->Address->validate['foregin_id']);
-		    $this->Order->saveAssociated($data); 
+		    unset($this->Order->Address->validate['foreign_id']);
 		    
-		    //Write the results of the Stripe payment processing to the table
-		    $this->Order->save($result); 
+		    //Add the results of stripe to the data array
+		    $data['Payment'] = $result;
+		    $this->Order->saveAssociated($data); 
 		
 		    //Get the order_id
 		    $order_id = $this->Order->id;
@@ -226,7 +226,7 @@ class OrdersController extends AppController
 		    }
 		    
 		    $this->Cart->emptyCart();
-		    $order = $this->Order->getOrder($order_id);
+		    $order = $this->Order->getOrder($order_id); 
 		    $this->emailOrder($order);
 		    $title = 'Thank You For Your Order';
 		    $this->set(compact('order', 'title'));   

@@ -65,6 +65,9 @@ class Order extends AppModel {
 		    return $item;
 		}, $addresses);
 	}
+	if (isset($this->data['Payment'])) {
+	    $this->data['Payment']['class'] = 'Order';
+	}
 	return true;
     }
 
