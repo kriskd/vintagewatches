@@ -451,8 +451,8 @@ class OrdersController extends AppController
 		}
 	    }
 	} 
-
-	$this->paginate['fields'] = array('id', 'email', 'stripe_id', 'stripe_amount', 'shipDate', 'created', 'modified');
+	
+	$this->paginate['fields'] = array('id', 'email', 'Payment.stripe_id', 'Payment.stripe_amount', 'shipDate', 'created', 'modified');
 	$this->Paginator->settings = array_merge($this->paginate, $options); 
 	$this->set(array(
 		    'orders' => $this->Paginator->paginate('Order')
@@ -488,6 +488,7 @@ class OrdersController extends AppController
 		$billingCountry = $this->request->data['Address'][0]['country'];
 		$this->Order->Address->create();
 		$this->Order->Address->save(array(
+						'class' => 'Order',
 						'foreign_id' => $id,
 						'type' => 'shipping',
 						'country' => $billingCountry

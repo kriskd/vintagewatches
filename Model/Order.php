@@ -57,7 +57,7 @@ class Order extends AppModel {
     }
     
     public function beforeValidate($options = array())
-    {
+    {	
 	if (isset($this->data['Address'])) {
 	    $addresses = $this->data['Address'];
 	    $this->data['Address'] = array_map(function($item) {
@@ -101,6 +101,15 @@ class Order extends AppModel {
 			'counterQuery' => ''
 		)
 	);
+	
+	public $hasOne = array(
+                'Payment' => array(
+                        'className' => 'Payment',
+                        'foreignKey' => 'foreign_id',
+                        'conditions' => array('Payment.class' => 'Order'),
+                        'dependent' => true
+                )
+        );
 
 /**
  * hasAndBelongsToMany associations
@@ -147,7 +156,8 @@ class Order extends AppModel {
 				    'Watch' => array(
 					'fields' => array('id', 'order_id', 'stockId', 'price', 'name'),
 					'Image'
-				    )
+				    ),
+				    'Payment'
 				);
 	return $this->find('first', $options);
     }

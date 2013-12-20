@@ -104,6 +104,15 @@ class Invoice extends AppModel {
 		)
 	);
         
+        public $hasOne = array(
+                'Payment' => array(
+                        'className' => 'Payment',
+                        'foreignKey' => 'foreign_id',
+                        'conditions' => array('Payment.class' => 'Invoice'),
+                        'dependent' => true
+                )
+        );
+        
         public function beforeValidate($options = array())
         {
             if (isset($this->data['Address'])) {

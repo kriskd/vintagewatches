@@ -35,7 +35,7 @@
                         </legend>
                         <?php echo $this->Form->input('Address.'.$i.'.id', array('type' => 'hidden', 'value' => $address['id'])); ?>
                         <?php foreach ($addressFields as $field): ?>
-                                <?php $options = array('value' => $address[$field]); ?>
+                                <?php $options = array('value' => isset($address[$field]) ? $address[$field] : ''); ?>
                                 <?php if (strcasecmp($field, 'state')==0 && in_array($address['country'], array('US', 'CA'))): ?>
                                         <?php if (strcasecmp($address['country'], 'US')==0): ?>
                                                 <?php $options['options'] = $statesUS; ?>

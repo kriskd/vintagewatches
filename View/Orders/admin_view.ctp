@@ -38,7 +38,7 @@
                     <p>
                         Are you sure you want to delete Order <?php echo $order['Order']['id']; ?>
                         from <?php echo $order['Address'][0]['firstName']; ?> <?php echo $order['Address'][0]['lastName']; ?>
-                        for <?php echo $this->Number->stripe($order['Order']['stripe_amount']); ?>?
+                        for <?php echo $this->Number->stripe($order['Payment']['stripe_amount']); ?>?
                     </p>
                 </div>
                 <div class="modal-footer">
@@ -82,7 +82,7 @@
             <td></td>
             <td></td>
             <td class="text-right">Total</td>
-            <td class="total-formatted-amount text-right"><?php echo $this->Number->currency($order['Order']['stripe_amount']/100, 'USD'); ?></td>
+            <td class="total-formatted-amount text-right"><?php echo $this->Number->currency($order['Payment']['stripe_amount']/100, 'USD'); ?></td>
         </tr>
     </table>
     <h2>Contact Information</h2>
@@ -130,15 +130,15 @@
     <h2>Payment Details</h2>
     <dl>
         <dt>Stripe ID</dt>
-        <dd><?php echo $order['Order']['stripe_id']; ?></dd>
+        <dd><?php echo $order['Payment']['stripe_id']; ?></dd>
         <dt>Last 4 CCD Digits</dt>
-        <dd><?php echo $order['Order']['stripe_last4']; ?></dd>
+        <dd><?php echo $order['Payment']['stripe_last4']; ?></dd>
         <dt>Address Check</dt>
-        <dd><?php echo $order['Order']['stripe_address_check']; ?></dd>
+        <dd><?php echo $order['Payment']['stripe_address_check']; ?></dd>
         <dt>Zip Check</dt>
-        <dd><?php echo $order['Order']['stripe_zip_check']; ?></dd>
+        <dd><?php echo $order['Payment']['stripe_zip_check']; ?></dd>
         <dt>CVC Check</dt>
-        <dd><?php echo $order['Order']['stripe_cvc_check']; ?></dd>
+        <dd><?php echo $order['Payment']['stripe_cvc_check']; ?></dd>
     </dl>
     <?php if(!empty($order['Order']['shipDate'])): ?>
         <h2>Ship Date</h2>
