@@ -52,8 +52,8 @@ class MyHtmlHelper extends HtmlHelper
     {   
         if (!empty($watch['Image'])) {
             $images = $watch['Image'];
-            $primary = array_reduce($images, function($primaryExists, $item){
-                    if ($item['primary'] == 1) {
+            $primary = array_reduce($images, function($primaryExists, $item){ 
+                    if (isset($item['primary']) && $item['primary'] == 1) {
                         $primaryExists = $item;
                     }
                     return $primaryExists;
