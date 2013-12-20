@@ -6718,11 +6718,13 @@ body {
 body {
   padding-top: 70px;
 }
-body.checkout .footer {
+body.checkout .footer,
+body.admin .footer {
   height: 52px;
   margin-top: -52px;
 }
-body.checkout .container .content {
+body.checkout .container .content,
+body.admin .container .content {
   margin-bottom: 57px;
 }
 .glyphicon {

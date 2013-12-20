@@ -77,7 +77,7 @@
 		</div>
 	</noscript>
 </head>
-<body class="<?php echo $checkout==true ? ' checkout' : ''; ?>">
+<body class="<?php echo $checkout==true ? ' checkout' : ''; ?> <?php echo empty($this->request->params['admin']) ? '' : 'admin'; ?>">
 	<?php echo $this->Element('navigation'); ?>
 	<?php if (stage() == true): ?>
 		<div class="stage">
