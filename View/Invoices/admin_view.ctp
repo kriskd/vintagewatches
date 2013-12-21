@@ -12,5 +12,15 @@
         </div>
     </div>
     <?php echo $this->Element('invoice_top'); ?>
+    <?php foreach ($invoice['Address'] as $address): ?>
+        <h3><?php echo ucfirst($address['type']); ?> Address</h3>
+        <ul>
+            <li><?php echo $address['name']; ?></li>
+            <li><?php echo $address['company']; ?></li>
+            <li><?php echo $address['address1']; ?></li>
+            <li><?php echo $address['address2']; ?></li>
+            <li><?php echo $address['cityStZip']; ?></li>
+        </ul>
+    <?php endforeach; ?>
     <?php echo $this->Element('invoice_detail'); ?>
 </div>

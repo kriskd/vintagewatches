@@ -46,10 +46,11 @@ class InvoicesController extends AppController {
 		$invoice = $this->Invoice->find('first', array('conditions' => compact('slug')));
 		
 		if (empty($invoice)) {
-			//var_dump($invoice); exit;
 			$this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));
 		}
-		$this->set('invoice', $invoice); //var_dump('end'); exit;
+		
+		$this->request->data = $invoice; 
+		$this->set('invoice', $invoice);
 	}
 
 /**
@@ -152,7 +153,7 @@ class InvoicesController extends AppController {
 			$slugChars = 'abcdefghijklmnopqrstuvwxyz0123456789';
 			$slug = substr(str_shuffle($slugChars), 0, 32);
 			$this->request->data['Invoice']['slug'] = $slug;
-			$this->request->data['Address'][0]['type'] = 'billing'; //var_dump($this->request->data); exit;
+			$this->request->data['Address'][0]['type'] = 'billing'; 
 			if ($this->Invoice->saveAssociated($this->request->data)) {
 				$this->Session->setFlash(__('The invoice has been saved.'), 'success');
 				return $this->redirect(array('action' => 'index'));
