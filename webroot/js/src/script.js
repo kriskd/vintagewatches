@@ -263,6 +263,10 @@ $(document).ready(function(){
         });
     });
     
+    $(document).on('click', '.invoice-url', function(){
+        $(this).focus().select();
+    });
+    
     $('.payment-form').submit(function(){ 
         $('.submit-payment').attr('disabled', 'disabled');
         var form = $(this); 

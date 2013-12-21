@@ -41,12 +41,15 @@ class InvoicesController extends AppController {
  * @param string $id
  * @return void
  */
-	public function view($id = null) {
-		if (!$this->Invoice->exists($id)) {
-			throw new NotFoundException(__('Invalid invoice'));
+	public function view($slug = null) {
+
+		$invoice = $this->Invoice->find('first', array('conditions' => compact('slug')));
+		
+		if (empty($invoice)) {
+			//var_dump($invoice); exit;
+			$this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));
 		}
-		$options = array('conditions' => array('Invoice.' . $this->Invoice->primaryKey => $id));
-		$this->set('invoice', $this->Invoice->find('first', $options));
+		$this->set('invoice', $invoice); //var_dump('end'); exit;
 	}
 
 /**
