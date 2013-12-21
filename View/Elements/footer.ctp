@@ -1,6 +1,6 @@
 <div class="footer">
-    <?php //No fat footer on checkout page ?>
-    <?php if ($checkout == false && empty($this->request->params['admin'])): ?>
+    <?php //No fat footer on checkout, invoice and admin page ?>
+    <?php if ($hideFatFooter == false): ?>
         <nav class="navbar navbar-default" role="navigation">
             <div class="container">
                 <div class="row">

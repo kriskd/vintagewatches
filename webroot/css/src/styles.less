@@ -153,7 +153,7 @@ html, body {
 body {
     padding-top: 70px;
 }
-body.checkout, body.admin {
+body.hide-fat-footer {
     .footer {
         height: 52px;
         margin-top: -52px;
@@ -490,28 +490,28 @@ body.checkout, body.admin {
                 }
             }
         }
+        .header {
+            .header-inner {
+                padding: 0 1em;
+                border: 2px solid @goldDark;
+                background: @gray-light;
+                h1, h4 {
+                    color: @goldDark;
+                }
+                .border-top-radius(5px);
+                .border-right-radius(5px);
+                .border-bottom-radius(5px);
+                .border-left-radius(5px);
+            }
+            .col-sm-4 {
+                margin-top: 20px;
+                font-style: italic;
+                font-weight: bold;
+            }
+        }
         .page {
             .row {
                 margin-bottom: 20px;
-            }
-            .header {
-                .header-inner {
-                    padding: 0 1em;
-                    border: 2px solid @goldDark;
-                    background: @gray-light;
-                    h1, h4 {
-                        color: @goldDark;
-                    }
-                    .border-top-radius(5px);
-                    .border-right-radius(5px);
-                    .border-bottom-radius(5px);
-                    .border-left-radius(5px);
-                }
-                .col-sm-4 {
-                    margin-top: 20px;
-                    font-style: italic;
-                    font-weight: bold;
-                }
             }
         }
         #carousel-home {

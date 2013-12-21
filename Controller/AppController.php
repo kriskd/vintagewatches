@@ -115,14 +115,19 @@ class AppController extends Controller {
         //Current Url
         $currentUrl = 'http://' . env('SERVER_NAME') . $this->here;
         
-        //Set var to determine if on checkout page
+        //Recent watches
+        $recentWatches = $this->Watch->getWatches(3);
+        
+        //Set var to determine if we show fat footer
         $route = Router::parse($this->here); 
-        $checkout = false;
-        if (strcasecmp($route['controller'], 'orders')==0 && strcasecmp($route['action'], 'checkout')==0) {
-            $checkout = true;
+        $hideFatFooter = false;
+        if (strcasecmp($route['controller'], 'orders')==0 && strcasecmp($route['action'], 'checkout')==0 ||
+            strcasecmp($route['controller'], 'invoices')==0 && strcasecmp($route['action'], 'view')==0 ||
+            !empty($this->request->params['admin'])) {
+            $hideFatFooter = true;
         }
         
-        $vars = compact('loggedIn', 'navigation', 'storeOpen', 'cartEmpty', 'cartCount', 'cartItemIds', 'checkout', 'currentUrl', 'allBrands');
+        $vars = compact('loggedIn', 'navigation', 'storeOpen', 'cartEmpty', 'cartCount', 'cartItemIds', 'hideFatFooter', 'currentUrl', 'allBrands', 'recentWatches');
         
         $this->set(array('name' => $this->name, 'brandsWithWatches' => $this->brandsWithWatches) + $vars);
         parent::beforeRender();

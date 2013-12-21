@@ -6718,13 +6718,11 @@ body {
 body {
   padding-top: 70px;
 }
-body.checkout .footer,
-body.admin .footer {
+body.hide-fat-footer .footer {
   height: 52px;
   margin-top: -52px;
 }
-body.checkout .container .content,
-body.admin .container .content {
+body.hide-fat-footer .container .content {
   margin-bottom: 57px;
 }
 .glyphicon {
@@ -7073,10 +7071,7 @@ body.admin .container .content {
 .container .content .contacts #s3captcha-images .s3captcha .leaf {
   background-image: url(/css/images/s3icons/new/leaf.png);
 }
-.container .content .page .row {
-  margin-bottom: 20px;
-}
-.container .content .page .header .header-inner {
+.container .content .header .header-inner {
   padding: 0 1em;
   border: 2px solid #665600;
   background: #999999;
@@ -7085,14 +7080,17 @@ body.admin .container .content {
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
 }
-.container .content .page .header .header-inner h1,
-.container .content .page .header .header-inner h4 {
+.container .content .header .header-inner h1,
+.container .content .header .header-inner h4 {
   color: #665600;
 }
-.container .content .page .header .col-sm-4 {
+.container .content .header .col-sm-4 {
   margin-top: 20px;
   font-style: italic;
   font-weight: bold;
+}
+.container .content .page .row {
+  margin-bottom: 20px;
 }
 .container .content #carousel-home {
   position: relative;

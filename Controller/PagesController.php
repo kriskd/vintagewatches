@@ -48,12 +48,6 @@ class PagesController extends AppController {
     
 	public $uses = array('Page', 'Content', 'Watch');
 	
-	public function beforeRender()
-	{
-		$recentWatches = $this->Watch->getWatches(3);
-		$this->set(compact('recentWatches'));
-		parent::beforeRender();
-	}
 
 /**
  * Displays a view
