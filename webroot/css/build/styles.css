@@ -7462,12 +7462,7 @@ body.admin .container .content {
 .container .content .checkout-form:after {
   clear: both;
 }
-@media (max-width: 480px) {
-  .container .content .checkout-form .error-message {
-    margin: 0 0 2px 21px;
-  }
-}
-@media (min-width: 480px) and (max-width: 767px) {
+@media (max-width: 767px) {
   .container .content .checkout-form .error-message {
     margin: 0 0 2px 21px;
   }
@@ -7479,7 +7474,7 @@ body.admin .container .content {
 }
 @media (min-width: 992px) and (max-width: 1199px) {
   .container .content .checkout-form .error-message {
-    margin: 0 0 2px 175px;
+    margin: 0 0 2px 252px;
   }
 }
 @media (min-width: 1200px) {
