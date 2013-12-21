@@ -7,7 +7,9 @@
     <?php echo $this->Element('checkout_review_cart', compact('watch')); ?>
     <?php echo $this->Element('checkout_shipping'); ?>
     <?php echo $this->Element('checkout_address'); ?>
-    <?php echo $this->Element('checkout_credit_card'); ?>  
+    <section class="credit-card credit-card-order hide">
+        <?php echo $this->Element('checkout_credit_card'); ?>
+    </section>
 </div>
 
 <?php $mode = Configure::read('Stripe.mode'); ?>

@@ -112,7 +112,7 @@ $(document).ready(function(){
         $('.shipping').removeClass('hide').addClass('show');
         //Hide address and credit card blocks
         $('.address').removeClass('show').addClass('hide');
-        $('.credit-card').removeClass('show').addClass('hide');
+        $('.credit-card-order').removeClass('show').addClass('hide');
     });
 
     /**
@@ -142,7 +142,7 @@ $(document).ready(function(){
         getAddressForm(country, shippingOption);
         //Show address and credit card blocks
         $('.address').removeClass('hide').addClass('show');
-        $('.credit-card').removeClass('hide').addClass('show');
+        $('.credit-card-order').removeClass('hide').addClass('show');
     });
     
     if ($('.shipping .radio input').is(':checked')) { 
@@ -153,7 +153,7 @@ $(document).ready(function(){
         getAddressForm(country, shippingOption);
         //Show address and credit card blocks
         $('.address').removeClass('hide').addClass('show');
-        $('.credit-card').removeClass('hide').addClass('show');
+        $('.credit-card-order').removeClass('hide').addClass('show');
     }
     else { 
         //Hide special order instructions
@@ -162,7 +162,7 @@ $(document).ready(function(){
         $('.submit-payment').attr('disabled', 'disabled');
         //Hide address and credit card blocks
         $('.address').removeClass('show').addClass('hide');
-        $('.credit-card').removeClass('show').addClass('hide');
+        $('.credit-card-order').removeClass('show').addClass('hide');
     }
     
     /**

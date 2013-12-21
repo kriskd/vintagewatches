@@ -109,12 +109,6 @@ class OrdersController extends AppController
             $this->redirect(array('controller' => 'watches', 'action' => 'index'));
         }
 	
-        $months = array_combine(range(1,12), range(1,12));
-        $year = date('Y'); 
-        for($i=date('Y'); $i<=date('Y')+10; $i++){
-            $years[$i] = $i;
-        }
-	
 	//Handle ajax request for autocomplete
         if($this->request->is('ajax')){
             $query = $this->request->query; 

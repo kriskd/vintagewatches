@@ -7433,6 +7433,115 @@ body.admin .container .content {
 .container .content .watches.view .carousel-indicators .active {
   background-color: #000;
 }
+.container .content .checkout-form {
+  padding: 5px;
+  background: #eeeeee;
+  border: 1px solid #555555;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+}
+.container .content .checkout-form:before,
+.container .content .checkout-form:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+.container .content .checkout-form:after {
+  clear: both;
+}
+.container .content .checkout-form:before,
+.container .content .checkout-form:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+.container .content .checkout-form:after {
+  clear: both;
+}
+@media (max-width: 480px) {
+  .container .content .checkout-form .error-message {
+    margin: 0 0 2px 21px;
+  }
+}
+@media (min-width: 480px) and (max-width: 767px) {
+  .container .content .checkout-form .error-message {
+    margin: 0 0 2px 21px;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .container .content .checkout-form .error-message {
+    margin: 0 0 2px 257px;
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .container .content .checkout-form .error-message {
+    margin: 0 0 2px 175px;
+  }
+}
+@media (min-width: 1200px) {
+  .container .content .checkout-form .error-message {
+    margin: 0 0 2px 207px;
+  }
+}
+.container .content .checkout-form input {
+  margin: 5px;
+}
+.container .content .checkout-form .input {
+  line-height: 20px;
+}
+@media (min-width: 768px) {
+  .container .content .checkout-form .card-expiry-month {
+    margin-left: 5px;
+  }
+}
+.container .content .checkout-form label[for=CardCvc] {
+  padding-top: 10px;
+}
+.container .content .checkout-form label[for=CardMonth] {
+  padding-top: 5px;
+  width: 100%;
+}
+@media (min-width: 480px) and (max-width: 767px) {
+  .container .content .checkout-form label[for=CardMonth] {
+    display: block;
+  }
+}
+.container .content .checkout-form select option {
+  color: #555;
+}
+.container .content .checkout-form .payment-errors {
+  display: none;
+}
+.container .content .checkout-form .card-number-div {
+  height: 52px;
+}
+.container .content .checkout-form .submit {
+  text-align: center;
+}
+.container .content .checkout-form .submit:before,
+.container .content .checkout-form .submit:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+.container .content .checkout-form .submit:after {
+  clear: both;
+}
+.container .content .checkout-form .submit:before,
+.container .content .checkout-form .submit:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+.container .content .checkout-form .submit:after {
+  clear: both;
+}
 .container .content .orders h2,
 .container .content .orders h3 {
   color: #fff;
@@ -7515,114 +7624,8 @@ body.admin .container .content {
 .container .content .orders .cart-details .glyphicon-trash {
   text-align: center;
 }
-.container .content .orders .checkout-form {
-  padding: 5px;
-  background: #eeeeee;
-  border: 1px solid #555555;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-top-left-radius: 5px;
-}
-.container .content .orders .checkout-form:before,
-.container .content .orders .checkout-form:after {
-  content: " ";
-  /* 1 */
-  display: table;
-  /* 2 */
-}
-.container .content .orders .checkout-form:after {
-  clear: both;
-}
-.container .content .orders .checkout-form:before,
-.container .content .orders .checkout-form:after {
-  content: " ";
-  /* 1 */
-  display: table;
-  /* 2 */
-}
-.container .content .orders .checkout-form:after {
-  clear: both;
-}
-@media (max-width: 480px) {
-  .container .content .orders .checkout-form .error-message {
-    margin: 0 0 2px 21px;
-  }
-}
-@media (min-width: 480px) and (max-width: 767px) {
-  .container .content .orders .checkout-form .error-message {
-    margin: 0 0 2px 21px;
-  }
-}
-@media (min-width: 768px) and (max-width: 991px) {
-  .container .content .orders .checkout-form .error-message {
-    margin: 0 0 2px 257px;
-  }
-}
-@media (min-width: 992px) and (max-width: 1199px) {
-  .container .content .orders .checkout-form .error-message {
-    margin: 0 0 2px 175px;
-  }
-}
-@media (min-width: 1200px) {
-  .container .content .orders .checkout-form .error-message {
-    margin: 0 0 2px 207px;
-  }
-}
-.container .content .orders .checkout-form input {
-  margin: 5px;
-}
-.container .content .orders .checkout-form .input {
-  line-height: 20px;
-}
-@media (min-width: 768px) {
-  .container .content .orders .checkout-form .card-expiry-month {
-    margin-left: 5px;
-  }
-}
-.container .content .orders .checkout-form label[for=CardCvc] {
-  padding-top: 10px;
-}
-.container .content .orders .checkout-form label[for=CardMonth] {
-  padding-top: 5px;
-  width: 100%;
-}
-@media (min-width: 480px) and (max-width: 767px) {
-  .container .content .orders .checkout-form label[for=CardMonth] {
-    display: block;
-  }
-}
-.container .content .orders .checkout-form select option {
-  color: #555;
-}
-.container .content .orders .checkout-form .payment-errors {
+.container .content .orders .credit-card-order {
   display: none;
-}
-.container .content .orders .checkout-form .card-number-div {
-  height: 52px;
-}
-.container .content .orders .checkout-form .submit {
-  text-align: center;
-}
-.container .content .orders .checkout-form .submit:before,
-.container .content .orders .checkout-form .submit:after {
-  content: " ";
-  /* 1 */
-  display: table;
-  /* 2 */
-}
-.container .content .orders .checkout-form .submit:after {
-  clear: both;
-}
-.container .content .orders .checkout-form .submit:before,
-.container .content .orders .checkout-form .submit:after {
-  content: " ";
-  /* 1 */
-  display: table;
-  /* 2 */
-}
-.container .content .orders .checkout-form .submit:after {
-  clear: both;
 }
 .container .content .orders label {
   font-size: 90%;
@@ -7696,6 +7699,9 @@ body.admin .container .content {
 }
 .container .content .invoices.view ul {
   list-style: none;
+}
+.container .content .invoices.view .edit-invoice {
+  margin-top: 24px;
 }
 .container .content .invoices.view .head {
   font-weight: bold;

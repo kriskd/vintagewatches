@@ -31,4 +31,18 @@ App::uses('Helper', 'View');
  * @package       app.View.Helper
  */
 class AppHelper extends Helper {
+    
+    public function months()
+    {
+        return array_combine(range(1,12), range(1,12));
+    }
+    
+    public function years()
+    {
+        $year = date('Y'); 
+        for($i=date('Y'); $i<=date('Y')+10; $i++){
+            $years[$i] = $i;
+        }
+        return $years;
+    }
 }

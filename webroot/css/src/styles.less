@@ -801,6 +801,75 @@ body.checkout, body.admin {
                 }
             }
         }
+        .checkout-form {
+            padding: 5px;
+            background: @gray-lighter;
+            border: 1px solid @gray;
+            .border-top-radius(5px);
+            .border-right-radius(5px);
+            .border-bottom-radius(5px);
+            .border-left-radius(5px);
+            .clearfix();
+            @media (max-width: @screen-xs-min) {
+                .error-message {
+                    margin: 0 0 2px 21px;
+                }
+            }
+            @media (min-width: @screen-xs-min) and (max-width: @screen-xs-max) {
+                .error-message {
+                    margin: 0 0 2px 21px;
+                }
+            }
+            @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+                .error-message {
+                    margin: 0 0 2px 257px;
+                }
+            }
+            @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+                .error-message {
+                    margin: 0 0 2px 175px;
+                }
+            }
+            @media (min-width: @screen-lg-min) {
+                .error-message {
+                    margin: 0 0 2px 207px;
+                }
+            }
+            input {
+                margin: 5px;
+            }
+            .input {
+                line-height: 20px;
+            }
+            .card-expiry-month {
+                @media (min-width: @screen-sm-min) {
+                    margin-left: 5px;
+                }
+            }
+            label[for=CardCvc] {
+                padding-top: 10px;
+            }
+            label[for=CardMonth] {
+                padding-top: 5px;
+                width: 100%;
+                @media (min-width: @screen-xs-min) and (max-width: @screen-xs-max) {
+                    display: block;
+                }
+            }
+            select option {
+                color: #555;
+            }
+            .payment-errors {
+                display: none;
+            }
+            .card-number-div {
+                height: 52px;
+            }
+            .submit {
+                text-align: center;
+                .clearfix();
+            }
+        }
         .orders {
             h2, h3 {
                 color: #fff;
@@ -870,74 +939,9 @@ body.checkout, body.admin {
                     text-align: center;
                 }
             }
-            .checkout-form {
-                padding: 5px;
-                background: @gray-lighter;
-                border: 1px solid @gray;
-                .border-top-radius(5px);
-                .border-right-radius(5px);
-                .border-bottom-radius(5px);
-                .border-left-radius(5px);
-                .clearfix();
-                @media (max-width: @screen-xs-min) {
-                    .error-message {
-                        margin: 0 0 2px 21px;
-                    }
-                }
-                @media (min-width: @screen-xs-min) and (max-width: @screen-xs-max) {
-                    .error-message {
-                        margin: 0 0 2px 21px;
-                    }
-                }
-                @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
-                    .error-message {
-                        margin: 0 0 2px 257px;
-                    }
-                }
-                @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
-                    .error-message {
-                        margin: 0 0 2px 175px;
-                    }
-                }
-                @media (min-width: @screen-lg-min) {
-                    .error-message {
-                        margin: 0 0 2px 207px;
-                    }
-                }
-                input {
-                    margin: 5px;
-                }
-                .input {
-                    line-height: 20px;
-                }
-                .card-expiry-month {
-                    @media (min-width: @screen-sm-min) {
-                        margin-left: 5px;
-                    }
-                }
-                label[for=CardCvc] {
-                    padding-top: 10px;
-                }
-                label[for=CardMonth] {
-                    padding-top: 5px;
-                    width: 100%;
-                    @media (min-width: @screen-xs-min) and (max-width: @screen-xs-max) {
-                        display: block;
-                    }
-                }
-                select option {
-                    color: #555;
-                }
-                .payment-errors {
-                    display: none;
-                }
-                .card-number-div {
-                    height: 52px;
-                }
-                .submit {
-                    text-align: center;
-                    .clearfix();
-                }
+
+            .credit-card-order {
+                display: none;
             }
             label {
                 font-size: 90%;
@@ -1041,6 +1045,9 @@ body.checkout, body.admin {
         .invoices.view {
             ul {
                 list-style: none;
+            }
+            .edit-invoice {
+                margin-top: 24px;
             }
             .head {
                 font-weight: bold;
