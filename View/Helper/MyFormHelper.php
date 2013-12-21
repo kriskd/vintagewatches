@@ -188,6 +188,114 @@ class MyFormHelper extends FormHelper
         return $this->checkbox('delete_shipping_address', array('value' => $id, 'hiddenField' => false));
     }
     
+    public function ccd($payment_type = '')
+    {
+        $options = array(
+                        'name' => false,
+                        'data-stripe' => 'number',
+                        'autocomplete' => 'off',
+                        'placeHolder' => 'Card Number',
+                        'class' => 'card-number form-control',
+                        'label' => array('text' => 'Card Number<br /><small>(no spaces or hypens)</small>',
+                                         'class' => 'control-label col-xs-11 col-sm-4 col-md-4 col-lg-4'
+                                         ),
+                        'div' => array('class' => 'card-number-div input required'),
+                        'required' => 'required',
+                        'between' => '<div class="col-xs-11 col-sm-7 col-md-7 col-lg-7">',
+                        'after' => '</div>'
+                    );
+        
+        switch ($payment_type) {
+            case 'invoice':
+                $options['label']['class'] = 'control-label col-xs-11 col-sm-11 col-md-11 col-lg-11';
+                $options['between'] = '<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">';
+        }
+        
+        return $this->input('Card.number', $options);
+    }
+    
+    public function cvc($payment_type = '')
+    {
+        $options = array(
+                        'name' => false,
+                        'data-stripe' => 'cvc',
+                        'autocomplete' => 'off',
+                        'placeHolder' => 'CVC',
+                        'class' => 'card-cvc form-control',
+                        'label' => array('text' => 'CVC <a class="launch-tooltip"
+                                                    data-toggle="tooltip" data-placement="top"
+                                                    title="The CVC is the three-digit number
+                                                    that appears on the reverse side of your
+                                                    credit/debit card.">
+                                                    <i class="glyphicon glyphicon-question-sign"></i>
+                                                    </a>',
+                                         'class' => 'control-label col-xs-11 col-sm-4 col-md-4 col-lg-4'
+                                         ),
+                        'div' => array('class' => 'cvc-div input required'),
+                        'required' => 'required',
+                        'between' => '<div class="col-xs-11 col-sm-7 col-md-7 col-lg-7">',
+                        'after' => '</div>'
+                    );
+        
+        switch ($payment_type) {
+            case 'invoice':
+                $options['label']['class'] = 'control-label col-xs-11 col-sm-11 col-md-11 col-lg-11';
+                $options['between'] = '<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">';
+        }
+        
+        return $this->input('Card.cvc', $options);
+    }
+    
+    public function expy($payment_type = '')
+    {
+        switch ($payment_type) {
+            case 'invoice':
+                $div = 'col-xxs-6 col-xs-6 col-sm-6 col-md-6 col-lg-6';
+                break;
+            default:
+                $div = 'col-xxs-6 col-xs-6 col-sm-3 col-md-3 col-lg-3';
+        }
+        
+        $month = $this->input('Card.month', array(
+                                            'name' => false,
+                                            'empty' => 'MM',
+                                            'options' => $this->_months(),
+                                            'data-stripe' => 'exp-month',
+                                            'class' => 'form-control card-expiry-month',
+                                            'label' => false,
+                                            'multiple' => false,
+                                            'div' => $div,
+                                            ));
+                                        
+        $year = $this->input('Card.year', array(
+                                            'name' => false,
+                                            'empty' => 'Year',
+                                            'options' => $this->_years(),
+                                            'data-stripe' => 'exp-year',
+                                            'placeHolder' => 'Year',
+                                            'class' => 'card-expiry-year form-control',
+                                            'label' => false,
+                                            'multiple' => false,
+                                            'div' => $div,
+                                            ));
+                                            
+        return $month . $year;
+    }
+    
+    protected function _months()
+    {
+        return array_combine(range(1,12), range(1,12));
+    }
+    
+    protected function _years()
+    {
+        $year = date('Y'); 
+        for($i=date('Y'); $i<=date('Y')+10; $i++){
+            $years[$i] = $i;
+        }
+        return $years;
+    }
+    
     protected function _getCommonFields($options)
     {
         $this->nameToOptionsMap['state'] = array('label' => 'State or Province',

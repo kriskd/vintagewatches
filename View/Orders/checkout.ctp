@@ -8,7 +8,7 @@
     <?php echo $this->Element('checkout_shipping'); ?>
     <?php echo $this->Element('checkout_address'); ?>
     <section class="credit-card credit-card-order hide">
-        <?php echo $this->Element('checkout_credit_card'); ?>
+        <?php echo $this->Element('checkout_credit_card', array('payment_type' => 'order')); ?>
     </section>
 </div>
 
