@@ -58,7 +58,7 @@ class InvoicesController extends AppController {
  *
  * @return void
  */
-	public function add() {
+	public function add() { 
 		if ($this->request->is('post')) {
 			$this->Invoice->create();
 			if ($this->Invoice->save($this->request->data)) {
@@ -146,7 +146,7 @@ class InvoicesController extends AppController {
  *
  * @return void
  */
-	public function admin_add() {
+	public function admin_add() { 
 		$this->Invoice->Address->removeAllRules();
 		if ($this->request->is('post')) {
 			$this->Invoice->create();
@@ -204,11 +204,25 @@ class InvoicesController extends AppController {
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Invoice->delete()) {
-			$this->Session->setFlash(__('The invoice has been deleted.'), 'succes');
+			$this->Session->setFlash(__('The invoice has been deleted.'), 'success');
 		} else {
 			$this->Session->setFlash(__('The invoice could not be deleted. Please, try again.'), 'danger');
 		}
 		return $this->redirect(array('action' => 'index'));
+	}
+	
+	public function admin_delete_item($invoice_id = null, $id = null) { 
+		$this->Invoice->InvoiceItem->id = $id;
+		if (!$this->Invoice->InvoiceItem->exists()) {
+			throw new NotFoundException(__('Invalid invoice'));
+		}
+		$this->request->onlyAllow('post', 'delete');
+		if ($this->Invoice->InvoiceItem->delete()) {
+			$this->Session->setFlash(__('The invoice item has been deleted.'), 'success');
+		} else {
+			$this->Session->setFlash(__('The invoice item could not be deleted. Please, try again.'), 'danger');
+		}
+		return $this->redirect(array('action' => 'edit', $invoice_id));
 	}
 	
 	public function getLineItem($count = 0)
@@ -216,7 +230,7 @@ class InvoicesController extends AppController {
 		if(!$this->request->is('ajax')){
 			$this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));	
 		}
-		$this->set('i', $count);
+		$this->set(array('i' => $count, 'action' => 'add'));
 		$this->layout = 'ajax';
 	}
 	

@@ -7706,10 +7706,10 @@ body.hide-fat-footer .container .content {
 .container .content .invoices.view .shipping {
   margin-bottom: 10px;
 }
-.container .content .invoices.admin-edit .line-item div {
+.container .content .invoices .line-item div {
   position: relative;
 }
-.container .content .invoices.admin-edit .line-item div .glyphicon-remove-sign {
+.container .content .invoices .line-item div .glyphicon-remove-sign {
   color: #9d261d;
   position: absolute;
   right: 0;

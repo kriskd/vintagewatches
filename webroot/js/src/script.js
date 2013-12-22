@@ -263,6 +263,10 @@ $(document).ready(function(){
         });
     });
     
+    $(document).on('click', '.remove-line-item', function(){
+        $(this).parents('.line-item').remove();
+    });
+    
     $(document).on('click', '.invoice-url', function(){
         $(this).focus().select();
     });
