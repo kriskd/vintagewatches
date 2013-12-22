@@ -73,4 +73,27 @@ class InvoiceItem extends AppModel {
 			'order' => ''
 		)
 	);
+        
+        /*public function beforeValidate($options = array())
+        {   var_dump($this->data); exit;
+            if (!$this->id && !isset($this->data[$this->alias][$this->primaryKey])) {
+                // insert
+            } else {
+                // edit
+            }
+            return true;
+        }*/
+        
+        /**
+         * Don't delete line item if it's the only one.
+         */
+        public function beforeDelete($cascade = true)
+        {
+            $invoice_id = $this->invoice_id;
+            $count = $this->find('count', array('conditions' => compact('invoice_id')));
+            if ($count < 2) {
+                return false;
+            }
+            return true;
+        }
 }

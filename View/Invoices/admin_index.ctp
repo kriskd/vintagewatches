@@ -24,7 +24,7 @@
         <?php foreach($invoices as $invoice): ?>
             <?php $row = $this->Html->tag('span', $invoice['Invoice']['id'], array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', $invoice['Invoice']['email'], array('class' => 'table-cell')); ?>
-            <?php $row .= $this->Html->tag('span', '', array('class' => 'table-cell')); ?>
+            <?php $row .= $this->Html->tag('span', $this->Number->currency($this->Invoice->total($invoice), 'USD'), array('class' => 'table-cell text-right')); ?>
             <?php $row .= $this->Html->tag('span', $invoice['Invoice']['created'], array('class' => 'table-cell text-center')); ?>
             <?php $row .= $this->Html->tag('span', $invoice['Invoice']['modified'], array('class' => 'table-cell text-center')); ?>
             <?php echo $this->Html->link($row, array('action' => 'admin_view', $invoice['Invoice']['id'], 'admin' => true), array('class' => 'table-row', 'escape' => false)); ?>

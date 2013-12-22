@@ -19,7 +19,8 @@ class InvoicesController extends AppController {
 			'limit' => 10,
 			'order' => array(
 				    'Invoice.id' => 'desc'
-			)
+			),
+			'contain' => array('InvoiceItem')
 		);
 	
 	public $helpers = array('Invoice');
@@ -156,7 +157,7 @@ class InvoicesController extends AppController {
 			$this->request->data['Address'][0]['type'] = 'billing'; 
 			if ($this->Invoice->saveAssociated($this->request->data)) {
 				$this->Session->setFlash(__('The invoice has been saved.'), 'success');
-				return $this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'view', $this->Invoice->getInsertID()));
 			} else {
 				$this->Session->setFlash(__('The invoice could not be saved. Please, try again.'), 'danger');
 			}
@@ -180,7 +181,7 @@ class InvoicesController extends AppController {
 		if ($this->request->is(array('post', 'put'))) { 
 			if ($this->Invoice->saveAssociated($this->request->data)) {
 				$this->Session->setFlash(__('The invoice has been saved.'), 'success');
-				return $this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'view', $id));
 			} else {
 				$this->Session->setFlash(__('The invoice could not be saved. Please, try again.'), 'danger');
 			}
@@ -213,6 +214,7 @@ class InvoicesController extends AppController {
 	
 	public function admin_delete_item($invoice_id = null, $id = null) { 
 		$this->Invoice->InvoiceItem->id = $id;
+		$this->Invoice->InvoiceItem->invoice_id = $invoice_id;
 		if (!$this->Invoice->InvoiceItem->exists()) {
 			throw new NotFoundException(__('Invalid invoice'));
 		}
@@ -220,7 +222,7 @@ class InvoicesController extends AppController {
 		if ($this->Invoice->InvoiceItem->delete()) {
 			$this->Session->setFlash(__('The invoice item has been deleted.'), 'success');
 		} else {
-			$this->Session->setFlash(__('The invoice item could not be deleted. Please, try again.'), 'danger');
+			$this->Session->setFlash(__('The invoice item could not be deleted, invoices must have at least one line item.'), 'danger');
 		}
 		return $this->redirect(array('action' => 'edit', $invoice_id));
 	}
@@ -234,6 +236,9 @@ class InvoicesController extends AppController {
 		$this->layout = 'ajax';
 	}
 	
+	/**
+	 * Build the delete line item modal and append to the body so the postLink isn't inside another form
+	 */
 	public function deleteModal()
 	{
 		if($this->request->is('ajax')){

@@ -1058,16 +1058,17 @@ body.hide-fat-footer {
             }
         }
         .invoices {
+            .add-line-item {
+                margin-top: 24px;
+            }
+            .checkbox-inline {
+                margin-top: 20px;
+            }
             .line-item {
-                div {
-                    position: relative;
-                    .glyphicon-remove-sign {
-                        color: @red;
-                        position: absolute;
-                        right: 0;
-                        bottom: 0;
-                        margin-top: 33px;
-                    }
+                .launch-tooltip {
+                    color: @red;
+                    margin-top: 33px;
+                    float: right;
                 }
             }
         }

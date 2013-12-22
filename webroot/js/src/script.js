@@ -10,7 +10,7 @@ $(document).ready(function(){
         $('.image-upload').click();
     });
     
-    $('#OrderShipDate').datepicker({dateFormat: 'yy-mm-dd'});
+    $('#OrderShipDate, #InvoiceShipDate').datepicker({dateFormat: 'yy-mm-dd'});
     
     //Disable and enable filter input field based on filter option
     orderAdmin($('.admin-index select').val());
@@ -253,7 +253,7 @@ $(document).ready(function(){
             dataType: 'html',
             cache: false,
             success: function(data){
-                $('.invoices .line-items').append(data);
+                $('.invoices .line-items').append(data).find('.launch-tooltip').tooltip();;
                 // Remove all required spans and add to avoid multiple span on elements already in DOM
                 $('.invoices .input.required label').each(function(){
                     $(this).find('span').remove();
