@@ -54,7 +54,11 @@
     </div>
     <div class="row">
         <div class="col-lg-6">
-            <?php echo $this->Form->input('Address.0.country', array('options' => $countries)); ?>
+            <?php $options['options'] = $countries; ?>
+            <?php if (strcasecmp($action, 'add')==0): ?>
+                <?php $options['default'] = 'US'; ?>
+            <?php endif; ?>
+            <?php echo $this->Form->input('Address.0.country', $options); ?>
         </div>
         <div class="col-lg-6">
             <?php if (strcasecmp($action, 'edit')==0): ?>
