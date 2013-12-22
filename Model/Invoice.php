@@ -79,7 +79,7 @@ class Invoice extends AppModel {
 		'InvoiceItem' => array(
 			'className' => 'InvoiceItem',
 			'foreignKey' => 'invoice_id',
-			'dependent' => false,
+			'dependent' => true,
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
