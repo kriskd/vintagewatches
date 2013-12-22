@@ -227,7 +227,7 @@ class MyFormHelper extends FormHelper
                                                     title="The CVC is the three-digit number
                                                     that appears on the reverse side of your
                                                     credit/debit card.">
-                                                    <i class="glyphicon glyphicon-question-sign"></i>
+                                                    <span class="glyphicon glyphicon-question-sign"></span>
                                                     </a>',
                                          'class' => 'control-label col-xs-11 col-sm-4 col-md-4 col-lg-4'
                                          ),
@@ -242,7 +242,7 @@ class MyFormHelper extends FormHelper
                 $options['label']['class'] = 'control-label col-xs-11 col-sm-11 col-md-11 col-lg-11';
                 $options['between'] = '<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">';
         }
-        
+
         return $this->input('Card.cvc', $options);
     }
     
