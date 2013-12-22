@@ -26,11 +26,11 @@
             <?php endif; ?>
         </div>
     </div>
+    <?php if (strcasecmp($action, 'edit')==0): ?>
+        <?php echo $this->Form->input('Address.0.id', array('type' => 'hidden')); ?>
+        <?php echo $this->Form->input('Address.0.foreign_id', array('type' => 'hidden')); ?>
+    <?php endif; ?>
     <div class="row">
-        <?php if (strcasecmp($action, 'edit')==0): ?>
-            <?php echo $this->Form->input('Address.0.id', array('type' => 'hidden')); ?>
-            <?php echo $this->Form->input('Address.0.foreign_id', array('type' => 'hidden')); ?>
-        <?php endif; ?>
         <div class="col-lg-6">
             <?php echo $this->Form->input('Address.0.firstName'); ?>
         </div>
@@ -38,7 +38,33 @@
             <?php echo $this->Form->input('Address.0.lastName'); ?>
         </div>
     </div>
-    <?php echo $this->Form->input('Invoice.email'); ?>
+    <div class="row">
+        <div class="col-lg-12">
+            <?php echo $this->Form->input('Address.0.address1'); ?>
+        </div>
+        <div class="col-lg-12">
+            <?php echo $this->Form->input('Address.0.address2'); ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <?php echo $this->Form->input('Address.0.city'); ?>
+        </div>
+        <div class="col-lg-3">
+            <?php echo $this->Form->input('Address.0.state', array('options' => $options)); ?>
+        </div>
+        <div class="col-lg-3">
+            <?php echo $this->Form->input('Address.0.postalCode'); ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <?php echo $this->Form->input('Address.0.country', array('options' => $countries)); ?>
+        </div>
+        <div class="col-lg-6">
+            <?php echo $this->Form->input('Invoice.email'); ?>
+        </div>
+    </div>
     <div class="line-items">
         <?php if (empty($this->request->data['InvoiceItem'])): ?>
             <?php echo $this->Element('line_item', array('action' => $action)); ?>
@@ -52,6 +78,11 @@
         <div class="col-lg-10"></div>
         <div class="col-lg-2">
             <?php echo $this->Form->input('Invoice.shippingAmount', array('min' => 0)); ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <?php echo $this->Form->input('invoiceNotes', array('label' => 'Invoice Notes <small>(Notes to customer)</small>')); ?>
         </div>
     </div>
 </fieldset>

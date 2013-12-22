@@ -24,6 +24,20 @@ class InvoicesController extends AppController {
 		);
 	
 	public $helpers = array('Invoice');
+	
+	public $uses = array('Invoice', 'State', 'Province', 'Country');
+	
+	public function beforeRender()
+	{
+		$statesUS = $this->State->getList();
+		$statesCA = $this->Province->getList();
+		$countries = $this->Country->getList();
+		
+		$options = array_merge(array('' => 'Select One'), array('U.S.' => $statesUS), array('Canada' => $statesCA));
+		$this->set(compact('options', 'statesUS', 'statesCA', 'countries'));
+		
+		parent::beforeRender();
+	}
 
 /**
  * index method
@@ -148,7 +162,7 @@ class InvoicesController extends AppController {
  * @return void
  */
 	public function admin_add() { 
-		$this->Invoice->Address->removeAllRules();
+		$this->Invoice->Address->removeAllButCountry();
 		if ($this->request->is('post')) {
 			$this->Invoice->create();
 			$slugChars = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -178,6 +192,7 @@ class InvoicesController extends AppController {
 		if (!$this->Invoice->exists($id)) {
 			throw new NotFoundException(__('Invalid invoice'));
 		}
+		$this->Invoice->Address->removeAllButCountry();
 		if ($this->request->is(array('post', 'put'))) { 
 			if ($this->Invoice->saveAssociated($this->request->data)) {
 				$this->Session->setFlash(__('The invoice has been saved.'), 'success');

@@ -1,5 +1,6 @@
-<h2>Invoice No. <?php echo $invoice['Invoice']['id']; ?></h2>
-<ul>
-    <li><?php echo $invoice['Invoice']['email']; ?></li>
-    <li><?php echo date('F j, Y', strtotime($invoice['Invoice']['created'])); ?></li>
-</ul>
+<h2>
+    Invoice No. <?php echo $invoice['Invoice']['id']; ?>
+    <div class="pull-right">
+        <small><?php echo date('F j, Y', strtotime($invoice['Invoice']['created'])); ?></small>
+    </div>
+</h2>

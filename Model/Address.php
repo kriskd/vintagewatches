@@ -183,14 +183,14 @@ class Address extends AppModel {
 		),
 	);
         
-        public $insertedIds = array();
+        /*public $insertedIds = array();
         
         public function afterSave($created, $options = array()){
             if($created){
                 $this->insertedIds[] = $this->getInsertID();
             }
             return true;
-        }
+        }*/
         
         /**
          * Set the state to null if not US or CA
@@ -230,7 +230,7 @@ class Address extends AppModel {
 	/**
 	 * Remove all validation rules. Used when creating an invoice since user might not be known.
 	 */
-	public function removeAllRules()
+	public function removeAllButCountry()
 	{
 	    $this->validator()->remove('firstName');
 	    $this->validator()->remove('lastName');
@@ -238,6 +238,5 @@ class Address extends AppModel {
 	    $this->validator()->remove('city');
 	    $this->validator()->remove('state');
 	    $this->validator()->remove('postalCode');
-	    $this->validator()->remove('country');
 	}
 }

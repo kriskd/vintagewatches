@@ -70,7 +70,10 @@ $(document).ready(function(){
         } 
     });
     
-    $(document).on('change', '#Address0Country, #Address1Country', function(){
+    /**
+     * Add and remove state field based on country
+     */
+    $(document).on('change', '.orders #Address0Country, .orders #Address1Country', function(){
         var id = $(this).attr('id');
         var addressId = id.match(/\d/);
         var country = $(this).val();
