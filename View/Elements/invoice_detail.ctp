@@ -24,17 +24,17 @@
  <?php endforeach; ?>
  <div class="row shipping">
      <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 text-right">
-         Shipping
+            Shipping
      </div>
      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-right">
-         <?php echo $this->Number->currency($invoice['Invoice']['shippingAmount'], 'USD'); ?>
+            <?php echo $this->Number->currency($invoice['Invoice']['shippingAmount'], 'USD'); ?>
      </div>
  </div>
  <div class="row total">
      <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 text-right">
-         Total
+            Total
      </div>
      <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-right">
-         <?php echo $this->Number->currency($this->Invoice->total($invoice), 'USD'); ?>
+            <?php echo $this->Number->currency($this->Invoice->total($invoice), 'USD'); ?>
      </div>
  </div>
