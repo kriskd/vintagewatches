@@ -9,21 +9,16 @@
 <fieldset>
     <legend><?php echo $action; ?> Invoice</legend>
     <div class="row">
-        <div class="col-lg-2 col-md-2">
-            <?php echo $this->Html->link('Add Line Item', '#', array('class' => 'btn btn-success add-line-item')); ?>
+        <div class="col-lg-11 col-md-10">
+            <?php echo $this->Form->input('Invoice.email'); ?>
         </div>
-        <div class="col-lg-1 col-md-2">
+        <div class="col-lg-1 col-md-2 text-right">
             <?php echo $this->Form->input('active', array(
                                                         'label' => array('class' => 'control-label'),
                                                         'div' => 'checkbox-inline',
                                                         'class' => '', //Override inputDefault
                                                         'checked' => isset($this->request->data['Invoice']['active']) ? $this->request->data['Invoice']['active'] : true
                                                     )); ?>
-        </div>
-        <div class="col-lg-9 col-md-8">
-            <?php if (strcasecmp($action, 'edit')==0): ?>
-                <?php echo $this->Form->input('Invoice.shipDate', array('type' => 'text')); ?>
-            <?php endif; ?>
         </div>
     </div>
     <?php if (strcasecmp($action, 'edit')==0): ?>
@@ -62,7 +57,9 @@
             <?php echo $this->Form->input('Address.0.country', array('options' => $countries)); ?>
         </div>
         <div class="col-lg-6">
-            <?php echo $this->Form->input('Invoice.email'); ?>
+            <?php if (strcasecmp($action, 'edit')==0): ?>
+                <?php echo $this->Form->input('Invoice.shipDate', array('type' => 'text')); ?>
+            <?php endif; ?>
         </div>
     </div>
     <div class="line-items">
@@ -75,7 +72,9 @@
         <?php endif; ?>
     </div>
     <div class="row">
-        <div class="col-lg-10"></div>
+        <div class="col-lg-10">
+            <?php echo $this->Html->link('Add Line Item', '#', array('class' => 'btn btn-success add-line-item')); ?>
+        </div>
         <div class="col-lg-2">
             <?php echo $this->Form->input('Invoice.shippingAmount', array('min' => 0)); ?>
         </div>
