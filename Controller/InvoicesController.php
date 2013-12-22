@@ -204,9 +204,9 @@ class InvoicesController extends AppController {
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Invoice->delete()) {
-			$this->Session->setFlash(__('The invoice has been deleted.'));
+			$this->Session->setFlash(__('The invoice has been deleted.'), 'succes');
 		} else {
-			$this->Session->setFlash(__('The invoice could not be deleted. Please, try again.'));
+			$this->Session->setFlash(__('The invoice could not be deleted. Please, try again.'), 'danger');
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
