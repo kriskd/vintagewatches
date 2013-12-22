@@ -32,7 +32,7 @@ class Invoice extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'shipping' => array(
+		'shippingAmount' => array(
 			'decimal' => array(
 				'rule' => array('decimal'),
 				//'message' => 'Your custom message here',
@@ -126,9 +126,12 @@ class Invoice extends AppModel {
         }
 
         public function beforeSave($options = array())
-        {
-            if (isset($this->data['Invoice']) && !is_numeric($this->data['Invoice']['shippingAmount'])) {
-                $this->data['Invoice']['shippingAmount'] = 0;
+        {   
+            // Set shippingAmount to zero if does not exist on add only.
+            if (!$this->id && !isset($this->data[$this->alias][$this->primaryKey])) {
+                if (isset($this->data['Invoice']) && !is_numeric($this->data['Invoice']['shippingAmount'])) {
+                    $this->data['Invoice']['shippingAmount'] = 0;
+                }
             }
             if (empty($this->data['InvoiceItem'])) {
                 return false;

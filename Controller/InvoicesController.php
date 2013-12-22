@@ -57,55 +57,39 @@ class InvoicesController extends AppController {
  * @return void
  */
 	public function view($slug = null) {
-
+		
 		$invoice = $this->Invoice->find('first', array('conditions' => compact('slug')));
-		
-		if (empty($invoice)) {
-			$this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));
-		}
-		
-		$this->request->data = $invoice; 
-		$this->set('invoice', $invoice);
+                
+                if (empty($invoice)) {
+                        $this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));
+                }
+                
+                $this->set('invoice', $invoice);
 	}
 
 /**
- * add method
- *
- * @return void
- */
-	public function add() { 
-		if ($this->request->is('post')) {
-			$this->Invoice->create();
-			if ($this->Invoice->save($this->request->data)) {
-				$this->Session->setFlash(__('The invoice has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The invoice could not be saved. Please, try again.'));
-			}
-		}
-	}
-
-/**
- * edit method
+ * pay method
  *
  * @throws NotFoundException
  * @param string $id
  * @return void
  */
-	public function edit($id = null) {
-		if (!$this->Invoice->exists($id)) {
-			throw new NotFoundException(__('Invalid invoice'));
-		}
+	public function pay($slug = null) {
+		
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Invoice->save($this->request->data)) {
 				$this->Session->setFlash(__('The invoice has been saved.'));
-				return $this->redirect(array('action' => 'index'));
+				return $this->redirect(array('action' => 'view', $slug));
 			} else {
 				$this->Session->setFlash(__('The invoice could not be saved. Please, try again.'));
 			}
 		} else {
-			$options = array('conditions' => array('Invoice.' . $this->Invoice->primaryKey => $id));
-			$this->request->data = $this->Invoice->find('first', $options);
+			$invoice = $this->Invoice->find('first', array('conditions' => compact('slug')));
+			if (empty($invoice)) {
+				$this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));
+			}
+			$this->request->data = $invoice; 
+			$this->set('invoice', $invoice);
 		}
 	}
 

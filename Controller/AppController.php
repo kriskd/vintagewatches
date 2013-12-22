@@ -122,7 +122,7 @@ class AppController extends Controller {
         $route = Router::parse($this->here); 
         $hideFatFooter = false;
         if (strcasecmp($route['controller'], 'orders')==0 && strcasecmp($route['action'], 'checkout')==0 ||
-            strcasecmp($route['controller'], 'invoices')==0 && strcasecmp($route['action'], 'view')==0 ||
+            strcasecmp($route['controller'], 'invoices')==0 && strcasecmp($route['action'], 'pay')==0 ||
             !empty($this->request->params['admin'])) {
             $hideFatFooter = true;
         }
