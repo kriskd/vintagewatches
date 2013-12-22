@@ -264,7 +264,27 @@ $(document).ready(function(){
     });
     
     $(document).on('click', '.remove-line-item', function(){
-        $(this).parents('.line-item').remove();
+        var count = $(this).parent().data('count');
+        if (typeof(count) != "undefined") {
+            // Line item edit
+            var description = $(this).parent().data('description');
+            var invoice_id = $(this).parent().data('invoice_id');
+            var item_id = $(this).parent().data('item_id');
+            $.ajax({
+                url: '/invoices/deleteModal',
+                dataType: 'html',
+                data: {'description' : description, 'invoice_id' : invoice_id, 'item_id' : item_id},
+                type: 'post',
+                cache: false,
+                success: function(data){
+                    $('body').append(data);
+                    $('#delete-line-item').modal();
+                }
+            });
+        } else {
+            // Line item add, just delete row from DOM
+            $(this).parents('.line-item').remove();
+        }
     });
     
     $(document).on('click', '.invoice-url', function(){

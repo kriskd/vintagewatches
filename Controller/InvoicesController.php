@@ -234,4 +234,16 @@ class InvoicesController extends AppController {
 		$this->layout = 'ajax';
 	}
 	
+	public function deleteModal()
+	{
+		if($this->request->is('ajax')){
+			$data = $this->request->data;
+			$this->set(array('description' => $data['description'],
+					 'invoice_id' => $data['invoice_id'],
+					 'item_id' => $data['item_id']
+					 ));
+		}
+		$this->layout = 'ajax';
+	}
+	
 }
