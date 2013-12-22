@@ -37,8 +37,13 @@
     <?php endif; ?>
     <div class="line-items"></div>
     <div class="row">
-        <div class="col-lg-9"></div>
-        <div class="col-lg-3">
+        <?php if (strcasecmp($action, 'edit')==0): ?>
+            <div class="col-lg-10"></div>
+            <div class="col-lg-2">
+        <?php else: ?>
+            <div class="col-lg-9"></div>
+            <div class="col-lg-3">
+        <?php endif; ?>
             <?php echo $this->Form->input('Invoice.shippingAmount', array('min' => 0)); ?>
         </div>
     </div>

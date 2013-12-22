@@ -1,14 +1,17 @@
 <div class="invoices view">
     <div class="row">
-        <div class="col-lg-10">
+        <div class="col-lg-9">
             <?php echo $this->Form->input(false, array(
                                             'value' => 'http://' . env('SERVER_NAME') . DS . $invoice['Invoice']['slug'],
                                             'readonly' => 'readonly',
                                             'class' => 'form-control invoice-url',
                                             'label' => 'URL')); ?>
         </div>
-        <div class="col-lg-2">
-            <?php echo $this->Html->link('Edit Invoice', array('action' => 'edit', $invoice['Invoice']['id'], 'admin' => true), array('class' => 'btn btn-primary edit-invoice')); ?>
+        <div class="col-lg-3 buttons">
+            <?php echo $this->Html->link('Edit Invoice', array('action' => 'edit', $invoice['Invoice']['id'], 'admin' => true), array('class' => 'btn btn-primary')); ?>
+            <?php echo $this->Html->link('Delete Invoice', '#', array('class' => 'btn btn-danger',
+                                                                      'data-target' => '#delete-invoice',
+                                                                      'data-toggle' => 'modal')); ?>
         </div>
     </div>
     <?php echo $this->Element('invoice_top'); ?>
@@ -24,3 +27,26 @@
     <?php endforeach; ?>
     <?php echo $this->Element('invoice_detail'); ?>
 </div>
+
+<div class="modal fade" id="delete-invoice" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+	<div class="modal-content">
+	    <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h4 class="modal-title">Line Item Delete</h4>
+	    </div>
+	    <div class="modal-body">
+		<p>
+                    Are you sure you want to delete invoice
+                    <?php echo $invoice['Invoice']['id']; ?>?
+                </p>
+	    </div>
+	    <div class="modal-footer">
+		<?php echo $this->Html->link('Close', '#', array('data-dismiss' => 'modal',
+								 'class' => 'btn btn-default btn-lg')); ?>
+		<?php echo $this->Form->postLink('Delete', array('action' => 'delete', $invoice['Invoice']['id'], 'admin' => true),
+							array('class' => 'btn btn-danger btn-lg')); ?>                                    
+	    </div>
+	</div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

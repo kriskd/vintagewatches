@@ -7693,7 +7693,7 @@ body.hide-fat-footer .container .content {
 .container .content .invoices.view ul {
   list-style: none;
 }
-.container .content .invoices.view .edit-invoice {
+.container .content .invoices.view .buttons {
   margin-top: 24px;
 }
 .container .content .invoices.view .head {
@@ -7705,4 +7705,14 @@ body.hide-fat-footer .container .content {
 }
 .container .content .invoices.view .shipping {
   margin-bottom: 10px;
+}
+.container .content .invoices.admin-edit .line-item div {
+  position: relative;
+}
+.container .content .invoices.admin-edit .line-item div .glyphicon-remove-sign {
+  color: #9d261d;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin-top: 33px;
 }
