@@ -125,4 +125,14 @@ class Invoice extends AppModel {
             return true;
         }
 
+        public function beforeSave($options = array())
+        {
+            if (isset($this->data['Invoice']) && !is_numeric($this->data['Invoice']['shippingAmount'])) {
+                $this->data['Invoice']['shippingAmount'] = 0;
+            }
+            if (empty($this->data['InvoiceItem'])) {
+                return false;
+            }
+            return true;
+        }
 }
