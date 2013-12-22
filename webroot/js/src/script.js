@@ -267,6 +267,7 @@ $(document).ready(function(){
                 });
             }
         });
+        return false;
     });
     
     $(document).on('click', '.remove-line-item', function(){
