@@ -22,3 +22,15 @@
                                       'div' => 'submit col-xs-11')); ?>
     </div>
 </div>
+
+<?php $mode = Configure::read('Stripe.mode'); ?>
+ 
+<?php $this->append('script'); ?>
+    <?php echo $this->Html->script('https://js.stripe.com/v2/'); ?>
+    <?php echo '<script type="text/javascript">Stripe.setPublishableKey("' . Configure::read('Stripe.' . $mode . 'Publishable') . '");</script>'; ?>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            Stripe.setPublishableKey("<?php echo Configure::read('Stripe.' . $mode . 'Publishable'); ?>")
+        });
+    </script>
+<?php $this->end(); ?>
