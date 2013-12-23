@@ -1,10 +1,10 @@
 <div class="invoices pay">
     <?php echo $this->Element('header'); ?>
+    <?php echo $this->Form->create('Invoice', array('class' => 'payment-form', 'inputDefaults' => array('class' => 'form-control'))); ?>
     <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
             <?php echo $this->Element('invoice_top'); ?>
             <?php echo $this->Element('invoice_detail'); ?>
-            <?php echo $this->Form->create('Invoice', array('class' => 'payment-form', 'inputDefaults' => array('class' => 'form-control'))); ?>
             <?php foreach ($invoice['Address'] as $i => $address): ?>
                 <div class="invoice-address">
                     <h3><?php echo ucfirst($address['type']); ?> Address</h3>
@@ -13,20 +13,21 @@
                             <?php echo $this->Form->input('Address.'.$i.'.firstName'); ?>
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                            <?php echo $this->Form->input('Address.'.$i.'.lastName'); ?>
+                            <?php echo $this->Form->input('Address.'.$i.'.lastName', array('data-stripe' => 'name')); ?>
                         </div>
                     </div>
                     <?php echo $this->Form->input('Invoice.email'); ?>
-                    <?php echo $this->Form->input('Address.'.$i.'.address1', array('label' => 'Address 1')); ?>
-                    <?php echo $this->Form->input('Address.'.$i.'.address2', array('label' => 'Address 2')); ?>
-                    <?php echo $this->Form->input('Address.'.$i.'.city'); ?>
+                    <?php echo $this->Form->input('Address.'.$i.'.address1', array('label' => 'Address 1', 'data-stripe' => 'address_line1')); ?>
+                    <?php echo $this->Form->input('Address.'.$i.'.address2', array('label' => 'Address 2', 'data-stripe' =>'address_line2')); ?>
+                    <?php echo $this->Form->input('Address.'.$i.'.city', array('data-stripe' => 'address_city')); ?>
                     <?php if (strcasecmp($invoice['Address'][$i]['country'], 'US')==0): ?>
-                        <?php echo $this->Form->input('Address.'.$i.'.state', array('options' => array_merge(array('' => 'Select One'), $statesUS))); ?>
+                        <?php echo $this->Form->input('Address.'.$i.'.state', array('data-stripe' => 'address_state', 'options' => array_merge(array('' => 'Select One'), $statesUS))); ?>
                     <?php endif; ?>
                         <?php if (strcasecmp($invoice['Address'][$i]['country'], 'CA')==0): ?>
-                        <?php echo $this->Form->input('Address.'.$i.'.state', array('options' => array_merge(array('' => 'Select One'), $statesCA))); ?>
+                        <?php echo $this->Form->input('Address.'.$i.'.state', array('data-stripe' => 'address_state', 'options' => array_merge(array('' => 'Select One'), $statesCA))); ?>
                     <?php endif; ?>
-                    <?php echo $this->Form->input('Address.'.$i.'.postalCode'); ?>
+                    <?php echo $this->Form->input('Address.'.$i.'.postalCode', array('data-stripe' => 'address_zip')); ?>
+                    <?php echo $this->Form->input('Address.'.$i.'.country', array('data-stripe' => 'address_country', 'type' => 'hidden')); ?>
                 </div>
             <?php endforeach; ?>
         </div>

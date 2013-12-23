@@ -76,6 +76,10 @@ class InvoicesController extends AppController {
  */
 	public function pay($slug = null) {
 		
+		if (prod() == true && (!isset($_SERVER['HTTPS']) || !$_SERVER['HTTPS'])) {
+			$this->redirect('https://' . env('SERVER_NAME') . $this->here);
+		}
+		
 		$invoice = $this->Invoice->find('first', array(
 								'conditions' => compact('slug'),
 								'contain' => array('InvoiceItem', 'Address')
@@ -87,11 +91,35 @@ class InvoicesController extends AppController {
 		$this->Invoice->Address->removeCountryValidation();
 		if ($this->request->is(array('post', 'put'))) { 
 			$this->request->data = $this->array_merge_recursive_distinct($invoice, $this->request->data);
-			if ($this->Invoice->saveAssociated($this->request->data)) { 
-				$this->Session->setFlash(__('Thank you for your payment.'), 'success');
-				return $this->redirect(array('action' => 'view', $slug));
+			$data = $this->request->data;
+			if ($this->Invoice->validateAssociated($data)) {
+				
+				$amount = $this->total($invoice); 
+				$stripeToken = $this->request->data['stripeToken'];
+				
+				//Create a description of brands to send to Stripe
+				$description = 'Invoice No. ' . $data['Invoice']['id'];
+				
+				$stripeData = array(
+						'amount' => $amount,
+						'stripeToken' => $stripeToken,
+						'description' => $description
+					    );
+				$result = $this->Stripe->charge($stripeData);
+				
+				if (is_array($result) && $result['stripe_paid'] == true) {
+					//Add the results of stripe to the data array
+					$data['Payment'] = $result;
+					$data['Invoice']['active'] = 0;
+					$this->Session->setFlash(__('Thank you for your payment.'), 'success');
+					$this->Invoice->saveAssociated($data);
+					return $this->redirect(array('action' => 'view', $slug));
+				} else {
+					$this->Session->setFlash(__('Payment error, please try again.'), 'danger');
+					return $this->redirect(array('action' => 'pay', $slug));
+				}	
 			} else {
-				$this->Session->setFlash(__('Payment error, please try again.'), 'danger');
+				$this->Session->setFlash(__('Processing error, please try again.'), 'danger');
 				return $this->redirect(array('action' => 'pay', $slug));
 			}
 		} else {
@@ -127,8 +155,8 @@ class InvoicesController extends AppController {
  * @return void
  */
 	public function admin_index() {
-		$this->Invoice->recursive = 0;
-		$this->Paginator->settings = $this->paginate;
+		$this->paginate['contain'][] = 'Payment';
+		$this->Paginator->settings = $this->paginate; 
 		$this->set('invoices', $this->Paginator->paginate());
 	}
 

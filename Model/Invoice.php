@@ -123,6 +123,9 @@ class Invoice extends AppModel {
                         return $item;
                     }, $addresses);
             }
+            if (isset($this->data['Payment'])) {
+                $this->data['Payment']['class'] = 'Invoice';
+            }
             return true;
         }
 
