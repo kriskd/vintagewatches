@@ -76,9 +76,19 @@ class InvoicesController extends AppController {
  */
 	public function pay($slug = null) {
 		
+		$invoice = $this->Invoice->find('first', array(
+								'conditions' => compact('slug'),
+								'contain' => array('InvoiceItem', 'Address')
+							)
+						); 
+		if (empty($invoice) || !$invoice['Invoice']['active']) {
+			$this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));
+		}
 		$this->Invoice->Address->removeCountryValidation();
 		if ($this->request->is(array('post', 'put'))) { 
-			if ($this->Invoice->saveAssociated($this->request->data)) {
+			$this->request->data = array_merge($invoice, $this->request->data);
+			$this->request->data = $this->request->data + $invoice;
+			if ($this->Invoice->saveAssociated($this->request->data)) { 
 				$this->Session->setFlash(__('Thank you for your payment.'), 'success');
 				return $this->redirect(array('action' => 'view', $slug));
 			} else {
@@ -86,10 +96,6 @@ class InvoicesController extends AppController {
 				return $this->redirect(array('action' => 'pay', $slug));
 			}
 		} else {
-			$invoice = $this->Invoice->find('first', array('conditions' => compact('slug'))); 
-			if (empty($invoice) || !$invoice['Invoice']['active']) {
-				$this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));
-			}
 			$this->request->data = $invoice; 
 			$this->set('invoice', $invoice);
 		}
@@ -180,7 +186,7 @@ class InvoicesController extends AppController {
 		}
 		$this->Invoice->Address->removeAllButCountry();
 		if ($this->request->is(array('post', 'put'))) { 
-			if ($this->Invoice->saveAssociated($this->request->data)) {
+			if ($this->Invoice->saveAssociated($this->request->data)) { 
 				$this->Session->setFlash(__('The invoice has been saved.'), 'success');
 				return $this->redirect(array('action' => 'view', $id));
 			} else {
