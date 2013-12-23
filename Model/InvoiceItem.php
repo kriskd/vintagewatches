@@ -34,7 +34,7 @@ class InvoiceItem extends AppModel {
 		'description' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Please enter the item adescription.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
@@ -44,7 +44,7 @@ class InvoiceItem extends AppModel {
 		'amount' => array(
 			'decimal' => array(
 				'rule' => array('decimal'),
-				//'message' => 'Your custom message here',
+				'message' => 'Please enter a valid number.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
