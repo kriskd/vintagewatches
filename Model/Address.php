@@ -239,4 +239,9 @@ class Address extends AppModel {
 	    $this->validator()->remove('state');
 	    $this->validator()->remove('postalCode');
 	}
+	
+	public function removeCountryValidation()
+	{
+	    $this->validator()->remove('country');
+	}
 }
