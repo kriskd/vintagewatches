@@ -860,6 +860,9 @@ body.hide-fat-footer {
             .card-number-div {
                 height: 52px;
             }
+            .cvc-div {
+                .clearfix(); //This is needed otherwise the div surrounded expy date fills the whole area making CCD & CVC not selectable
+            }
             .submit {
                 text-align: center;
                 .clearfix();
@@ -1037,7 +1040,7 @@ body.hide-fat-footer {
                 }
             }
         }
-        .invoices.view {
+        .invoices.pay {
             ul {
                 list-style: none;
             }

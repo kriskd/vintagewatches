@@ -7512,6 +7512,26 @@ body.hide-fat-footer .container .content {
 .container .content .checkout-form .card-number-div {
   height: 52px;
 }
+.container .content .checkout-form .cvc-div:before,
+.container .content .checkout-form .cvc-div:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+.container .content .checkout-form .cvc-div:after {
+  clear: both;
+}
+.container .content .checkout-form .cvc-div:before,
+.container .content .checkout-form .cvc-div:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+.container .content .checkout-form .cvc-div:after {
+  clear: both;
+}
 .container .content .checkout-form .submit {
   text-align: center;
 }
@@ -7690,23 +7710,23 @@ body.hide-fat-footer .container .content {
 .container .content .orders.admin-index .row input[type=submit] {
   margin-top: 25px;
 }
-.container .content .invoices.view ul {
+.container .content .invoices.pay ul {
   list-style: none;
 }
-.container .content .invoices.view .buttons {
+.container .content .invoices.pay .buttons {
   margin-top: 24px;
 }
-.container .content .invoices.view .head {
+.container .content .invoices.pay .head {
   font-weight: bold;
   margin-bottom: 10px;
 }
-.container .content .invoices.view .items div {
+.container .content .invoices.pay .items div {
   margin-bottom: 10px;
 }
-.container .content .invoices.view .shipping {
+.container .content .invoices.pay .shipping {
   margin-bottom: 10px;
 }
-.container .content .invoices.view .invoice-address {
+.container .content .invoices.pay .invoice-address {
   margin-bottom: 20px;
 }
 .container .content .invoices h2 small,
