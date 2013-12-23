@@ -86,8 +86,7 @@ class InvoicesController extends AppController {
 		}
 		$this->Invoice->Address->removeCountryValidation();
 		if ($this->request->is(array('post', 'put'))) { 
-			$this->request->data = array_merge($invoice, $this->request->data);
-			$this->request->data = $this->request->data + $invoice;
+			$this->request->data = $this->array_merge_recursive_distinct($invoice, $this->request->data);
 			if ($this->Invoice->saveAssociated($this->request->data)) { 
 				$this->Session->setFlash(__('Thank you for your payment.'), 'success');
 				return $this->redirect(array('action' => 'view', $slug));

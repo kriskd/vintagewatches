@@ -5,10 +5,7 @@
             <?php echo $this->Element('invoice_top'); ?>
             <?php echo $this->Element('invoice_detail'); ?>
             <?php echo $this->Form->create('Invoice', array('class' => 'payment-form', 'inputDefaults' => array('class' => 'form-control'))); ?>
-            <?php echo $this->Form->input('Invoice.id', array('type' => 'hidden')); ?>
             <?php foreach ($invoice['Address'] as $i => $address): ?>
-                <?php echo $this->Form->input('Address.'.$i.'.id', array('type' => 'hidden')); ?>
-                <?php echo $this->Form->input('Address.'.$i.'.foreign_id', array('type' => 'hidden')); ?>
                 <div class="invoice-address">
                     <h3><?php echo ucfirst($address['type']); ?> Address</h3>
                     <div class="row">
