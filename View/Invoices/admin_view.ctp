@@ -15,6 +15,11 @@
         </div>
     </div>
     <?php echo $this->Element('invoice_top'); ?>
+    <?php if (empty($invoice['Payment']['stripe_paid'])): ?>
+        <h4 class="red"><span class="glyphicon glyphicon-minus-sign"></span> Not Paid</h4>
+    <?php else: ?>
+        <h4 class="green"><span class="glyphicon glyphicon-check"></span>Paid <?php echo date('M j, Y', strtotime($invoice['Payment']['created'])); ?></h4>
+    <?php endif; ?>
     <div class="row">
         <div class="col-lg-6">
             <h4>Notes From Customer</h4>

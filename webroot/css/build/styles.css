@@ -6711,6 +6711,12 @@ td.hidden-xxs {
 .no-js a:active {
   color: #333333;
 }
+.red {
+  color: #9d261d;
+}
+.green {
+  color: #46a546;
+}
 html,
 body {
   height: 100%;
