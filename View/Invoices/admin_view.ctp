@@ -18,7 +18,48 @@
     <?php if (empty($invoice['Payment']['stripe_paid'])): ?>
         <h4 class="red"><span class="glyphicon glyphicon-minus-sign"></span> Not Paid</h4>
     <?php else: ?>
-        <h4 class="green"><span class="glyphicon glyphicon-check"></span>Paid <?php echo date('M j, Y', strtotime($invoice['Payment']['created'])); ?></h4>
+        <div class="invoice-payment">
+            <div class="row head">
+                <div class="col-lg-3">
+                    
+                </div>
+                <div class="col-lg-2">
+                    <p>Stripe ID</p>
+                </div>
+                <div class="col-lg-1">
+                    <p>Last 4</p>
+                </div>
+                <div class="col-lg-2">
+                    <p>Address Check</p>
+                </div>
+                <div class="col-lg-2">
+                    <p>Zip Check</p>
+                </div>
+                <div class="col-lg-2">
+                    <p>Stripe Amount</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3">
+                    <h4 class="green"><span class="glyphicon glyphicon-check"></span>Paid <?php echo date('M j, Y', strtotime($invoice['Payment']['created'])); ?></h4>        
+                </div>
+                <div class="col-lg-2">
+                    <p><?php echo $invoice['Payment']['stripe_id']; ?></p>
+                </div>
+                <div class="col-lg-1">
+                    <p><?php echo $invoice['Payment']['stripe_last4']; ?></p>
+                </div>
+                <div class="col-lg-2">
+                    <p><?php echo $invoice['Payment']['stripe_address_check']; ?></p>
+                </div>
+                <div class="col-lg-2">
+                    <p><?php echo $invoice['Payment']['stripe_zip_check']; ?></p>
+                </div>
+                <div class="col-lg-2">
+                    <p><?php echo $this->Number->stripe($invoice['Payment']['stripe_amount']); ?></p>
+                </div>
+            </div>
+        </div>
     <?php endif; ?>
     <div class="row">
         <div class="col-lg-6">
