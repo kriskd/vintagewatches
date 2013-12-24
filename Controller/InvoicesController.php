@@ -98,7 +98,7 @@ class InvoicesController extends AppController {
 				$amount = $this->total($invoice); 
 				$stripeToken = $this->request->data['stripeToken'];
 				
-				//Create a description of brands to send to Stripe
+				//Invoice number for Stripe description
 				$description = 'Invoice No. ' . $data['Invoice']['id'];
 				
 				$stripeData = array(
@@ -112,11 +112,12 @@ class InvoicesController extends AppController {
 					//Add the results of stripe to the data array
 					$data['Payment'] = $result;
 					$data['Invoice']['active'] = 0;
+					$this->Invoice->saveAssociated($data);
 					$this->Session->setFlash(__('<span class="glyphicon glyphicon-ok"></span> Thank you for your payment.'),
 								 'default', array('class' => 'alert alert-success'));
-					$this->Invoice->saveAssociated($data);
 					return $this->redirect(array('action' => 'view', $slug));
 				} else {
+					$this->Invoice->saveAssociated($data);
 					$this->Session->setFlash('<span class="glyphicon glyphicon-warning-sign"></span> ' . $result,
 								'default', array('class' => 'alert alert-danger'));
 					return $this->redirect(array('action' => 'pay', $slug));
