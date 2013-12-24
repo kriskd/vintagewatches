@@ -127,7 +127,15 @@ class AppController extends Controller {
             $hideFatFooter = true;
         }
         
-        $vars = compact('loggedIn', 'navigation', 'storeOpen', 'cartEmpty', 'cartCount', 'cartItemIds', 'hideFatFooter', 'currentUrl', 'allBrands', 'recentWatches');
+        $hideAnalytics = false;
+        if (prod() == true || $loggedIn == true ||
+            strcasecmp($route['controller'], 'invoices')==0 && strcasecmp($route['action'], 'pay')==0 ||
+            !empty($this->request->params['admin'])) {
+            $hideAnalytics = true;
+        }
+        
+        $vars = compact('loggedIn', 'navigation', 'storeOpen', 'cartEmpty', 'cartCount', 'cartItemIds',
+                        'hideFatFooter', 'currentUrl', 'allBrands', 'recentWatches', 'hideAnalytics');
         
         $this->set(array('name' => $this->name, 'brandsWithWatches' => $this->brandsWithWatches) + $vars);
         parent::beforeRender();
