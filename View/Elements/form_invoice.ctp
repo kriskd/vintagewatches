@@ -45,25 +45,25 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6 col-md-6">
+        <div class="col-lg-6 col-md-6 col-sm-12">
             <?php echo $this->Form->input('Address.0.city'); ?>
         </div>
-        <div class="col-lg-3 col-md-3">
+        <div class="col-lg-3 col-md-3 col-sm-6">
             <?php echo $this->Form->input('Address.0.state', array('options' => $stateOptions)); ?>
         </div>
-        <div class="col-lg-3 col-md-3">
+        <div class="col-lg-3 col-md-3 col-sm-6">
             <?php echo $this->Form->input('Address.0.postalCode'); ?>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6 col-md-6">
+        <div class="col-lg-6 col-md-6 col-sm-6">
             <?php $options['options'] = $countries; ?>
             <?php if (strcasecmp($action, 'add')==0): ?>
                 <?php $options['default'] = 'US'; ?>
             <?php endif; ?>
             <?php echo $this->Form->input('Address.0.country', $options); ?>
         </div>
-        <div class="col-lg-6 col-md-6">
+        <div class="col-lg-6 col-md-6 col-sm-6">
             <?php if (strcasecmp($action, 'edit')==0): ?>
                 <?php echo $this->Form->input('Invoice.shipDate', array('type' => 'text')); ?>
             <?php endif; ?>
