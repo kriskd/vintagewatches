@@ -50,8 +50,6 @@
             <section class="credit-card credit-card-invoice">
                 <?php echo $this->Element('checkout_credit_card', array('payment_type' => 'invoice')); ?>
             </section>
-            <?php //Display this after payment submitted ?>
-            <?php //echo $this->Element('recent_watches'); ?>
         </div>
     </div>
 </div>

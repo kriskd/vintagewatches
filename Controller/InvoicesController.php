@@ -92,7 +92,7 @@ class InvoicesController extends AppController {
 		$this->Invoice->Address->removeCountryValidation();
 		if ($this->request->is(array('post', 'put'))) { 
 			$this->request->data = $this->array_merge_recursive_distinct($invoice, $this->request->data);
-			$data = $this->request->data;
+			$data = $this->request->data; 
 			if ($this->Invoice->validateAssociated($data)) {
 				
 				$amount = $this->total($invoice); 
@@ -112,10 +112,18 @@ class InvoicesController extends AppController {
 					//Add the results of stripe to the data array
 					$data['Payment'] = $result;
 					$data['Invoice']['active'] = 0;
-					$this->Invoice->saveAssociated($data);
+					$this->Invoice->saveAssociated($data); 
 					$this->Session->setFlash(__('<span class="glyphicon glyphicon-ok"></span> Thank you for your payment.'),
 								 'default', array('class' => 'alert alert-success'));
-					return $this->redirect(array('action' => 'view', $slug));
+					
+					// Get a brand new invoice to ensure up to date info
+					$invoice = $this->Invoice->find('first', array(
+							'conditions' => compact('slug'),
+							'contain' => array('InvoiceItem', 'Address')
+						)
+					); 
+					$this->set('invoice', $invoice);
+					$this->render('view');
 				} else {
 					$this->Invoice->saveAssociated($data);
 					$this->Session->setFlash('<span class="glyphicon glyphicon-warning-sign"></span> ' . $result,
