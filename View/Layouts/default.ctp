@@ -53,8 +53,8 @@
 		echo $this->Html->script('/js/build/scripts.min');
 	?>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		
-	<?php if (prod() == true && $loggedIn == false): ?>
+	
+	<?php if ($hideAnalytics == false): ?>
 		<script>
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
