@@ -209,10 +209,23 @@ class Address extends AppModel {
         public function beforeSave($options = array())
         {
             if (isset($this->data['Address']['country']) && !in_array($this->data['Address']['country'], array('US', 'CA'))) {
-                $this->data['Address']['state'] = null;
+                $this->data['Address']['state'] = '';
             }
             return true;
         }
+	
+	/**
+	 * cityStZip virtual field is null if state is null so fix it
+	 */
+	public function afterFind($results, $primary = false)
+	{
+	    return array_map(function($item) { //var_dump($item);
+		if (empty($item[$this->name]['state'])) {
+		    $item[$this->name]['cityStZip'] = $item[$this->name]['city'] . ', ' . $item[$this->name]['postalCode'];
+		}
+		return $item;
+	    }, $results);
+	}
 
 //The Associations below have been created with all possible keys, those that are not needed can be removed
 
