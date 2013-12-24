@@ -23,12 +23,12 @@
         
     </div>
     <div class="col-lg-3">
-        <?php echo $this->Form->input('InvoiceItem.'.$i.'.itemid', array('label' => 'Item Id/Code', 'class' => 'form-control')); ?>
+        <?php echo $this->Form->invoiceItem('InvoiceItem.'.$i.'.itemid', array('label' => 'Item Id/Code', 'class' => 'form-control'), $this->request->data); ?>
     </div>
     <div class="col-lg-6">
-        <?php echo $this->Form->input('InvoiceItem.'.$i.'.description', array('class' => 'form-control')); ?>
+        <?php echo $this->Form->invoiceItem('InvoiceItem.'.$i.'.description', array('class' => 'form-control'), $this->request->data); ?>
     </div>
     <div class="col-lg-2">
-        <?php echo $this->Form->input('InvoiceItem.'.$i.'.amount', array('class' => 'form-control', 'min' => 0)); ?>
+        <?php echo $this->Form->invoiceItem('InvoiceItem.'.$i.'.amount', array('min' => 0, 'class' => 'form-control'), $this->request->data); ?>
     </div>
 </div>

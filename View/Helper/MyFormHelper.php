@@ -282,6 +282,17 @@ class MyFormHelper extends FormHelper
         return $month . $year;
     }
     
+    /**
+     * Disable editing line item or shipping if invoice is paid.
+     */
+    public function invoiceItem($fieldName, $options = array(), $invoice = array())
+    {
+        if (isset($invoice['Payment']) && $invoice['Payment']['stripe_paid'] == 1) {
+            $options['disabled'] = 'disabled';
+        }
+        return parent::input($fieldName, $options);
+    }
+    
     protected function _months()
     {
         return array_combine(range(1,12), range(1,12));

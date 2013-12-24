@@ -77,10 +77,12 @@
     </div>
     <div class="row">
         <div class="col-lg-10">
-            <?php echo $this->Html->link('Add Line Item', '#', array('class' => 'btn btn-success add-line-item')); ?>
+            <?php if (!isset($this->request->data['Payment']) || $this->request->data['Payment']['stripe_paid'] != 1): ?>
+                <?php echo $this->Html->link('Add Line Item', '#', array('class' => 'btn btn-success add-line-item')); ?>
+            <?php endif; ?>
         </div>
         <div class="col-lg-2">
-            <?php echo $this->Form->input('Invoice.shippingAmount', array('min' => 0)); ?>
+            <?php echo $this->Form->invoiceItem('Invoice.shippingAmount', array('min' => 0), $this->request->data); ?>
         </div>
     </div>
     <div class="row">
