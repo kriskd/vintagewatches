@@ -8,7 +8,7 @@
                                                         'action' => 'add', 'admin' => 'true'
                                                     ),
                                                         array(
-                                                        'class' => 'btn btn-primary'
+                                                        'class' => 'btn btn-primary add-invoice'
                                                     )
                                         ); ?>
         </div>
