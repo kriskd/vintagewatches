@@ -1069,10 +1069,18 @@ body.hide-fat-footer {
                 }
             }
             .add-line-item {
-                margin-top: 24px;
+                @media (min-width: @screen-xs-min) {
+                    margin-top: 5px;
+                    margin-bottom: 10px;
+                }
+                @media (min-width: @screen-md-min) {
+                    margin-top: 24px;
+                }
             }
             .checkbox-inline {
-                margin-top: 20px;
+                @media (min-width: @screen-md-min) {
+                    margin-top: 20px;
+                }
             }
             .line-item {
                 .delete-icon-item-id {
@@ -1091,6 +1099,11 @@ body.hide-fat-footer {
                     @media (min-width: @screen-md-min) {
                         float: right;
                     }
+                }
+            }
+            .invoice-active {
+                @media (min-width: @screen-md-min) {
+                    text-align: right;
                 }
             }
             .invoice-payment {

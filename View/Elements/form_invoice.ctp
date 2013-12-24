@@ -9,19 +9,19 @@
 <fieldset>
     <legend><?php echo $action; ?> Invoice</legend>
     <div class="row">
-        <div class="col-lg-6 col-md-5">
-            <?php echo $this->Form->input('Invoice.email'); ?>
-        </div>
-        <div class="col-lg-5 col-md-5">
-            <?php echo $this->Form->input('Invoice.ebayId'); ?>
-        </div>
-        <div class="col-lg-1 col-md-2 text-right">
+        <div class="col-lg-1 col-lg-push-11 col-md-1 col-md-push-11 col-sm-12 col-xs-12 invoice-active">
             <?php echo $this->Form->input('active', array(
                                                         'label' => array('class' => 'control-label'),
                                                         'div' => 'checkbox-inline',
                                                         'class' => '', //Override inputDefault
                                                         'checked' => isset($this->request->data['Invoice']['active']) ? $this->request->data['Invoice']['active'] : true
                                                     )); ?>
+        </div>
+        <div class="col-lg-6 col-lg-pull-1 col-md-6 col-md-pull-1 col-sm-12 col-xs-12">
+            <?php echo $this->Form->input('Invoice.email'); ?>
+        </div>
+        <div class="col-lg-5 col-lg-pull-1 col-md-5 col-md-pull-1 col-sm-12 col-xs-12">
+            <?php echo $this->Form->input('Invoice.ebayId'); ?>
         </div>
     </div>
     <?php if (strcasecmp($action, 'edit')==0): ?>

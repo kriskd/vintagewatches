@@ -7764,11 +7764,21 @@ body.hide-fat-footer .container .content {
 .container .content .invoices h3 small {
   color: #665600;
 }
-.container .content .invoices .add-line-item {
-  margin-top: 24px;
+@media (min-width: 480px) {
+  .container .content .invoices .add-line-item {
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
 }
-.container .content .invoices .checkbox-inline {
-  margin-top: 20px;
+@media (min-width: 992px) {
+  .container .content .invoices .add-line-item {
+    margin-top: 24px;
+  }
+}
+@media (min-width: 992px) {
+  .container .content .invoices .checkbox-inline {
+    margin-top: 20px;
+  }
 }
 @media (min-width: 480px) {
   .container .content .invoices .line-item .delete-icon-item-id {
@@ -7804,6 +7814,11 @@ body.hide-fat-footer .container .content {
 @media (min-width: 992px) {
   .container .content .invoices .line-item .launch-tooltip {
     float: right;
+  }
+}
+@media (min-width: 992px) {
+  .container .content .invoices .invoice-active {
+    text-align: right;
   }
 }
 .container .content .invoices .invoice-payment {
