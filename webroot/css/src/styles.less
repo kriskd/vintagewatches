@@ -17,6 +17,14 @@
 @gold:                  #b29600;
 @goldDark:              #665600;
 
+.rounded-corners (@radius: 5px) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+  -ms-border-radius: @radius;
+  -o-border-radius: @radius;
+  border-radius: @radius;
+}
+
 // Buttons
 .btn-gold {
     background-color: hsl(177, 90%, 10%) !important;
@@ -387,10 +395,7 @@ body.hide-fat-footer {
         .table {
             display: table;
             border: 2px solid @goldDark;
-            .border-top-radius(5px);
-            .border-right-radius(5px);
-            .border-bottom-radius(5px);
-            .border-left-radius(5px);
+            .rounded-corners;
             background: @gray-lighter;
             span {
                 padding: 10px;
@@ -422,10 +427,7 @@ body.hide-fat-footer {
         }
         .table-bordered {
             border: 1px solid @gray;
-            .border-top-radius(5px);
-            .border-right-radius(5px);
-            .border-bottom-radius(5px);
-            .border-left-radius(5px);
+            .rounded-corners;
         }
         span.required {
             color: @red;
@@ -504,10 +506,7 @@ body.hide-fat-footer {
                 h1, h4 {
                     color: @goldDark;
                 }
-                .border-top-radius(5px);
-                .border-right-radius(5px);
-                .border-bottom-radius(5px);
-                .border-left-radius(5px);
+                .rounded-corners;
             }
             .col-sm-4 {
                 margin-top: 20px;
@@ -554,10 +553,7 @@ body.hide-fat-footer {
         }
         .recent-watches {
             border: 1px solid @goldDark;
-            .border-top-radius(5px);
-            .border-right-radius(5px);
-            .border-bottom-radius(5px);
-            .border-left-radius(5px);
+            .rounded-corners;
             background: @gray-lighter;
             padding: 10px;
             h3 {
@@ -616,10 +612,7 @@ body.hide-fat-footer {
             }
             .watch-index-intro {
                 border: 1px solid @goldDark;
-                .border-top-radius(5px);
-                .border-right-radius(5px);
-                .border-bottom-radius(5px);
-                .border-left-radius(5px);
+                .rounded-corners;
                 background: @gray-lighter;
                 padding: 10px;
                 margin-bottom: 10px;
@@ -629,10 +622,7 @@ body.hide-fat-footer {
             }
             .watch {
                 border: 1px solid @goldDark;
-                .border-top-radius(5px);
-                .border-right-radius(5px);
-                .border-bottom-radius(5px);
-                .border-left-radius(5px);
+                .rounded-corners;
                 padding: 0px 0px 10px 0px;
                 overflow: hidden;
                 margin-bottom: 20px;
@@ -811,10 +801,7 @@ body.hide-fat-footer {
             padding: 5px;
             background: @gray-lighter;
             border: 1px solid @gray;
-            .border-top-radius(5px);
-            .border-right-radius(5px);
-            .border-bottom-radius(5px);
-            .border-left-radius(5px);
+            .rounded-corners;
             .clearfix();
             @media (max-width: @screen-xs-max) {
                 .error-message {
@@ -878,10 +865,7 @@ body.hide-fat-footer {
             h2, h3 {
                 color: #fff;
                 background: @goldDark;
-                .border-top-radius(5px);
-                .border-right-radius(5px);
-                .border-bottom-radius(5px);
-                .border-left-radius(5px);
+                .rounded-corners;
                 padding: 0 10px;
                 line-height: 40px;
                 small {
@@ -931,10 +915,7 @@ body.hide-fat-footer {
             .cart-details {
                 background: @gray-lighter;
                 border: 1px solid @goldDark;
-                .border-top-radius(5px);
-                .border-right-radius(5px);
-                .border-bottom-radius(5px);
-                .border-left-radius(5px);
+                .rounded-corners;
                     .head, .watch, .choose-ship {
                     border-bottom: 1px solid #ddd;
                     padding: 0 0 15px 0; 
@@ -1093,6 +1074,20 @@ body.hide-fat-footer {
                     color: @red;
                     margin-top: 33px;
                     float: right;
+                }
+            }
+            .invoice-payment {
+                border: 1px solid @gray;
+                .rounded-corners;
+                padding: 10px;
+                text-align: center;
+                background: @gray-lighter;
+                .head {
+                    font-weight: bold;
+                    margin-bottom: 0px;
+                }
+                h4 {
+                    margin-top: -8px;
                 }
             }
         }

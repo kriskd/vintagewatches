@@ -6938,10 +6938,11 @@ body.hide-fat-footer .container .content {
 .container .content .table {
   display: table;
   border: 2px solid #665600;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-top-left-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
   background: #eeeeee;
 }
 .container .content .table span {
@@ -6976,10 +6977,11 @@ body.hide-fat-footer .container .content {
 }
 .container .content .table-bordered {
   border: 1px solid #555555;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-top-left-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
 }
 .container .content span.required {
   color: #9d261d;
@@ -7081,10 +7083,11 @@ body.hide-fat-footer .container .content {
   padding: 0 1em;
   border: 2px solid #665600;
   background: #999999;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-top-left-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
 }
 .container .content .header .header-inner h1,
 .container .content .header .header-inner h4 {
@@ -7138,10 +7141,11 @@ body.hide-fat-footer .container .content {
 }
 .container .content .recent-watches {
   border: 1px solid #665600;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-top-left-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
   background: #eeeeee;
   padding: 10px;
 }
@@ -7220,10 +7224,11 @@ body.hide-fat-footer .container .content {
 }
 .container .content .watches.index .watch-index-intro {
   border: 1px solid #665600;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-top-left-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
   background: #eeeeee;
   padding: 10px;
   margin-bottom: 10px;
@@ -7233,10 +7238,11 @@ body.hide-fat-footer .container .content {
 }
 .container .content .watches.index .watch {
   border: 1px solid #665600;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-top-left-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
   padding: 0px 0px 10px 0px;
   overflow: hidden;
   margin-bottom: 20px;
@@ -7441,10 +7447,11 @@ body.hide-fat-footer .container .content {
   padding: 5px;
   background: #eeeeee;
   border: 1px solid #555555;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-top-left-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
 }
 .container .content .checkout-form:before,
 .container .content .checkout-form:after {
@@ -7565,10 +7572,11 @@ body.hide-fat-footer .container .content {
 .container .content .orders h3 {
   color: #fff;
   background: #665600;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-top-left-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
   padding: 0 10px;
   line-height: 40px;
 }
@@ -7629,10 +7637,11 @@ body.hide-fat-footer .container .content {
 .container .content .orders .cart-details {
   background: #eeeeee;
   border: 1px solid #665600;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-top-left-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
 }
 .container .content .orders .cart-details .head,
 .container .content .orders .cart-details .watch,
@@ -7763,4 +7772,22 @@ body.hide-fat-footer .container .content {
   color: #9d261d;
   margin-top: 33px;
   float: right;
+}
+.container .content .invoices .invoice-payment {
+  border: 1px solid #555555;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+  background: #eeeeee;
+}
+.container .content .invoices .invoice-payment .head {
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+.container .content .invoices .invoice-payment h4 {
+  margin-top: -8px;
 }
