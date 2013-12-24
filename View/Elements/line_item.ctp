@@ -15,11 +15,12 @@
             <?php $options['data-invoice_id'] = $this->request->data['Invoice']['id']; ?>
             <?php $options['data-item_id'] = $this->request->data['InvoiceItem'][$i]['id']; ?>
         <?php endif; ?>
-        <?php echo $this->Html->link($this->Html->tag('span', '', array('class' => 'glyphicon glyphicon-remove-sign remove-line-item')),
-                                                    '#',
-                                                    $options
-                                                ); ?>
-        
+        <?php if (!isset($this->request->data['Payment']) || $this->request->data['Payment']['stripe_paid'] != 1): ?>
+            <?php echo $this->Html->link($this->Html->tag('span', '', array('class' => 'glyphicon glyphicon-remove-sign remove-line-item')),
+                                                        '#',
+                                                        $options
+                                                    ); ?>
+        <?php endif; ?>
         
     </div>
     <div class="col-lg-3">
