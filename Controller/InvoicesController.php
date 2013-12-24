@@ -88,6 +88,7 @@ class InvoicesController extends AppController {
 		if (empty($invoice) || !$invoice['Invoice']['active']) {
 			$this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));
 		}
+		$this->set('invoice', $invoice);
 		$this->Invoice->Address->removeCountryValidation();
 		if ($this->request->is(array('post', 'put'))) { 
 			$this->request->data = $this->array_merge_recursive_distinct($invoice, $this->request->data);
@@ -119,12 +120,13 @@ class InvoicesController extends AppController {
 					return $this->redirect(array('action' => 'pay', $slug));
 				}	
 			} else {
-				$this->Session->setFlash(__('Processing error, please try again.'), 'danger');
-				return $this->redirect(array('action' => 'pay', $slug));
+				$this->Session->setFlash(__('Sorry, your invoice payment could not be completed because
+							    one or more required fields was not filled out. Please scroll
+							    down the form, complete the required fields, and then resubmit
+							    the form.'), 'danger');
 			}
 		} else {
 			$this->request->data = $invoice; 
-			$this->set('invoice', $invoice);
 		}
 	}
 
