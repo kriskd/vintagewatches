@@ -270,7 +270,7 @@ $(document).ready(function(){
         return false;
     });
     
-    $(document).on('click', '.remove-line-item', function(){
+    $(document).on('click', '.remove-line-item', function() { 
         var count = $(this).parent().data('count');
         if (typeof(count) != "undefined") {
             // Line item edit
@@ -292,6 +292,7 @@ $(document).ready(function(){
             // Line item add, just delete row from DOM
             $(this).parents('.line-item').remove();
         }
+        return false;
     });
     
     $(document).on('click', '.invoice-url', function(){
