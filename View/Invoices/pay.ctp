@@ -32,8 +32,10 @@
             <?php endforeach; ?>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-            <h3>Additional Information</h3>
-            <p><?php echo $invoice['Invoice']['invoiceNotes']; ?></p>
+            <?php if (!empty($invoice['Invoice']['invoiceNotes'])): ?>
+                <h3>Additional Information</h3>
+                <p><?php echo $invoice['Invoice']['invoiceNotes']; ?></p>
+            <?php endif; ?>
             <?php echo $this->Form->input('Invoice.notes',
                                       array('label' => '<h3>Special Order Instructions <small>' . $this->Html->link(
                                                         '<span class="glyphicon glyphicon-question-sign"></span>', '#',
