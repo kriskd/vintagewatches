@@ -191,6 +191,17 @@ class Address extends AppModel {
             }
             return true;
         }*/
+	
+	/**
+	 * Remove state validation if not US or CA
+	 */
+	public function beforeValidate($options = array())
+	{
+            if (isset($this->data['Address']['country']) && !in_array($this->data['Address']['country'], array('US', 'CA'))) {
+                $this->removeStateValidation();
+            }
+            return true;
+	}
         
         /**
          * Set the state to null if not US or CA
@@ -238,6 +249,11 @@ class Address extends AppModel {
 	    $this->validator()->remove('city');
 	    $this->validator()->remove('state');
 	    $this->validator()->remove('postalCode');
+	}
+	
+	public function removeStateValidation()
+	{
+	    $this->validator()->remove('state');
 	}
 	
 	public function removeCountryValidation()
