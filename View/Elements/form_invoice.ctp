@@ -9,8 +9,11 @@
 <fieldset>
     <legend><?php echo $action; ?> Invoice</legend>
     <div class="row">
-        <div class="col-lg-11 col-md-10">
+        <div class="col-lg-6 col-md-5">
             <?php echo $this->Form->input('Invoice.email'); ?>
+        </div>
+        <div class="col-lg-5 col-md-5">
+            <?php echo $this->Form->input('Invoice.ebayId'); ?>
         </div>
         <div class="col-lg-1 col-md-2 text-right">
             <?php echo $this->Form->input('active', array(
@@ -42,25 +45,25 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <?php echo $this->Form->input('Address.0.city'); ?>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-3 col-md-3">
             <?php echo $this->Form->input('Address.0.state', array('options' => $options)); ?>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-3 col-md-3">
             <?php echo $this->Form->input('Address.0.postalCode'); ?>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <?php $options['options'] = $countries; ?>
             <?php if (strcasecmp($action, 'add')==0): ?>
                 <?php $options['default'] = 'US'; ?>
             <?php endif; ?>
             <?php echo $this->Form->input('Address.0.country', $options); ?>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 col-md-6">
             <?php if (strcasecmp($action, 'edit')==0): ?>
                 <?php echo $this->Form->input('Invoice.shipDate', array('type' => 'text')); ?>
             <?php endif; ?>
@@ -76,12 +79,12 @@
         <?php endif; ?>
     </div>
     <div class="row">
-        <div class="col-lg-10">
+        <div class="col-lg-10 col-md-10">
             <?php if (!isset($this->request->data['Payment']) || $this->request->data['Payment']['stripe_paid'] != 1): ?>
                 <?php echo $this->Html->link('Add Line Item', '#', array('class' => 'btn btn-success add-line-item')); ?>
             <?php endif; ?>
         </div>
-        <div class="col-lg-2">
+        <div class="col-lg-2 col-md-2">
             <?php echo $this->Form->invoiceItem('Invoice.shippingAmount', array('min' => 0), $this->request->data); ?>
         </div>
     </div>

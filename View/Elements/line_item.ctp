@@ -3,7 +3,7 @@
         <?php echo $this->Form->input('InvoiceItem.'.$i.'.id', array('type' => 'hidden')); ?>
         <?php echo $this->Form->input('InvoiceItem.'.$i.'.invoice_id', array('type' => 'hidden')); ?>
     <?php endif; ?>
-    <div class="col-lg-1">
+    <div class="col-lg-1 col-md-1">
         <?php $options['escape'] = false; ?>
         <?php $options['class'] = 'launch-tooltip'; ?>
         <?php $options['data-toggle'] = 'tooltip'; ?>
@@ -21,15 +21,14 @@
                                                         $options
                                                     ); ?>
         <?php endif; ?>
-        
     </div>
-    <div class="col-lg-3">
+    <div class="col-lg-3 col-md-3">
         <?php echo $this->Form->invoiceItem('InvoiceItem.'.$i.'.itemid', array('label' => 'Item Id/Code', 'class' => 'form-control'), $this->request->data); ?>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-6 col-md-6">
         <?php echo $this->Form->invoiceItem('InvoiceItem.'.$i.'.description', array('class' => 'form-control'), $this->request->data); ?>
     </div>
-    <div class="col-lg-2">
+    <div class="col-lg-2 col-md-2">
         <?php echo $this->Form->invoiceItem('InvoiceItem.'.$i.'.amount', array('min' => 0, 'class' => 'form-control'), $this->request->data); ?>
     </div>
 </div>
