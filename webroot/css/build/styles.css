@@ -7758,9 +7758,11 @@ body.hide-fat-footer .container .content {
 .container .content .invoices .add-invoice {
   margin-top: 20px;
 }
-.container .content .invoices h2 small,
-.container .content .invoices h3 small {
+.container .content .invoices h2 small {
   color: black;
+}
+.container .content .invoices h3 small {
+  color: #665600;
 }
 .container .content .invoices .add-line-item {
   margin-top: 24px;

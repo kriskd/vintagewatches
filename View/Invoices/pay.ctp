@@ -7,7 +7,7 @@
             <?php echo $this->Element('invoice_detail'); ?>
             <?php foreach ($invoice['Address'] as $i => $address): ?>
                 <div class="invoice-address">
-                    <h3><?php echo ucfirst($address['type']); ?> Address</h3>
+                    <h3><small class="pull-right hidden-xxs"><span class="glyphicon glyphicon-arrow-right"></span> Complete Address</small><?php echo ucfirst($address['type']); ?> Address</h3>
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <?php echo $this->Form->input('Address.'.$i.'.firstName'); ?>
