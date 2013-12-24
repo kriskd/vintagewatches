@@ -24,7 +24,7 @@
                         <?php echo $this->Form->input('Address.'.$i.'.state', array('data-stripe' => 'address_state', 'options' => array_merge(array('' => 'Select One'), $statesUS))); ?>
                     <?php endif; ?>
                         <?php if (strcasecmp($invoice['Address'][$i]['country'], 'CA')==0): ?>
-                        <?php echo $this->Form->input('Address.'.$i.'.state', array('data-stripe' => 'address_state', 'options' => array_merge(array('' => 'Select One'), $statesCA))); ?>
+                        <?php echo $this->Form->input('Address.'.$i.'.state', array('label' => 'Province', 'data-stripe' => 'address_state', 'options' => array_merge(array('' => 'Select One'), $statesCA))); ?>
                     <?php endif; ?>
                     <?php echo $this->Form->input('Address.'.$i.'.postalCode', array('data-stripe' => 'address_zip')); ?>
                     <?php echo $this->Form->input('Address.'.$i.'.country', array('data-stripe' => 'address_country', 'type' => 'hidden')); ?>
