@@ -185,7 +185,8 @@ class InvoicesController extends AppController {
  *
  * @return void
  */
-	public function admin_add() { 
+	public function admin_add() {
+		$this->Invoice->removeRequiredEmail();
 		$this->Invoice->Address->removeAllButCountry();
 		if ($this->request->is('post')) {
 			$this->Invoice->create();
@@ -216,6 +217,7 @@ class InvoicesController extends AppController {
 		if (!$this->Invoice->exists($id)) {
 			throw new NotFoundException(__('Invalid invoice'));
 		}
+		$this->Invoice->removeRequiredEmail();
 		$this->Invoice->Address->removeAllButCountry();
 		if ($this->request->is(array('post', 'put'))) { 
 			if ($this->Invoice->saveAssociated($this->request->data)) { 

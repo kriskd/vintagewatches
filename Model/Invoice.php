@@ -19,7 +19,9 @@ class Invoice extends AppModel {
                         'message' => 'Please enter your email.'),
                     'email' => array(
                         'rule' => array('email'),
-                        'message' => 'Please supply a valid email address.'
+                        'message' => 'Please supply a valid email address.',
+                        'required' => false,
+                        'allowEmpty' => true
                     )
                 ),
 		'slug' => array(
@@ -141,5 +143,10 @@ class Invoice extends AppModel {
                 return false;
             }
             return true;
+        }
+        
+        public function removeRequiredEmail()
+        {
+            $this->validator()->remove('email', 'notempty');
         }
 }
