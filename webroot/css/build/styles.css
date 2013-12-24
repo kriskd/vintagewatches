@@ -7770,10 +7770,41 @@ body.hide-fat-footer .container .content {
 .container .content .invoices .checkbox-inline {
   margin-top: 20px;
 }
+@media (min-width: 480px) {
+  .container .content .invoices .line-item .delete-icon-item-id {
+    margin-top: 20px;
+  }
+}
+.container .content .invoices .line-item .delete-icon-item-id .delete-icon {
+  margin-top: 33px;
+}
+.container .content .invoices .line-item .clear-me:before,
+.container .content .invoices .line-item .clear-me:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+.container .content .invoices .line-item .clear-me:after {
+  clear: both;
+}
+.container .content .invoices .line-item .clear-me:before,
+.container .content .invoices .line-item .clear-me:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */
+}
+.container .content .invoices .line-item .clear-me:after {
+  clear: both;
+}
 .container .content .invoices .line-item .launch-tooltip {
   color: #9d261d;
-  margin-top: 33px;
-  float: right;
+}
+@media (min-width: 992px) {
+  .container .content .invoices .line-item .launch-tooltip {
+    float: right;
+  }
 }
 .container .content .invoices .invoice-payment {
   border: 1px solid #555555;

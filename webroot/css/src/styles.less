@@ -1075,10 +1075,22 @@ body.hide-fat-footer {
                 margin-top: 20px;
             }
             .line-item {
+                .delete-icon-item-id {
+                    @media (min-width: @screen-xs-min) {
+                        margin-top: 20px;
+                    }
+                    .delete-icon {
+                        margin-top: 33px;
+                    }
+                }
+                .clear-me {
+                    .clearfix();
+                }
                 .launch-tooltip {
                     color: @red;
-                    margin-top: 33px;
-                    float: right;
+                    @media (min-width: @screen-md-min) {
+                        float: right;
+                    }
                 }
             }
             .invoice-payment {
