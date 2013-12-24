@@ -112,11 +112,13 @@ class InvoicesController extends AppController {
 					//Add the results of stripe to the data array
 					$data['Payment'] = $result;
 					$data['Invoice']['active'] = 0;
-					$this->Session->setFlash(__('Thank you for your payment.'), 'success');
+					$this->Session->setFlash(__('<span class="glyphicon glyphicon-ok"></span> Thank you for your payment.'),
+								 'default', array('class' => 'alert alert-success'));
 					$this->Invoice->saveAssociated($data);
 					return $this->redirect(array('action' => 'view', $slug));
 				} else {
-					$this->Session->setFlash(__('Payment error, please try again.'), 'danger');
+					$this->Session->setFlash('<span class="glyphicon glyphicon-warning-sign"></span> ' . $result,
+								'default', array('class' => 'alert alert-danger'));
 					return $this->redirect(array('action' => 'pay', $slug));
 				}	
 			} else {
