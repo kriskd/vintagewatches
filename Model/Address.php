@@ -123,7 +123,7 @@ class Address extends AppModel {
 		'address1' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				'message' => 'Please enter a address.',
+				'message' => 'Please enter your address.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
