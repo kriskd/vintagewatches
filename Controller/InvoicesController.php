@@ -33,8 +33,8 @@ class InvoicesController extends AppController {
 		$statesCA = $this->Province->getList();
 		$countries = $this->Country->getList();
 		
-		$options = array_merge(array('' => 'Select One'), array('U.S.' => $statesUS), array('Canada' => $statesCA));
-		$this->set(compact('options', 'statesUS', 'statesCA', 'countries'));
+		$stateOptions = array_merge(array('' => 'Select One'), array('U.S.' => $statesUS), array('Canada' => $statesCA));
+		$this->set(compact('stateOptions', 'statesUS', 'statesCA', 'countries'));
 		
 		parent::beforeRender();
 	}

@@ -49,7 +49,7 @@
             <?php echo $this->Form->input('Address.0.city'); ?>
         </div>
         <div class="col-lg-3 col-md-3">
-            <?php echo $this->Form->input('Address.0.state', array('options' => $options)); ?>
+            <?php echo $this->Form->input('Address.0.state', array('options' => $stateOptions)); ?>
         </div>
         <div class="col-lg-3 col-md-3">
             <?php echo $this->Form->input('Address.0.postalCode'); ?>
