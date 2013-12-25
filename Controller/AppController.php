@@ -89,12 +89,6 @@ class AppController extends Controller {
                 break;
         }
         
-        //Logged in
-        $loggedIn = false;
-        if($this->Auth->loggedIn()){
-            $loggedIn = true;
-        }
-        
         //Page navigation
         $navigation = $this->Page->getNavigation();
         
@@ -120,15 +114,8 @@ class AppController extends Controller {
         //Recent watches
         $recentWatches = $this->Watch->getWatches(3);
         
-        $hideAnalytics = false;
-        if (prod() == true || $loggedIn == true ||
-            strcasecmp($this->route['controller'], 'invoices')==0 && strcasecmp($this->route['action'], 'pay')==0 ||
-            !empty($this->request->params['admin'])) {
-            $hideAnalytics = true;
-        }
-        
         $vars = compact('loggedIn', 'navigation', 'storeOpen', 'cartEmpty', 'cartCount', 'cartItemIds',
-                        'currentUrl', 'allBrands', 'recentWatches', 'hideAnalytics');
+                        'currentUrl', 'allBrands', 'recentWatches');
         
         $this->set(array('name' => $this->name, 'brandsWithWatches' => $this->brandsWithWatches) + $vars);
         parent::beforeRender();
@@ -138,6 +125,12 @@ class AppController extends Controller {
     {
         $this->route = Router::parse($this->here);
         
+        //Logged in
+        $loggedIn = false;
+        if($this->Auth->loggedIn()){
+            $loggedIn = true;
+        }
+        
         //Set var to determine if we show fat footer, set it here so it can be manually changed in controllers.
         $hideFatFooter = false;
         if (strcasecmp($this->route['controller'], 'orders')==0 && strcasecmp($this->route['action'], 'checkout')==0 ||
@@ -146,7 +139,14 @@ class AppController extends Controller {
             $hideFatFooter = true;
         }
         
-        $this->set('hideFatFooter', $hideFatFooter);
+        $hideAnalytics = false;
+        if (prod() == true || $loggedIn == true ||
+            strcasecmp($this->route['controller'], 'invoices')==0 && strcasecmp($this->route['action'], 'pay')==0 ||
+            !empty($this->request->params['admin'])) {
+            $hideAnalytics = true;
+        }
+        
+        $this->set(compact('hideFatFooter', 'hideAnalytics', 'loggedIn'));
         
         $secure = array('orders/checkout', 'orders/totalCart.json', 'orders/getAddress.html', 'orders/getCountry.json', 'orders/checkout.json');
         $here = trim($this->here, '/');

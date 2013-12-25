@@ -11,7 +11,11 @@ class UsersController extends AppController
                 $this->redirect($this->Auth->redirectUrl());
             }
             $this->Session->setFlash('Username or password is incorrect.');
-        }  
+        }
+        
+        $hideFatFooter = true;
+        $hideAnalytics = true;
+        $this->set(compact('hideFatFooter', 'hideAnalytics'));
     }
     
     public function logout()
