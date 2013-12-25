@@ -1,17 +1,18 @@
 <div class="invoices view">
     <div class="row">
-        <div class="col-lg-9">
+        <div class="col-lg-4 col-lg-push-8 col-md-5 col-md-push-7 col-sm-12col-xs-12 buttons">
+            <?php echo $this->Html->link('Go To Invoice', DS . $invoice['Invoice']['slug'], array('class' => 'btn btn-success')); ?>
+            <?php echo $this->Html->link('Edit Invoice', array('action' => 'edit', $invoice['Invoice']['id'], 'admin' => true), array('class' => 'btn btn-primary')); ?>
+            <?php echo $this->Html->link('Delete Invoice', '#', array('class' => 'btn btn-danger',
+                                                                      'data-target' => '#delete-invoice',
+                                                                      'data-toggle' => 'modal')); ?>
+        </div>
+        <div class="col-lg-8 col-lg-pull-4 col-md-7 col-md-pull-5 col-sm-12 col-xs-12">
             <?php echo $this->Form->input(false, array(
                                             'value' => 'http://' . env('SERVER_NAME') . DS . $invoice['Invoice']['slug'],
                                             'readonly' => 'readonly',
                                             'class' => 'form-control invoice-url',
                                             'label' => 'URL')); ?>
-        </div>
-        <div class="col-lg-3 buttons">
-            <?php echo $this->Html->link('Edit Invoice', array('action' => 'edit', $invoice['Invoice']['id'], 'admin' => true), array('class' => 'btn btn-primary')); ?>
-            <?php echo $this->Html->link('Delete Invoice', '#', array('class' => 'btn btn-danger',
-                                                                      'data-target' => '#delete-invoice',
-                                                                      'data-toggle' => 'modal')); ?>
         </div>
     </div>
     <?php echo $this->Element('invoice_top'); ?>
