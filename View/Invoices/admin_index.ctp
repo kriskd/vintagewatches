@@ -1,9 +1,6 @@
 <div class="invoices admin-index">
     <div class="row">
-        <div class="col-lg-10">
-            <h1>Invoice Admin</h1>
-        </div>
-        <div class="col-lg-2">
+        <div class="col-lg-2 col-lg-push-10 col-md-2 col-md-push-10 col-sm-2 col-sm-push-10 col-xs-12">
             <?php echo $this->Html->link('Add an Invoice', array(
                                                         'action' => 'add', 'admin' => 'true'
                                                     ),
@@ -11,6 +8,9 @@
                                                         'class' => 'btn btn-primary add-invoice'
                                                     )
                                         ); ?>
+        </div>
+        <div class="col-lg-10 col-lg-pull-2 col-md-10 col-md-pull-2 col-sm-10 col-sm-pull-2 col-xs-12">
+            <h1>Invoice Admin</h1>
         </div>
     </div>
     <div class="table">
