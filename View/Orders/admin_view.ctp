@@ -88,7 +88,7 @@
     <h2>Contact Information</h2>
     <dl>
         <dt>Email</dt>
-        <dd><?php echo $order['Order']['email']; ?></dd>
+        <dd><?php echo $this->Text->autoLinkEmails($order['Order']['email']); ?></dd>
         <?php if(!empty($order['Order']['phone'])): ?>
             <dt>Phone</dt>
             <dd><?php echo $order['Order']['phone']; ?></dd>

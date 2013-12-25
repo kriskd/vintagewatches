@@ -861,7 +861,7 @@ body.hide-fat-footer {
                 .clearfix();
             }
         }
-        .orders {
+        .payment-form, .order-details {
             h2, h3 {
                 color: #fff;
                 background: @goldDark;
@@ -878,6 +878,8 @@ body.hide-fat-footer {
                     }
                 }
             }
+        }
+        .orders {
             h6 {
                 margin: 0;
             }
@@ -1027,6 +1029,25 @@ body.hide-fat-footer {
                 }
             }
         }
+        .invoices.pay {
+            .table {
+                .head {
+                    .table-head {
+                        background: @gray-lighter;
+                        color: @goldDark;
+                        font-weight: bold;
+                        border-bottom-color: #ddd;
+                    }
+                }
+            }
+        }
+        .invoices.view {
+            h2 {
+                small {
+                    color: black;
+                }
+            }
+        }
         .invoices.pay, .invoices.view {
             ul {
                 list-style: none;
@@ -1053,20 +1074,15 @@ body.hide-fat-footer {
                 margin-top: 2px;
                 margin-bottom: 10px;
             }
+            .special-instructions {
+                .glyphicon-question-sign {
+                    color: white;
+                }
+            }
         }
         .invoices {
             .add-invoice {
                 margin-top: 20px;
-            }
-            h2, {
-                small {
-                    color: black;
-                }
-            }
-            h3 {
-                small {
-                    color: @goldDark;
-                }
             }
             .add-line-item {
                 @media (max-width: @screen-sm-max) {

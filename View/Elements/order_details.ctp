@@ -1,4 +1,4 @@
-<div class="order-details col-lg-6 col-md-6 col-sm-12 col-xs-12">
+<div class="order-details">
     <h1>Order Summary</h1>
     <h2>Purchases</h2>
     <div class="row head">

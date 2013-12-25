@@ -7568,8 +7568,10 @@ body.hide-fat-footer .container .content {
 .container .content .checkout-form .submit:after {
   clear: both;
 }
-.container .content .orders h2,
-.container .content .orders h3 {
+.container .content .payment-form h2,
+.container .content .order-details h2,
+.container .content .payment-form h3,
+.container .content .order-details h3 {
   color: #fff;
   background: #665600;
   -webkit-border-radius: 5px;
@@ -7580,14 +7582,18 @@ body.hide-fat-footer .container .content {
   padding: 0 10px;
   line-height: 40px;
 }
-.container .content .orders h2 small,
-.container .content .orders h3 small {
+.container .content .payment-form h2 small,
+.container .content .order-details h2 small,
+.container .content .payment-form h3 small,
+.container .content .order-details h3 small {
   color: white;
   font-weight: bold;
   line-height: 40px;
 }
-.container .content .orders h2 small .glyphicon,
-.container .content .orders h3 small .glyphicon {
+.container .content .payment-form h2 small .glyphicon,
+.container .content .order-details h2 small .glyphicon,
+.container .content .payment-form h3 small .glyphicon,
+.container .content .order-details h3 small .glyphicon {
   position: relative;
   top: 2px;
 }
@@ -7725,6 +7731,15 @@ body.hide-fat-footer .container .content {
 .container .content .orders.admin-index .row input[type=submit] {
   margin-top: 25px;
 }
+.container .content .invoices.pay .table .head .table-head {
+  background: #eeeeee;
+  color: #665600;
+  font-weight: bold;
+  border-bottom-color: #ddd;
+}
+.container .content .invoices.view h2 small {
+  color: black;
+}
 .container .content .invoices.pay ul,
 .container .content .invoices.view ul {
   list-style: none;
@@ -7755,14 +7770,12 @@ body.hide-fat-footer .container .content {
   margin-top: 2px;
   margin-bottom: 10px;
 }
+.container .content .invoices.pay .special-instructions .glyphicon-question-sign,
+.container .content .invoices.view .special-instructions .glyphicon-question-sign {
+  color: white;
+}
 .container .content .invoices .add-invoice {
   margin-top: 20px;
-}
-.container .content .invoices h2 small {
-  color: black;
-}
-.container .content .invoices h3 small {
-  color: #665600;
 }
 @media (max-width: 991px) {
   .container .content .invoices .add-line-item {
