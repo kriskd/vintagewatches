@@ -6,6 +6,10 @@
             <?php echo $this->Element('invoice_top'); ?>
             <?php echo $this->Element('invoice_detail'); ?>
             <?php foreach ($invoice['Address'] as $i => $address): ?>
+                <?php $hasState = false; ?>
+                <?php if (in_array(strtoupper($address['country']), array('US', 'CA'))): ?>
+                    <?php $hasState = true; ?>
+                <?php endif; ?>
                 <div class="invoice-address">
                     <h3><small class="pull-right hidden-xxs"><span class="glyphicon glyphicon-arrow-right"></span> Complete Address</small><?php echo ucfirst($address['type']); ?> Address</h3>
                     <div class="row">
@@ -19,14 +23,29 @@
                     <?php echo $this->Form->input('Invoice.email'); ?>
                     <?php echo $this->Form->input('Address.'.$i.'.address1', array('label' => 'Address 1', 'data-stripe' => 'address_line1')); ?>
                     <?php echo $this->Form->input('Address.'.$i.'.address2', array('label' => 'Address 2', 'data-stripe' =>'address_line2')); ?>
-                    <?php echo $this->Form->input('Address.'.$i.'.city', array('data-stripe' => 'address_city')); ?>
-                    <?php if (strcasecmp($invoice['Address'][$i]['country'], 'US')==0): ?>
-                        <?php echo $this->Form->input('Address.'.$i.'.state', array('data-stripe' => 'address_state', 'options' => array_merge(array('' => 'Select One'), $statesUS))); ?>
-                    <?php endif; ?>
-                        <?php if (strcasecmp($invoice['Address'][$i]['country'], 'CA')==0): ?>
-                        <?php echo $this->Form->input('Address.'.$i.'.state', array('label' => 'Province', 'data-stripe' => 'address_state', 'options' => array_merge(array('' => 'Select One'), $statesCA))); ?>
-                    <?php endif; ?>
-                    <?php echo $this->Form->input('Address.'.$i.'.postalCode', array('data-stripe' => 'address_zip')); ?>
+                    <div class="row">
+                        <?php if ($hasState == true): ?>
+                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <?php else: ?>
+                            <div class="col-lg-9 col-md-9 col-sm-6 col-xs-12">
+                        <?php endif; ?>
+                            <?php echo $this->Form->input('Address.'.$i.'.city', array('data-stripe' => 'address_city')); ?>
+                        </div>
+                        <?php if ($hasState == true): ?>
+                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <?php endif; ?>
+                        <?php if (strcasecmp($invoice['Address'][$i]['country'], 'US')==0): ?>
+                            <?php echo $this->Form->input('Address.'.$i.'.state', array('data-stripe' => 'address_state', 'options' => array_merge(array('' => 'Select One'), $statesUS))); ?>
+                        <?php elseif (strcasecmp($invoice['Address'][$i]['country'], 'CA')==0): ?>
+                            <?php echo $this->Form->input('Address.'.$i.'.state', array('label' => 'Province', 'data-stripe' => 'address_state', 'options' => array_merge(array('' => 'Select One'), $statesCA))); ?>
+                        <?php endif; ?>
+                        <?php if ($hasState == true): ?>
+                            </div>
+                        <?php endif; ?>
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <?php echo $this->Form->input('Address.'.$i.'.postalCode', array('data-stripe' => 'address_zip')); ?>
+                        </div>
+                    </div>
                     <?php echo $this->Form->input('Address.'.$i.'.country', array('data-stripe' => 'address_country', 'type' => 'hidden')); ?>
                 </div>
             <?php endforeach; ?>
