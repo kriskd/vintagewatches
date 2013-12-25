@@ -226,6 +226,8 @@ class OrdersController extends AppController
 		    $this->set(compact('order', 'title'));   
 		    $this->Session->setFlash('<span class="glyphicon glyphicon-ok"></span> Thank you for your order.',
 					     'default', array('class' => 'alert alert-success'));
+		    $hideFatFooter = false;
+		    $this->set(compact('invoice', 'hideFatFooter'));
 		    $this->render('confirm');
 		} else {
 		    //Decline
@@ -459,7 +461,7 @@ class OrdersController extends AppController
 	if (!$this->Order->exists($id)) {
 		throw new NotFoundException(__('Invalid order'));
 	}
-
+	
 	$this->set('order', $this->Order->getOrder($id));
     }
     
