@@ -121,8 +121,11 @@ class InvoicesController extends AppController {
 							'conditions' => compact('slug'),
 							'contain' => array('InvoiceItem', 'Address')
 						)
-					); 
-					$this->set('invoice', $invoice);
+					);
+					
+					$hideFatFooter = false;
+					$this->set(compact('invoice', 'hideFatFooter'));
+					
 					$this->render('view');
 				} else {
 					$this->Invoice->saveAssociated($data);
