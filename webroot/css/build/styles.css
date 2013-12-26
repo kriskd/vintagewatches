@@ -7568,8 +7568,10 @@ body.hide-fat-footer .container .content {
 .container .content .checkout-form .submit:after {
   clear: both;
 }
+.container .content .orders.admin-view h2,
 .container .content .payment-form h2,
 .container .content .order-details h2,
+.container .content .orders.admin-view h3,
 .container .content .payment-form h3,
 .container .content .order-details h3 {
   color: #fff;
@@ -7582,16 +7584,20 @@ body.hide-fat-footer .container .content {
   padding: 0 10px;
   line-height: 40px;
 }
+.container .content .orders.admin-view h2 small,
 .container .content .payment-form h2 small,
 .container .content .order-details h2 small,
+.container .content .orders.admin-view h3 small,
 .container .content .payment-form h3 small,
 .container .content .order-details h3 small {
   color: white;
   font-weight: bold;
   line-height: 40px;
 }
+.container .content .orders.admin-view h2 small .glyphicon,
 .container .content .payment-form h2 small .glyphicon,
 .container .content .order-details h2 small .glyphicon,
+.container .content .orders.admin-view h3 small .glyphicon,
 .container .content .payment-form h3 small .glyphicon,
 .container .content .order-details h3 small .glyphicon {
   position: relative;
