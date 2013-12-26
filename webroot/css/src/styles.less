@@ -1101,7 +1101,9 @@ body.hide-fat-footer {
             .line-item {
                 .delete-icon-item-id {
                     @media (max-width: @screen-sm-max) {
-                        margin-top: 20px;
+                        //Padding instead of margin and overflow so this works in Safari
+                        padding-top: 20px;
+                        overflow: hidden;
                     }
                     .delete-icon {
                         margin-top: 33px;

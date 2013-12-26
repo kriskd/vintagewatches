@@ -7801,7 +7801,8 @@ body.hide-fat-footer .container .content {
 }
 @media (max-width: 991px) {
   .container .content .invoices .line-item .delete-icon-item-id {
-    margin-top: 20px;
+    padding-top: 20px;
+    overflow: hidden;
   }
 }
 .container .content .invoices .line-item .delete-icon-item-id .delete-icon {
