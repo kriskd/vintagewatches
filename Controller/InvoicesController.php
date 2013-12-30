@@ -76,7 +76,7 @@ class InvoicesController extends AppController {
  */
 	public function pay($slug = null) {
 		
-		if (prod() == true && (!isset($_SERVER['HTTPS']) || !$_SERVER['HTTPS'])) {
+		if ((prod() == true || stage() == true) && (!isset($_SERVER['HTTPS']) || !$_SERVER['HTTPS'])) {
 			$this->redirect('https://' . env('SERVER_NAME') . $this->here);
 		}
 		
