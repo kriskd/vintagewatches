@@ -66,11 +66,4 @@
             </td>
         </tr>
     <?php endif; ?>
-    <tr>
-        <td colspan=4>
-            <p>
-                Visit <?php echo $this->Html->link('brucesvintagewatches.com/orders', 'http://brucesvintagewatches.com/orders'); ?> to get your entire order history.
-            </p>
-        </td>
-    </tr>
 </table>
