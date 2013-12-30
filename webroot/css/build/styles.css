@@ -7771,6 +7771,11 @@ body.hide-fat-footer .container .content {
 .container .content .invoices.view .invoice-address {
   margin-bottom: 20px;
 }
+.container .content .invoices.pay .invoice-address .invoice-country,
+.container .content .invoices.view .invoice-address .invoice-country {
+  float: left;
+  margin-right: 5px;
+}
 .container .content .invoices.pay .error-message,
 .container .content .invoices.view .error-message {
   margin-top: 2px;

@@ -47,6 +47,8 @@
                                 <?php echo $this->Form->input('Address.'.$i.'.postalCode', array('data-stripe' => 'address_zip')); ?>
                             </div>
                         </div>
+                        <?php echo $this->Form->label('Address.'.$i.'country', 'Country', array('class' => 'control-label invoice-country')); ?>
+                        <p><?php echo $address['countryName']; ?></p>
                     </div>
                     <?php echo $this->Form->input('Address.'.$i.'.country', array('data-stripe' => 'address_country', 'type' => 'hidden')); ?>
                 </div>

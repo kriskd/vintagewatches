@@ -19,6 +19,7 @@
                 <li><?php echo $address['address1']; ?></li>
                 <li><?php echo $address['address2']; ?></li>
                 <li><?php echo $address['cityStZip']; ?></li>
+                <li><?php echo $address['countryName']; ?></li>
             </ul>
         </div>
     <?php endforeach; ?>
