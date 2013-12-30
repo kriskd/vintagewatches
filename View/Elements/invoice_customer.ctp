@@ -24,9 +24,11 @@
         </div>
     <?php endforeach; ?>
     <div class="col-lg-4">
+        <?php if (!empty($invoice['Invoice']['shipDate'])): ?>
         <h3>Ship Date</h3>
         <p>
-            <?php echo isset($invoice['Invoice']['shipDate']) ? date('M d, Y', strtotime($invoice['Invoice']['shipDate'])) : ''; ?>
+            <?php echo date('M d, Y', strtotime($invoice['Invoice']['shipDate'])); ?>
         </p>
+        <?php endif; ?>
     </div>
 </div>
