@@ -383,6 +383,10 @@ class OrdersController extends AppController
 	    $value = !empty($this->request->query['value']) ? $this->request->query['value'] : '';
 	    if (!empty($filter) && !empty($value)){
 		$options['conditions'] = array($filter => $value);
+		$options['contain'] =  array('Payment' => array(
+								'fields' => 'stripe_id', 'stripe_amount'
+							)
+					    );
 		switch ($filter) {
 		    case 'Address.lastName':
 		    case 'Address.postalCode':
@@ -392,14 +396,14 @@ class OrdersController extends AppController
 				'alias' => 'Address',
 				'type' => 'INNER',
 				'conditions' => array(
-				    'Address.foreign_id = Order.id'
+				    'Address.foreign_id = Order.id',
+				    'Address.class' => 'Order'
 				)
 			    )
 			);
-			$options['contain'] = array('Address' => array(
-								    'fields' => 'id', 'type', 'lastName', 'postalCode' 
-								)
-						    );
+			$options['contain']['Address'] = array(
+								'fields' => 'id', 'type', 'lastName', 'city', 'postalCode' 
+							    );
 			$options['conditions']['Address.type'] = 'billing';
 			break;
 		    case 'Watch.stockId':
@@ -413,10 +417,9 @@ class OrdersController extends AppController
 				)
 			    )
 			);
-			$options['contain'] = array('Watch' => array(
+			$options['contain']['Watch'] = array(
 								'fields' => 'id', 'stockId'
-							    )
-							);
+							    );
 			break;
 		    case 'Brand.name':
 			$options['joins'] = array(
@@ -437,12 +440,10 @@ class OrdersController extends AppController
 				)
 			    )
 			);
-			$options['contain'] = array(
-						'Watch' => array(
+			$options['contain']['Watch'] = array(
 								'fields' => 'id', 'stockId',
 								'Brand'
-							    ),
-							);
+							    );
 			break;
 		}
 	    }
