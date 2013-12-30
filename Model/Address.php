@@ -230,7 +230,7 @@ class Address extends AppModel {
 	    }, $results);
 	    
 	    $results = array_map(function($item) { 
-		if (empty($item[$this->name]['state'])) {
+		if (empty($item[$this->name]['state']) && isset($item[$this->name]['city']) && isset($item[$this->name]['postalCode'])) {
 		    $item[$this->name]['cityStZip'] = $item[$this->name]['city'] . ', ' . $item[$this->name]['postalCode'];
 		}
 		return $item;
