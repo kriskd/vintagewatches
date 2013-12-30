@@ -215,16 +215,28 @@ class Address extends AppModel {
         }
 	
 	/**
+	 * Include full country name in results
 	 * cityStZip virtual field is null if state is null so fix it
 	 */
 	public function afterFind($results, $primary = false)
 	{
-	    return array_map(function($item) { //var_dump($item);
+	    $countries = ClassRegistry::init('Country')->getList();
+	    
+	    $results = array_map(function($item) use ($countries) {
+		if (!empty($item[$this->name]['country'])) {
+		    $item[$this->name]['countryName'] = $countries[$item[$this->name]['country']];
+		}
+		return $item;
+	    }, $results);
+	    
+	    $results = array_map(function($item) { 
 		if (empty($item[$this->name]['state'])) {
 		    $item[$this->name]['cityStZip'] = $item[$this->name]['city'] . ', ' . $item[$this->name]['postalCode'];
 		}
 		return $item;
 	    }, $results);
+	    
+	    return $results;
 	}
 
 //The Associations below have been created with all possible keys, those that are not needed can be removed
