@@ -177,7 +177,21 @@ class WatchesController extends AppController {
 		if (!$this->Watch->exists($id)) {
 			throw new NotFoundException(__('Invalid watch'));
 		}
-		$options = array('conditions' => array('Watch.' . $this->Watch->primaryKey => $id));
+		
+		$options = array(
+			'conditions' => array(
+				'Watch.' . $this->Watch->primaryKey => $id
+			),
+			'contain' => array(
+				'Image',
+				'Brand' => array(
+				    'fields' => array(
+					'id', 'name'
+				    )
+				)
+			)
+		);
+
 		$this->set('watch', $this->Watch->find('first', $options));
 	}
 
@@ -220,7 +234,19 @@ class WatchesController extends AppController {
 			}
 		} else {
 			$this->brandList();
-			$options = array('conditions' => array('Watch.' . $this->Watch->primaryKey => $id));
+			$options = array(
+				'conditions' => array(
+					'Watch.' . $this->Watch->primaryKey => $id
+				),
+				'contain' => array(
+					'Image',
+					'Brand' => array(
+					    'fields' => array(
+						'id', 'name'
+					    )
+					)
+				)
+			);
 			$this->request->data = $this->Watch->find('first', $options);
 			$this->set('watch', $this->Watch->find('first', $options));
 		}
