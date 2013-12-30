@@ -140,7 +140,7 @@ class AppController extends Controller {
         }
         
         $hideAnalytics = false;
-        if (prod() == true || $loggedIn == true ||
+        if (prod() == false || $loggedIn == true ||
             strcasecmp($this->route['controller'], 'invoices')==0 && strcasecmp($this->route['action'], 'pay')==0 ||
             !empty($this->request->params['admin'])) {
             $hideAnalytics = true;
