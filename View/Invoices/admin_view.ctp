@@ -8,8 +8,9 @@
                                                                       'data-toggle' => 'modal')); ?>
         </div>
         <div class="col-lg-8 col-lg-pull-4 col-md-7 col-md-pull-5 col-sm-12 col-xs-12">
+            <?php $scheme = prod() == true ? 'https://' : 'http://'; ?>
             <?php echo $this->Form->input(false, array(
-                                            'value' => 'http://' . env('SERVER_NAME') . DS . $invoice['Invoice']['slug'],
+                                            'value' => $scheme . env('SERVER_NAME') . DS . $invoice['Invoice']['slug'],
                                             'readonly' => 'readonly',
                                             'class' => 'form-control invoice-url',
                                             'label' => 'URL')); ?>
