@@ -101,7 +101,7 @@ class OrdersController extends AppController
     
     public function checkout()
     {
-	if ((prod() == true || stage() == true) && (!isset($_SERVER['HTTPS']) || !$_SERVER['HTTPS'])) {
+	if (prod() == true && (!isset($_SERVER['HTTPS']) || !$_SERVER['HTTPS'])) {
 	    $this->redirect('https://' . env('SERVER_NAME') . $this->here);
 	}
 	

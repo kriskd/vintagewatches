@@ -152,7 +152,7 @@ class AppController extends Controller {
         $here = trim($this->here, '/');
 
         //Redirect to non-secure if https and not on checkout
-        if ((prod() == true || stage() == true) && (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS'])=='on') &&
+        if (prod() == true && (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS'])=='on') &&
             (!in_array($here, $secure) && !preg_match('/[a-z0-9]{32}/', $here))) {
 	    $this->redirect('http://' . env('SERVER_NAME') . $this->here);
 	}
