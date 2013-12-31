@@ -163,8 +163,6 @@ class AppController extends Controller {
         
         $this->set(compact('hideFatFooter', 'hideAnalytics', 'loggedIn'));
         
-
-        
         $this->Cookie->domain = env('HTTP_BASE');
         
         if (empty($this->params['prefix'])) {

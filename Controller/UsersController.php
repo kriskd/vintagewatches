@@ -1,23 +1,14 @@
 <?php
-App::uses('HttpSocket', 'Network/Http');
 
 class UsersController extends AppController
 {
-    public $headers = array();
     public $runame;
-    public $HttpSocket;
+    
+    public $components = array('Ebay');
     
     public function beforeFilter()
     {
-        $this->headers = array(
-                    'X-EBAY-API-COMPATIBILITY-LEVEL' => '851',
-                    'X-EBAY-API-DEV-NAME' => Configure::read('eBay.devid'),
-                    'X-EBAY-API-APP-NAME' => Configure::read('eBay.appid'),
-                    'X-EBAY-API-CERT-NAME' => Configure::read('eBay.certid'),
-                    'X-EBAY-API-SITEID' => '0'
-                );
         $this->runame = Configure::read('eBay.runame');
-        $this->HttpSocket = new HttpSocket(['ssl_allow_self_signed' => true]);
                 
         parent::beforeFilter();
     }
@@ -50,21 +41,16 @@ class UsersController extends AppController
     public function admin_ebay()
     {
         if ($this->Session->check('ebaySessionId')) { 
+            $this->Ebay->ebayHeaders['X-EBAY-API-CALL-NAME'] = 'FetchToken';
+            
             $ebaySessionId = $this->Session->read('ebaySessionId'); 
             
-            $this->headers['X-EBAY-API-CALL-NAME'] = 'FetchToken';
-            
-            $xml = <<<XML
-<?xml version="1.0" encoding="utf-8"?>
-<FetchTokenRequest xmlns="urn:ebay:apis:eBLBaseComponents">
-  <SessionID>{$ebaySessionId}</SessionID>
-</FetchTokenRequest>
-XML;
+            $xml = $this->Ebay->fetchTokenXml($ebaySessionId);
 
-            $results = $this->HttpSocket->request([
+            $results = $this->Ebay->HttpSocket->request([
                 'method' => 'POST',
                 'uri' => Configure::read('eBay.apiUrl'),
-                'header' => $this->headers,
+                'header' => $this->Ebay->ebayHeaders,
                 'body' => $xml
             ]);
             
@@ -89,31 +75,23 @@ XML;
                                         'id' => $userid
                                    )
                                 );
-            // How to decode
-            //$token = base64_decode($token);
-            //$token = Security::rijndael($token, Configure::read('Security.cipherSeed').Configure::read('Security.cipherSeed'), 'decrypt');
             
             $this->redirect(array('controller' => 'orders', 'action' => 'index', 'admin' => true));
         } else { 
-            $this->headers['X-EBAY-API-CALL-NAME'] = 'GetSessionID';
-    
-            $xml = <<<XML
-<?xml version="1.0" encoding="utf-8"?>
-<GetSessionIDRequest xmlns="urn:ebay:apis:eBLBaseComponents">
-<RuName>{$this->runame}</RuName>
-</GetSessionIDRequest>
-XML;
+            $this->Ebay->ebayHeaders['X-EBAY-API-CALL-NAME'] = 'GetSessionID';
+            
+            $xml = $this->Ebay->sessionIdXml($this->runame);
 
-            $results = $this->HttpSocket->request([
+            $results = $this->Ebay->HttpSocket->request([
                 'method' => 'POST',
                 'uri' => Configure::read('eBay.apiUrl'),
-                'header' => $this->headers,
+                'header' => $this->Ebay->ebayHeaders,
                 'body' => $xml
             ]);
             
             $xml = simplexml_load_string($results->body);
             
-            $sessionID = (string)$xml->SessionID;
+            $sessionID = (string)$xml->SessionID; 
             $this->Session->write('ebaySessionId', $sessionID);
             
             $this->redirect(Configure::read('eBay.signinUrl').'?SignIn&RuName='.$this->runame.'&SessID='.urlencode($sessionID));
