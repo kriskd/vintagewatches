@@ -7,9 +7,9 @@
         </div>
         <?php foreach($items as $item): ?>
             <?php $row = $this->Html->tag('span', (string)$item->ItemID, array('class' => 'table-cell')); ?>
-            <?php $row .= $this->Html->tag('span', (string)$item->ListingDetails->StartTime, array('class' => 'table-cell')); ?>
-            <?php $row .= $this->Html->tag('span', (string)$item->ListingDetails->EndTime, array('class' => 'table-cell')); ?>
-            <?php echo $this->Html->tag('div', $row, array('class' => 'table-row row')); ?>
+            <?php $row .= $this->Html->tag('span', date('Y-m-d H:i:s', strtotime((string)$item->ListingDetails->StartTime)), array('class' => 'table-cell')); ?>
+            <?php $row .= $this->Html->tag('span', date('Y-m-d H:i:s', strtotime((string)$item->ListingDetails->EndTime)), array('class' => 'table-cell')); ?>
+            <?php echo $this->Html->tag('div', $row, array('class' => 'table-row')); ?>
         <?php endforeach; ?>
     </div>
 </div>
