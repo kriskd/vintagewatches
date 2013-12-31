@@ -7,7 +7,7 @@ class EbaysController extends AppController
     
     public $uses = array('User');
     
-    public function admin_index()
+    public function admin_items()
     {
         // Put the ebayToken in session with something like http://stackoverflow.com/questions/17267232/include-a-subset-of-fields-in-the-auth-user-session
         $encodedToken = $this->User->field('ebayToken', array('id' => $this->Auth->user('id'))); 
@@ -24,10 +24,6 @@ class EbaysController extends AppController
         
         $xml = simplexml_load_string($results->body);
         
-        foreach ($xml->ItemArray as $item) {
-            var_dump($item);
-        }
-        
-        $this->autoRender = false;
+        $this->set('items', $xml->ItemArray->Item);
     }
 }
