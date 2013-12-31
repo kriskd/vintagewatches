@@ -7746,6 +7746,22 @@ body.hide-fat-footer .container .content {
 .container .content .invoices.view h2 small {
   color: black;
 }
+.container .content .invoices.view .green {
+  font-size: 65%;
+  font-weight: normal;
+}
+@media (max-width: 767px) {
+  .container .content .invoices.pay .invoice-top .invoice-date,
+  .container .content .invoices.view .invoice-top .invoice-date {
+    text-align: left;
+  }
+}
+@media (min-width: 768px) {
+  .container .content .invoices.pay .invoice-top .invoice-date,
+  .container .content .invoices.view .invoice-top .invoice-date {
+    text-align: right;
+  }
+}
 .container .content .invoices.pay ul,
 .container .content .invoices.view ul {
   list-style: none;
@@ -7854,7 +7870,6 @@ body.hide-fat-footer .container .content {
   -o-border-radius: 5px;
   border-radius: 5px;
   padding: 10px;
-  text-align: center;
   background: #eeeeee;
 }
 .container .content .invoices .invoice-payment .head {

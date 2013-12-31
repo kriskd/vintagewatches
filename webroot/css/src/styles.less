@@ -1047,8 +1047,22 @@ body.hide-fat-footer {
                     color: black;
                 }
             }
+            .green {
+                font-size: 65%;
+                font-weight: normal;
+            }
         }
         .invoices.pay, .invoices.view {
+            .invoice-top {
+                .invoice-date {
+                    @media (max-width: @screen-xs-max) {
+                        text-align: left;
+                    }
+                    @media (min-width: @screen-sm-min) {
+                        text-align: right;
+                    }
+                }
+            }
             ul {
                 list-style: none;
             }
@@ -1132,7 +1146,6 @@ body.hide-fat-footer {
                 border: 1px solid @gray;
                 .rounded-corners;
                 padding: 10px;
-                text-align: center;
                 background: @gray-lighter;
                 .head {
                     font-weight: bold;

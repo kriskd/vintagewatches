@@ -200,7 +200,9 @@ class InvoicesController extends AppController {
 			throw new NotFoundException(__('Invalid invoice'));
 		}
 		$options = array('conditions' => array('Invoice.' . $this->Invoice->primaryKey => $id));
-		$this->set('invoice', $this->Invoice->find('first', $options));
+		$invoice = $this->Invoice->find('first', $options);
+		$paid = empty($invoice['Payment']['stripe_paid']) ? false : true;
+		$this->set(compact('invoice', 'paid'));
 	}
 
 /**
