@@ -92,7 +92,7 @@ XML;
             // How to decode
             //$token = base64_decode($token);
             //$token = Security::rijndael($token, Configure::read('Security.cipherSeed').Configure::read('Security.cipherSeed'), 'decrypt');
-            //var_dump($token);
+            
             $this->redirect(array('controller' => 'orders', 'action' => 'index', 'admin' => true));
         } else { 
             $this->headers['X-EBAY-API-CALL-NAME'] = 'GetSessionID';
