@@ -123,7 +123,22 @@ class AppController extends Controller {
     
     public function beforeFilter()
     {
-        $this->route = Router::parse($this->here);
+        $secure = array('orders/checkout', 'orders/totalCart.json', 'orders/getAddress.html', 'orders/getCountry.json', 'orders/checkout.json');
+        $here = trim($this->here, '/'); 
+        
+        //Redirect to non-secure if https, not on checkout, not invoice or admin
+        if (prod() == true && (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS'])=='on') &&
+            (!in_array($here, $secure) && !preg_match('/[a-z0-9]{32}/', $here)) &&
+            empty($this->request->params['admin'])) {
+	    $this->redirect('http://' . env('SERVER_NAME') . $this->here);
+	}
+        
+        //Make admin pages secure
+        if (prod() == true && (!isset($_SERVER['HTTPS']) || !$_SERVER['HTTPS']) && !empty($this->request->params['admin'])) {
+            $this->redirect('https://' . env('SERVER_NAME') . $this->here);
+        }
+        
+        $this->route = Router::parse($this->here); 
         
         //Logged in
         $loggedIn = false;
@@ -148,14 +163,7 @@ class AppController extends Controller {
         
         $this->set(compact('hideFatFooter', 'hideAnalytics', 'loggedIn'));
         
-        $secure = array('orders/checkout', 'orders/totalCart.json', 'orders/getAddress.html', 'orders/getCountry.json', 'orders/checkout.json');
-        $here = trim($this->here, '/');
 
-        //Redirect to non-secure if https and not on checkout
-        if (prod() == true && (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS'])=='on') &&
-            (!in_array($here, $secure) && !preg_match('/[a-z0-9]{32}/', $here))) {
-	    $this->redirect('http://' . env('SERVER_NAME') . $this->here);
-	}
         
         $this->Cookie->domain = env('HTTP_BASE');
         
