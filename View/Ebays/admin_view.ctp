@@ -15,6 +15,8 @@
             <?php if ($item->SellingStatus->QuantitySold > 0): ?>
                 <h2>Winner</h2>
                 <dl>
+                    <dt>Item ID</dt>
+                    <dd><?php echo $item->ItemID; ?></dd>
                     <dt>User ID</dt>
                     <dd><?php echo isset($item->SellingStatus->HighBidder->UserID) ? $item->SellingStatus->HighBidder->UserID : '<em>None</em>'; ?></dd>
                     <dt>Email</dt>
