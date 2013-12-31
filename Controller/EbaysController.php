@@ -24,7 +24,9 @@ class EbaysController extends AppController
         
         $xml = simplexml_load_string($results->body);
         
-        var_dump($xml);
+        foreach ($xml->ItemArray as $item) {
+            var_dump($item);
+        }
         
         $this->autoRender = false;
     }
