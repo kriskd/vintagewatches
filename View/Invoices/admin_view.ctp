@@ -10,20 +10,22 @@
                                                                       'data-toggle' => 'modal')); ?>
         </div>
         <div class="col-lg-8 col-lg-pull-4 col-md-7 col-md-pull-5 col-sm-12 col-xs-12">
-            <?php $scheme = prod() == true ? 'https://' : 'http://'; ?>
-            <?php echo $this->Form->input(false, array(
-                                            'value' => $scheme . env('SERVER_NAME') . DS . $invoice['Invoice']['slug'],
-                                            'readonly' => 'readonly',
-                                            'class' => 'form-control invoice-url',
-                                            'label' => 'URL')); ?>
+            <?php if ($paid == false && $invoice['Invoice']['active']==1): ?>
+                <?php $scheme = prod() == true ? 'https://' : 'http://'; ?>
+                <?php echo $this->Form->input(false, array(
+                                                'value' => $scheme . env('SERVER_NAME') . DS . $invoice['Invoice']['slug'],
+                                                'readonly' => 'readonly',
+                                                'class' => 'form-control invoice-url',
+                                                'label' => 'URL')); ?>
+            <?php endif; ?>
         </div>
     </div>
+    <h4><?php echo $invoice['Invoice']['active'] == 1 ? '<span class="glyphicon glyphicon-plus green">Active</span>' : '<span class="glyphicon glyphicon-minus red">Inactive</span>'; ?></h4>
     <?php echo $this->Element('invoice_top'); ?>
     <?php if ($paid == false): ?>
         <h4 class="red"><span class="glyphicon glyphicon-minus-sign"></span> Not Paid</h4>
     <?php else: ?>
         <div class="invoice-payment">
-            
             <dl>
                 <dt>Stripe ID</dt>
                 <dd><?php echo $invoice['Payment']['stripe_id']; ?></dd>
@@ -36,46 +38,6 @@
                 <dt>CVC Check</dt>
                 <dd><?php echo $invoice['Payment']['stripe_cvc_check']; ?></dd>
             </dl>
-            <?php /*<div class="row head">
-                <div class="col-lg-3 col-md-3">
-                    
-                </div>
-                <div class="col-lg-2 col-md-2">
-                    <p>Stripe ID</p>
-                </div>
-                <div class="col-lg-1 col-md-1">
-                    <p>Last 4</p>
-                </div>
-                <div class="col-lg-2 col-md-2">
-                    <p>Address Check</p>
-                </div>
-                <div class="col-lg-2 col-md-2">
-                    <p>Zip Check</p>
-                </div>
-                <div class="col-lg-2 col-md-2">
-                    <p>Stripe Amount</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-3 col-md-3">
-                    <h4 class="green"><span class="glyphicon glyphicon-check"></span>Paid <?php echo date('M j, Y', strtotime($invoice['Payment']['created'])); ?></h4>        
-                </div>
-                <div class="col-lg-2 col-md-2">
-                    <p><?php echo $invoice['Payment']['stripe_id']; ?></p>
-                </div>
-                <div class="col-lg-1 col-md-1">
-                    <p><?php echo $invoice['Payment']['stripe_last4']; ?></p>
-                </div>
-                <div class="col-lg-2 col-md-2">
-                    <p><?php echo $invoice['Payment']['stripe_address_check']; ?></p>
-                </div>
-                <div class="col-lg-2 col-md-2">
-                    <p><?php echo $invoice['Payment']['stripe_zip_check']; ?></p>
-                </div>
-                <div class="col-lg-2 col-md-2">
-                    <p><?php echo $this->Number->stripe($invoice['Payment']['stripe_amount']); ?></p>
-                </div>
-            </div>*/ ?>
         </div>
     <?php endif; ?>
     <?php echo $this->Element('invoice_customer'); ?>

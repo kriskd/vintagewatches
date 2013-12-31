@@ -7746,7 +7746,7 @@ body.hide-fat-footer .container .content {
 .container .content .invoices.view h2 small {
   color: black;
 }
-.container .content .invoices.view .green {
+.container .content .invoices.view .smaller {
   font-size: 65%;
   font-weight: normal;
 }
@@ -7769,6 +7769,18 @@ body.hide-fat-footer .container .content {
 .container .content .invoices.pay .buttons,
 .container .content .invoices.view .buttons {
   margin-top: 24px;
+}
+@media (max-width: 991px) {
+  .container .content .invoices.pay .buttons,
+  .container .content .invoices.view .buttons {
+    text-align: left;
+  }
+}
+@media (min-width: 992px) {
+  .container .content .invoices.pay .buttons,
+  .container .content .invoices.view .buttons {
+    text-align: right;
+  }
 }
 .container .content .invoices.pay .head,
 .container .content .invoices.view .head {
