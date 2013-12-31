@@ -38,6 +38,8 @@ class NavigationHelper extends AppHelper
                 array('controller' => 'orders', 'action' => 'index', 'admin' => true),
             '<span class="glyphicon glyphicon-italic"></span> Invoices' =>
                 array('controller' => 'invoices', 'action' => 'index', 'admin' => true),
+             '<span class="glyphicon glyphicon-user"></span> Ebay' =>
+                array('controller' => 'ebays', 'action' => 'index', 'admin' => true),
             '<span class="glyphicon glyphicon-cog"></span> Watches' =>
                 array('controller' => 'watches', 'action' => 'index', 'admin' => true),
             '<span class="glyphicon glyphicon-star"></span> Brands' => 

@@ -64,7 +64,30 @@ XML;
 </Pagination>
 <EndTimeFrom>{$endTimeFrom}</EndTimeFrom>
 <EndTimeTo>{$endTimeTo}</EndTimeTo>
+<Sort>1</Sort>
+<GranularityLevel>Coarse</GranularityLevel>
+<DetailLevel>ReturnAll</DetailLevel>
 </GetSellerListRequest>
+XML;
+        return $xml;
+    }
+    
+    public function getItemXml($token, $itemId)
+    {
+        $xml = <<<XML
+<?xml version="1.0" encoding="utf-8"?>
+<GetItemRequest xmlns="urn:ebay:apis:eBLBaseComponents">
+<RequesterCredentials>
+<eBayAuthToken>{$token}</eBayAuthToken>
+</RequesterCredentials>
+<ItemID>{$itemId}</ItemID>
+<IncludeWatchCount>1</IncludeWatchCount>
+<IncludeCrossPromotion>1</IncludeCrossPromotion>
+<IncludeItemSpecifics>1</IncludeItemSpecifics>
+<IncludeTaxTable>0</IncludeTaxTable>
+<DetailLevel>ItemReturnAttributes</DetailLevel>
+<Version>851</Version>
+</GetItemRequest>
 XML;
         return $xml;
     }

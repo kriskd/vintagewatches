@@ -7879,3 +7879,6 @@ body.hide-fat-footer .container .content {
 .container .content .invoices .invoice-payment h4 {
   margin-top: -8px;
 }
+.container .content .ebays.admin-view .btn-success {
+  margin-top: 20px;
+}
