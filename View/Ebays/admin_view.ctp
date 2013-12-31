@@ -19,6 +19,10 @@
                     <dd><?php echo isset($item->SellingStatus->HighBidder->UserID) ? $item->SellingStatus->HighBidder->UserID : '<em>None</em>'; ?></dd>
                     <dt>Email</dt>
                     <dd><?php echo isset($item->SellingStatus->HighBidder->Email) ? $item->SellingStatus->HighBidder->Email : '<em>None</em>'; ?></dd>
+                    <dt>Postal Code</dt>
+                    <dd><?php echo isset($item->SellingStatus->HighBidder->BuyerInfo->ShippingAddress->PostalCode) ? $item->SellingStatus->HighBidder->BuyerInfo->ShippingAddress->PostalCode : '<em>None</em>'; ?></dd>
+                    <dt>Country</dt>
+                    <dd><?php echo isset($item->SellingStatus->HighBidder->BuyerInfo->ShippingAddress->Country) ? $item->SellingStatus->HighBidder->BuyerInfo->ShippingAddress->Country : '<em>None</em>'; ?></dd>
                     <dt>Price</dt>
                     <dd><?php echo $this->Number->currency($item->SellingStatus->CurrentPrice, 'USD'); ?></dd>
                     <dt>Shipping</dt>
