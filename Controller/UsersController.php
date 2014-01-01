@@ -66,7 +66,7 @@ class UsersController extends AppController
             $expiration = date('Y-m-d H:i:s', strtotime($expiration));
             $token = base64_encode(Security::rijndael($token, Configure::read('Security.cipherSeed').Configure::read('Security.cipherSeed'), 'encrypt'));
 
-            $userid = $this->Auth->user('id');
+            $userid = $this->Auth->user('id'); 
             $this->User->updateAll(array(
                                         'ebayToken' => '"'.$token.'"',
                                         'ebayTokenExpy' => '"'.$expiration.'"'
@@ -75,6 +75,7 @@ class UsersController extends AppController
                                         'id' => $userid
                                    )
                                 );
+            $this->Session->write('Auth.User.ebayToken', $token); 
             
             $this->redirect(array('controller' => 'orders', 'action' => 'index', 'admin' => true));
         } else { 
