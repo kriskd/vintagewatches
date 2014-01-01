@@ -133,13 +133,16 @@ class Invoice extends AppModel {
 
         public function beforeSave($options = array())
         {   
-            // Set shippingAmount to zero if does not exist on add only.
+            // Set shippingAmount to zero if does not exist and create slug on add only.
             if (!$this->id && !isset($this->data[$this->alias][$this->primaryKey])) {
                 if (isset($this->data['Invoice']) && !is_numeric($this->data['Invoice']['shippingAmount'])) {
                     $this->data['Invoice']['shippingAmount'] = 0;
                 }
+                $slugChars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+		$slug = substr(str_shuffle($slugChars), 0, 32);
+		$this->data['Invoice']['slug'] = $slug;
             }
-            if (empty($this->data['InvoiceItem'])) {
+            if (empty($this->data['InvoiceItem'])) { 
                 return false;
             }
             return true;
