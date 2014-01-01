@@ -25,6 +25,21 @@ class EbayComponent extends Component
         return Security::rijndael($token, Configure::read('Security.cipherSeed').Configure::read('Security.cipherSeed'), 'decrypt');
     }
     
+    public function getSellerList($token)
+    {
+        $this->ebayHeaders['X-EBAY-API-CALL-NAME'] = 'GetSellerList';
+        $xml = $this->getSellerListXml($token);
+        
+        $results = $this->HttpSocket->request([
+            'method' => 'POST', 
+            'uri' => Configure::read('eBay.apiUrl'),
+            'header' => $this->ebayHeaders,
+            'body' => $xml
+        ]);
+        
+        return simplexml_load_string($results->body);
+    }
+    
     public function sessionIdXml($runame)
     {
         $xml = <<<XML
@@ -65,7 +80,7 @@ XML;
 <EndTimeFrom>{$endTimeFrom}</EndTimeFrom>
 <EndTimeTo>{$endTimeTo}</EndTimeTo>
 <Sort>1</Sort>
-<GranularityLevel>Coarse</GranularityLevel>
+<GranularityLevel>Fine</GranularityLevel>
 <DetailLevel>ReturnAll</DetailLevel>
 </GetSellerListRequest>
 XML;

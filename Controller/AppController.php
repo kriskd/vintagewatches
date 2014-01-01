@@ -52,7 +52,7 @@ class AppController extends Controller {
                                     'logoutRedirect' => array('controller' => 'users', 'action' => 'login', 'admin' => false),
                                     ),
                                'Paginator',
-                               'Navigation'
+                               'Navigation', 'Ebay'
                             );
     
     public $uses = array('Page', 'Watch', 'Brand');
@@ -60,6 +60,8 @@ class AppController extends Controller {
     public $brandsWithWatches;
     
     public $route;
+    
+    public $token;
     
     /**
      * Send the Controller object to the View so Helpers can initialize a Component with it
@@ -145,6 +147,10 @@ class AppController extends Controller {
         if($this->Auth->loggedIn()){
             $loggedIn = true;
         }
+        
+        //eBay token
+        $encodedToken = $this->Auth->user('ebayToken');
+        $this->token = $this->Ebay->decodeToken($encodedToken);
         
         //Set var to determine if we show fat footer, set it here so it can be manually changed in controllers.
         $hideFatFooter = false;

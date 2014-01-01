@@ -183,6 +183,49 @@ class InvoicesController extends AppController {
  * @return void
  */
 	public function admin_index() {
+		$itemIds = $this->Invoice->InvoiceItem->find('list', array('fields' => 'itemid')); 
+		$ebayAuctions = $this->Ebay->getSellerList($this->token); 
+		foreach ($ebayAuctions->ItemArray->Item as $item) {
+			$email = (string)$item->SellingStatus->HighBidder->Email; 
+			if (stristr($email, '@')) {
+				$ebayItemID = (string)$item->ItemID; 
+				if (!in_array($ebayItemID, $itemIds)) {
+					$title = (string)$item->Title;
+					$url = (string)$item->ListingDetails->ViewItemURL;
+					$userID = (string)$item->SellingStatus->HighBidder->UserID;
+					$country = (string)$item->SellingStatus->HighBidder->BuyerInfo->ShippingAddress->Country;
+					$postalCode = (string)$item->SellingStatus->HighBidder->BuyerInfo->ShippingAddress->PostalCode;
+					$price = (string)$item->SellingStatus->CurrentPrice;
+					$shipping = (string)$item->ShippingDetails->ShippingServiceOptions->ShippingServiceCost;
+					$data = array(
+						'Invoice' => array(
+							'email' => $email,
+							'ebayId' => $userID,
+							'shippingAmount' => $shipping,
+							'invoiceNotes' => 'View the eBay auction at ' . $url,
+							'active' => 0,
+						),
+						'InvoiceItem' => array(
+							array(
+							      'itemid' => $ebayItemID,
+								'description' => $title,
+								'amount' => $price
+							)
+						),
+						'Address' => array(
+							array(
+								'class' => 'Invoice',
+								'type' => 'billing',
+								'postalCode' => $postalCode,
+								'country' => $country
+							)
+						)
+					);
+					$this->Invoice->saveAssociated($data);
+				}
+			}
+		}
+		
 		$this->paginate['contain'][] = 'Payment';
 		$this->Paginator->settings = $this->paginate; 
 		$this->set('invoices', $this->Paginator->paginate());
@@ -215,9 +258,6 @@ class InvoicesController extends AppController {
 		$this->Invoice->Address->removeAllButCountry();
 		if ($this->request->is('post')) {
 			$this->Invoice->create();
-			$slugChars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-			$slug = substr(str_shuffle($slugChars), 0, 32);
-			$this->request->data['Invoice']['slug'] = $slug;
 			$this->request->data['Address'][0]['type'] = 'billing'; 
 			if ($this->Invoice->saveAssociated($this->request->data)) {
 				$this->Session->setFlash(__('The invoice has been saved.'), 'success');
@@ -265,7 +305,7 @@ class InvoicesController extends AppController {
  * @return void
  */
 	public function admin_delete($id = null) {
-		$this->Invoice->id = $id;
+		$this->Invoice->id = $id; 
 		if (!$this->Invoice->exists()) {
 			throw new NotFoundException(__('Invalid invoice'));
 		}
@@ -285,7 +325,10 @@ class InvoicesController extends AppController {
 			throw new NotFoundException(__('Invalid invoice'));
 		}
 		$this->request->onlyAllow('post', 'delete');
-		if ($this->Invoice->InvoiceItem->delete()) {
+		// Don't delete if only 1 invoice item exists
+		// Had to move here from beforeDelete because it interfered with full invoice delete
+		$count = $this->Invoice->InvoiceItem->find('count', array('conditions' => compact('invoice_id')));
+		if ($count > 1 && $this->Invoice->InvoiceItem->delete()) {
 			$this->Session->setFlash(__('The invoice item has been deleted.'), 'success');
 		} else {
 			$this->Session->setFlash(__('The invoice item could not be deleted, invoices must have at least one line item.'), 'danger');

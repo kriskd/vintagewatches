@@ -15,6 +15,7 @@
     </div>
     <div class="table">
         <div class="table-row">
+            <span class="table-head"><?php echo $this->Paginator->sort('active'); ?></span>
             <span class="table-head"><?php echo $this->Paginator->sort('id'); ?></span>
             <span class="table-head"><?php echo $this->Paginator->sort('email'); ?></span>
             <span class="table-head"><?php echo $this->Paginator->sort('total'); ?></span>
@@ -23,7 +24,8 @@
             <span class="table-head"><?php echo $this->Paginator->sort('created'); ?></span>
         </div>
         <?php foreach($invoices as $invoice): ?>
-            <?php $row = $this->Html->tag('span', $invoice['Invoice']['id'], array('class' => 'table-cell')); ?>
+            <?php $row = $this->Html->tag('span', $invoice['Invoice']['active']==true ? '<span class="glyphicon glyphicon-ok green"></span>' : '', array('class' => 'table-cell text-center')); ?>
+            <?php $row .= $this->Html->tag('span', $invoice['Invoice']['id'], array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', $invoice['Invoice']['email'], array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', $this->Number->currency($this->Invoice->total($invoice), 'USD'), array('class' => 'table-cell text-right')); ?>
             <?php $row .= isset($invoice['Invoice']['shipDate']) ? $this->Html->tag('span', $invoice['Invoice']['shipDate'], array('class' => 'table-cell text-center')) : $this->Html->tag('span', '', array('class' => 'table-cell text-center')); ?>
