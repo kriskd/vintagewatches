@@ -234,6 +234,10 @@ class InvoicesController extends AppController {
 	 * Check if invoice was previously created, valid XML returned and valid email exists
 	 */
 	public function admin_ebay() {
+		if (!$this->Ebay->checkToken($this->Auth->user())) {
+			$this->redirect(array('controller' => 'users', 'action' => 'ebay', 'admin' => true));
+		}
+	
 		$ebayItemID = $this->request->query['ebayItemId']; 
 		$itemIds = $this->Invoice->InvoiceItem->find('list', array('fields' => 'itemid'));
 		if (in_array($ebayItemID, $itemIds)) { 

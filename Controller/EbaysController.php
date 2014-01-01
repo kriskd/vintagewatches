@@ -11,7 +11,10 @@ class EbaysController extends AppController
      * add a property for whether auction can be invoiced determined by checking if it's currently invoiced and has a valid email
      */
     public function admin_index()
-    {   
+    {
+        if (!$this->Ebay->checkToken($this->Auth->user())) {
+            $this->redirect(array('controller' => 'users', 'action' => 'ebay', 'admin' => true));
+        }
         $itemIds = $this->Invoice->InvoiceItem->find('list', array('fields' => 'itemid')); 
         $xml = $this->Ebay->getSellerList($this->token);
         foreach ($xml->ItemArray->Item as $item) { 

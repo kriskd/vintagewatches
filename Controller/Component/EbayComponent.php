@@ -25,9 +25,21 @@ class EbayComponent extends Component
         return Security::rijndael($token, Configure::read('Security.cipherSeed').Configure::read('Security.cipherSeed'), 'decrypt');
     }
     
+    /**
+     * Pass in the user stored in session.
+     * Check that the encoded token exists and that it is not expired or within 7 days of expiration
+     */
+    public function checkToken($sessionUser)
+    {   
+        if (empty($sessionUser['ebayToken']) || strtotime($sessionUser['ebayTokenExpy']) < time() || strtotime($sessionUser['ebayTokenExpy']) - time() < 60*60*24*7) { 
+            return false;
+        }
+        return true;
+    }
+    
     public function getSellerList($token)
     {
-        $this->ebayHeaders['X-EBAY-API-CALL-NAME'] = 'GetSellerList';
+        $this->ebayHeaders['X-EBAY-API-CALL-NAME'] = 'GetSellerList'; 
         $xml = $this->getSellerListXml($token);
         
         $results = $this->HttpSocket->request([

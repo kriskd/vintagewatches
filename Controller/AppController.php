@@ -146,19 +146,11 @@ class AppController extends Controller {
         $loggedIn = false;
         if($this->Auth->loggedIn()){
             $loggedIn = true;
-            
-            //eBay token
-            $encodedToken = $this->Auth->user('ebayToken'); 
-                
-            //Check for expired eBay token
-            $expyDate = $this->Auth->user('ebayTokenExpy');
-            if ((strtotime($expyDate) < time() || strtotime($expyDate) - time() < 60*60*24*7) &&
-                (strcasecmp($this->route['controller'], 'users')!=0 || strcasecmp($this->route['action'], 'ebay'))!=0 ||
-                (empty($encodedToken))) { 
-                $this->redirect(array('controller' => 'users', 'action' => 'ebay', 'admin' => true));
+              
+            if ($this->Ebay->checkToken($this->Auth->user())) {
+                $encodedToken = $this->Auth->user('ebayToken'); 
+                $this->token = $this->Ebay->decodeToken($encodedToken);
             }
-            
-            $this->token = $this->Ebay->decodeToken($encodedToken);
         }
         
         //Set var to determine if we show fat footer, set it here so it can be manually changed in controllers.
