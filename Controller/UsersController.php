@@ -75,7 +75,8 @@ class UsersController extends AppController
                                         'id' => $userid
                                    )
                                 );
-            $this->Session->write('Auth.User.ebayToken', $token); 
+            $this->Session->write('Auth.User.ebayToken', $token);
+            $this->Session->write('Auth.User.ebayTokenExpy', $expiration); 
             
             $this->redirect(array('controller' => 'orders', 'action' => 'index', 'admin' => true));
         } else { 
