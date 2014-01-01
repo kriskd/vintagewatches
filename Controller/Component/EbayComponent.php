@@ -40,6 +40,21 @@ class EbayComponent extends Component
         return simplexml_load_string($results->body);
     }
     
+    public function getItem($token, $itemId)
+    {
+        $this->ebayHeaders['X-EBAY-API-CALL-NAME'] = 'GetItem';
+        $xml = $this->getItemXml($token, $itemId); 
+        
+        $results = $this->HttpSocket->request([
+            'method' => 'POST', 
+            'uri' => Configure::read('eBay.apiUrl'),
+            'header' => $this->ebayHeaders,
+            'body' => $xml
+        ]);
+        
+        return simplexml_load_string($results->body);
+    }
+    
     public function sessionIdXml($runame)
     {
         $xml = <<<XML

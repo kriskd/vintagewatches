@@ -3,56 +3,36 @@ App::uses('AppController', 'Controller');
 
 class EbaysController extends AppController
 {
-    public $components = array('Ebay');
+    public $uses = array('Invoice');
     
-    public $uses = array('User');
-    
-    public $token;
-    
-    public function beforeFilter()
-    {
-        // Put the ebayToken in session with something like http://stackoverflow.com/questions/17267232/include-a-subset-of-fields-in-the-auth-user-session
-        $encodedToken = $this->User->field('ebayToken', array('id' => $this->Auth->user('id'))); 
-        $this->token = $this->Ebay->decodeToken($encodedToken);
-        
-        parent::beforeFilter();
-    }
-    
+    /**
+     * List of recent eBay Auctions
+     * Add a property for whether auction has been invoiced by checking for eBay ID in InvoiceItems and
+     * add a property for whether auction can be invoiced determined by checking if it's currently invoiced and has a valid email
+     */
     public function admin_index()
-    {
-        $this->Ebay->ebayHeaders['X-EBAY-API-CALL-NAME'] = 'GetSellerList';
-        $xml = $this->Ebay->getSellerListXml($this->token);
-        
-        $results = $this->Ebay->HttpSocket->request([
-            'method' => 'POST', 
-            'uri' => Configure::read('eBay.apiUrl'),
-            'header' => $this->Ebay->ebayHeaders,
-            'body' => $xml
-        ]);
-        
-        $xml = simplexml_load_string($results->body);
-        //var_dump($xml->ItemArray); exit;
-        foreach ($xml->ItemArray->Item as $item) {
-            //var_dump($item->Title);
-            //var_dump($item);
+    {   
+        $itemIds = $this->Invoice->InvoiceItem->find('list', array('fields' => 'itemid')); 
+        $xml = $this->Ebay->getSellerList($this->token);
+        foreach ($xml->ItemArray->Item as $item) { 
+            $item->Invoiced = false;
+            $ebayItemID = (string)$item->ItemID; 
+            if (in_array($ebayItemID, $itemIds)) {
+                $item->Invoiced = true;
+            } 
+            $email = (string)$item->SellingStatus->HighBidder->Email; 
+            $item->AllowInvoice = false; 
+            if (stristr($email, '@')==true && $item->Invoiced==0) { 
+                $item->AllowInvoice = true;
+            } 
         }
         $this->set('items', $xml->ItemArray->Item);
     }
     
     public function admin_view($itemId)
-    {
-        $this->Ebay->ebayHeaders['X-EBAY-API-CALL-NAME'] = 'GetItem';
-        $xml = $this->Ebay->getItemXml($this->token, $itemId);
+    {   
+        $xml = $this->Ebay->getItem($this->token, $itemId);
         
-        $results = $this->Ebay->HttpSocket->request([
-            'method' => 'POST', 
-            'uri' => Configure::read('eBay.apiUrl'),
-            'header' => $this->Ebay->ebayHeaders,
-            'body' => $xml
-        ]);
-        
-        $xml = simplexml_load_string($results->body);
-        //var_dump($xml->Item);
         $this->set('item', $xml->Item);
     }
 }

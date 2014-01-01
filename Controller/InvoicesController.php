@@ -183,49 +183,6 @@ class InvoicesController extends AppController {
  * @return void
  */
 	public function admin_index() {
-		$itemIds = $this->Invoice->InvoiceItem->find('list', array('fields' => 'itemid')); 
-		$ebayAuctions = $this->Ebay->getSellerList($this->token); 
-		foreach ($ebayAuctions->ItemArray->Item as $item) {
-			$email = (string)$item->SellingStatus->HighBidder->Email; 
-			if (stristr($email, '@')) {
-				$ebayItemID = (string)$item->ItemID; 
-				if (!in_array($ebayItemID, $itemIds)) {
-					$title = (string)$item->Title;
-					$url = (string)$item->ListingDetails->ViewItemURL;
-					$userID = (string)$item->SellingStatus->HighBidder->UserID;
-					$country = (string)$item->SellingStatus->HighBidder->BuyerInfo->ShippingAddress->Country;
-					$postalCode = (string)$item->SellingStatus->HighBidder->BuyerInfo->ShippingAddress->PostalCode;
-					$price = (string)$item->SellingStatus->CurrentPrice;
-					$shipping = (string)$item->ShippingDetails->ShippingServiceOptions->ShippingServiceCost;
-					$data = array(
-						'Invoice' => array(
-							'email' => $email,
-							'ebayId' => $userID,
-							'shippingAmount' => $shipping,
-							'invoiceNotes' => 'View the eBay auction at ' . $url,
-							'active' => 0,
-						),
-						'InvoiceItem' => array(
-							array(
-							      'itemid' => $ebayItemID,
-								'description' => $title,
-								'amount' => $price
-							)
-						),
-						'Address' => array(
-							array(
-								'class' => 'Invoice',
-								'type' => 'billing',
-								'postalCode' => $postalCode,
-								'country' => $country
-							)
-						)
-					);
-					$this->Invoice->saveAssociated($data);
-				}
-			}
-		}
-		
 		$this->paginate['contain'][] = 'Payment';
 		$this->Paginator->settings = $this->paginate; 
 		$this->set('invoices', $this->Paginator->paginate());
@@ -269,6 +226,64 @@ class InvoicesController extends AppController {
 		// Count of line items starting at 0
 		$i=0;
 		$this->set('i', $i);
+	}
+	
+	/**
+	 * Add eBay invoice
+	 * ebayItemID is received via GET form submitted with JS
+	 * Check if invoice was previously created, valid XML returned and valid email exists
+	 */
+	public function admin_ebay() {
+		$ebayItemID = $this->request->query['ebayItemId']; 
+		$itemIds = $this->Invoice->InvoiceItem->find('list', array('fields' => 'itemid'));
+		if (in_array($ebayItemID, $itemIds)) { 
+			$this->redirect(array('action' => 'index', 'admin' => true));
+		}
+		$ebayItem = $this->Ebay->getItem($this->token, $ebayItemID);
+		
+		if (strcasecmp($ebayItem->Ack, 'Failure')==0) { 
+			$this->Session->setFlash((string)$ebayItem->Errors->ShortMessage, 'danger');
+			$this->redirect(array('action' => 'index', 'admin' => true));
+		}
+		$email = (string)$ebayItem->Item->SellingStatus->HighBidder->Email;
+		if (stristr($email, '@')==false) {
+			$this->Session->setFlash('No valid email.', 'danger');
+			$this->redirect(array('action' => 'index', 'admin' => true));
+		} 
+		$title = (string)$ebayItem->Item->Title;
+		$url = (string)$ebayItem->Item->ListingDetails->ViewItemURL;
+		$userID = (string)$ebayItem->Item->SellingStatus->HighBidder->UserID;
+		$country = (string)$ebayItem->Item->SellingStatus->HighBidder->BuyerInfo->ShippingAddress->Country;
+		$postalCode = (string)$ebayItem->Item->SellingStatus->HighBidder->BuyerInfo->ShippingAddress->PostalCode;
+		$price = (string)$ebayItem->Item->SellingStatus->CurrentPrice;
+		$shipping = (string)$ebayItem->Item->ShippingDetails->ShippingServiceOptions->ShippingServiceCost;
+		
+		$data = array(
+			'Invoice' => array(
+				'email' => $email,
+				'ebayId' => $userID,
+				'shippingAmount' => $shipping,
+				'invoiceNotes' => 'View the eBay auction at ' . $url,
+				'active' => 0,
+			),
+			'InvoiceItem' => array(
+				array(
+				      'itemid' => $ebayItemID,
+					'description' => $title,
+					'amount' => $price
+				)
+			),
+			'Address' => array(
+				array(
+					'class' => 'Invoice',
+					'type' => 'billing',
+					'postalCode' => $postalCode,
+					'country' => $country
+				)
+			)
+		);
+		$this->Invoice->saveAssociated($data);
+		$this->redirect(array('action' => 'index', 'admin' => true));
 	}
 
 /**

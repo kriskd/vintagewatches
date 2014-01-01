@@ -299,6 +299,17 @@ $(document).ready(function(){
         $(this).focus().select();
     });
     
+    /**
+     * Since an anchor tag surrounds an entire table row, we can't have anchor tags within the rows.
+     * So create a GET form, put the required ID in a hidden field and submit form via javascript
+     */
+    $(document).on('click', '.create-ebay-invoice', function(e) {
+        var ebayId = $(this).data('ebayid'); 
+        $('#InvoiceEbayItemId').val(ebayId);
+        form.get(0).submit();
+        return false;
+    })
+    
     $('.payment-form').submit(function(){ 
         $('.submit-payment').attr('disabled', 'disabled');
         var form = $(this); 
