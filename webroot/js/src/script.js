@@ -308,6 +308,13 @@ $(document).ready(function(){
         $('#InvoiceEbayItemId').val(ebayId);
         form.get(0).submit();
         return false;
+    });
+    
+    $(document).on('click', '.goto-order', function(e) {
+        var orderId = $(this).data('orderid'); 
+        $('#OrderOrderId').val(orderId);
+        $('#OrderAdminIndexForm').get(0).submit();
+        return false;
     })
     
     $('.payment-form').submit(function(){ 

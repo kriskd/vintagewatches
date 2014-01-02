@@ -45,31 +45,35 @@
             </div>
         </div>
     </section>
+    <?php echo $this->Form->create('Order', array('type' => 'get', 'url' => array('controller' => 'orders', 'action' => 'view', 'admin' => true))); ?>
+    <?php echo $this->Form->input('orderId', array('value' => '', 'type' => 'hidden')); ?>
     <div class="table">
         <div class="table-row">
             <span class="table-head">Image</span>
+	    <span class="table-head">Order</span>
             <span class="table-head"><?php echo $this->Paginator->sort('Brand.name', 'Brand'); ?></span>
             <span class="table-head"><?php echo $this->Paginator->sort('stockId'); ?></span>
             <span class="table-head"><?php echo $this->Paginator->sort('price'); ?></span>
             <span class="table-head"><?php echo $this->Paginator->sort('name'); ?></span>
-            <span class="table-head"><?php echo $this->Paginator->sort('description'); ?></span>
             <span class="table-head"><?php echo $this->Paginator->sort('created'); ?></span>
             <span class="table-head"><?php echo $this->Paginator->sort('modified'); ?></span>
         </div>
-        <?php foreach ($watches as $watch): ?>
+        <?php foreach ($watches as $watch): //var_dump($watch); ?>
             <?php $row = ''; ?>
             <?php $row .= $this->Html->tag('span', $this->Html->thumbPrimary($watch), array('class' => 'table-cell')); ?>
+	    <?php $row .= $this->Html->tag('span', !empty($watch['Watch']['order_id']) ? $this->Form->button('Order', array('data-orderid' => $watch['Watch']['order_id'], 'class' => 'btn btn-primary goto-order')) : '',
+			       array('class' => 'table-cell text-center', 'escape' => false)); ?>
             <?php $brand = isset($watch['Brand']['name']) ? $watch['Brand']['name'] : ''; ?>
             <?php $row .= $this->Html->tag('span', $brand, array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['stockId']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['price']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['name']), array('class' => 'table-cell')); ?>
-            <?php $row .= $this->Html->tag('span', $this->Text->truncate($watch['Watch']['description'], 75, array('html' => true, 'exact' => false)), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', date('Y-m-d', strtotime($watch['Watch']['created'])), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', date('Y-m-d', strtotime($watch['Watch']['modified'])), array('class' => 'table-cell')); ?>
             <?php echo $this->Html->link($row, array('action' => 'admin_view', $watch['Watch']['id'], 'admin' => true), array('class' => 'table-row', 'escape' => false)); ?>
         <?php endforeach; ?>
-	</div>
+    </div>
+    <?php echo $this->Form->end(); ?>
     <?php $this->Paginator->options(array('url' => $this->params->query)); ?>
-	<?php echo $this->Element('paginator'); ?>
+    <?php echo $this->Element('paginator'); ?>
 </div>

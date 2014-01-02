@@ -458,7 +458,9 @@ class OrdersController extends AppController
     }
     
     public function admin_view($id = null)
-    {
+    {	
+	$id = empty($id)  ? $this->request->query('orderId') : $id;
+	
 	if (!$this->Order->exists($id)) {
 		throw new NotFoundException(__('Invalid order'));
 	}

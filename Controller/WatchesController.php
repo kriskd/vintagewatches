@@ -145,7 +145,7 @@ class WatchesController extends AppController {
 		}
 		
 		$this->paginate['conditions'][] = $this->Watch->getWatchesConditions($active, $sold);
-		$this->paginate['fields'] = array('id', 'stockId', 'price', 'name', 'description', 'created', 'modified');
+		$this->paginate['fields'] = array('id', 'order_id', 'stockId', 'price', 'name', 'description', 'created', 'modified');
         
 		$this->Paginator->settings = $this->paginate;
         
