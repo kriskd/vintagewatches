@@ -128,7 +128,13 @@ class WatchesController extends AppController {
  */
 	public function admin_index()
 	{   
-        $this->paginate['paramType'] = 'querystring';
+		$this->paginate['paramType'] = 'querystring';
+		
+		//Send to the view as they are received for comparison against buttons array to set class to active
+		$this->set(array('active' => $this->params->query('active'), 'sold' => $this->params->query('sold')));
+		
+		//Cast '00' into integer 0
+		//Cake make the query param 0 into nothing so use '00' to get a valid param that gets passed
 		$active = isset($this->params->query['active']) ? (int)$this->params->query['active'] : null;
 		$sold = isset($this->params->query['sold']) ? (int)$this->params->query['sold'] : null;
 		
@@ -137,11 +143,6 @@ class WatchesController extends AppController {
 		    $brand_id = $this->params->query['id'];
 		    $this->paginate['conditions']['brand_id'] = $brand_id;
 		}
-        
-        //No pagingation if we are doing another filter
-        if (!empty($active) || !empty($sold) || !empty($brand_id)) {
-            unset($this->params->query['page']);
-        }
 		
 		$this->paginate['conditions'][] = $this->Watch->getWatchesConditions($active, $sold);
 		$this->paginate['fields'] = array('id', 'stockId', 'price', 'name', 'description', 'created', 'modified');
@@ -153,17 +154,12 @@ class WatchesController extends AppController {
 		$buttons = array(
 			'All Watches' => array('active' => null, 'sold' => null),
 			'Sold Watches' => array('active' => null, 'sold' => 1),
-			'Unsold Watches' => array('active' => null, 'sold' => 0),
+			'Unsold Watches' => array('active' => null, 'sold' => '00'),
 			'Active Watches' => array('active' => 1, 'sold' => null),
-			'Inactive Watches' => array('active' => 0, 'sold' => null)
+			'Inactive Watches' => array('active' => '00', 'sold' => null)
 		);
-        
-        //Clean out any empty filters
-        $this->params->query = array_filter($this->params->query, function($item){
-                                    return !empty($item);
-                                });
-		
-		$this->set(array('watches' => $this->paginate()) + compact('active', 'sold', 'buttons', 'brands', 'brand_id')); 
+        	
+		$this->set(array('watches' => $this->paginate()) + compact('buttons', 'brands', 'brand_id')); 
 	}
 
 /**

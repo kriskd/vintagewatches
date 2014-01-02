@@ -29,7 +29,7 @@
             <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 btn-group">
                 <?php foreach ($buttons as $button => $attrs): ?>
                     <?php $class = array('btn', 'btn-default'); ?>
-                    <?php if ($sold === $attrs['sold'] && $active === $attrs['active']): ?>
+                    <?php if ($sold == $attrs['sold'] && $active == $attrs['active']): ?>
                         <?php $class[] = 'active'; ?>
                     <?php endif; ?>
                     <?php echo $this->Html->link($button, array(
