@@ -13,11 +13,6 @@
         </div>
         <?php foreach($items as $item): ?>
             <?php $sold = $item->SellingStatus->QuantitySold > 0 ? true : false; ?>
-            <?php $link = $this->Html->link('Create Invoice', array(
-                                                    'controller' => 'invoices',
-                                                    'action' => 'ebay', (string)$item->ItemID,
-                                                    'admin' => true), array('escape' => false)); ?>
-            <?php //echo $link; ?>
             <?php $row = $this->Html->tag('span', $sold==true ? '<span class="glyphicon glyphicon-ok green"></span>' : '', array('class' => 'table-cell text-center')); ?>
             <?php $row .= $this->Html->tag('span', ($item->Invoiced==1 ? '<span class="glyphicon glyphicon-ok green"></span>' :
                                            ($item->AllowInvoice == 1 ? $this->Form->button('Invoice', array('data-ebayid' => (string)$item->ItemID, 'class' => 'btn btn-primary create-ebay-invoice')) : '')),
