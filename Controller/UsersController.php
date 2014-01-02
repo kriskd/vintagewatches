@@ -39,7 +39,7 @@ class UsersController extends AppController
      * Get eBay token and write to table
      */
     public function admin_ebay()
-    {
+    {   
         if ($this->Session->check('ebaySessionId')) { 
             $this->Ebay->ebayHeaders['X-EBAY-API-CALL-NAME'] = 'FetchToken';
             
@@ -76,7 +76,8 @@ class UsersController extends AppController
                                    )
                                 );
             $this->Session->write('Auth.User.ebayToken', $token);
-            $this->Session->write('Auth.User.ebayTokenExpy', $expiration); 
+            $this->Session->write('Auth.User.ebayTokenExpy', $expiration);
+            $this->Session->delete('ebaySessionId');
             
             $this->redirect(array('controller' => 'orders', 'action' => 'index', 'admin' => true));
         } else { 
