@@ -262,12 +262,19 @@ class InvoicesController extends AppController {
 		$price = (string)$ebayItem->Item->SellingStatus->CurrentPrice;
 		$shipping = (string)$ebayItem->Item->ShippingDetails->ShippingServiceOptions->ShippingServiceCost;
 		
+		$formattedShipping = number_format($shipping, 2);
+		$discountShipping = number_format($shipping/2, 2);
+		$link = '<a target="_blank" href="' . $url . '">' . $url . '</a>';
+		$notes = <<<NOTES
+Thank you for your bid. You should note I have reduced the shipping fee from \${$formattedShipping} to \${$discountShipping}
+as an incentive to use my checkout versus Paypal. You may view the eBay auction at {$link}.
+NOTES;
 		$data = array(
 			'Invoice' => array(
 				'email' => $email,
 				'ebayId' => $userID,
-				'shippingAmount' => $shipping,
-				'invoiceNotes' => 'View the eBay auction at ' . $url,
+				'shippingAmount' => $shipping/2,
+				'invoiceNotes' => $notes,
 				'active' => 0,
 			),
 			'InvoiceItem' => array(
@@ -312,7 +319,7 @@ class InvoicesController extends AppController {
 			}
 		} else {
 			$options = array('conditions' => array('Invoice.' . $this->Invoice->primaryKey => $id));
-			$this->request->data = $this->Invoice->find('first', $options);
+			$this->request->data = $this->Invoice->find('first', $options); 
 		} 
 	}
 
