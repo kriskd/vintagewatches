@@ -18,8 +18,5 @@ If you are collaborating with me set up the project as follows:
 `ln -s ../../../Vendor/stripe/stripe-php Stripe`</li>
 <li>Make tmp directory web writeable with `sudo chown -R www-data:www-data tmp/`</li>
 <li>The full CakePHP project should live at the same level as this project in a folder named cakephp
-with tag 2.4.2 checkout out</li>
+with tag 2.4.4 checkout out</li>
 </ol>
-
-The previous version of the project https://github.com/kriskd/thewatchstore
-will likely be going away.
