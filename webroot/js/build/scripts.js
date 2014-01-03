@@ -1488,7 +1488,7 @@
     $(document).on('click', '.create-ebay-invoice', function(e) {
         var ebayId = $(this).data('ebayid'); 
         $('#InvoiceEbayItemId').val(ebayId);
-        form.get(0).submit();
+        $('form').get(0).submit();
         return false;
     });
     
@@ -1516,6 +1516,12 @@
             }
         });
         return false;
+    });
+    
+    //Disable submit button on click
+    $(document).on('click', '.contacts button', function() { 
+        $(this).prop('disabled', true);
+        $('form').get(0).submit();
     });
     
     $('.payment-form').submit(function(){ 

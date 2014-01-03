@@ -7002,6 +7002,12 @@ body.hide-fat-footer .container .content {
 .container .content .contacts .verify {
   margin-top: 10px;
 }
+.container .content .contacts .fake-contact-submit {
+  margin-top: 20px;
+}
+.container .content .contacts .submit input {
+  display: none;
+}
 .container .content .contacts #s3captcha-images:before,
 .container .content .contacts #s3captcha-images:after {
   content: " ";

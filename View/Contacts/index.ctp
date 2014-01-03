@@ -38,6 +38,7 @@
 	</div>
 	<?php echo $this->Form->error('s3captcha-error', __('Try again, select the '. $selectedItem .'.', true)); ?>
     </div>
+    <?php echo $this->Form->button('Submit', array('class' => 'btn btn-gold fake-contact-submit', 'type' => 'button')); ?>
     <?php echo $this->Form->end(array('label' => 'Submit', 'class' => 'btn btn-gold')); ?>
 </div>
 
