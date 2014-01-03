@@ -127,8 +127,8 @@ class WatchesController extends AppController {
  * @return void
  */
 	public function admin_index()
-	{   
-		$this->paginate['paramType'] = 'querystring';
+	{   	
+		$this->paginate['paramType'] = 'querystring'; 
 		
 		//Send to the view as they are received for comparison against buttons array to set class to active
 		$this->set(array('active' => $this->params->query('active'), 'sold' => $this->params->query('sold')));
@@ -158,8 +158,17 @@ class WatchesController extends AppController {
 			'Active Watches' => array('active' => 1, 'sold' => null),
 			'Inactive Watches' => array('active' => '00', 'sold' => null)
 		);
+		
+		try {
+			$watches = $this->paginate();
+		} catch (NotFoundException $e) {
+			//Redirect to previous page
+			$query = $this->request->query;
+			$query['page']--;
+			$this->redirect(array_merge(Router::parse($this->here), array('?' => $query))); 
+		}
         	
-		$this->set(array('watches' => $this->paginate()) + compact('buttons', 'brands', 'brand_id')); 
+		$this->set(compact('watches', 'buttons', 'brands', 'brand_id')); 
 	}
 
 /**
