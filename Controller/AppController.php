@@ -224,4 +224,11 @@ class AppController extends Controller {
         
         return $itemTotal + $invoice['Invoice']['shippingAmount'];
     }
+    
+    public function secure()
+    {
+        if (prod() == true && (!isset($_SERVER['HTTPS']) || !$_SERVER['HTTPS'])) {
+            $this->redirect('https://' . env('SERVER_NAME') . $this->here);
+        }
+    }
 }
