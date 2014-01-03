@@ -1,7 +1,7 @@
 <?php
-$this->Paginator->options(array(
-  'convertKeys' => array('sold', 'active')
-));
+//$this->Paginator->options(array(
+//  'convertKeys' => array('id', 'sold', 'active')
+//));
 ?>
 <ul class="pagination">
     <?php

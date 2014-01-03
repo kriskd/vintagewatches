@@ -58,7 +58,7 @@
             <span class="table-head"><?php echo $this->Paginator->sort('created'); ?></span>
             <span class="table-head"><?php echo $this->Paginator->sort('modified'); ?></span>
         </div>
-        <?php foreach ($watches as $watch): //var_dump($watch); ?>
+        <?php foreach ($watches as $watch): ?>
             <?php $row = ''; ?>
             <?php $row .= $this->Html->tag('span', $this->Html->thumbPrimary($watch), array('class' => 'table-cell')); ?>
 	    <?php $row .= $this->Html->tag('span', !empty($watch['Watch']['order_id']) ? $this->Form->button('Order', array('data-orderid' => $watch['Watch']['order_id'], 'class' => 'btn btn-primary goto-order')) : '',
@@ -74,6 +74,7 @@
         <?php endforeach; ?>
     </div>
     <?php echo $this->Form->end(); ?>
-    <?php $this->Paginator->options(array('url' => $this->params->query)); ?>
+    <?php $this->Paginator->options(array('url' => $this->params->query,
+					  'convertKeys' => array('id', 'sold', 'active'))); ?>
     <?php echo $this->Element('paginator'); ?>
 </div>
