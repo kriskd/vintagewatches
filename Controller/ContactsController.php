@@ -39,7 +39,7 @@ class ContactsController extends AppController {
 					$Email = new CakeEmail('smtp');
 					$Email->template('contact', 'default')
 					      ->emailFormat('html')
-					      ->to('kris@jimandkris.com')
+					      ->to(Configure::read('contactFormEmail'))
 					      ->from(Configure::read('fromEmail'))
 					      ->replyTo($contact['Contact']['email'])
 					      ->subject('Message From ' . $contact['Contact']['name'])
