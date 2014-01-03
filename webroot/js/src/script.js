@@ -337,7 +337,7 @@ $(document).ready(function(){
     });
     
     //Disable submit button on click
-    $(document).on('click', '.contacts button', function() { 
+    $(document).on('click', '.fake-contact-submit', function() { 
         $(this).prop('disabled', true);
         $('form').get(0).submit();
     });
