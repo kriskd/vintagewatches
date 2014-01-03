@@ -101,9 +101,7 @@ class OrdersController extends AppController
     
     public function checkout()
     {
-	if (prod() == true && (!isset($_SERVER['HTTPS']) || !$_SERVER['HTTPS'])) {
-	    $this->redirect('https://' . env('SERVER_NAME') . $this->here);
-	}
+	$this->secure();
 	
         if($this->Cart->cartEmpty() == true){
             $this->redirect(array('controller' => 'watches', 'action' => 'index'));

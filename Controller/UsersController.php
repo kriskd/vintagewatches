@@ -14,7 +14,9 @@ class UsersController extends AppController
     }
     
     public function login()
-    { 
+    {
+        $this->secure();
+        
         if($this->Auth->loggedIn() == true){ 
             $this->redirect($this->Auth->redirectUrl());
         }
