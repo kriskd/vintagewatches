@@ -365,6 +365,8 @@ class OrdersController extends AppController
     
     public function admin_index()
     {
+	$this->paginate['paramType'] = 'querystring';
+	
 	$filter = '';
 	$value = '';
 	$options = array();
