@@ -1497,7 +1497,26 @@
         $('#OrderOrderId').val(orderId);
         $('#OrderAdminIndexForm').get(0).submit();
         return false;
-    })
+    });
+    
+    //Delete contact
+    $(document).on('click', '.delete-contact', function(e) {
+        var contactId = $(this).data('contactid');
+        var contactName = $(this).data('contactname');
+        var query = $(this).data('query'); 
+        $.ajax({
+            url: '/contacts/deleteModal',
+            dataType: 'html',
+            data: {'contactId' : contactId, 'contactName' : contactName, 'query' : query},
+            type: 'post',
+            cache: false,
+            success: function(data){
+                $('body').append(data);
+                $('#delete-contact').modal();
+            }
+        });
+        return false;
+    });
     
     $('.payment-form').submit(function(){ 
         $('.submit-payment').attr('disabled', 'disabled');

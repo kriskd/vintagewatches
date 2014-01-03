@@ -26,7 +26,7 @@ class ContactsController extends AppController {
  *
  * @return void
  */
-	public function index() {
+	public function index() { 
 		if ($this->request->is('post')) {
 			$this->Contact->set($this->request->data);
 			if(!$this->Captcha->verify()) { 
@@ -39,7 +39,7 @@ class ContactsController extends AppController {
 					$Email = new CakeEmail('smtp');
 					$Email->template('contact', 'default')
 					      ->emailFormat('html')
-					      ->to(Configure::read('contactFormEmail'))
+					      ->to('kris@jimandkris.com')
 					      ->from(Configure::read('fromEmail'))
 					      ->replyTo($contact['Contact']['email'])
 					      ->subject('Message From ' . $contact['Contact']['name'])
@@ -64,10 +64,33 @@ class ContactsController extends AppController {
  *
  * @return void
  */
-	public function admin_index() {
+	public function admin_index() { 
+		$this->paginate['paramType'] = 'querystring'; 
 		$this->Contact->recursive = 0;
 		$this->Paginator->settings = $this->paginate;
-		$this->set('contacts', $this->Paginator->paginate());
+		
+		try {
+			$contacts = $this->Paginator->paginate();
+		} catch (NotFoundException $e) {
+			//Redirect to previous page
+			$query = $this->request->query;
+			$query['page']--;
+			$this->redirect(array_merge(Router::parse($this->here), array('?' => $query))); 
+		}
+		
+		$this->set('contacts', $contacts);
+	}
+	
+	public function deleteModal()
+	{
+		if($this->request->is('ajax')){
+			$data = $this->request->data;
+			$this->set(array('contactId' => $data['contactId'],
+					 'contactName' => $data['contactName'],
+					 'query' => $data['query']
+					 ));
+		}
+		$this->layout = 'ajax';
 	}
 
 /**
@@ -128,21 +151,22 @@ class ContactsController extends AppController {
 
 /**
  * admin_delete method
+ * Get the query string to redirect back to it instead of default to first page
  *
  * @throws NotFoundException
  * @param string $id
  * @return void
  */
-	public function admin_delete($id = null) {
+	public function admin_delete($id = null, $query = '') {
 		$this->Contact->id = $id;
 		if (!$this->Contact->exists()) {
 			throw new NotFoundException(__('Invalid contact'));
-		}
+		} 
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Contact->delete()) {
-			$this->Session->setFlash(__('The contact has been deleted.'));
+			$this->Session->setFlash(__('The contact has been deleted.'), 'success');
 		} else {
-			$this->Session->setFlash(__('The contact could not be deleted. Please, try again.'));
+			$this->Session->setFlash(__('The contact could not be deleted. Please, try again.'), 'danger');
 		}
-		return $this->redirect(array('action' => 'index'));
+		return $this->redirect(array_merge(array('action' => 'index'), array('?' => $query)));
 	}}
