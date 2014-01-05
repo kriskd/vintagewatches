@@ -14,6 +14,7 @@ module.exports = function(grunt) {
 					'webroot/js/src/modal.js',
 					'webroot/js/src/tooltip.js',
 					'webroot/js/src/collapse.js',
+					'webroot/js/src/bootstrap-switch.js',
 					'webroot/js/src/script.js',
 				],
 				dest: 'webroot/js/build/scripts.js'
@@ -32,7 +33,7 @@ module.exports = function(grunt) {
 		less:	{
 			my_target: {
 				files: {
-					'webroot/css/build/styles.css': 'webroot/css/src/styles.less'
+					'webroot/css/build/styles.css': ['webroot/css/src/bootstrap3/bootstrap-switch.less', 'webroot/css/src/styles.less']
 				}
 			}
 		},
