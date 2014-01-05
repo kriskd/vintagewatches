@@ -20,11 +20,26 @@ $(document).ready(function(){
     
     function orderAdmin(filterValue) { 
         if (filterValue == '') {
-            $('.admin-index .input input').val('').prop('disabled', true);
+            $('.admin-index .input input:not("#WatchActive")').val('').prop('disabled', true);
         } else {
-            $('.admin-index .input input').prop('disabled', false);
+            $('.admin-index .input input:not("#WatchActive")').prop('disabled', false);
         }
     }
+    
+    $(document).on('click', '.admin-index #WatchActive', function(){
+        var value;
+        if ($(this).is(':checked')) {
+            value = 1;
+        } else {
+            value = 0;
+        }
+        var watchid = $(this).data('watchid');
+        $.ajax({
+            url: '/watches/active',
+            data: {'active': value, 'watchid': watchid},
+            type: 'post'
+        });
+    });
     
     //Set position of indicators on homepage carousel, not a perfect solution
     setHomeCarouselImageHeight();

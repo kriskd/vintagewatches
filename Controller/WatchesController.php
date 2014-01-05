@@ -145,7 +145,7 @@ class WatchesController extends AppController {
 		}
 		
 		$this->paginate['conditions'][] = $this->Watch->getWatchesConditions($active, $sold);
-		$this->paginate['fields'] = array('id', 'order_id', 'stockId', 'price', 'name', 'description', 'created', 'modified');
+		$this->paginate['fields'] = array('id', 'order_id', 'stockId', 'price', 'name', 'active', 'created', 'modified');
         
 		$this->Paginator->settings = $this->paginate;
         
@@ -297,5 +297,17 @@ class WatchesController extends AppController {
 	{
 	    $brands = array('' => 'Select One') + $this->Watch->Brand->find('list', array('order' => 'Brand.name'));
 	    $this->set(compact('brands'));
+	}
+	
+	public function active()
+	{
+		if($this->request->is('ajax')){
+			$data = $this->request->data;
+			$active = $data['active'];
+			$watchid = $data['watchid'];
+			$this->Watch->id = $watchid;
+			$this->Watch->saveField('active', $active);
+		}
+		$this->autoRender = false;
 	}
 }
