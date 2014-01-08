@@ -125,7 +125,7 @@ class AppController extends Controller {
     
     public function beforeFilter()
     {
-        $secure = array('contacts/deleteModal', 'users/login', 'orders/checkout', 'orders/totalCart.json', 'orders/getAddress.html', 'orders/getCountry.json', 'orders/checkout.json');
+        $secure = array('watches/active', 'contacts/deleteModal', 'users/login', 'orders/checkout', 'orders/totalCart.json', 'orders/getAddress.html', 'orders/getCountry.json', 'orders/checkout.json');
         $here = trim($this->here, '/'); 
         
         //Redirect to non-secure if https, not on checkout, not invoice or admin
