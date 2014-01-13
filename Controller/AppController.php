@@ -130,7 +130,7 @@ class AppController extends Controller {
         
         //Redirect to non-secure if https, not on checkout, not invoice or admin
         if (prod() == true && (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS'])=='on') &&
-            (!in_array($here, $secure) && !preg_match('/[a-z0-9]{32}/', $here)) &&
+            (!in_array($here, $secure) && !preg_match('/[a-z0-9]{32}/', $here) && !preg_match('invoices/getLineItem/{d}+', $here)) &&
             empty($this->request->params['admin'])) {
 	    $this->redirect('http://' . env('SERVER_NAME') . $this->here);
 	}
