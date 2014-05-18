@@ -28,14 +28,16 @@
 		<?php echo $title_for_layout; ?>
 	</title>
 	<?php
-		echo $this->html->meta('description', 'Bruce\'s Vintage Wristwatches sells vintage watches,
-				       with an emphasis on wristwatches. Also offered are many brands of
-				       chronographs and other complicated watches, such as triple date, and
-				       triple date moonphase. Emphasis is on affordable vintage watches in
-				       the $100 to $1,000 price range. All watches for sale come with a 7-day
-				       unconditional money-back guarantee. The company also offers trades,
-				       or will buy your vintage watches outright. Most major credit/debit
-				       cards are accepted.');
+        $description = 'Bruce\'s Vintage Wristwatches sells vintage watches,
+        with an emphasis on wristwatches. Also offered are many brands of
+        chronographs and other complicated watches, such as triple date, and
+        triple date moonphase. Emphasis is on affordable vintage watches in
+        the $100 to $1,000 price range. All watches for sale come with a 7-day
+        unconditional money-back guarantee. The company also offers trades,
+        or will buy your vintage watches outright. Most major credit/debit
+        cards are accepted.';
+        $description = empty($watch['Watch']['description']) ? $description : $this->Text->truncate(strip_tags($watch['Watch']['description']), 150, array('exact' => false));
+		echo $this->html->meta('description', $description);
 		echo $this->Html->meta('keywords', $allBrands);
 		echo $this->Html->meta('icon');
 
