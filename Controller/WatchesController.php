@@ -40,6 +40,8 @@ class WatchesController extends AppController {
  * @return void
  */
 	public function index($brand_slug = null) { 
+		$this->paginate['paramType'] = 'querystring'; 
+
 		//Get only active and unsold watches
 		$this->paginate['conditions'] = $this->Watch->getWatchesConditions(1, 0);
 		if (!empty($brand_slug)) {
@@ -56,7 +58,17 @@ class WatchesController extends AppController {
 			}
 		}
 		$this->paginate['fields'] = array('id', 'stockId', 'price', 'name', 'description');
-		$this->Paginator->settings = $this->paginate;
+		try {
+            $this->Paginator->settings = $this->paginate;
+			$watches = $this->paginate();
+		} catch (NotFoundException $e) {
+			//Redirect to previous page
+			$query = $this->request->query;
+			$query['page']--;
+            extract(Router::parse($this->request->here)); 
+            $pass = empty($pass) ? '' : $pass[0]; 
+            $this->redirect(array_merge(array('action' => $action, $pass), array('?' => $query))); 
+		}
 		$title = empty($brand) ? 'Store' : $brand . ' Watches';
 		$this->set('title', $title);
 		
