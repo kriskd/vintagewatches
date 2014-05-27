@@ -1,6 +1,7 @@
 /tmp
 *.komodoproject
-/Vendor
-/Plugin/Stripe
+Vendor/*
+!Vendor/HttpSocketOauth.php
+/Plugin/*
 /webroot/files
 node_modules
