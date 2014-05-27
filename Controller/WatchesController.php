@@ -60,7 +60,7 @@ class WatchesController extends AppController {
 		$this->paginate['fields'] = array('id', 'stockId', 'price', 'name', 'description');
 		try {
             $this->Paginator->settings = $this->paginate;
-			$watches = $this->paginate();
+			$this->paginate();
 		} catch (NotFoundException $e) {
 			//Redirect to previous page
 			$query = $this->request->query;
@@ -84,6 +84,7 @@ class WatchesController extends AppController {
  */
 	public function view($id = null) {
 		if (!$this->Watch->sellable($id)) {
+            $this->Session->setFlash('This watch is not available.', 'info');
 			$this->redirect(array('controller' => 'pages', 'action' => 'home', 'display'));
 		}
 		$options = array(
