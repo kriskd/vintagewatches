@@ -43,38 +43,40 @@ class TweetWatchShell extends AppShell
                 ),
             ), 
         ));
-        //var_dump($watch);
-        $tweet = strtoupper($watch['Brand']['name']) . ' - ' . $watch['Watch']['name'] . ' $' . $watch['Watch']['price'] . ' http://brucesvintagewatches.com/watches/view/' . $watch['Watch']['id'];
-        //var_dump($tweet);
-        $request = array(
-            'method' => 'POST',
-            'header' => array(
-                'Content-Type' => 'multipart/form-data',
-            ),
-            'uri' => array(
-                'scheme' => 'https',
-                'host' => 'api.twitter.com',
-                'path' => '1.1/statuses/update_with_media.json',
-            ),
-            'auth' => array(
-                  'method' => 'OAuth',
-                  'oauth_token' => Configure::read('Twitter.access_token'),
-                  'oauth_token_secret' => Configure::read('Twitter.access_token_secret'),
-                  'oauth_consumer_key' => Configure::read('Twitter.api_key'),
-                  'oauth_consumer_secret' => Configure::read('Twitter.api_secret')
-                  ),
-            'data' => array(
-                'media[]' => WWW_ROOT . $watch['Image'][0]['filenameMedium'] 
-            ),
-            'body' => array(
-                'status' => $tweet 
-            ),
-        );
 
-        $response = $this->Http->request($request);
-        if ($response->headers['status'] == '200 OK') {
-            $this->Watch->id = $watch['Watch']['id'];
-            $this->Watch->save(array('tweeted_at' => date('Y-m-d H:i:s')));
+        if ($watch) {
+            $tweet = strtoupper($watch['Brand']['name']) . ' - ' . $watch['Watch']['name'] . ' $' . $watch['Watch']['price'] . ' http://brucesvintagewatches.com/watches/view/' . $watch['Watch']['id'];
+
+            $request = array(
+                'method' => 'POST',
+                'header' => array(
+                    'Content-Type' => 'multipart/form-data',
+                ),
+                'uri' => array(
+                    'scheme' => 'https',
+                    'host' => 'api.twitter.com',
+                    'path' => '1.1/statuses/update_with_media.json',
+                ),
+                'auth' => array(
+                      'method' => 'OAuth',
+                      'oauth_token' => Configure::read('Twitter.access_token'),
+                      'oauth_token_secret' => Configure::read('Twitter.access_token_secret'),
+                      'oauth_consumer_key' => Configure::read('Twitter.api_key'),
+                      'oauth_consumer_secret' => Configure::read('Twitter.api_secret')
+                      ),
+                'data' => array(
+                    'media[]' => WWW_ROOT . $watch['Image'][0]['filenameMedium'] 
+                ),
+                'body' => array(
+                    'status' => $tweet 
+                ),
+            );
+
+            $response = $this->Http->request($request);
+            if ($response->headers['status'] == '200 OK') {
+                $this->Watch->id = $watch['Watch']['id'];
+                $this->Watch->save(array('tweeted_at' => date('Y-m-d H:i:s')));
+            }
         }
     }
 }
