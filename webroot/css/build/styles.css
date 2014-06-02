@@ -6933,8 +6933,10 @@ body.hide-fat-footer .container .content {
 }
 .container .content .table .table-row {
   display: table-row;
-  color: #333333;
   text-decoration: none;
+}
+.container .content .table .table-row:not(.red) {
+  color: #333333;
 }
 .container .content .table .table-cell {
   display: table-cell;

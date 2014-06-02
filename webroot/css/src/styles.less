@@ -413,8 +413,10 @@ body.hide-fat-footer {
             }
             .table-row {
                 display: table-row;
-                color: @gray-dark;
-                text-decoration:  none;
+                text-decoration: none;
+                &:not(.red) {
+                    color: @gray-dark;
+                }
             }
             .table-cell {
                 display: table-cell;
