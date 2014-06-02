@@ -37,17 +37,17 @@ class Invoice extends AppModel {
 		'shippingAmount' => array(
 			'decimal' => array(
 				'rule' => array('decimal'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
+				'message' => 'Please enter a valid number.',
+				'allowEmpty' => true,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
-				'on' => 'create', // Limit validation to 'create' or 'update' operations
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-                        'not_negative' => array(
-                                'rule'    => array('comparison', '>=', 0),
-                                'message' => 'Must be a positive number.',
-                                'on' => 'create'
-                        )
+            'not_negative' => array(
+                'rule'    => array('comparison', '>=', 0),
+                'message' => 'This can not be a negative number.',
+                //'on' => 'create'
+            )
 		),
 		'created' => array(
 			'datetime' => array(
@@ -133,15 +133,15 @@ class Invoice extends AppModel {
 
         public function beforeSave($options = array())
         {   
-            // Set shippingAmount to zero if does not exist and create slug on add only.
+            // Create slug on add only.
             if (!$this->id && !isset($this->data[$this->alias][$this->primaryKey])) {
-                if (isset($this->data['Invoice']) && !is_numeric($this->data['Invoice']['shippingAmount'])) {
-                    $this->data['Invoice']['shippingAmount'] = 0;
-                }
                 $slugChars = 'abcdefghijklmnopqrstuvwxyz0123456789';
-		$slug = substr(str_shuffle($slugChars), 0, 32);
-		$this->data['Invoice']['slug'] = $slug;
+                $slug = substr(str_shuffle($slugChars), 0, 32);
+                $this->data['Invoice']['slug'] = $slug;
             }
+            if (isset($this->data['Invoice']['shippingAmount']) && !is_numeric($this->data['Invoice']['shippingAmount'])) {
+                $this->data['Invoice']['shippingAmount'] = 0;
+             } 
             if (empty($this->data['InvoiceItem'])) { 
                 return false;
             }
