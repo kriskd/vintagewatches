@@ -39,4 +39,9 @@
                 <?php echo $this->Number->currency($this->Invoice->total($invoice), 'USD'); ?>
          </span>
      </div>
+    <div class="row expiration table-row red">
+        <span class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            Please pay by <?php echo date('F j, Y', strtotime($invoice['Invoice']['expiration'])); ?>.
+        </span>
+    </div>
  </div>

@@ -1,7 +1,7 @@
 <?php echo $this->Form->create('Invoice', array('class' => 'form-horizontal',
                                              'inputDefaults' => array(
                                                                     'class' => 'form-control'
-                                                                )
+                                                                ),
                                              )); ?>
 <?php if (strcasecmp($action, 'edit')==0): ?>
     <?php echo $this->Form->input('Invoice.id', array('type' => 'hidden')); ?>
@@ -63,7 +63,10 @@
             <?php endif; ?>
             <?php echo $this->Form->input('Address.0.country', $options); ?>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-6">
+        <div class="col-lg-3 col-md-3 col-sm-3">
+            <?php echo $this->Form->input('Invoice.expiration', array('type' => 'text')); ?>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3">
             <?php if (strcasecmp($action, 'edit')==0): ?>
                 <?php echo $this->Form->input('Invoice.shipDate', array('type' => 'text')); ?>
             <?php endif; ?>
