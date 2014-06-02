@@ -10,7 +10,7 @@ $(document).ready(function(){
         $('.image-upload').click();
     });
     
-    $('#OrderShipDate, #InvoiceShipDate').datepicker({dateFormat: 'yy-mm-dd'});
+    $('#OrderShipDate, #InvoiceShipDate, #InvoiceExpiration').datepicker({dateFormat: 'yy-mm-dd'});
     
     //Disable and enable filter input field based on filter option
     orderAdmin($('.admin-index select').val());
