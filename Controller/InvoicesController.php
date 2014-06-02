@@ -220,7 +220,9 @@ class InvoicesController extends AppController {
 			} else {
 				$this->Session->setFlash(__('The invoice could not be saved. Please, try again.'), 'danger');
 			}
-		}
+        } else {
+            $this->request->data['Invoice']['expiration'] = date('Y-m-d', strtotime('+30 day'));
+        }
 		// Count of line items starting at 0
 		$i=0;
 		$this->set('i', $i);
