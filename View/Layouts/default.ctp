@@ -19,7 +19,7 @@
 
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
 <head>
 	<?php echo $this->Html->charset(); ?>
 	<title>
