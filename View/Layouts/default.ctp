@@ -79,7 +79,8 @@
 		</div>
 	</noscript>
 </head>
-<body class="<?php echo $hideFatFooter==true ? 'hide-fat-footer' : ''; ?>">
+<?php // show-fat-footer is just a dummy class show html is valid ?>
+<body class="<?php echo $hideFatFooter==true ? 'hide-fat-footer' : 'show-fat-footer'; ?>">
 	<?php echo $this->Element('navigation'); ?>
 	<?php if (stage() == true): ?>
 		<div class="stage">
