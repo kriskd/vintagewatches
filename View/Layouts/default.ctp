@@ -19,7 +19,7 @@
 
 ?>
 <!DOCTYPE html>
-<html lang="en-US">
+<html class="no-js" lang="en-US">
 <head>
 	<?php echo $this->Html->charset(); ?>
 	<title>
@@ -67,21 +67,19 @@
 			ga('send', 'pageview');
 		</script>
 	<?php endif; ?>
-	<noscript>
-		<div class="no-js">
-			You do not have Javascript enabled in your web browser, which
-			is required by this site. Please enable it now.
-			<?php //echo $this->Html->link('Learn how to enable Javacript.',
-						     //'http://enable-javascript.com/',
-						     //array('class' => 'no-js',
-							   //'target' => '_blank')
-						//); ?>
-		</div>
-	</noscript>
 </head>
 <?php // show-fat-footer is just a dummy class show html is valid ?>
 <body class="<?php echo $hideFatFooter==true ? 'hide-fat-footer' : 'show-fat-footer'; ?>">
 	<?php echo $this->Element('navigation'); ?>
+    <div class="no-script">
+        You do not have Javascript enabled in your web browser, which
+        is required by this site. Please enable it now.
+        <?php echo $this->Html->link('Learn how to enable Javacript.',
+                         'http://enable-javascript.com/',
+                         array(
+                           'target' => '_blank')
+                    ); ?>
+    </div>
 	<?php if (stage() == true): ?>
 		<div class="stage">
 			Staging Site

@@ -9,6 +9,7 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				src: [
+                    'webroot/js/src/modernizr.custom.74479.js',
 					'webroot/js/src/transition.js',
 					'webroot/js/src/carousel.js',
 					'webroot/js/src/dropdown.js',

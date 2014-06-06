@@ -6665,7 +6665,11 @@ td.hidden-xxs {
     display: none !important;
   }
 }
-.no-js {
+.no-script {
+  display: none;
+}
+.no-js .no-script {
+  display: block;
   text-align: center;
   background: #b29600;
   color: black;
@@ -6673,16 +6677,16 @@ td.hidden-xxs {
   font-weight: bold;
   padding: 5px;
 }
-.no-js a:link,
-.no-js a:visited,
-.no-js a:hover,
-.no-js a:active {
+.no-js .no-script a:link,
+.no-js .no-script a:visited,
+.no-js .no-script a:hover,
+.no-js .no-script a:active {
+  color: #333333;
   text-decoration: underline;
 }
-.no-js a:visited,
-.no-js a:hover,
-.no-js a:active {
-  color: #333333;
+.no-js .no-script a:hover,
+.no-js .no-script a:active {
+  color: #eeeeee;
 }
 .red {
   color: #9d261d;
