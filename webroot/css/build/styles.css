@@ -6489,7 +6489,7 @@ td.visible-print {
   color: white;
   font-weight: bold;
   text-align: center;
-  margin: -10px 0 20px;
+  margin: -18px 0 20px;
 }
 @media (max-width: 480px) {
   .col-xxs-12 {
@@ -6673,7 +6673,7 @@ td.hidden-xxs {
   text-align: center;
   background: #b29600;
   color: black;
-  margin: -18px 0 10px;
+  margin: -18px 0px 18px;
   font-weight: bold;
   padding: 5px;
 }
