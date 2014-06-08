@@ -9,32 +9,32 @@ App::uses('AppModel', 'Model');
 class Order extends AppModel {
     
     public $validate = array(
+        'email' => array(
+            'notempty' => array(
+                'rule' => array('notempty'),
+                'message' => 'Please enter your email.'),
             'email' => array(
-                'notempty' => array(
-                    'rule' => array('notempty'),
-                    'message' => 'Please enter your email.'),
-                'email' => array(
-                    'rule' => array('email'),
-                    'message' => 'Please supply a valid email address.'
-                )
-            ),
+                'rule' => array('email'),
+                'message' => 'Please supply a valid email address.'
+            )
+        ),
 	    'shipDate' => array(
-		'date' => array(
-		    'rule' => array('date', 'ymd'),
-		    'message' => 'Enter a valid date in YYYY-MM-DD format.',
-		    'allowEmpty' => true,
-		    'required' => false
-		)
+            'date' => array(
+                'rule' => array('date', 'ymd'),
+                'message' => 'Enter a valid date in YYYY-MM-DD format.',
+                'allowEmpty' => true,
+                'required' => false
+            )
 	    )
-        );
+    );
     
     public $actsAs = array(
-	'HtmlPurifier.HtmlPurifier' => array( 
-	    'config' => 'StripAll',
-	    'fields' => array(
-		'email', 'phone', 'notes', 'orderNotes',
-	    )
-	)
+        'HtmlPurifier.HtmlPurifier' => array( 
+            'config' => 'StripAll',
+            'fields' => array(
+            'email', 'phone', 'notes', 'orderNotes',
+            )
+        )
     );
 
     /**
@@ -42,33 +42,33 @@ class Order extends AppModel {
      */
     public function afterDelete()
     {
-	$order_id = $this->id;
-	$this->Watch->updateAll(
-	    array('Watch.order_id' => null),
-	    array('Watch.order_id' => $order_id)
-	);
+        $order_id = $this->id;
+        $this->Watch->updateAll(
+            array('Watch.order_id' => null),
+            array('Watch.order_id' => $order_id)
+        );
     }
     
     /**
      * Remove any empty results
      */
     public function afterFind($results, $primary = false) {
-	return Hash::filter($results);
+        return Hash::filter($results);
     }
     
     public function beforeValidate($options = array())
     {	
-	if (isset($this->data['Address'])) {
-	    $addresses = $this->data['Address'];
-	    $this->data['Address'] = array_map(function($item) {
-		    $item['class'] = 'Order';
-		    return $item;
-		}, $addresses);
-	}
-	if (isset($this->data['Payment'])) {
-	    $this->data['Payment']['class'] = 'Order';
-	}
-	return true;
+        if (isset($this->data['Address'])) {
+            $addresses = $this->data['Address'];
+            $this->data['Address'] = array_map(function($item) {
+                $item['class'] = 'Order';
+                return $item;
+            }, $addresses);
+        }
+        if (isset($this->data['Payment'])) {
+            $this->data['Payment']['class'] = 'Order';
+        }
+        return true;
     }
 
 /**
@@ -90,7 +90,7 @@ class Order extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
-                'Watch' => array(
+        'Watch' => array(
 			'className' => 'Watch',
 			'foreignKey' => 'order_id',
 			'dependent' => false, //Don't delete associated watches
@@ -106,13 +106,13 @@ class Order extends AppModel {
 	);
 	
 	public $hasOne = array(
-                'Payment' => array(
-                        'className' => 'Payment',
-                        'foreignKey' => 'foreign_id',
-                        'conditions' => array('Payment.class' => 'Order'),
-                        'dependent' => true //Delete associated payment
-                )
-        );
+        'Payment' => array(
+                'className' => 'Payment',
+                'foreignKey' => 'foreign_id',
+                'conditions' => array('Payment.class' => 'Order'),
+                'dependent' => true //Delete associated payment
+        )
+    );
 
 /**
  * hasAndBelongsToMany associations
@@ -142,27 +142,27 @@ class Order extends AppModel {
     {
         if(!empty($items)){
             return  array_reduce($items, function($return, $item){ 
-                        if(isset($item['Watch']['price'])){
-                            $return += $item['Watch']['price'];
-                            return $return;
-                        }
-                });
+                    if(isset($item['Watch']['price'])){
+                        $return += $item['Watch']['price'];
+                        return $return;
+                    }
+            });
         }
         return null;
     }
 
     public function getOrder($id)
     {
-	$options = array('conditions' => array('Order.' . $this->primaryKey => $id));
-	
-	$options['contain'] = array('Address',
-				    'Watch' => array(
-					'fields' => array('id', 'order_id', 'stockId', 'price', 'name'),
-					'Image'
-				    ),
-				    'Payment'
-				);
-	return $this->find('first', $options);
+        $options = array('conditions' => array('Order.' . $this->primaryKey => $id));
+        
+        $options['contain'] = array('Address',
+            'Watch' => array(
+            'fields' => array('id', 'order_id', 'stockId', 'price', 'name'),
+            'Image'
+            ),
+            'Payment'
+        );
+        return $this->find('first', $options);
     }
     
     /**
@@ -171,64 +171,64 @@ class Order extends AppModel {
      */
     public function getCustomerOrderOptions($email, $postalCode, $id = null)
     {	
-	$conditionsSubQuery = array(
-		    'Address.postalCode' => $postalCode,
-		    'Address.type' => 'billing'
-		);
-	$db = $this->Address->getDataSource();
-	$subQuery = $db->buildStatement(
-	    array(
-		'fields' => array('Address.foreign_id'),
-		'table' => $db->fullTableName($this->Address),
-		'alias' => 'Address',
-		'conditions' => $conditionsSubQuery
-	    ),
-	    $this->Address
-	);
-	$subQuery = ' Order.id IN (' . $subQuery . ')';
-	$subQueryExpression = $db->expression($subQuery);
-	$conditions[] = $subQueryExpression;
-	$conditions['email'] = urldecode($email);
-	
-	if (!empty($id)) {
-	    $conditions['Order.id'] = $id;
-	}
+        $conditionsSubQuery = array(
+            'Address.postalCode' => $postalCode,
+            'Address.type' => 'billing'
+        );
+        $db = $this->Address->getDataSource();
+        $subQuery = $db->buildStatement(
+            array(
+            'fields' => array('Address.foreign_id'),
+            'table' => $db->fullTableName($this->Address),
+            'alias' => 'Address',
+            'conditions' => $conditionsSubQuery
+            ),
+            $this->Address
+        );
+        $subQuery = ' Order.id IN (' . $subQuery . ')';
+        $subQueryExpression = $db->expression($subQuery);
+        $conditions[] = $subQueryExpression;
+        $conditions['email'] = urldecode($email);
+        
+        if (!empty($id)) {
+            $conditions['Order.id'] = $id;
+        }
 
-	return array('conditions' => $conditions,
-			'fields' => array(
-				'id', 'email', 'phone', 'shippingAmount', 
-				'notes', 'created', 'shipDate'
-			    ),
-			'contain' => array(
-			    'Address',
-			    'Watch' => array(
-				'fields' => array('id', 'order_id', 'stockId', 'price', 'name'),
-				'Image'
-			    ),
-			    'Payment' => array(
-				'fields' => array(
-				    'stripe_amount'
-				)
-			    )
-			),
-			'order' => array(
-			    'created' => 'DESC'
-			)
-		    );
+        return array('conditions' => $conditions,
+            'fields' => array(
+                'id', 'email', 'phone', 'shippingAmount', 
+                'notes', 'created', 'shipDate'
+                ),
+            'contain' => array(
+                'Address',
+                'Watch' => array(
+                    'fields' => array('id', 'order_id', 'stockId', 'price', 'name'),
+                    'Image'
+                ),
+                'Payment' => array(
+                    'fields' => array(
+                        'stripe_amount'
+                    )
+                )
+            ),
+            'order' => array(
+                'created' => 'DESC'
+            )
+        );
     }
     
     public function getShippingAmount($country = null)
     {
-	switch($country){
-	    case 'us':
-		return '8';
-		break;
-	    case 'ca':
-		return '38';
-		break;
-	    default:
-		return '45';
-		break;
-	}
+        switch($country){
+            case 'us':
+            return '8';
+            break;
+            case 'ca':
+            return '38';
+            break;
+            default:
+            return '45';
+            break;
+        }
     }
 }
