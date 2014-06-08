@@ -3,19 +3,6 @@
         {
             "type": "package",
             "package": {
-                "name": "TwitterBootstrap",
-                "type": "cakephp-plugin",
-                "version": "2.1",
-                "source": {
-                    "url": "https://github.com/loadsys/twitter-bootstrap-helper",
-                    "type": "git",
-                    "reference": "origin/2.1"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
                 "name": "Stripe",
                 "type": "cakephp-plugin",
                 "version": "2.0.0",
@@ -75,24 +62,11 @@
                     "reference": "origin/master"
                 }
             }
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "nostalgiaz/bootstrap-switch",
-                "version": "2.0.0",
-                "source": {
-                    "url": "https://github.com/nostalgiaz/bootstrap-switch",
-                    "type": "git",
-                    "reference": "origin/master"
-                }
-            }
         }
     ],
     "require": {
         "composer/installers": "dev-master",
         "mjohnson/uploader": "4.*",
-        "TwitterBootstrap": "2.1.*",
         "cakephp/debug_kit": "2.2.*",
         "Stripe": "2.0.0",
         "stripe/stripe-php": "1.9.0",
@@ -100,8 +74,10 @@
         "Datasources": "2.3",
         "HtmlPurifier": "dev-master",
         "chronon/mobile_detect": "1.1.0",
-        "zeroasterisk/CakePHP-ArrayToXml-Lib": "dev-master",
-        "nostalgiaz/bootstrap-switch": "2.0.*"
+        "zeroasterisk/CakePHP-ArrayToXml-Lib": "dev-master"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
     },
     "config": {
         "vendor-dir": "Vendor"
