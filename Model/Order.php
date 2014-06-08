@@ -142,10 +142,10 @@ class Order extends AppModel {
     {
         if(!empty($items)){
             return  array_reduce($items, function($return, $item){ 
-                    if(isset($item['Watch']['price'])){
-                        $return += $item['Watch']['price'];
-                        return $return;
-                    }
+                if(isset($item['Watch']['price'])){
+                    $return += $item['Watch']['price'];
+                    return $return;
+                }
             });
         }
         return null;
@@ -157,8 +157,8 @@ class Order extends AppModel {
         
         $options['contain'] = array('Address',
             'Watch' => array(
-            'fields' => array('id', 'order_id', 'stockId', 'price', 'name'),
-            'Image'
+                'fields' => array('id', 'order_id', 'stockId', 'price', 'name'),
+                'Image'
             ),
             'Payment'
         );
