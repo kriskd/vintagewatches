@@ -1,1 +1,0 @@
-../../../Vendor/nostalgiaz/bootstrap-switch/build/js/bootstrap-switch.js
