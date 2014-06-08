@@ -5,7 +5,6 @@
             <div class="container">
                 <div class="row">
                     <div class="sitemap col-lg-9 col-md-8 col-sm-7 col-xs-5 col-xxs-12">
-                        <h3>Sitemap</h3>
                         <div class="row">
                             <?php if ($storeOpen == true): ?>
                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
@@ -62,9 +61,8 @@
                         </div>
                     </div>
                     <div class="announcement-list col-lg-3 col-md-4 col-sm-5 col-xs-7 col-xxs-12">
-                        <h3>Mailing List</h3>
-                        <h5 class="announcement-list-head">Join my mailing list and be among the first to know about new watches
-                        added to my website!</h5>
+                        <h4>Mailing List</h4>
+                        <p class="announcement-list-head">Join my mailing list and be among the first to know about new watches added to my website!</p>
                         <div class="announcement-list-signup">
                             <p class="title">Join My Mailing List</p>
                             <p class="announce-error">Please enter a valid email address.</p>
@@ -80,8 +78,8 @@
                                 <label>Email:</label>
                                 <input type="text" name="email" class="form-control input-sm">
                                 <div class="buttons">
-                                    <input type="submit" name="submit" value="Join" class="submit btn btn-default btn-sm" />
-                                    <input type="submit" name="unsub" value="Unsubscribe" class="submit btn btn-default btn-sm" />
+                                    <input type="submit" name="submit" value="Join" class="submit btn join btn-gold btn-sm" />
+                                    <input type="submit" name="unsub" value="Unsubscribe" class="submit btn unsub btn-sm" />
                                 </div>
                             </form>
                         </div>

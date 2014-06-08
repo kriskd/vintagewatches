@@ -6787,7 +6787,6 @@ body.hide-fat-footer .container .content {
   list-style: none;
 }
 .footer .navbar-default .announcement-list {
-  text-align: center;
   margin-bottom: 5px;
 }
 .footer .navbar-default .announcement-list .announcement-list-head {
@@ -6795,18 +6794,27 @@ body.hide-fat-footer .container .content {
   line-height: 18px;
 }
 .footer .navbar-default .announcement-list .announcement-list-signup {
-  border: 2px solid #000;
-  background: #ffffcc;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  text-align: center;
+  border: 1px solid #cbab00;
+  background: #fff;
   width: 253px;
-  padding: 10px 0;
+  padding-bottom: 15px;
   margin: auto;
 }
 .footer .navbar-default .announcement-list .announcement-list-signup .title {
+  background: #b29600;
   font-weight: bold;
   font-family: Arial;
   font-size: 13px;
-  border-bottom: 2px solid #000;
-  padding-bottom: 10px;
+  border-bottom: 1px solid #cbab00;
+  padding: 10px 0;
+  color: white;
+  margin-bottom: 15px;
 }
 .footer .navbar-default .announcement-list .announcement-list-signup .announce-error {
   font-size: 90%;
@@ -6830,7 +6838,14 @@ body.hide-fat-footer .container .content {
   width: 150px;
 }
 .footer .navbar-default .announcement-list .announcement-list-signup form .buttons {
-  margin-top: 5px;
+  margin-top: 15px;
+}
+.footer .navbar-default .announcement-list .announcement-list-signup form .buttons .join {
+  color: white;
+}
+.footer .navbar-default .announcement-list .announcement-list-signup form .buttons .unsub {
+  background: #665600;
+  color: white;
 }
 .container {
   min-height: 100%;
