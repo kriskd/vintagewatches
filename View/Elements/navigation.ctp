@@ -12,7 +12,12 @@
                                                      )
                                             ); ?>
             <?php echo $this->Html->link('Bruce\'s Vintage Watches', '/', array('class' => 'navbar-brand')); ?>
-            <?php echo $this->Html->image('credit_card_logos_43.gif', array('alt' => 'Visa, MasterCard, American Express, Discover', 'class' => 'credit-card-logos')); ?>
+            <?php echo $this->Html->image('credit_card_logos_43.gif', array(
+                'alt' => 'Visa, MasterCard, American Express, Discover', 
+                'class' => 'credit-card-logos',
+                'width' => 179,
+                'height' => 30,            
+            )); ?>
         </div>
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav">
@@ -53,7 +58,11 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <?php echo $this->Html->image('credit_card_logos_43.gif', array('alt' => 'Visa, MasterCard, American Express, Discover')); ?>
+                    <?php echo $this->Html->image('credit_card_logos_43.gif', array(
+                        'alt' => 'Visa, MasterCard, American Express, Discover',
+                        'width' => 179,
+                        'height' => 30,            
+                    )); ?>
                 </li>
             </ul>
         </div>

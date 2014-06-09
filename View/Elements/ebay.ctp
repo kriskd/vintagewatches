@@ -3,7 +3,9 @@
     <p>
         <?php echo $this->Html->image('rsz_1ebay.png', array(
                                                         'url' => 'http://cgi6.ebay.com/ws/ebayISAPI.dll?ViewListedItemsLinkButtons&userid=brtime',
-                                                        'alt' => 'My items on eBay'
+                                                        'alt' => 'My items on eBay',
+                                                        'width' => 88,
+                                                        'height' => 38,
                                                     )
                               ); ?>
         At any given time, I may have a number of watches at auction on <strong>ebay</strong>.

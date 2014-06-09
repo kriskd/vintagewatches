@@ -29,10 +29,12 @@
                                     <?php endif; ?>
                                     <h4>Auctions</h4>
                                     <?php echo $this->Html->image('rsz_1ebay.png', array(
-                                                                                        'url' => 'http://cgi6.ebay.com/ws/ebayISAPI.dll?ViewListedItemsLinkButtons&userid=brtime',
-                                                                                        'alt' => 'My items on eBay'
-                                                                                    )
-                                    ); ?>
+                                                                    'url' => 'http://cgi6.ebay.com/ws/ebayISAPI.dll?ViewListedItemsLinkButtons&userid=brtime',
+                                                                    'alt' => 'My items on eBay',
+                                                                    'width' => 88,
+                                                                    'height' => 38,
+                                                                )
+                                                            ); ?>
 <h4>Twitter</h4>
 <a href="https://twitter.com/bruceswatches" class="twitter-follow-button" data-show-count="false">Follow @bruceswatches</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
