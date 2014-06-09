@@ -556,106 +556,106 @@ class OrdersController extends AppController
      */
     public function admin_resend($id = null)
     {
-	$this->Order->id = $id;
-	if (!$this->Order->exists()) {
-		throw new NotFoundException(__('Invalid order'));
-	}
-	
-	$order = $this->Order->getOrder($id);
-	$this->emailOrder($order);
-	$this->Session->setFlash('Order Confirmation Resent', 'success');
-	$this->redirect($this->referer());
+        $this->Order->id = $id;
+        if (!$this->Order->exists()) {
+            throw new NotFoundException(__('Invalid order'));
+        }
+        
+        $order = $this->Order->getOrder($id);
+        $this->emailOrder($order);
+        $this->Session->setFlash('Order Confirmation Resent', 'success');
+        $this->redirect($this->referer());
     }
 
-/**
- * admin_delete method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
+    /**
+     * admin_delete method
+     *
+     * @throws NotFoundException
+     * @param string $id
+     * @return void
+     */
     public function admin_delete($id = null) {
-	$this->Order->id = $id;
-	if (!$this->Order->exists()) {
-		throw new NotFoundException(__('Invalid order'));
-	}
-	$this->request->onlyAllow('post', 'delete');
-	if ($this->Order->delete()) {
-		$this->Session->setFlash(__('Order deleted'), 'success');
-		$this->redirect(array('action' => 'index'));
-	}
-	$this->Session->setFlash(__('Order was not deleted'), 'danger');
-	$this->redirect(array('action' => 'index'));
+        $this->Order->id = $id;
+        if (!$this->Order->exists()) {
+            throw new NotFoundException(__('Invalid order'));
+        }
+        $this->request->onlyAllow('post', 'delete');
+        if ($this->Order->delete()) {
+            $this->Session->setFlash(__('Order deleted'), 'success');
+            $this->redirect(array('action' => 'index'));
+        }
+        $this->Session->setFlash(__('Order was not deleted'), 'danger');
+        $this->redirect(array('action' => 'index'));
     }
-    
+
     public function emailOrder($order = null)
     {
-	$url = $this->referer(null, true);
-	$route = Router::parse($url);
-	$action = $route['action'];
-	
-	if (strcasecmp($action, 'checkout')==0) {
-	    $Email = new CakeEmail('smtp');
-	    $Email->template('order_received', 'default')
-		  ->emailFormat('html')
-		  ->to(Configure::read('ordersEmail'))
-		  ->from(Configure::read('fromEmail'))
-		  ->subject('Order No. ' . $order['Order']['id'])
-		  ->viewVars(array('order' => $order))
-		  ->helpers(array('Html' => array('className' => 'MyHtml'),
-				  'Number' => array('className' => 'MyNumber')))
-		  ->send();
-	}
-	
-	if (empty($order['Order']['shipDate'])) {
-	    $subject = 'Thank you for your order from Bruce\'s Vintage Watches';
-	} else {
-	    $subject = 'Your order from Bruce\'s Vintage Watches was shipped on ' . date('F j, Y', strtotime($order['Order']['shipDate']));
-	}
-	
-	$Email = new CakeEmail('smtp');
-	$Email->template('order_received', 'default')
-	      ->emailFormat('html')
-	      ->to($order['Order']['email'])
-	      ->from(Configure::read('fromEmail'))
-	      ->subject($subject)
-	      ->viewVars(array('order' => $order))
-	      ->helpers(array('Html' => array('className' => 'MyHtml'),
-			      'Number' => array('className' => 'MyNumber')))
-	      ->send();
-	      
-	return;
+        $url = $this->referer(null, true);
+        $route = Router::parse($url);
+        $action = $route['action'];
+
+        if (strcasecmp($action, 'checkout')==0) {
+            $Email = new CakeEmail('smtp');
+            $Email->template('order_received', 'default')
+                ->emailFormat('html')
+                ->to(Configure::read('ordersEmail'))
+                ->from(Configure::read('fromEmail'))
+                ->subject('Order No. ' . $order['Order']['id'])
+                ->viewVars(array('order' => $order))
+                ->helpers(array('Html' => array('className' => 'MyHtml'),
+                    'Number' => array('className' => 'MyNumber')))
+                    ->send();
+        }
+
+        if (empty($order['Order']['shipDate'])) {
+            $subject = 'Thank you for your order from Bruce\'s Vintage Watches';
+        } else {
+            $subject = 'Your order from Bruce\'s Vintage Watches was shipped on ' . date('F j, Y', strtotime($order['Order']['shipDate']));
+        }
+
+        $Email = new CakeEmail('smtp');
+        $Email->template('order_received', 'default')
+            ->emailFormat('html')
+            ->to($order['Order']['email'])
+            ->from(Configure::read('fromEmail'))
+            ->subject($subject)
+            ->viewVars(array('order' => $order))
+            ->helpers(array('Html' => array('className' => 'MyHtml'),
+                'Number' => array('className' => 'MyNumber')))
+                ->send();
+
+        return;
     }
-    
+
     /**
      * Proof of concept for address validation
      */
     /*public function test()
     {
-	if($this->request->is('post')){
-	    $data = $this->request->data; 
-	    $addresses = $data['Address'];
-	    foreach($addresses as $type => $item){ 
-		$address = $item;
-		$address['type'] = $type;
-		$addressesToSave[] = $address;
-	    } 
+    if($this->request->is('post')){
+        $data = $this->request->data; 
+        $addresses = $data['Address'];
+        foreach($addresses as $type => $item){ 
+        $address = $item;
+        $address['type'] = $type;
+        $addressesToSave[] = $address;
+        } 
 
-	    $this->Address->set($addressesToSave);
-	    //Grab the form data because the save attempt munges it
-	    $data = $this->Address->data;
-	    if($this->Address->saveMany($addressesToSave)){
-		$this->Session->setFlash('valid');
-	    }  
-	    else{
-		$errors = $this->Address->validationErrors;
-		$fixErrors['billing'] = $errors[0];
-		if(isset($errors[1])){
-		    $fixErrors['shipping'] = $errors[1];
-		}
-		$this->Address->validationErrors = $fixErrors;
-		$this->Address->data = $data;
-	    }
-	}
+        $this->Address->set($addressesToSave);
+        //Grab the form data because the save attempt munges it
+        $data = $this->Address->data;
+        if($this->Address->saveMany($addressesToSave)){
+        $this->Session->setFlash('valid');
+        }  
+        else{
+        $errors = $this->Address->validationErrors;
+        $fixErrors['billing'] = $errors[0];
+        if(isset($errors[1])){
+            $fixErrors['shipping'] = $errors[1];
+        }
+        $this->Address->validationErrors = $fixErrors;
+        $this->Address->data = $data;
+        }
+    }
     }*/
 }
