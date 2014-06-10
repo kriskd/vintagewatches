@@ -556,6 +556,7 @@ class OrdersController extends AppController
      */
     public function admin_resend($id = null)
     {
+        $this->autoRender = $this->layout = false;
         $this->Order->id = $id;
         if (!$this->Order->exists()) {
             throw new NotFoundException(__('Invalid order'));
