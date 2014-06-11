@@ -53,7 +53,7 @@
     <h2>Purchases</h2>
     <dl>
         <dt>Date</dt>
-        <dd><?php echo $order['Order']['created']; ?></dd>
+        <dd><?php echo date('n-j-Y g:i a', strtotime($order['Order']['created'] .  "+2 hour")); ?></dd>
     </dl>
     <table class="table table-bordered">
         <tr><th></th><th></th><th>Stock ID</th><th>Name</th><th>Price</th></tr>
@@ -144,7 +144,7 @@
         <h2>Ship Date</h2>
         <dl>
             <dt>Date</dt>
-            <dd><?php echo $order['Order']['shipDate']; ?></dd>
+            <dd><?php echo date('M j, Y', strtotime($order['Order']['shipDate'])); ?></dd>
         </dl>
     <?php endif; ?>
 </div>

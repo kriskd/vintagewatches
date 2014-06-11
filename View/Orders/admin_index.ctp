@@ -27,9 +27,9 @@
             <?php $row .= $this->Html->tag('span', $order['Order']['email'], array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', $order['Payment']['stripe_id'], array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', $this->Number->stripe($order['Payment']['stripe_amount']), array('class' => 'table-cell right')); ?>
-            <?php $row .= (isset($order['Order']['shipDate'])) ? $this->Html->tag('span', $order['Order']['shipDate'], array('class' => 'table-cell text-center')) : $this->Html->tag('span', '', array('class' => 'table-cell')); ?>
-            <?php $row .= $this->Html->tag('span', $order['Order']['created'], array('class' => 'table-cell text-center')); ?>
-            <?php $row .= $this->Html->tag('span', $order['Order']['modified'], array('class' => 'table-cell text-center')); ?>
+            <?php $row .= (isset($order['Order']['shipDate'])) ? $this->Html->tag('span', date('n-j-Y', strtotime($order['Order']['shipDate'])), array('class' => 'table-cell text-center')) : $this->Html->tag('span', '', array('class' => 'table-cell')); ?>
+            <?php $row .= $this->Html->tag('span', date('n-j-Y g:i a', strtotime($order['Order']['created'] .  "+2 hour")), array('class' => 'table-cell text-center')); ?>
+            <?php $row .= $this->Html->tag('span', date('n-j-Y g:i a', strtotime($order['Order']['modified'] . "+2 hour")), array('class' => 'table-cell text-center')); ?>
             <?php echo $this->Html->link($row, array('action' => 'admin_view', $order['Order']['id'], 'admin' => true), array('class' => 'table-row', 'escape' => false)); ?>
         <?php endforeach; ?>
     </div>
