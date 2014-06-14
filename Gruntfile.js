@@ -10,6 +10,7 @@ module.exports = function(grunt) {
 			dist: {
 				src: [
                     'webroot/js/src/modernizr.custom.74479.js',
+                    'webroot/js/src/jquery-ui-1.10.4.custom.js',
 					'webroot/js/src/transition.js',
 					'webroot/js/src/carousel.js',
 					'webroot/js/src/dropdown.js',
@@ -47,23 +48,23 @@ module.exports = function(grunt) {
 				ext: '.min.css'
 			}
 		},
-                watch: {
+        watch: {
 			jss: {
 			    files: ['webroot/js/src/*.js'],
-			    tasks: ['concat', 'uglify']
-			},
-			css: {
-				files: ['webroot/css/src/styles.less'],
-				tasks: ['less', 'cssmin']
-			}
-                },
-	});
+                 tasks: ['concat', 'uglify']
+                 },
+                 css: {
+                 files: ['webroot/css/src/styles.less'],
+                 tasks: ['less', 'cssmin']
+                 }
+                 },
+                 });
 
-	grunt.loadNpmTasks('grunt-contrib-concat');
-	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-cssmin');
-        grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-contrib-less');
+                 grunt.loadNpmTasks('grunt-contrib-concat');
+                 grunt.loadNpmTasks('grunt-contrib-uglify');
+                 grunt.loadNpmTasks('grunt-contrib-cssmin');
+                 grunt.loadNpmTasks('grunt-contrib-watch');
+                 grunt.loadNpmTasks('grunt-contrib-less');
 
-	grunt.registerTask('default', ['concat:dist', 'uglify']);
-};
+                 grunt.registerTask('default', ['concat:dist', 'uglify']);
+                                         };
