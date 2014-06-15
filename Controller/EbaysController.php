@@ -17,6 +17,11 @@ class EbaysController extends AppController
         }
         $itemIds = $this->Invoice->InvoiceItem->find('list', array('fields' => 'itemid')); 
         $xml = $this->Ebay->getSellerList($this->token);
+
+        if (strcasecmp($xml->Ack, 'Failure')==0) {
+            $errors = $xml->Errors->LongMessage;
+            return $this->Session->setFlash((string)$errors, 'danger');
+        } 
         foreach ($xml->ItemArray->Item as $item) { 
             $item->Invoiced = false;
             $ebayItemID = (string)$item->ItemID; 

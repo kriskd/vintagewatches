@@ -1,3 +1,6 @@
+<?php if (empty($items)): ?>
+    <?php return; ?>
+<?php endif; ?>
 <div class="ebays admin-index">
     <h1>Recent Auctions</h1>
     <?php echo $this->Form->create('Invoice', array('type' => 'get', 'url' => array('controller' => 'invoices', 'action' => 'ebay', 'admin' => true))); ?>
