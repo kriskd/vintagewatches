@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9f913a61a005aaf719fbb48343309368",
+    "hash": "af9b27516f4be737f77fad3e52b15185",
     "packages": [
         {
             "name": "Datasources",
@@ -453,6 +453,97 @@
     ],
     "packages-dev": [
         {
+            "name": "burriko/cake-faker",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/burriko/cakephp-faker-fixtures.git",
+                "reference": "e85efea6277910abca6ba00a11e7f4fe0451002d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/burriko/cakephp-faker-fixtures/zipball/e85efea6277910abca6ba00a11e7f4fe0451002d",
+                "reference": "e85efea6277910abca6ba00a11e7f4fe0451002d",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "*",
+                "fzaninotto/faker": "v1.2.0",
+                "php": ">=5.3.0"
+            },
+            "type": "cakephp-plugin",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Graeme Tait",
+                    "homepage": "http://graemetait.co.uk",
+                    "role": "Author"
+                }
+            ],
+            "description": "CakePHP fixtures plugin using Faker.",
+            "homepage": "https://github.com/burriko/cakephp-faker-fixtures",
+            "keywords": [
+                "cakephp",
+                "faker",
+                "fixtures"
+            ],
+            "time": "2013-09-16 10:14:32"
+        },
+        {
+            "name": "fzaninotto/faker",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fzaninotto/Faker.git",
+                "reference": "4ad4bc4b5c8d3c0f3cf55d2fedc2f65b313ec62f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/4ad4bc4b5c8d3c0f3cf55d2fedc2f65b313ec62f",
+                "reference": "4ad4bc4b5c8d3c0f3cf55d2fedc2f65b313ec62f",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Faker": "src/",
+                    "Faker\\PHPUnit": "test/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "François Zaninotto"
+                }
+            ],
+            "description": "Faker is a PHP library that generates fake data for you.",
+            "keywords": [
+                "data",
+                "faker",
+                "fixtures"
+            ],
+            "time": "2013-06-09 18:05:57"
+        },
+        {
             "name": "phpunit/php-code-coverage",
             "version": "1.2.17",
             "source": {
@@ -875,7 +966,8 @@
     "stability-flags": {
         "composer/installers": 20,
         "htmlpurifier": 20,
-        "zeroasterisk/cakephp-arraytoxml-lib": 20
+        "zeroasterisk/cakephp-arraytoxml-lib": 20,
+        "burriko/cake-faker": 20
     },
     "platform": [
 
