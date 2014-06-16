@@ -1,14 +1,17 @@
 <?php
+App::uses('FakerTestCase', 'CakeFaker.Lib');
 App::Uses('Order', 'Model');
 
-class OrderTest extends CakeTestCase {
+class OrderTest extends FakerTestCase {
     
     public $fixtures = array(
         'app.order',
         'app.watch',
         'app.image',
         'app.payment',
-        'app.address'
+        'app.address',
+        'app.detect',
+        'app.detectsorder',
     );
 
     public function setUp() {
@@ -30,46 +33,14 @@ class OrderTest extends CakeTestCase {
     }
 
     public function testGetOrder() {
-        $result = $this->Order->getOrder(28);
+        
+        $result = $this->Order->getOrder(1);
+
         $expected = array(
             'Order' => array(
-                'id' => 28, 
-            ),
-            'Address' => array(
-                    array(
-                        'id' => 94,
-                )
-            ),
-            'Watch' => array(
-                'id' => 44,
-                'Image' => array(
-                    array(
-                        'id' => 289,
-                    ),
-                    array(
-                        'id' => 290,
-                    ),
-                    array(
-                        'id' => 291,
-                    ),
-                    array(
-                        'id' => 292,
-                    ),
-                    array(
-                        'id' => 293,
-                    ),
-                    array(
-                        'id' => 294,
-                    ),
-                    array(
-                        'id' => 295,
-                    ),    
-                ),
-            ),
-            'Payment' => array(
-                'id' => 60,
+                'id' => 1, 
             ),
         );
-        $this->assertEquals($result['Watch']['id'], $expected['Watch']['id']);
+        $this->assertEquals($result['Order']['id'], $expected['Order']['id']);
     }
 }
