@@ -213,12 +213,13 @@ class Watch extends AppModel {
     public function storeOpen()
     {
         $watchCount = $this->find('count', array(
-            'conditions' => array(
-                'active' => 1,
-                'order_id' => null
+                'conditions' => array(
+                    'active' => 1,
+                    'order_id' => null
+                ),
+                'recursive' => -1
             )
-        )
-    );
+        );
 
         return $watchCount > 0 ? true : false;
     }
