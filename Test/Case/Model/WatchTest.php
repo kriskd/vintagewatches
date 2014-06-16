@@ -15,6 +15,6 @@ class WatchTest extends FakerTestCase {
 
     public function setUp() {
         parent::setUp();
-        $this->Order = ClassRegistry::init('Watch');
+        $this->Watch = ClassRegistry::init('Watch');
     }
 }
