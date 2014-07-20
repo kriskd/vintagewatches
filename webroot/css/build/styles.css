@@ -6924,9 +6924,6 @@ body.hide-fat-footer .container .content {
 .glyphicon {
   font-size: 120%;
 }
-.right {
-  text-align: right;
-}
 .navbar .navbar-header .credit-card-logos {
   display: none;
 }
@@ -7120,6 +7117,9 @@ body.hide-fat-footer .container .content {
 }
 .container .content .checkbox-inline input {
   margin-top: 10px;
+}
+.container .content .admin-btns {
+  margin-top: 25px;
 }
 .container .content table {
   background: #eeeeee;
@@ -7515,9 +7515,6 @@ body.hide-fat-footer .container .content {
 }
 .container .content .watches.admin-index .header .btn-primary {
   margin-right: 10px;
-}
-.container .content .watches.admin-index .watch-btns {
-  margin-top: 25px;
 }
 .container .content .watches.admin-index .btn-group {
   margin-top: 10px;

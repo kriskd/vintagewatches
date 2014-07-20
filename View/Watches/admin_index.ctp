@@ -3,7 +3,7 @@
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
             <h2><?php echo __('Watches'); ?></h2>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 watch-btns right">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 admin-btns text-right">
             <?php echo $this->Html->link('Add Watch', array('action' => 'add'), array('class' => 'btn btn-primary add-watch')); ?>
             <?php echo $this->Watch->closeOpenStore($storeOpen); ?>
         </div>
@@ -50,7 +50,7 @@
     <div class="table">
         <div class="table-row">
             <span class="table-head">Image</span>
-	    <span class="table-head">Order/Active</span>
+            <span class="table-head">Order/Active</span>
             <span class="table-head"><?php echo $this->Paginator->sort('Brand.name', 'Brand'); ?></span>
             <span class="table-head"><?php echo $this->Paginator->sort('stockId'); ?></span>
             <span class="table-head"><?php echo $this->Paginator->sort('price'); ?></span>
@@ -61,9 +61,9 @@
         <?php foreach ($watches as $watch): ?>
             <?php $row = ''; ?>
             <?php $row .= $this->Html->tag('span', $this->Html->thumbPrimary($watch), array('class' => 'table-cell')); ?>
-	    <?php $orderButton = $this->Form->button('Order', array('data-orderid' => $watch['Watch']['order_id'], 'class' => 'btn btn-primary goto-order')); ?>
-	    <?php $activeCheckbox = $this->Form->input('Watch.active', array('data-watchid' => $watch['Watch']['id'], 'class' => 'switch-mini', 'div' => array('class' => 'text-center'), 'label' => false, 'checked' => $watch['Watch']['active'])); ?>
-	    <?php $row .= $this->Html->tag('span', empty($watch['Watch']['order_id']) ? $activeCheckbox : $orderButton, array('class' => 'table-cell text-center', 'escape' => false)); ?>
+        <?php $orderButton = $this->Form->button('Order', array('data-orderid' => $watch['Watch']['order_id'], 'class' => 'btn btn-primary goto-order')); ?>
+        <?php $activeCheckbox = $this->Form->input('Watch.active', array('data-watchid' => $watch['Watch']['id'], 'class' => 'switch-mini', 'div' => array('class' => 'text-center'), 'label' => false, 'checked' => $watch['Watch']['active'])); ?>
+        <?php $row .= $this->Html->tag('span', empty($watch['Watch']['order_id']) ? $activeCheckbox : $orderButton, array('class' => 'table-cell text-center', 'escape' => false)); ?>
             <?php $brand = isset($watch['Brand']['name']) ? $watch['Brand']['name'] : ''; ?>
             <?php $row .= $this->Html->tag('span', $brand, array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($watch['Watch']['stockId']), array('class' => 'text-center table-cell')); ?>
@@ -75,7 +75,7 @@
         <?php endforeach; ?>
     </div>
     <?php echo $this->Form->end(); ?>
-    <?php $this->Paginator->options(array('url' => $this->params->query,
-					  'convertKeys' => array('id', 'sold', 'active'))); ?>
+<?php $this->Paginator->options(array('url' => $this->params->query,
+    'convertKeys' => array('id', 'sold', 'active'))); ?>
     <?php echo $this->Element('paginator'); ?>
 </div>
