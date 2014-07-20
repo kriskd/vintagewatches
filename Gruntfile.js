@@ -10,7 +10,7 @@ module.exports = function(grunt) {
 			dist: {
 				src: [
                     'webroot/js/src/modernizr.custom.74479.js',
-                    'webroot/js/src/jquery-ui-1.10.4.custom.js',
+                    'webroot/js/src/jquery-ui.js',
 					'webroot/js/src/transition.js',
 					'webroot/js/src/carousel.js',
 					'webroot/js/src/dropdown.js',
