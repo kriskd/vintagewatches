@@ -9,8 +9,12 @@ $(document).ready(function(){
     $(document).on('click', '.fake-upload', function(){
         $('.image-upload').click();
     });
-    
+
     $('#OrderShipDate, #InvoiceShipDate, #InvoiceExpiration').datepicker({dateFormat: 'yy-mm-dd'});
+    $('#CouponExpireDate').datepicker({
+      dateFormat: 'yy-mm-dd',
+      minDate: new Date()
+    });
     
     //Disable and enable filter input field based on filter option
     orderAdmin($('.admin-index select').val());

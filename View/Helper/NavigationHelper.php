@@ -36,6 +36,8 @@ class NavigationHelper extends AppHelper
         $links = array(
             '<span class="glyphicon glyphicon-usd"></span> Orders' =>
                 array('controller' => 'orders', 'action' => 'index', 'admin' => true),
+            '<span class="glyphicon glyphicon-gift"></span> Coupons' =>
+                array('controller' => 'coupons', 'action' => 'index', 'admin' => true),
             '<span class="glyphicon glyphicon-italic"></span> Invoices' =>
                 array('controller' => 'invoices', 'action' => 'index', 'admin' => true),
              '<span class="glyphicon glyphicon-user"></span> Ebay' =>
