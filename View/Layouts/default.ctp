@@ -42,7 +42,7 @@
 		echo $this->Html->meta('icon');
 
 		echo $this->Html->css('//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css');
-		echo $this->Html->css('/css/build/styles.min.css?v=1');
+		echo $this->Html->css('/css/build/styles.min.css?v='.filemtime(WWW_ROOT.'/css/build/styles.min.css'));
 		
 		echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
 		
@@ -50,7 +50,7 @@
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 		
-		echo $this->Html->script('/js/build/scripts.min.js?v=1');
+		echo $this->Html->script('/js/build/scripts.min.js?v='.filemtime(WWW_ROOT.'/js/build/scripts.min.js'));
 	?>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
