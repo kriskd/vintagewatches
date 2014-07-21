@@ -136,6 +136,30 @@ class Coupon extends AppModel {
     }
 
     /**
+     * Null values in search results are stripped out. Add them back as an emptry string by getting the
+     * fields in the database and merging with Order results
+     *
+     * @return array
+     */
+    public function afterFind($results = array(), $primary = false) {
+        $orderFields = $this->Order->getColumnTypes();
+        foreach ($orderFields as $key => &$value) {
+            $value = '';
+        }
+        unset($value); 
+        foreach ($results as &$result) {
+            foreach ($result as $key => &$orders) { 
+                if (strcasecmp($key, 'Order')==0) {
+                    foreach($orders as &$order) {
+                       $order = array_merge($orderFields, $order); 
+                    }
+                }
+            }
+        }
+        return $results;
+    }
+
+    /**
      * Has user redeemed coupon
      * @return bool
      */
