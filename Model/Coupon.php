@@ -27,7 +27,7 @@ class Coupon extends AppModel {
 				'allowEmpty' => false,
 				'required' => true,
 				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
             'unique' => array(
                 'rule' => 'uniqueNotArchived',

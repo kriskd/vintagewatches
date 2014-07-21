@@ -87,6 +87,12 @@ class CouponsController extends AppController {
 			$options = array('conditions' => array('Coupon.' . $this->Coupon->primaryKey => $id));
 			$this->request->data = $this->Coupon->find('first', $options);
 		}
+        $options = array(
+            '' => 'Choose One', 
+            'fixed' => 'Fixed', 
+            'percentage' => 'Percentage'
+        );
+        $this->set('options', $options);
 	}
 
 /**
