@@ -60,10 +60,8 @@
                 <span class="table-head"><?php echo __('ShipDate'); ?></span>
                 <span class="table-head"><?php echo __('Notes'); ?></span>
                 <span class="table-head"><?php echo __('OrderNotes'); ?></span>
-                <span class="table-head"><?php echo __('Coupon Id'); ?></span>
                 <span class="table-head"><?php echo __('Created'); ?></span>
                 <span class="table-head"><?php echo __('Modified'); ?></span>
-                <th class="actions"><?php echo __('Actions'); ?></span>
             </div>
             <?php foreach ($coupon['Order'] as $order): ?>
                 <?php $row = ''; ?>	
@@ -74,7 +72,6 @@
                 <?php $row .= $this->Html->tag('span',  $order['shipDate'], array('class' => 'table-cell')); ?>
                 <?php $row .= $this->Html->tag('span',  $order['notes'], array('class' => 'table-cell')); ?>
                 <?php $row .= $this->Html->tag('span',  $order['orderNotes'], array('class' => 'table-cell')); ?>
-                <?php $row .= $this->Html->tag('span',  $order['coupon_id'], array('class' => 'table-cell')); ?>
                 <?php $row .= $this->Html->tag('span',  $order['created'], array('class' => 'table-cell')); ?>
                 <?php $row .= $this->Html->tag('span',  $order['modified'], array('class' => 'table-cell'), array('class' => 'table-cell')); ?>
                 <?php echo $this->Html->link($row, array('controller' => 'orders', 'action' => 'admin_view', $order['id'], 'admin' => true), array('class' => 'table-row', 'escape' => false)); ?>	
