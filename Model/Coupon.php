@@ -26,12 +26,12 @@ class Coupon extends AppModel {
 				'message' => 'Enter a coupon code.',
 				'allowEmpty' => false,
 				'required' => true,
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 				//'last' => false, // Stop validation after this rule
 			),
             'unique' => array(
                 'rule' => 'uniqueNotArchived',
                 'message' => 'This coupon code is unavailable, choose another.',
-				'on' => 'create', // Limit validation to 'create' or 'update' operations
             ),
 		),
 		'type' => array(
@@ -190,11 +190,19 @@ class Coupon extends AppModel {
      */
     public function uniqueNotArchived($code) {
         $code = current($code);
+        $conditions = array(
+            'Coupon.code' => strtolower($code),
+            'Coupon.archived' => 0,
+        );
+
+        if (!empty($this->data['Coupon']['id'])) {
+            $conditions['NOT'] = array(
+                'Coupon.id' => $this->data['Coupon']['id']
+            );
+        }
+
         $codes = $this->find('all', array(
-            'conditions' => array(
-                'Coupon.code' => strtolower($code),
-                'Coupon.archived' => 0,
-            ),
+            'conditions' => $conditions,
             'recursive' => -1
         ));
         
