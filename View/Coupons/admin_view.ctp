@@ -1,5 +1,20 @@
 <div class="coupons view">
-<h2><?php echo __('Coupon'); ?></h2>
+<h2><?php echo __('Coupon'); ?>
+        <?php echo $this->Html->link('Edit', array(
+                                                'action' => 'edit', $coupon['Coupon']['id'],
+                                                'admin' => true
+                                                ),
+                                           array(
+                                                 'class' => 'btn btn-success'
+                                                 )
+                                           ); ?>
+        <?php echo $this->Html->link('Delete', '#delete-coupon',
+                                                array(
+                                                    'class' => 'btn btn-danger',
+                                                    'data-toggle' => 'modal'
+                                                )
+                                     ); ?>
+</h2>
 	<dl>
 		<dt><?php echo __('Id'); ?></dt>
 		<dd>

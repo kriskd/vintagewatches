@@ -9,7 +9,7 @@
     )); ?>
 <?php endif; ?>
 	<fieldset>
-		<legend><?php echo $action . __(' Coupon'); ?></legend>
+        <legend><?php echo $action; ?> Coupon <?php echo isset($this->request->data['Coupon']['code']) ?  ' - '.strtoupper($this->request->data['Coupon']['code']) : '';  ?></legend>
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12"> 
                 <?php echo $this->Form->input('code'); ?>

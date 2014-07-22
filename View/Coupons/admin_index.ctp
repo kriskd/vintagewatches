@@ -7,9 +7,11 @@
             <?php echo $this->Html->link('Add Coupon', array('action' => 'add'), array('class' => 'btn btn-primary add-coupon')); ?>
         </div>
     </div>
+    <?php echo $this->Form->create('Order', array('type' => 'get', 'url' => array('controller' => 'orders', 'action' => 'view', 'admin' => true))); ?>
     <div class="table">
         <div class="table-row">
 			<span class="table-head"><?php echo $this->Paginator->sort('id'); ?></span>
+            <span class="table-head">Archived</span>
 			<span class="table-head"><?php echo $this->Paginator->sort('code'); ?></span>
 			<span class="table-head"><?php echo $this->Paginator->sort('type'); ?></span>
 			<span class="table-head"><?php echo $this->Paginator->sort('amount'); ?></span>
@@ -22,16 +24,18 @@
         <?php foreach ($coupons as $coupon): ?>
             <?php $row = ''; ?>	
             <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['id']), array('class' => 'table-cell')); ?>
+            <?php $row .= $this->Form->inputSpan('Coupon.archived', array('data-couponid' => $coupon['Coupon']['id'], 'div' => array('class' => 'table-cell text-center'), 'label' => false, 'checked' => $coupon['Coupon']['archived'])); ?>
             <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['code']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['type']), array('class' => 'table-cell')); ?>
-            <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['amount']), array('class' => 'table-cell')); ?>
+            <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['amount']), array('class' => 'table-cell text-right')); ?>
             <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['assigned_to']), array('class' => 'table-cell')); ?>
-            <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['minimum_order']), array('class' => 'table-cell')); ?>
-            <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['expire_date']), array('class' => 'table-cell')); ?>
-            <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['created']), array('class' => 'table-cell')); ?>
-            <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['modified']), array('class' => 'table-cell')); ?>
+            <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['minimum_order']), array('class' => 'table-cell text-right')); ?>
+            <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['expire_date']), array('class' => 'text-center table-cell')); ?>
+            <?php $row .= $this->Html->tag('span',  h(date('Y-m-d', strtotime($coupon['Coupon']['created']))), array('class' => 'text-center table-cell')); ?>
+            <?php $row .= $this->Html->tag('span',  h(date('Y-m-d', strtotime($coupon['Coupon']['modified']))), array('class' => 'text-center table-cell')); ?>
             <?php echo $this->Html->link($row, array('action' => 'admin_view', $coupon['Coupon']['id'], 'admin' => true), array('class' => 'table-row', 'escape' => false)); ?>
         <?php endforeach; ?>
     </div>
+    <?php echo $this->Form->end(); ?>
     <?php echo $this->Element('paginator'); ?>
 </div>
