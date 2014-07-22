@@ -98,22 +98,22 @@ class Page extends AppModel {
 	 */
 	public function beforeSave($options = array())
 	{
-	    if ($this->data[$this->alias]['homepage']==1) {
-		$this->updateAll(
-		    array('homepage' => 0)
-		);
-	    }
-	}
-        
-        public function getNavigation()
-        {
-            return $this->find('all', array(
-					'fields' => array('slug', 'name', 'modified'),
-                                        'recursive' => -1,
-                                        'conditions' => array('active' => 1),
-                                        'order' => array('homepage' => 'DESC', 'name' => 'ASC'),
-                                    )
-			        );
+        if (isset($this->data[$this->alias]['homepage']) && $this->data[$this->alias]['homepage']==1) {
+            $this->updateAll(
+                array('homepage' => 0)
+            );
         }
+    }
+
+    public function getNavigation()
+    {
+        return $this->find('all', array(
+                'fields' => array('slug', 'name', 'modified'),
+                'recursive' => -1,
+                'conditions' => array('active' => 1),
+                'order' => array('homepage' => 'DESC', 'name' => 'ASC'),
+            )
+        );
+    }
 
 }
