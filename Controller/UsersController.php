@@ -17,7 +17,7 @@ class UsersController extends AppController
     {
         $this->secure();
         
-        if($this->Auth->loggedIn() == true){ 
+        if($this->Auth->user() == true){ 
             $this->redirect($this->Auth->redirectUrl());
         }
         if($this->request->is('post') || $this->request->is('put')){

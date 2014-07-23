@@ -142,7 +142,7 @@ class AppController extends Controller {
         
         //Logged in
         $loggedIn = false;
-        if($this->Auth->loggedIn()){
+        if($this->Auth->user()){
             $loggedIn = true;
               
             if ($this->Ebay->checkToken($this->Auth->user())) {
