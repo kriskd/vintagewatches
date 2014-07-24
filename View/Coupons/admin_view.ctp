@@ -8,12 +8,13 @@
                                                  'class' => 'btn btn-success'
                                                  )
                                            ); ?>
-        <?php echo $this->Html->link('Delete', '#delete-coupon',
-                                                array(
-                                                    'class' => 'btn btn-danger',
-                                                    'data-toggle' => 'modal'
-                                                )
-                                     ); ?>
+        <?php if (empty($coupon['Order'])): ?>
+            <?php echo $this->Form->button('Delete', array(
+                'data-coupon' => $coupon['Coupon']['id'], 
+                'data-code' => $coupon['Coupon']['code'], 
+                'class' => 'btn btn-danger delete-coupon',
+            )); ?> 
+        <?php endif; ?>
 </h2>
 	<dl>
 		<dt><?php echo __('Id'); ?></dt>
