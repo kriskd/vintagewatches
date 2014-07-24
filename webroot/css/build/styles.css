@@ -7867,6 +7867,9 @@ body.hide-fat-footer .container .content {
 .container .content .orders .shipping .shipping-inner {
   display: none;
 }
+.container .content .orders .shipping .shipping-inner input[type=radio] {
+  margin-left: 0px;
+}
 .container .content .orders .address .address-form-billing .checkbox {
   padding: 10px 0 0 0;
 }
