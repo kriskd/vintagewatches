@@ -50,10 +50,10 @@ class CouponsController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Coupon->create();
 			if ($this->Coupon->save($this->request->data)) {
-				$this->Session->setFlash(__('The coupon has been saved.'));
+				$this->Session->setFlash(__('The coupon has been saved.'), 'success');
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The coupon could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The coupon could not be saved. Please, try again.'), 'danger');
 			}
 		}
         $this->request->data['Coupon']['total'] = 1;
@@ -78,10 +78,10 @@ class CouponsController extends AppController {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Coupon->save($this->request->data)) {
-				$this->Session->setFlash(__('The coupon has been saved.'));
+				$this->Session->setFlash(__('The coupon has been saved.'), 'success');
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The coupon could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The coupon could not be saved. Please, try again.'), 'danger');
 			}
 		} else {
 			$options = array('conditions' => array('Coupon.' . $this->Coupon->primaryKey => $id));
@@ -109,10 +109,23 @@ class CouponsController extends AppController {
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Coupon->delete()) {
-			$this->Session->setFlash(__('The coupon has been deleted.'));
+			$this->Session->setFlash(__('The coupon has been deleted.'), 'success');
 		} else {
-			$this->Session->setFlash(__('The coupon could not be deleted. Please, try again.'));
+			$this->Session->setFlash(__('The coupon could not be deleted. Please, try again.'), 'danger');
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
+    
+    public function deleteModal()
+	{
+		if($this->request->is('ajax')){
+			$data = $this->request->data;
+            $this->set(array(
+                'couponId' => $data['couponId'],
+                'couponCode' => $data['couponCode'],
+            ));
+        }
+        $this->layout = 'ajax';
+    }
+
 }

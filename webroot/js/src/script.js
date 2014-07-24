@@ -354,6 +354,23 @@ $(document).ready(function(){
         return false;
     });
     
+    //Delete coupon
+    $(document).on('click', '.delete-coupon', function(e) {
+        var couponId = $(this).data('coupon');
+        var couponCode = $(this).data('code');
+        $.ajax({
+            url: '/coupons/deleteModal',
+            dataType: 'html',
+            data: {'couponId' : couponId, 'couponCode' : couponCode},
+            type: 'post',
+            cache: false,
+            success: function(data){
+                $('body').append(data);
+                $('#delete-coupon').modal();
+            }
+        });
+        return false;
+    });
     //Disable submit button on click
     $(document).on('click', '.fake-contact-submit', function() { 
         $(this).prop('disabled', true);
