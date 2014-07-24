@@ -6530,6 +6530,13 @@ var datepicker = $.datepicker;
         });
         return false;
     });
+
+    //Format coupon amount to 2 decimal places
+    $('#CouponAmount').on('blur', function() {
+      var val = $(this).val();
+      $(this).val(parseFloat(Math.round(val * 100) / 100).toFixed(2));
+    });
+
     //Disable submit button on click
     $(document).on('click', '.fake-contact-submit', function() { 
         $(this).prop('disabled', true);
