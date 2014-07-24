@@ -61,6 +61,10 @@ class Coupon extends AppModel {
                 'rule' => array('decimal', 2),
                 'message' => 'Enter a valid amount.',
             ),
+            'amount' => array(
+                'rule' => array('couponAmount'),
+                'message' => 'Enter valid percentage or dollar amount.',
+            ),
 		),
         'total' => array(
             'notEmpty' => array(
@@ -212,5 +216,19 @@ class Coupon extends AppModel {
     public function futureDate($date) {
         $date = current($date); 
         return strtotime($date) > strtotime('now') ? true : false;
+    }
+
+    /**
+     * Validate coupon amount based on coupon type
+     */
+    public function couponAmount() {
+        //var_dump($this->data); exit;
+        if ($this->data[$this->name]['type'] == 'percentage') {
+            return $this->data[$this->name]['amount'] > 0 && $this->data[$this->name]['amount'] < 1 ? true : false;
+        }
+        if ($this->data[$this->name]['type'] == 'fixed') {
+            return $this->data[$this->name]['amount'] > 0 ? true : false;
+        }
+        return false;
     }
 }
