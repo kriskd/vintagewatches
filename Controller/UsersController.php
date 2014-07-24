@@ -34,6 +34,8 @@ class UsersController extends AppController
     
     public function logout()
     {
+        // Add session destroy because on prod the redirect alone not working perhaps due to https
+        $this->Session->delete('Auth');
         $this->redirect($this->Auth->logout());
     }
     
