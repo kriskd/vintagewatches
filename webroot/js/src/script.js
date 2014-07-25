@@ -57,7 +57,7 @@ $(document).ready(function(){
         type: 'post'
       });
     });
-    
+
     //Set position of indicators on homepage carousel, not a perfect solution
     setHomeCarouselImageHeight();
     $(window).on('resize', function(){
@@ -202,6 +202,14 @@ $(document).ready(function(){
         }
     }
     
+    /**
+     * Handle coupon
+     */
+    $('.apply-coupon #OrderEmail, .apply-coupon #CouponCode').on('change', function() {
+      var email = $('.apply-coupon #OrderEmail').val();
+      var code = $('.apply-coupon #CouponCode').val());
+    });
+
     /**
      * Billing country autocomplete
      */
