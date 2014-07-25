@@ -207,7 +207,7 @@ $(document).ready(function(){
      */
     $('.apply-coupon #OrderEmail, .apply-coupon #CouponCode').on('change', function() {
       var email = $('.apply-coupon #OrderEmail').val();
-      var code = $('.apply-coupon #CouponCode').val());
+      var code = $('.apply-coupon #CouponCode').val();
     });
 
     /**
