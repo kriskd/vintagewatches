@@ -24,7 +24,17 @@
         <?php foreach ($coupons as $coupon): ?>
             <?php $row = ''; ?>	
             <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['id']), array('class' => 'table-cell')); ?>
-            <?php $row .= $this->Form->inputSpan('Coupon.archived', array('data-couponid' => $coupon['Coupon']['id'], 'div' => array('class' => 'table-cell text-center'), 'label' => false, 'checked' => $coupon['Coupon']['archived'])); ?>
+            <?php $row .= $this->Form->inputSpan('Coupon.archived', array(
+                'data-couponid' => $coupon['Coupon']['id'], 
+                'div' => array(
+                    'class' => 
+                    'table-cell text-center'
+                ), 
+                'label' => false, 
+                'checked' => $coupon['Coupon']['archived'],
+                'id' => 'CouponArchived'.$coupon['Coupon']['id'],
+                'class' => 'archive-coupon',
+            )); ?>
             <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['code']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['type']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['amount']), array('class' => 'table-cell text-right')); ?>

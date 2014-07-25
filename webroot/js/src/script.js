@@ -44,6 +44,19 @@ $(document).ready(function(){
             type: 'post'
         });
     });
+
+    $('.admin-index .archive-coupon').on('click', function() {
+      var value = 0;
+      if ($(this).is(':checked')) {
+        value = 1;
+      }
+      var couponid = $(this).data('couponid');
+      $.ajax({
+        url: '/coupons/archive',
+        data: {'archived': value, 'couponid' : couponid},
+        type: 'post'
+      });
+    });
     
     //Set position of indicators on homepage carousel, not a perfect solution
     setHomeCarouselImageHeight();
