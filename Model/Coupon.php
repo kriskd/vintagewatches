@@ -135,7 +135,9 @@ class Coupon extends AppModel {
 	);
 
     public function beforeSave($options = array()) {
-        $this->data['Coupon']['code'] = strtolower($this->data['Coupon']['code']);
+        if (isset($this->data['Coupon']['code'])) {
+            $this->data['Coupon']['code'] = strtolower($this->data['Coupon']['code']);
+        }
         return true;
     }
 
