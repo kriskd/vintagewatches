@@ -128,4 +128,15 @@ class CouponsController extends AppController {
         $this->layout = 'ajax';
     }
 
+	public function archive()
+	{
+		if($this->request->is('ajax')){
+			$data = $this->request->data;
+			$archive = $data['archived'];
+			$couponid = $data['couponid'];
+			$this->Coupon->id = $couponid;
+			$this->Coupon->saveField('archived', $archive);
+		}
+		$this->autoRender = false;
+	}
 }
