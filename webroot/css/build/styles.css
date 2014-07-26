@@ -7849,6 +7849,9 @@ body.hide-fat-footer .container .content {
   font-size: 13px;
   line-height: 17px;
 }
+.container .content .orders .cart-details .coupon-fields .coupon-amount {
+  margin-top: 33px;
+}
 .container .content .orders .credit-card-order {
   display: none;
 }
