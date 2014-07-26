@@ -15,66 +15,65 @@ class OrdersController extends AppController
     protected $cartItemIds = array();
     protected $cartWatches = array();
     
-    public function beforeFilter()
-    {	
-	$storeOpen = $this->Watch->storeOpen();
-	//Redirect if store is closed and going to a non-admin order page and not index or view
-	if ($storeOpen == false && empty($this->request->params['admin']) && !in_array($this->request->params['action'], array('index', 'view'))) {
-	    $this->redirect(array('controller' => 'pages', 'action' => 'home', 'admin' => false));
-	}
-	
-	$this->cartItemIds = $this->Cart->cartItemIds();
+    public function beforeFilter() {	
+        $storeOpen = $this->Watch->storeOpen();
+        //Redirect if store is closed and going to a non-admin order page and not index or view
+        if ($storeOpen == false && empty($this->request->params['admin']) && !in_array($this->request->params['action'], array('index', 'view'))) {
+            $this->redirect(array('controller' => 'pages', 'action' => 'home', 'admin' => false));
+        }
+        
+        $this->cartItemIds = $this->Cart->cartItemIds();
         $this->cartWatches = $this->Watch->getCartWatches($this->cartItemIds);
-	
-	parent::beforeFilter();
+        $this->Order->Coupon->removeRequiredCode();
+        
+        parent::beforeFilter();
     }
     
     /**
      * Get customer orders. Store email and postalCode in session, only fetch
      * orders that match those.
      */
-    public function index($reset = false)
-    {
-	if ($reset == true) {
-	    $this->Session->delete('Order');
-	    $this->Session->delete('Address');
-	    $this->redirect(array('action' => 'index'));
-	}
-	
-	$email = $this->Session->read('Order.email');
-	$postalCode = $this->Session->read('Address.postalCode'); 
-	    
-	if($this->request->is('post')){
-	    $data = $this->request->data;
-	    $email = $data['Order']['email'];
-	    $postalCode = $data['Address']['postalCode'];
-	    
-	    if (empty($email) || empty($postalCode)) {
-		$this->Session->setFlash('Email and postal code are required to search for orders.',
-					 'danger', array('class' => 'alert alert-error'));
-	    }
-	    
-	    $this->Session->write('Order.email', $email);
-	    $this->Session->write('Address.postalCode', $postalCode);
-	}
-	
-	$options = $this->Order->getCustomerOrderOptions($email, $postalCode); 
-	$this->Paginator->settings = array_merge($this->paginate, $options); 
-	$orders = $this->Paginator->paginate('Order');
-	
-	if (!empty($orders)) {
-	    $this->set('orders', $orders);
-	}
+    public function index($reset = false) {
+        if ($reset == true) {
+            $this->Session->delete('Order');
+            $this->Session->delete('Address');
+            $this->redirect(array('action' => 'index'));
+        }
+        
+        $email = $this->Session->read('Order.email');
+        $postalCode = $this->Session->read('Address.postalCode'); 
+            
+        if($this->request->is('post')){
+            $data = $this->request->data;
+            $email = $data['Order']['email'];
+            $postalCode = $data['Address']['postalCode'];
+            
+            if (empty($email) || empty($postalCode)) {
+            $this->Session->setFlash('Email and postal code are required to search for orders.',
+                         'danger', array('class' => 'alert alert-error'));
+            }
+            
+            $this->Session->write('Order.email', $email);
+            $this->Session->write('Address.postalCode', $postalCode);
+        }
+        
+        $options = $this->Order->getCustomerOrderOptions($email, $postalCode); 
+        $this->Paginator->settings = array_merge($this->paginate, $options); 
+        $orders = $this->Paginator->paginate('Order');
+        
+        if (!empty($orders)) {
+            $this->set('orders', $orders);
+        }
 
-	//Set flash message if we have an email and postalCode but no orders
-	if ((!(empty($email)) && !empty($postalCode)) && empty($orders)) { 
-	    $this->Session->setFlash('No orders found for this email and postal code.',
-			     'danger', array('class' => 'alert alert-error'));
-	}
-	
-	$title = 'Order History';
-	
-	$this->set(compact('email', 'title'));
+        //Set flash message if we have an email and postalCode but no orders
+        if ((!(empty($email)) && !empty($postalCode)) && empty($orders)) { 
+            $this->Session->setFlash('No orders found for this email and postal code.',
+                     'danger', array('class' => 'alert alert-error'));
+        }
+        
+        $title = 'Order History';
+        
+        $this->set(compact('email', 'title'));
     }
     
     public function view($id = null)
