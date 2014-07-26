@@ -34,6 +34,14 @@ class Coupon extends AppModel {
                 'message' => 'This coupon code is unavailable, choose another.',
             ),
 		),
+        'email' => array(
+            'validEmail' => array(
+                'rule'    => array('email', true),
+                'message' => 'Please enter a valid email address.',
+                'allowEmtpy' => true,
+                'required' => false,
+            )
+        ),
 		'type' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
@@ -279,7 +287,6 @@ class Coupon extends AppModel {
      * Validate coupon amount based on coupon type
      */
     public function couponAmount() {
-        //var_dump($this->data); exit;
         if ($this->data[$this->name]['type'] == 'percentage') {
             return $this->data[$this->name]['amount'] > 0 && $this->data[$this->name]['amount'] < 1 ? true : false;
         }
@@ -287,5 +294,9 @@ class Coupon extends AppModel {
             return $this->data[$this->name]['amount'] > 0 ? true : false;
         }
         return false;
+    }
+
+    public function removeRequiredCode() {
+        $this->validator()->remove('code');
     }
 }
