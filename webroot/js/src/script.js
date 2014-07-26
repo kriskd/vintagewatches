@@ -149,14 +149,6 @@ $(document).ready(function(){
         $('.credit-card-order').removeClass('show').addClass('hide');
     });
 
-    /**
-     * Handle coupon
-     */
-    $('.apply-coupon #OrderEmail, .apply-coupon #CouponCode').on('change', function() {
-      var email = $('.apply-coupon #OrderEmail').val();
-      var code = $('.apply-coupon #CouponCode').val();
-    });
-
     $('.cart-details').on('change', 'input', function() {
       var form = $(this).parents('form').serialize(); 
       $.ajax({
