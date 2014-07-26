@@ -110,7 +110,7 @@
                     <h5 class="text-center">To redeem a coupon enter your email and coupon code. Your new balance will be reflected.</h5>
                     <div class="row coupon-fields">
                         <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                            <?php echo $this->Form->input('Order.email', array(
+                            <?php echo $this->Form->input('Coupon.email', array(
                                 'class' => 'form-control input-sm'
                             )); ?>
                         </div>
@@ -121,7 +121,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-2 col-xxs-4">
+                <div class="coupon-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-2 col-xxs-4">
                 </div>
             </div>
             <div class="row">

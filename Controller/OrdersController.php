@@ -290,14 +290,31 @@ class OrdersController extends AppController
     {	
         if($this->request->is('ajax')){
             $query = $this->request->query; 
-            $country = $query['country'];
+            //debug($query['data']);
+            $country = $query['data']['Address']['select-country'];
+            $email = $query['data']['Coupon']['email'];
+            $code = $query['data']['Coupon']['code'];
             $this->Cart->setShipping($this->Order->getShippingAmount($country));
             $subTotal = $this->Order->getSubTotal($this->cartWatches); 
-            $this->Cart->setTotal($subTotal);
+            $couponAmount = 0;
+            if ($coupon = $this->Order->Coupon->valid($code, $email, $subTotal)) {
+                switch ($coupon['Coupon']['type']) {
+                    case 'fixed':
+                        $couponAmount = $subTotal > $coupon['Coupon']['amount'] ? $coupon['Coupon']['amount'] : $subTotal;
+                        break;
+                    case 'percentage':
+                        $couponAmount = $subTotal * $coupon['Coupon']['amount'];
+                        break;
+                }
+                $this->set(array(
+                    'couponAmount' => $couponAmount,
+                ));
+            }
+            $this->Cart->setTotal($subTotal, $couponAmount);
 
             $this->set(array('data' => array(
                         'shipping' => $this->Cart->getShipping(),
-                        'total' => $this->Cart->getTotal()
+                        'total' => $this->Cart->getTotal(),
                     )
                 )
             );

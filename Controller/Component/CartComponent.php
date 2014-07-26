@@ -100,9 +100,9 @@ class CartComponent extends Component
         return $this->total;
     }
     
-    public function setTotal($subTotal)
+    public function setTotal($subTotal, $couponAmount)
     {
-        $this->total = $subTotal + $this->shipping;
+        $this->total = $subTotal + $this->shipping - $couponAmount;
         $this->Session->write('Cart.total', $this->total);
     }
 }

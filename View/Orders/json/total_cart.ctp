@@ -4,5 +4,10 @@
                                           'data-placement' => 'top',
                                           'title' => 'Shipping Fee',
                                           'escape' => false)); ?>
+<?php $arr = array(); ?>
+<?php if (isset($couponAmount)): ?> 
+    <?php $couponFormatted = $this->Number->currency($couponAmount); ?>
+    <?php $arr = compact('couponAmount', 'couponFormatted'); ?>
+<?php endif; ?>
 <?php $totalFormatted = $this->Number->currency($data['total']); ?>
-<?php echo json_encode(compact('shipping', 'totalFormatted')); ?>
+<?php echo json_encode(compact('shipping', 'totalFormatted') + $arr); ?>

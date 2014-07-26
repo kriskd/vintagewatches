@@ -122,7 +122,7 @@ class Coupon extends AppModel {
 		'Order' => array(
 			'className' => 'Order',
 			'foreignKey' => 'coupon_id',
-			'dependent' => false,
+			'dependent' => false, // Don't delete associated order
 			'conditions' => '',
 			'fields' => '',
 			'order' => '',
@@ -188,6 +188,61 @@ class Coupon extends AppModel {
             'recursive' => -1,
         ));
         return (bool) $count;
+    }
+
+    /**
+     * Get the number of coupons available for a code
+     * @param array The coupon array 
+     * @return int
+     */
+    public function available($coupon) {
+        $count = $this->Order->find('count', array(
+            'conditions' => array(
+                'Order.coupon_id' => $coupon['Coupon']['id'],
+            ),
+            'recursive' => -1,
+        ));
+
+        return $coupon['Coupon']['total'] - $count;
+    }
+
+    /**
+     * Is coupon valid for the user
+     * @return bool
+     */
+    public function valid($code, $email, $subTotal) {
+        if (empty($code) || empty($email)) return false;
+
+        $coupon = $this->find('first', array(
+            'conditions' => array(
+                'Coupon.code' => $code,
+                'Coupon.archived' => 0,
+            ),
+            'fields' => array(
+                'id', 'code', 'type', 'amount', 'total', 'assigned_to', 'minimum_order', 'DATE(expire_date) AS expire_date', 'archived'
+            ),
+            'recursive' => -1
+        ));
+
+        // Coupon archived
+        if (empty($coupon)) return false;
+
+        // Coupon expired
+        if (!empty($coupon[0]['expire_date']) && strtotime($coupon[0]['expire_date']) < strtotime('now')) return false;
+
+        // Assigned to user
+        if (!empty($coupon['Coupon']['assigned_to']) && strcasecmp($email, $coupon['Coupon']['assigned_to'])!=0) return false;
+
+        // Coupon redeemed
+        if ($this->redeemed($email, $code)) return false;
+
+        // Coupon available
+        if ($this->available($coupon) < 1) return false;
+
+        // Minimum order met
+        if ($coupon['Coupon']['minimum_order'] > 0 && $coupon['Coupon']['minimum_order'] < $subTotal) return false;
+
+        return $coupon;
     }
 
     /**

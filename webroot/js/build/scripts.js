@@ -6282,7 +6282,7 @@ var datepicker = $.datepicker;
      */
     if ($('.select-country input:radio').is(':checked')) {
         var country = $('.select-country input:radio:checked').val();
-        computeTotal(country);
+        //computeTotal(country);
         $('.shipping').removeClass('hide').addClass('show');
     }
     
@@ -6300,12 +6300,42 @@ var datepicker = $.datepicker;
         $('.submit-payment').attr('disabled', 'disabled');
         //Display correcting address form and shipping amount based on country
         var country = $(this).val();
-        computeTotal(country);
+        //computeTotal(country);
         //Show shipping block
         $('.shipping').removeClass('hide').addClass('show');
         //Hide address and credit card blocks
         $('.address').removeClass('show').addClass('hide');
         $('.credit-card-order').removeClass('show').addClass('hide');
+    });
+
+    /**
+     * Handle coupon
+     */
+    $('.apply-coupon #OrderEmail, .apply-coupon #CouponCode').on('change', function() {
+      var email = $('.apply-coupon #OrderEmail').val();
+      var code = $('.apply-coupon #CouponCode').val();
+    });
+
+    $('.cart-details').on('change', 'input', function() {
+      var form = $(this).parents('form').serialize(); 
+      $.ajax({
+        url: '/orders/totalCart.json',
+        data: form,
+        dataType: 'json',
+        cache: false,
+        success: function(data){
+          var shipping = data.shipping;
+          var totalFormatted = data.totalFormatted;
+          var couponAmount = data.couponAmount;
+          $('.shipping-amount').empty().append(shipping).find('.launch-tooltip').tooltip();
+          $('.coupon-amount').empty();
+          if (typeof(couponAmount) != 'undefined' && couponAmount !== null) {
+            $('.coupon-amount').append('('+data.couponFormatted+')');
+          }
+          $('.total-formatted-amount').empty().append(totalFormatted);
+          $('.shipping-inner').show();
+        }
+      });
     });
 
     /**
@@ -6361,14 +6391,6 @@ var datepicker = $.datepicker;
         }
     }
     
-    /**
-     * Handle coupon
-     */
-    $('.apply-coupon #OrderEmail, .apply-coupon #CouponCode').on('change', function() {
-      var email = $('.apply-coupon #OrderEmail').val();
-      var code = $('.apply-coupon #CouponCode').val();
-    });
-
     /**
      * Billing country autocomplete
      */

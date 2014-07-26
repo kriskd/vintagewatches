@@ -104,6 +104,13 @@ class Order extends AppModel {
 			'counterQuery' => ''
 		)
 	);
+
+    public $belongsTo = array(
+        'Coupon' => array(
+            'className' => 'Coupon',
+            'foreign_key' => 'coupon_id',
+        )
+    );
 	
 	public $hasOne = array(
         'Payment' => array(
