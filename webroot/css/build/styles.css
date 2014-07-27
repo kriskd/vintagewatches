@@ -8081,3 +8081,6 @@ body.hide-fat-footer .container .content {
 .container .content .ebays.admin-view .btn-success {
   margin-top: 20px;
 }
+.container .content .coupons.form input[type=checkbox] {
+  margin-left: 0px;
+}
