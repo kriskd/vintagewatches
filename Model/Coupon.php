@@ -162,6 +162,7 @@ class Coupon extends AppModel {
         }
         unset($value); 
         foreach ($results as &$result) {
+            $result['Coupon']['available'] = $this->available($result);
             foreach ($result as $key => &$orders) { 
                 if (strcasecmp($key, 'Order')==0) {
                     foreach($orders as &$order) {

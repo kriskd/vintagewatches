@@ -10,9 +10,10 @@
     <?php echo $this->Form->create('Order', array('type' => 'get', 'url' => array('controller' => 'orders', 'action' => 'view', 'admin' => true))); ?>
     <div class="table">
         <div class="table-row">
-			<span class="table-head"><?php echo $this->Paginator->sort('id'); ?></span>
             <span class="table-head">Archived</span>
 			<span class="table-head"><?php echo $this->Paginator->sort('code'); ?></span>
+            <span class="table-head"><?php echo $this->Paginator->sort('total'); ?></span>
+            <span class="table-head"><?php echo $this->Paginator->sort('available'); ?></span>
 			<span class="table-head"><?php echo $this->Paginator->sort('type'); ?></span>
 			<span class="table-head"><?php echo $this->Paginator->sort('amount'); ?></span>
 			<span class="table-head"><?php echo $this->Paginator->sort('assigned_to'); ?></span>
@@ -23,7 +24,6 @@
         </div>
         <?php foreach ($coupons as $coupon): ?>
             <?php $row = ''; ?>	
-            <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['id']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Form->inputSpan('Coupon.archived', array(
                 'data-couponid' => $coupon['Coupon']['id'], 
                 'div' => array(
@@ -36,6 +36,8 @@
                 'class' => 'archive-coupon',
             )); ?>
             <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['code']), array('class' => 'table-cell')); ?>
+            <?php $row .= $this->Html->tag('span', h($coupon['Coupon']['total']), array('class' => 'text-center table-cell')); ?>
+            <?php $row .= $this->Html->tag('span', $coupon['Coupon']['available'], array('class' => 'text-center table-cell')); ?>
             <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['type']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['amount']), array('class' => 'table-cell text-right')); ?>
             <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['assigned_to']), array('class' => 'table-cell')); ?>
