@@ -6309,10 +6309,33 @@ var datepicker = $.datepicker;
     });
 
     $('.cart-details').on('change', 'input', function() {
-      var form = $(this).parents('form').serialize(); 
+      computeTotal();
+    });
+
+    /**
+     * Coupon and Order email need to be the same
+     */
+    $('#CouponEmail').on('keyup', function() {
+      var couponEmail = $(this).val();
+      $('#OrderEmail').val(couponEmail); 
+    });
+    // Only set Coupon email based on order email if Coupon email not empty
+      $('#OrderEmail').on('keyup', function() {
+        var couponEmail = $('#CouponEmail').val();
+        if (couponEmail.length > 0) {
+          var orderEmail = $(this).val();
+          $('#CouponEmail').val(orderEmail);
+          computeTotal();
+        }
+      });
+
+    /**
+     * Compute shipping and total based on country
+     */
+    function computeTotal() {
       $.ajax({
         url: '/orders/totalCart.json',
-        data: form,
+        data: $('#OrderCheckoutForm').serialize(),
         dataType: 'json',
         cache: false,
         success: function(data){
@@ -6328,13 +6351,7 @@ var datepicker = $.datepicker;
           $('.shipping-inner').show();
         }
       });
-    });
-
-    /**
-     * Compute shipping and total based on country
-     */
-    function computeTotal(country) {
-        $.ajax({
+        /*$.ajax({
             url: '/orders/totalCart.json',
             data: {"country" : country},
             dataType: 'json',
@@ -6346,7 +6363,7 @@ var datepicker = $.datepicker;
                 $('.total-formatted-amount').empty().append(totalFormatted);
                 $('.shipping-inner').show();
             }
-        });
+        });*/
     }
     
     $('.shipping .radio input').change(function(){
