@@ -102,7 +102,7 @@ class CartComponent extends Component
     
     public function setTotal($subTotal, $couponAmount)
     {
-        $this->total = $subTotal + $this->shipping - $couponAmount;
+        $this->total = $this->shipping > 0 ? $subTotal + $this->shipping - $couponAmount : 0;
         $this->Session->write('Cart.total', $this->total);
     }
 }
