@@ -110,11 +110,11 @@ class Coupon extends AppModel {
 				'allowEmpty' => true,
 				'required' => false,
 				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
             'future' => array(
                 'rule' => 'futureDate',
                 'message' => 'Please enter a future date.',
+				'on' => 'create', // Limit validation to 'create' otherwise edit might not save
             ),
 		),
     );
