@@ -224,18 +224,21 @@ class Order extends AppModel {
         );
     }
     
-    public function getShippingAmount($country = null)
+    public function getShippingAmount($country = '')
     {
         switch($country){
+            case '':
+                return '';
+                break;
             case 'us':
-            return '8';
-            break;
+                return '8';
+                break;
             case 'ca':
-            return '38';
-            break;
+                return '38';
+                break;
             default:
-            return '45';
-            break;
+                return '45';
+                break;
         }
     }
 }
