@@ -6317,7 +6317,9 @@ var datepicker = $.datepicker;
      */
     $('#CouponEmail').on('keyup', function() {
       var couponEmail = $(this).val();
-      $('#OrderEmail').val(couponEmail); 
+      if (couponEmail.length > 0) {
+        $('#OrderEmail').val(couponEmail); 
+      }
     });
     // Only set Coupon email based on order email if Coupon email not empty
       $('#OrderEmail').on('keyup', function() {
