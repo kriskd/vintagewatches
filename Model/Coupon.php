@@ -34,14 +34,14 @@ class Coupon extends AppModel {
                 'message' => 'This coupon code is unavailable, choose another.',
             ),
 		),
-        'email' => array(
+/*        'email' => array(
             'validEmail' => array(
                 'rule'    => array('email', true),
                 'message' => 'Please enter a valid email address.',
                 'allowEmtpy' => true,
                 'required' => false,
             )
-        ),
+        ),*/
 		'type' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
