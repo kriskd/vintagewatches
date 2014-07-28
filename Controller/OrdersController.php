@@ -98,8 +98,7 @@ class OrdersController extends AppController
         $this->set(compact('order', 'title'));
     }
     
-    public function checkout()
-    {
+    public function checkout() {
         $this->secure();
 	
         if($this->Cart->cartEmpty() == true){
@@ -114,139 +113,142 @@ class OrdersController extends AppController
                 throw new NotFoundException('Search term required');
             }
 	    
-	    $filtered = array();
-	    $countries = $this->Country->getList();
-	    foreach($countries as $key => $country){
-            if(stripos($country, htmlentities($search)) !== false){
-                $filtered[] = array('id' => $key, 'value' => html_entity_decode($country, ENT_COMPAT, 'UTF-8'));
+            $filtered = array();
+            $countries = $this->Country->getList();
+            foreach($countries as $key => $country){
+                if(stripos($country, htmlentities($search)) !== false){
+                    $filtered[] = array('id' => $key, 'value' => html_entity_decode($country, ENT_COMPAT, 'UTF-8'));
+                }
             }
-	    }
 
-	    $this->set(compact('filtered'));
-	    $this->layout = 'ajax';
+            $this->set(compact('filtered'));
+            $this->layout = 'ajax';
         }
 	
-	//Form submitted
-	if($this->request->is('post')){
-	    $data = $this->request->data;
-	    unset($data['Shipping']);
-	    
-	    $addresses = $data['Address'];
-	    
-	    $addressesToSave = array();
-	    unset($addresses['select-country']);
+        //Form submitted
+        if($this->request->is('post')){
+            $data = $this->request->data;
+            unset($data['Shipping']);
+            
+            $addresses = $data['Address'];
+            
+            $addressesToSave = array();
+            unset($addresses['select-country']);
 
-	    foreach($addresses as $type => $item){
-		$address = $item;
-		$address['type'] = $type;
-		$addressesToSave[] = $address;
-	    }
-	    
-	    $data['Address'] = $addressesToSave;
-	    
-	    $checkoutData = ($this->Cart->getShipping() > 0) &&
-			    ($this->Cart->cartItemCount() > 0) &&
-			    ($this->Cart->getTotal() > 0);
-	    
-	    if(!$checkoutData){
-		//There is no data to checkout with
-		$this->redirect(array('controller' => 'watches', 'action' => 'index'));
-	    }
-	    
-	    //Add shipping to the order
-	    $data['Order']['shippingAmount'] = $this->Cart->getShipping();
-	    
-	    $valid = $this->Order->validateAssociated($data); 
-	    if($valid == true){
-		$amount = $this->Cart->getTotal(); 
-		$stripeToken = $this->request->data['stripeToken'];
-		
-		//Create a description of brands to send to Stripe
-		$watches = $this->cartWatches; 
-		$brands = array();
-		foreach($watches as $watch) {
-		    $brands[] = $watch['Brand']['name'];
-		}
-		$description = implode(',', $brands);
-		
-		$stripeData = array(
-				'amount' => $amount,
-				'stripeToken' => $stripeToken,
-				'description' => $description
-			    );
-		$result = $this->Stripe->charge($stripeData);
-		
-		if(is_array($result) && $result['stripe_paid'] == true){
-		    unset($this->Order->Address->validate['foreign_id']);
-		    
-		    //Add the results of stripe to the data array
-		    $data['Payment'] = $result;
-		    $this->Order->saveAssociated($data); 
-		
-		    //Get the order_id
-		    $order_id = $this->Order->id;
-		    
-		    //Get the purchased items from the Session, add the order_id and
-		    //update the items with the order_id
-		    $purchasedWatches = array_map(function($item) use ($order_id){
-					    $item['Watch']['order_id'] = $order_id;
-					    $item['Watch']['active'] = 0;
-					    return $item;
-					} , $this->cartWatches);
-		    $this->Watch->saveMany($purchasedWatches);
-		    
-		    $this->MobileDetect = $this->Components->load('MobileDetect.MobileDetect');
-		    // If mobile or tablet, get device details
-		    if ($this->MobileDetect->detect('isMobile') || $this->MobileDetect->detect('isTablet')) {
-			$methods = $this->Order->Detect->find('list', array('fields' => array('Detect.id', 'Detect.method')));
-			$detects = array();
-			foreach($methods as $id => $method) {
-			    $detect = $this->MobileDetect->detect($method);
-			    if ($detect == true) {
-				$detects[] = $id;
-			    }
-			}
-			
-			$this->Order->saveAll(array(
-                    'Order' => array(
-                        'id' => $order_id
-                    ),
-                    'Detect' => $detects
-                    )
-                );  
-		    }
-		    
-		    $this->Cart->emptyCart();
-		    $order = $this->Order->getOrder($order_id); 
-		    $this->emailOrder($order);
-		    $title = 'Thank You For Your Order';
-		    $this->set(compact('order', 'title'));   
-		    $this->Session->setFlash('<span class="glyphicon glyphicon-ok"></span> Thank you for your order.',
-					     'default', array('class' => 'alert alert-success'));
-		    $hideFatFooter = false;
-		    $this->set(compact('invoice', 'hideFatFooter'));
-		    $this->render('confirm');
-		} else {
-		    //Decline
-		    $this->Session->write('Address', array('data' => $addresses));
-		    $this->Session->setFlash('<span class="glyphicon glyphicon-warning-sign"></span> ' . $result,
-					     'default', array('class' => 'alert alert-danger'));
-		}
+            foreach($addresses as $type => $item){
+                $address = $item;
+                $address['type'] = $type;
+                $addressesToSave[] = $address;
+            }
+            
+            $data['Address'] = $addressesToSave;
+          
+            $checkoutData = ($this->Cart->getShipping() > 0) &&
+                    ($this->Cart->cartItemCount() > 0) &&
+                    ($this->Cart->getTotal() > 0);
+            
+            if(!$checkoutData){
+                //There is no data to checkout with
+                $this->redirect(array('controller' => 'watches', 'action' => 'index'));
+            }
+            
+            //Add shipping to the order
+            $data['Order']['shippingAmount'] = $this->Cart->getShipping();
+            unset($data['Coupon']);
+            $valid = $this->Order->validateAssociated($data); 
+            if($valid == true){
+                $amount = $this->Cart->getTotal(); 
+                $stripeToken = $this->request->data['stripeToken'];
+                
+                //Create a description of brands to send to Stripe
+                $watches = $this->cartWatches; 
+                $brands = array();
+                foreach($watches as $watch) {
+                    $brands[] = $watch['Brand']['name'];
+                }
+                $description = implode(',', $brands);
+                
+                $stripeData = array(
+                        'amount' => $amount,
+                        'stripeToken' => $stripeToken,
+                        'description' => $description
+                        );
+                $result = $this->Stripe->charge($stripeData);
+            
+                if(is_array($result) && $result['stripe_paid'] == true){
+                    unset($this->Order->Address->validate['foreign_id']);
+                    unset($this->Order->Coupon->validate);
+
+                    $data['Coupon'] = $this->Cart->getCoupon();
+
+                    //Add the results of stripe to the data array
+                    $data['Payment'] = $result;
+                    $this->Order->saveAssociated($data); 
+                
+                    //Get the order_id
+                    $order_id = $this->Order->id;
+                    
+                    //Get the purchased items from the Session, add the order_id and
+                    //update the items with the order_id
+                    $purchasedWatches = array_map(function($item) use ($order_id){
+                                $item['Watch']['order_id'] = $order_id;
+                                $item['Watch']['active'] = 0;
+                                return $item;
+                            } , $this->cartWatches);
+                    $this->Watch->saveMany($purchasedWatches);
+                    
+                    $this->MobileDetect = $this->Components->load('MobileDetect.MobileDetect');
+                    // If mobile or tablet, get device details
+                    if ($this->MobileDetect->detect('isMobile') || $this->MobileDetect->detect('isTablet')) {
+                        $methods = $this->Order->Detect->find('list', array('fields' => array('Detect.id', 'Detect.method')));
+                        $detects = array();
+                        foreach($methods as $id => $method) {
+                            $detect = $this->MobileDetect->detect($method);
+                            if ($detect == true) {
+                            $detects[] = $id;
+                            }
+                        }
+                        
+                        $this->Order->saveAll(array(
+                            'Order' => array(
+                                'id' => $order_id
+                            ),
+                            'Detect' => $detects
+                            )
+                        );  
+                    }
+                    
+                    $this->Cart->emptyCart();
+                    $order = $this->Order->getOrder($order_id); 
+                    $this->emailOrder($order);
+                    $title = 'Thank You For Your Order';
+                    $this->set(compact('order', 'title'));   
+                    $this->Session->setFlash('<span class="glyphicon glyphicon-ok"></span> Thank you for your order.',
+                    'default', array('class' => 'alert alert-success'));
+                    $hideFatFooter = false;
+                    $this->set(compact('invoice', 'hideFatFooter'));
+                    $this->render('confirm');
+            } else {
+                //Decline
+                $this->Session->write('Address', array('data' => $addresses));
+                $this->Session->setFlash('<span class="glyphicon glyphicon-warning-sign"></span> ' . $result,
+                             'default', array('class' => 'alert alert-danger'));
+            }
 	    }
 	    else{ 
-		//Get Address errors if any
-		$errors = $this->Address->validationErrors; 
-		
-		//Error sets have numeric keys, change to billing or shipping
-		foreach(array('billing', 'shipping') as $key => $value){
-		    $fixErrors[$value] = isset($errors[$key]) ? $errors[$key] : null;
-		}
-		$this->Address->validationErrors = $fixErrors;
-		
-		$this->Session->write('Address', array('errors' => $fixErrors, 'data' => $addresses));
-		
-		//Set a variable for the view to display a general error message
-		$this->set(array('errors' => true));
+            //Get Address errors if any
+            $errors = $this->Address->validationErrors; 
+           
+            //Error sets have numeric keys, change to billing or shipping
+            foreach(array('billing', 'shipping') as $key => $value){
+                $fixErrors[$value] = isset($errors[$key]) ? $errors[$key] : null;
+            }
+            $this->Address->validationErrors = $fixErrors;
+            
+            $this->Session->write('Address', array('errors' => $fixErrors, 'data' => $addresses));
+            
+            //Set a variable for the view to display a general error message
+            $this->set(array('errors' => true));
         }
     }
 
@@ -289,7 +291,6 @@ class OrdersController extends AppController
     {	
         if($this->request->is('ajax')){
             $query = $this->request->query; 
-            //debug($query['data']);
             $country = $query['data']['Address']['select-country'];
             $email = $query['data']['Coupon']['email'];
             $code = $query['data']['Coupon']['code'];
@@ -308,6 +309,7 @@ class OrdersController extends AppController
                 $this->set(array(
                     'couponAmount' => $couponAmount,
                 ));
+                $this->Cart->setCoupon($coupon['Coupon']['id']);
             }
             $this->Cart->setTotal($subTotal, $couponAmount);
 

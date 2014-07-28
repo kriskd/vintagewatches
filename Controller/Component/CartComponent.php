@@ -7,6 +7,7 @@ class CartComponent extends Component
     
     protected $items = array();
     protected $shipping = 0;
+    protected $coupon = null;
     protected $total = 0;
     
     public function initialize(Controller $controller)
@@ -93,6 +94,15 @@ class CartComponent extends Component
     {
         $this->shipping = $shipping;
         $this->Session->write('Cart.shipping', $this->shipping);
+    }
+
+    public function getCoupon() {
+        return $this->coupon;
+    }
+
+    public function setCoupon($couponId) {
+        $this->coupon = $couponId;
+        $this->Session->write('Cart.coupon', $this->coupon);
     }
     
     public function getTotal()
