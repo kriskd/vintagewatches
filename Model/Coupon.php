@@ -163,7 +163,9 @@ class Coupon extends AppModel {
         unset($value); 
         foreach ($results as &$result) {
             if (isset($result[$this->name])) { 
-                $result[$this->name]['available'] = $this->available($result);
+                if (isset($result[$this->name]['total'])) { 
+                    $result[$this->name]['available'] = $this->available($result);
+                }
                 foreach ($result as $key => &$orders) { 
                     if (strcasecmp($key, 'Order')==0) {
                         foreach($orders as &$order) {

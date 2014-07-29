@@ -177,9 +177,10 @@ class OrdersController extends AppController
             
                 if(is_array($result) && $result['stripe_paid'] == true){
                     unset($this->Order->Address->validate['foreign_id']);
-                    unset($this->Order->Coupon->validate);
 
-                    $data['Coupon'] = $this->Cart->getCoupon();
+                    if ($coupon_id = $this->Cart->getCoupon()) {
+                        $data['Order']['coupon_id'] = $coupon_id;
+                    }
 
                     //Add the results of stripe to the data array
                     $data['Payment'] = $result;

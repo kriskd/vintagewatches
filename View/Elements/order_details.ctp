@@ -42,6 +42,16 @@
             <?php echo $this->Number->currency($order['Order']['shippingAmount'], 'USD'); ?>
         </div>
     </div>
+    <?php if (isset($order['Coupon'])): ?>
+        <div class="row">
+            <div class="text-right col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                Coupon code <?php echo strtoupper($order['Coupon']['code']); ?> 
+            </div>
+            <div class="shipping-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                <?php echo $this->Number->couponValue($order); ?>
+            </div>
+        </div>
+    <?php endif; ?>
     <div class="row">
         <div class="text-right col-lg-10 col-md-10 col-sm-10 col-xs-10">
             Total
