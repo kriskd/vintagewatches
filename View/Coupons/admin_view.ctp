@@ -1,6 +1,7 @@
 <div class="coupons view">
 <h2><?php echo __('Coupon'); ?>
-        <?php echo $this->Html->link('Edit', array(
+        <?php if (empty($coupon['Order'])): ?>
+            <?php echo $this->Html->link('Edit', array(
                                                 'action' => 'edit', $coupon['Coupon']['id'],
                                                 'admin' => true
                                                 ),
@@ -8,7 +9,6 @@
                                                  'class' => 'btn btn-success'
                                                  )
                                            ); ?>
-        <?php if (empty($coupon['Order'])): ?>
             <?php echo $this->Form->button('Delete', array(
                 'data-coupon' => $coupon['Coupon']['id'], 
                 'data-code' => $coupon['Coupon']['code'], 

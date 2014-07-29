@@ -85,7 +85,15 @@ class CouponsController extends AppController {
 			}
 		} else {
 			$options = array('conditions' => array('Coupon.' . $this->Coupon->primaryKey => $id));
-			$this->request->data = $this->Coupon->find('first', $options);
+            $coupon = $this->Coupon->find('first', $options);
+            if (!empty($coupon['Order'])) {
+                $this->Session->setFlash('This coupon has at least one order associated with it and can\'t be edited.', 'info');
+                $this->redirect(array(
+                    'action' => 'view', $id,
+                    'admin' => true,
+                ));
+            }
+			$this->request->data = $coupon;
 		}
         $options = array(
             '' => 'Choose One', 
