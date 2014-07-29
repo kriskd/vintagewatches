@@ -6282,8 +6282,9 @@ var datepicker = $.datepicker;
      */
     if ($('.select-country input:radio').is(':checked')) {
         var country = $('.select-country input:radio:checked').val();
-        //computeTotal(country);
+        computeTotal();
         $('.shipping').removeClass('hide').addClass('show');
+        $('.shipping-inner').show();
     }
     
     /**
