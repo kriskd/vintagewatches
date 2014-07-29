@@ -21,6 +21,9 @@ class CartComponent extends Component
         if($this->Session->check('Cart.total') == true){
             $this->total = $this->Session->read('Cart.total');  
         }
+        if($this->Session->check('Cart.coupon') == true) {
+            $this->coupon = $this->Session->read('Cart.coupon');  
+        }
     }
     
     /**
