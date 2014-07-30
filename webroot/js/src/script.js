@@ -46,15 +46,25 @@ $(document).ready(function(){
     });
 
     $('.admin-index .archive-coupon').on('click', function() {
+      $('.alert-danger').remove();
+      var selected = $(this);
       var value = 0;
       if ($(this).is(':checked')) {
         value = 1;
       }
       var couponid = $(this).data('couponid');
+      var couponcode = $(this).data('couponcode');
       $.ajax({
         url: '/coupons/archive',
-        data: {'archived': value, 'couponid' : couponid},
-        type: 'post'
+        data: {'archived': value, 'couponid' : couponid, 'couponcode' : couponcode },
+        dataType: 'json',
+        type: 'post',
+        success: function(data) {
+          if(data.msg != 'undefined' && data.msg.length > 0) {
+            $('.content').prepend('<div class="alert alert-danger">'+data.msg+'</div>');
+            selected.prop('checked', 'checked');
+          }
+        }
       });
     });
 

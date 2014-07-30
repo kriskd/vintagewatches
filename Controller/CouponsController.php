@@ -136,14 +136,27 @@ class CouponsController extends AppController {
         $this->layout = 'ajax';
     }
 
+    /**
+     * Ajax controller method for archiving coupon on coupon index
+     * If the coupon is being unarchived check that is unique among unarchived coupons
+     */
 	public function archive()
 	{
 		if($this->request->is('ajax')){
 			$data = $this->request->data;
 			$archive = $data['archived'];
+            $unique = true;
+            if ($archive != 1) {
+                $code = $data['couponcode'];
+                $unique = $this->Coupon->uniqueNotArchived($code);
+            }
 			$couponid = $data['couponid'];
 			$this->Coupon->id = $couponid;
-			$this->Coupon->saveField('archived', $archive);
+            if ($unique) {
+                $this->Coupon->saveField('archived', $archive);
+            } else {
+                echo json_encode(array('msg' => 'This coupon can\'t be activated because there is another coupon with code '.strtoupper($code).' that is currently active.'));
+            }
 		}
 		$this->autoRender = false;
 	}

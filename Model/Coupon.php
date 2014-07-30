@@ -263,7 +263,7 @@ class Coupon extends AppModel {
      * return bool
      */
     public function uniqueNotArchived($code) {
-        $code = current($code);
+        $code = is_array($code) ? current($code) : $code;
         $conditions = array(
             'Coupon.code' => strtolower($code),
             'Coupon.archived' => 0,

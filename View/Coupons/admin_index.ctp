@@ -26,9 +26,9 @@
             <?php $row = ''; ?>	
             <?php $row .= $this->Form->inputSpan('Coupon.archived', array(
                 'data-couponid' => $coupon['Coupon']['id'], 
+                'data-couponcode' => $coupon['Coupon']['code'],
                 'div' => array(
-                    'class' => 
-                    'table-cell text-center'
+                    'class' => 'table-cell text-center'
                 ), 
                 'label' => false, 
                 'checked' => $coupon['Coupon']['archived'],
