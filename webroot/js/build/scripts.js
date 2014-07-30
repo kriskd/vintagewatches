@@ -6299,9 +6299,6 @@ var datepicker = $.datepicker;
         $('.shipping-instructions').hide();
         //Disable submit 
         $('.submit-payment').attr('disabled', 'disabled');
-        //Display correcting address form and shipping amount based on country
-        var country = $(this).val();
-        //computeTotal(country);
         //Show shipping block
         $('.shipping').removeClass('hide').addClass('show');
         //Hide address and credit card blocks
@@ -6333,7 +6330,7 @@ var datepicker = $.datepicker;
       });
 
     /**
-     * Compute shipping and total based on country
+     * Compute shipping,coupon amount and total
      */
     function computeTotal() {
       $.ajax({
@@ -6350,23 +6347,15 @@ var datepicker = $.datepicker;
           if (typeof(couponAmount) != 'undefined' && couponAmount !== null) {
             $('.coupon-amount').append('('+data.couponFormatted+')');
           }
+          if ($('#CouponEmail').val().length>0 && $('#CouponCode').val().length>0 && (typeof(couponAmount)=='undefined' || couponAmount == null)) {
+            $('.cart-details .alert-info').show();
+          } else {
+            $('.cart-details .alert-info').hide();
+          }
           $('.total-formatted-amount').empty().append(totalFormatted);
           $('.shipping-inner').show();
         }
       });
-        /*$.ajax({
-            url: '/orders/totalCart.json',
-            data: {"country" : country},
-            dataType: 'json',
-            cache: false,
-            success: function(data){
-                var shipping = data.shipping;
-                var totalFormatted = data.totalFormatted;
-                $('.shipping-amount').empty().append(shipping).find('.launch-tooltip').tooltip();
-                $('.total-formatted-amount').empty().append(totalFormatted);
-                $('.shipping-inner').show();
-            }
-        });*/
     }
     
     $('.shipping .radio input').change(function(){

@@ -7852,6 +7852,20 @@ body.hide-fat-footer .container .content {
 .container .content .orders .cart-details .coupon-fields .coupon-amount {
   margin-top: 33px;
 }
+.container .content .orders .cart-details .alert-info {
+  display: none;
+}
+.container .content .orders .cart-details .alert-info a {
+  color: #1d4356;
+}
+.container .content .orders .cart-details .alert-info a:link {
+  text-decoration: underline;
+}
+.container .content .orders .cart-details .alert-info a:visited,
+.container .content .orders .cart-details .alert-info a:hover,
+.container .content .orders .cart-details .alert-info a:active {
+  text-decoration: none;
+}
 .container .content .orders .credit-card-order {
   display: none;
 }

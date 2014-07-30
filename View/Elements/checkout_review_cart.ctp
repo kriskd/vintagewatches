@@ -125,7 +125,16 @@
                 </div>
             </div>
             <div class="row">
-                <div class="text-right col-lg-10 col-md-10 col-sm-10 col-xs-10 col-xxs-8">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 col-xxx-4">
+                    <div class="alert alert-info">
+                        <small><span class="glyphicon glyphicon-info-sign"></span> This coupon is not valid. 
+                            <?php echo $this->Html->link('Contact me', array(
+                                'controller' => 'contacts',
+                                'action' => 'index',
+                            )); ?> for assistance.</small>
+                    </div>
+                </div>
+                <div class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-2 col-xxs-4">
                     Total
                 </div>
                 <div class="total-formatted-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-2 col-xxs-4">
