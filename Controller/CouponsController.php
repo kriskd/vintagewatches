@@ -55,8 +55,9 @@ class CouponsController extends AppController {
 			} else {
 				$this->Session->setFlash(__('The coupon could not be saved. Please, try again.'), 'danger');
 			}
-		}
-        $this->request->data['Coupon']['total'] = 1;
+		} else {
+            $this->request->data['Coupon']['total'] = 1;
+        }
         $options = array(
             '' => 'Choose One', 
             'fixed' => 'Fixed', 
