@@ -8,6 +8,7 @@ class CartComponent extends Component
     protected $items = array();
     protected $shipping = 0;
     protected $coupon = null;
+    protected $email = null;
     protected $total = 0;
     
     public function initialize(Controller $controller)
@@ -23,6 +24,9 @@ class CartComponent extends Component
         }
         if($this->Session->check('Cart.coupon') == true) {
             $this->coupon = $this->Session->read('Cart.coupon');  
+        }
+        if($this->Session->check('Cart.email') == true) {
+            $this->email = $this->Session->read('Cart.email');  
         }
     }
     
@@ -87,6 +91,11 @@ class CartComponent extends Component
         }
         return false;
     }
+
+    public function clearCoupon() {
+        $this->Session->delete('Cart.email');
+        $this->Session->delete('Cart.coupon');
+    }
     
     public function getShipping()
     {
@@ -106,6 +115,15 @@ class CartComponent extends Component
     public function setCoupon($couponId) {
         $this->coupon = $couponId;
         $this->Session->write('Cart.coupon', $this->coupon);
+    }
+
+    public function getEmail() {
+        return $this->email;
+    }
+
+    public function setEmail($email) {
+        $this->email = $email;
+        $this->Session->write('Cart.email', $this->email);
     }
     
     public function getTotal()

@@ -4,31 +4,31 @@ App::uses('Address', 'Model');
 class OrdersController extends AppController
 {
     public $uses = array('Watch', 'Address', 'Order', 'State', 'Province', 'Country');
-    
+
     public $paginate = array(
-			    'limit' => 10,
-			    'order' => array(
-					'Order.id' => 'desc'
-			    )
-			);
-    
+        'limit' => 10,
+        'order' => array(
+            'Order.id' => 'desc'
+        )
+    );
+
     protected $cartItemIds = array();
     protected $cartWatches = array();
-    
+
     public function beforeFilter() {	
         $storeOpen = $this->Watch->storeOpen();
         //Redirect if store is closed and going to a non-admin order page and not index or view
         if ($storeOpen == false && empty($this->request->params['admin']) && !in_array($this->request->params['action'], array('index', 'view'))) {
             $this->redirect(array('controller' => 'pages', 'action' => 'home', 'admin' => false));
         }
-        
+
         $this->cartItemIds = $this->Cart->cartItemIds();
         $this->cartWatches = $this->Watch->getCartWatches($this->cartItemIds);
         $this->Order->Coupon->removeRequiredCode();
-        
+
         parent::beforeFilter();
     }
-    
+
     /**
      * Get customer orders. Store email and postalCode in session, only fetch
      * orders that match those.
@@ -39,28 +39,28 @@ class OrdersController extends AppController
             $this->Session->delete('Address');
             $this->redirect(array('action' => 'index'));
         }
-        
+
         $email = $this->Session->read('Order.email');
         $postalCode = $this->Session->read('Address.postalCode'); 
-            
+
         if($this->request->is('post')){
             $data = $this->request->data;
             $email = $data['Order']['email'];
             $postalCode = $data['Address']['postalCode'];
-            
+
             if (empty($email) || empty($postalCode)) {
-            $this->Session->setFlash('Email and postal code are required to search for orders.',
-                         'danger', array('class' => 'alert alert-error'));
+                $this->Session->setFlash('Email and postal code are required to search for orders.',
+                    'danger', array('class' => 'alert alert-error'));
             }
-            
+
             $this->Session->write('Order.email', $email);
             $this->Session->write('Address.postalCode', $postalCode);
         }
-        
+
         $options = $this->Order->getCustomerOrderOptions($email, $postalCode); 
         $this->Paginator->settings = array_merge($this->paginate, $options); 
         $orders = $this->Paginator->paginate('Order');
-        
+
         if (!empty($orders)) {
             $this->set('orders', $orders);
         }
@@ -68,43 +68,42 @@ class OrdersController extends AppController
         //Set flash message if we have an email and postalCode but no orders
         if ((!(empty($email)) && !empty($postalCode)) && empty($orders)) { 
             $this->Session->setFlash('No orders found for this email and postal code.',
-                     'danger', array('class' => 'alert alert-error'));
+                'danger', array('class' => 'alert alert-error'));
         }
-        
+
         $title = 'Order History';
-        
+
         $this->set(compact('email', 'title'));
     }
-    
-    public function view($id = null)
-    {
+
+    public function view($id = null) {
         $email = $this->Session->read('Order.email');
         $postalCode = $this->Session->read('Address.postalCode');
-        
+
         if (empty($email) || empty($postalCode) || empty($id)) {
             $this->redirect(array('action' => 'index'));
         }
-        
+
         $options = $this->Order->getCustomerOrderOptions($email, $postalCode, $id);
         $order = $this->Order->find('first', $options);
-        
+
         if (empty($order)) {
             $this->Session->setFlash('Invalid Order', 'danger', array('class' => 'alert alert-error'));
             $this->redirect(array('action' => 'index'));
         }
-        
+
         $title = 'Order History';
-        
+
         $this->set(compact('order', 'title'));
     }
-    
+
     public function checkout() {
         $this->secure();
-	
+
         if($this->Cart->cartEmpty() == true){
             $this->redirect(array('controller' => 'watches', 'action' => 'index'));
         }
-	
+
         //Handle ajax request for autocomplete
         if($this->request->is('ajax')){
             $query = $this->request->query; 
@@ -112,7 +111,7 @@ class OrdersController extends AppController
             if(!$search){ 
                 throw new NotFoundException('Search term required');
             }
-	    
+
             $filtered = array();
             $countries = $this->Country->getList();
             foreach($countries as $key => $country){
@@ -124,14 +123,14 @@ class OrdersController extends AppController
             $this->set(compact('filtered'));
             $this->layout = 'ajax';
         }
-	
+
         //Form submitted
-        if($this->request->is('post')){
+        if($this->request->is('post')) {
             $data = $this->request->data;
             unset($data['Shipping']);
-            
+
             $addresses = $data['Address'];
-            
+
             $addressesToSave = array();
             unset($addresses['select-country']);
 
@@ -140,18 +139,18 @@ class OrdersController extends AppController
                 $address['type'] = $type;
                 $addressesToSave[] = $address;
             }
-            
+
             $data['Address'] = $addressesToSave;
-          
+
             $checkoutData = ($this->Cart->getShipping() > 0) &&
-                    ($this->Cart->cartItemCount() > 0) &&
-                    ($this->Cart->getTotal() > 0);
-            
+                ($this->Cart->cartItemCount() > 0) &&
+                ($this->Cart->getTotal() > 0);
+
             if(!$checkoutData){
                 //There is no data to checkout with
                 $this->redirect(array('controller' => 'watches', 'action' => 'index'));
             }
-            
+
             //Add shipping to the order
             $data['Order']['shippingAmount'] = $this->Cart->getShipping();
             unset($data['Coupon']);
@@ -159,7 +158,7 @@ class OrdersController extends AppController
             if($valid == true){
                 $amount = $this->Cart->getTotal(); 
                 $stripeToken = $this->request->data['stripeToken'];
-                
+
                 //Create a description of brands to send to Stripe
                 $watches = $this->cartWatches; 
                 $brands = array();
@@ -167,14 +166,14 @@ class OrdersController extends AppController
                     $brands[] = $watch['Brand']['name'];
                 }
                 $description = implode(',', $brands);
-                
+
                 $stripeData = array(
-                        'amount' => $amount,
-                        'stripeToken' => $stripeToken,
-                        'description' => $description
-                        );
+                    'amount' => $amount,
+                    'stripeToken' => $stripeToken,
+                    'description' => $description
+                );
                 $result = $this->Stripe->charge($stripeData);
-            
+
                 if(is_array($result) && $result['stripe_paid'] == true){
                     unset($this->Order->Address->validate['foreign_id']);
 
@@ -185,19 +184,19 @@ class OrdersController extends AppController
                     //Add the results of stripe to the data array
                     $data['Payment'] = $result;
                     $this->Order->saveAssociated($data); 
-                
+
                     //Get the order_id
                     $order_id = $this->Order->id;
-                    
+
                     //Get the purchased items from the Session, add the order_id and
                     //update the items with the order_id
                     $purchasedWatches = array_map(function($item) use ($order_id){
-                                $item['Watch']['order_id'] = $order_id;
-                                $item['Watch']['active'] = 0;
-                                return $item;
-                            } , $this->cartWatches);
+                        $item['Watch']['order_id'] = $order_id;
+                        $item['Watch']['active'] = 0;
+                        return $item;
+                    } , $this->cartWatches);
                     $this->Watch->saveMany($purchasedWatches);
-                    
+
                     $this->MobileDetect = $this->Components->load('MobileDetect.MobileDetect');
                     // If mobile or tablet, get device details
                     if ($this->MobileDetect->detect('isMobile') || $this->MobileDetect->detect('isTablet')) {
@@ -206,52 +205,66 @@ class OrdersController extends AppController
                         foreach($methods as $id => $method) {
                             $detect = $this->MobileDetect->detect($method);
                             if ($detect == true) {
-                            $detects[] = $id;
+                                $detects[] = $id;
                             }
                         }
-                        
+
                         $this->Order->saveAll(array(
                             'Order' => array(
                                 'id' => $order_id
                             ),
                             'Detect' => $detects
-                            )
-                        );  
+                        ));  
                     }
-                    
+
                     $this->Cart->emptyCart();
                     $order = $this->Order->getOrder($order_id); 
                     $this->emailOrder($order);
                     $title = 'Thank You For Your Order';
                     $this->set(compact('order', 'title'));   
                     $this->Session->setFlash('<span class="glyphicon glyphicon-ok"></span> Thank you for your order.',
-                    'default', array('class' => 'alert alert-success'));
+                        'default', array('class' => 'alert alert-success'));
                     $hideFatFooter = false;
                     $this->set(compact('invoice', 'hideFatFooter'));
                     $this->render('confirm');
-            } else {
-                //Decline
-                $this->Session->write('Address', array('data' => $addresses));
-                $this->Session->setFlash('<span class="glyphicon glyphicon-warning-sign"></span> ' . $result,
-                             'default', array('class' => 'alert alert-danger'));
+                } else {
+                    //Decline
+                    $this->Session->write('Address', array('data' => $addresses));
+                    $this->Session->setFlash('<span class="glyphicon glyphicon-warning-sign"></span> ' . $result,
+                        'default', array('class' => 'alert alert-danger'));
+                }
+            } else { 
+                //Get Address errors if any
+                $errors = $this->Address->validationErrors; 
+
+                //Error sets have numeric keys, change to billing or shipping
+                foreach(array('billing', 'shipping') as $key => $value){
+                    $fixErrors[$value] = isset($errors[$key]) ? $errors[$key] : null;
+                }
+                $this->Address->validationErrors = $fixErrors;
+
+                $this->Session->write('Address', array('errors' => $fixErrors, 'data' => $addresses));
+
+                //Set a variable for the view to display a general error message
+                $this->set(array('errors' => true));
             }
-	    }
-	    else{ 
-            //Get Address errors if any
-            $errors = $this->Address->validationErrors; 
-           
-            //Error sets have numeric keys, change to billing or shipping
-            foreach(array('billing', 'shipping') as $key => $value){
-                $fixErrors[$value] = isset($errors[$key]) ? $errors[$key] : null;
+        } else {
+            $couponId = $this->Cart->getCoupon();
+            $email = $this->Cart->getEmail();
+            if (!empty($couponId) && !empty($email)) {
+                if ($coupon = $this->Order->Coupon->find('first', array(
+                    'conditions' => array(
+                        'id' => $couponId,
+                    ),
+                    'recursive' => -1,
+                ))) {
+                    $code = $coupon['Coupon']['code'];
+                    $this->request->data['Coupon']['email'] = $email;
+                    $this->request->data['Coupon']['code'] = $code;
+                    $this->request->data['Order']['email'] = $email;
+                }
             }
-            $this->Address->validationErrors = $fixErrors;
-            
-            $this->Session->write('Address', array('errors' => $fixErrors, 'data' => $addresses));
-            
-            //Set a variable for the view to display a general error message
-            $this->set(array('errors' => true));
         }
-    }
 
         $title = 'Checkout';
         $this->set(compact('months', 'years', 'total', 'title') + array('watches' => $this->cartWatches));
@@ -288,8 +301,7 @@ class OrdersController extends AppController
     /**
      * Get shipping and total
      */
-    public function totalCart()
-    {	
+    public function totalCart() {	
         if($this->request->is('ajax')){
             $query = $this->request->query; 
             $country = $query['data']['Address']['select-country'];
@@ -300,26 +312,31 @@ class OrdersController extends AppController
             $couponAmount = 0;
             if ($coupon = $this->Order->Coupon->valid($code, $email, $subTotal)) {
                 switch ($coupon['Coupon']['type']) {
-                    case 'fixed':
-                        $couponAmount = $subTotal > $coupon['Coupon']['amount'] ? $coupon['Coupon']['amount'] : $subTotal;
-                        break;
-                    case 'percentage':
-                        $couponAmount = $subTotal * $coupon['Coupon']['amount'];
-                        break;
+                case 'fixed':
+                    $couponAmount = $subTotal > $coupon['Coupon']['amount'] ? $coupon['Coupon']['amount'] : $subTotal;
+                    break;
+                case 'percentage':
+                    $couponAmount = $subTotal * $coupon['Coupon']['amount'];
+                    break;
                 }
                 $this->set(array(
                     'couponAmount' => $couponAmount,
                 ));
-                $this->Cart->setCoupon($coupon['Coupon']['id']);
+                if (!empty($coupon) && !empty($email)) {
+                    $this->Cart->setCoupon($coupon['Coupon']['id']);
+                    $this->Cart->setEmail($email);
+                } 
+            } else {
+                $this->Cart->clearCoupon();
             }
+
             $this->Cart->setTotal($subTotal, $couponAmount);
 
             $this->set(array('data' => array(
-                        'shipping' => $this->Cart->getShipping(),
-                        'total' => $this->Cart->getTotal(),
-                    )
+                    'shipping' => $this->Cart->getShipping(),
+                    'total' => $this->Cart->getTotal(),
                 )
-            );
+            ));
             $this->layout = 'ajax';
         }
     }
