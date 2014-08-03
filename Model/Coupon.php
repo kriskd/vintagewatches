@@ -45,7 +45,7 @@ class Coupon extends AppModel {
 		'type' => array(
 			'notEmpty' => array(
 				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+				'message' => 'Please choose a coupon type.',
 				'allowEmpty' => false,
 				'required' => true,
 				//'last' => false, // Stop validation after this rule
@@ -253,7 +253,7 @@ class Coupon extends AppModel {
         if ($this->available($coupon) < 1) return false;
 
         // Minimum order met
-        if ($coupon['Coupon']['minimum_order'] > 0 && $coupon['Coupon']['minimum_order'] < $subTotal) return false;
+        if ($coupon['Coupon']['minimum_order'] && (float)$coupon['Coupon']['minimum_order'] > $subTotal) return false;
 
         return $coupon;
     }
