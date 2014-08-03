@@ -223,7 +223,7 @@ class Coupon extends AppModel {
      * Is coupon valid for the user
      * @return bool
      */
-    public function valid($code, $email, $subTotal) {
+    public function valid($code, $email, $subTotal, $shipping) {
         if (empty($code) || empty($email)) return false;
 
         $coupon = $this->find('first', array(
@@ -254,6 +254,9 @@ class Coupon extends AppModel {
 
         // Minimum order met
         if ($coupon['Coupon']['minimum_order'] && (float)$coupon['Coupon']['minimum_order'] > $subTotal) return false;
+
+        // Coupon smaller than total
+        if (strcasecmp($coupon['Coupon']['type'], 'fixed')==0 && $coupon['Coupon']['amount'] >= $subTotal + $shipping) return false;
 
         return $coupon;
     }

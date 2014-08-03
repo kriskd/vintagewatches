@@ -307,13 +307,14 @@ class OrdersController extends AppController
             $country = $query['data']['Address']['select-country'];
             $email = $query['data']['Coupon']['email'];
             $code = $query['data']['Coupon']['code'];
-            $this->Cart->setShipping($this->Order->getShippingAmount($country));
+            $shipping = $this->Order->getShippingAmount($country);
+            $this->Cart->setShipping($shipping);
             $subTotal = $this->Order->getSubTotal($this->cartWatches); 
             $couponAmount = 0;
-            if ($coupon = $this->Order->Coupon->valid($code, $email, $subTotal)) {
+            if ($coupon = $this->Order->Coupon->valid($code, $email, $subTotal, $shipping)) {
                 switch ($coupon['Coupon']['type']) {
                 case 'fixed':
-                    $couponAmount = $subTotal > $coupon['Coupon']['amount'] ? $coupon['Coupon']['amount'] : $subTotal;
+                    $couponAmount = $subTotal + $shipping > $coupon['Coupon']['amount'] ? $coupon['Coupon']['amount'] : $subTotal + $shipping;
                     break;
                 case 'percentage':
                     $couponAmount = $subTotal * $coupon['Coupon']['amount'];
