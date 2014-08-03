@@ -14,15 +14,23 @@
             <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12"> 
                 <?php echo $this->Form->input('code'); ?>
             </div>
+            <?php $options = array(
+                'options' => $select
+            ); ?>
+            <?php if (isset($this->request->data['Coupon']['id']) && $hasOrders): ?>
+                <?php $options['disabled'] = 'disabled'; ?>
+            <?php endif; ?>
             <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12"> 
-                <?php echo $this->Form->input('type', array(
-                    'options' => $options
-                )); ?>
+                <?php echo $this->Form->input('type', $options); ?>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12"> 
-                <?php echo $this->Form->input('amount', array(
+                <?php $options = array(
                     'label' => 'Coupon Amount or Percentage Off',
-                )); ?>
+                ); ?>
+                <?php if (isset($this->request->data['Coupon']['id']) && $hasOrders): ?>
+                    <?php $options['disabled'] = 'disabled'; ?>
+                <?php endif; ?>
+                <?php echo $this->Form->input('amount', $options); ?>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12"> 
                 <?php echo $this->Form->input('total', array(

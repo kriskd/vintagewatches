@@ -16,6 +16,12 @@ class CouponsController extends AppController {
  */
 	public $components = array('Paginator', 'Session');
 
+    public $paginate = array(
+        'order' => array(
+            'Coupon.id' => 'DESC',
+        ),
+    );
+
 /**
  * admin_index method
  *
@@ -58,12 +64,12 @@ class CouponsController extends AppController {
 		} else {
             $this->request->data['Coupon']['total'] = 1;
         }
-        $options = array(
+        $select = array(
             '' => 'Choose One', 
             'fixed' => 'Fixed', 
             'percentage' => 'Percentage'
         );
-        $this->set('options', $options);
+        $this->set('select', $select);
 	}
 
 /**
@@ -77,7 +83,15 @@ class CouponsController extends AppController {
 		if (!$this->Coupon->exists($id)) {
 			throw new NotFoundException(__('Invalid coupon'));
 		}
+        $options = array('conditions' => array('Coupon.' . $this->Coupon->primaryKey => $id));
+        $coupon = $this->Coupon->find('first', $options);
+        $hasOrders = (bool) $coupon['Order'];
 		if ($this->request->is(array('post', 'put'))) {
+            // Don't allow editing of type or amount if orders exist
+            if ($hasOrders) {
+                $this->request->data['Coupon']['type'] = $coupon['Coupon']['type'];
+                $this->request->data['Coupon']['amount'] = $coupon['Coupon']['amount'];
+            } 
 			if ($this->Coupon->save($this->request->data)) {
 				$this->Session->setFlash(__('The coupon has been saved.'), 'success');
 				return $this->redirect(array('action' => 'index'));
@@ -85,23 +99,14 @@ class CouponsController extends AppController {
 				$this->Session->setFlash(__('The coupon could not be saved. Please, try again.'), 'danger');
 			}
 		} else {
-			$options = array('conditions' => array('Coupon.' . $this->Coupon->primaryKey => $id));
-            $coupon = $this->Coupon->find('first', $options);
-            if (!empty($coupon['Order'])) {
-                $this->Session->setFlash('This coupon has at least one order associated with it and can\'t be edited.', 'info');
-                $this->redirect(array(
-                    'action' => 'view', $id,
-                    'admin' => true,
-                ));
-            }
 			$this->request->data = $coupon;
 		}
-        $options = array(
+        $select = array(
             '' => 'Choose One', 
             'fixed' => 'Fixed', 
             'percentage' => 'Percentage'
         );
-        $this->set('options', $options);
+        $this->set(compact('select', 'hasOrders'));
 	}
 
 /**
