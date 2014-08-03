@@ -48,7 +48,7 @@
                 Coupon code <?php echo strtoupper($order['Coupon']['code']); ?> 
             </div>
             <div class="shipping-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                <?php echo $this->Number->couponValue($order); ?>
+                <?php echo $this->Order->couponValue($order); ?>
             </div>
         </div>
     <?php endif; ?>
@@ -57,7 +57,7 @@
             Total
         </div>
         <div class="total-formatted-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
-            <?php echo $this->Number->stripe($order['Payment']['stripe_amount']); ?>
+            <?php echo isset($order['Payment']['stripe_amount']) ? $this->Number->stripe($order['Payment']['stripe_amount']) : '0.00'; ?>
         </div>
     </div>
     <?php if(!empty($order['Order']['notes'])): ?>

@@ -142,13 +142,17 @@ class OrdersController extends AppController
 
             $data['Address'] = $addressesToSave;
 
-            $checkoutData = ($this->Cart->getShipping() > 0) &&
-                ($this->Cart->cartItemCount() > 0) &&
-                ($this->Cart->getTotal() > 0);
+            $cart = ($this->Cart->getShipping() > 0) &&
+                ($this->Cart->cartItemCount() > 0);
 
-            if(!$checkoutData){
+            if(!$cart){
                 //There is no data to checkout with
                 $this->redirect(array('controller' => 'watches', 'action' => 'index'));
+            }
+
+            // Free checkout
+            if ($this->Cart->getTotal() <= 0) {
+
             }
 
             //Add shipping to the order
@@ -172,9 +176,12 @@ class OrdersController extends AppController
                     'stripeToken' => $stripeToken,
                     'description' => $description
                 );
-                $result = $this->Stripe->charge($stripeData);
 
-                if(is_array($result) && $result['stripe_paid'] == true){
+                if ($this->Cart->getTotal > 0) {
+                    $result = $this->Stripe->charge($stripeData);
+                }
+
+                if($this->Cart->getTotal <= 0 || (is_array($result) && $result['stripe_paid'] == true)){
                     unset($this->Order->Address->validate['foreign_id']);
 
                     if ($coupon_id = $this->Cart->getCoupon()) {
@@ -182,7 +189,9 @@ class OrdersController extends AppController
                     }
 
                     //Add the results of stripe to the data array
-                    $data['Payment'] = $result;
+                    if (isset($result)) {
+                        $data['Payment'] = $result;
+                    }
                     $this->Order->saveAssociated($data); 
 
                     //Get the order_id
@@ -307,13 +316,14 @@ class OrdersController extends AppController
             $country = $query['data']['Address']['select-country'];
             $email = $query['data']['Coupon']['email'];
             $code = $query['data']['Coupon']['code'];
-            $this->Cart->setShipping($this->Order->getShippingAmount($country));
+            $shipping = $this->Order->getShippingAmount($country);
+            $this->Cart->setShipping($shipping);
             $subTotal = $this->Order->getSubTotal($this->cartWatches); 
             $couponAmount = 0;
             if ($coupon = $this->Order->Coupon->valid($code, $email, $subTotal)) {
                 switch ($coupon['Coupon']['type']) {
                 case 'fixed':
-                    $couponAmount = $subTotal > $coupon['Coupon']['amount'] ? $coupon['Coupon']['amount'] : $subTotal;
+                    $couponAmount = $subTotal + $shipping > $coupon['Coupon']['amount'] ? $coupon['Coupon']['amount'] : $subTotal + $shipping;
                     break;
                 case 'percentage':
                     $couponAmount = $subTotal * $coupon['Coupon']['amount'];

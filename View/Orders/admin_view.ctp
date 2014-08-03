@@ -86,7 +86,7 @@
                     Coupon code <?php echo strtoupper($order['Coupon']['code']); ?> 
                 </td>
                 <td class="total-formatted-amount text-right">
-                    <?php echo $this->Number->couponValue($order); ?>
+                    <?php echo $this->Order->couponValue($order); ?>
                 </td>
             </tr>
         <?php endif; ?>
@@ -95,7 +95,7 @@
             <td></td>
             <td></td>
             <td class="text-right">Total</td>
-            <td class="total-formatted-amount text-right"><?php echo $this->Number->currency($order['Payment']['stripe_amount']/100, 'USD'); ?></td>
+            <td class="total-formatted-amount text-right"><?php echo $this->Order->totalFormatted($order); ?></td>
         </tr>
     </table>
     <h2>Contact Information</h2>
