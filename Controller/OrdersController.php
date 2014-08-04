@@ -104,6 +104,19 @@ class OrdersController extends AppController
             $this->redirect(array('controller' => 'watches', 'action' => 'index'));
         }
 
+        // Check if any coupons are available
+        // TODO add check for available count
+        $couponsAvailable = false;
+        if ($this->Order->Coupon->find('count', array(
+            'conditions' => array(
+                'archived' => 0,
+                'expire_date >' => date('Y-m-d'),
+            ),
+        )) > 0) {
+            $couponsAvailable = true;
+        }
+        $this->set(compact('couponsAvailable'));
+        
         //Handle ajax request for autocomplete
         if($this->request->is('ajax')){
             $query = $this->request->query; 
