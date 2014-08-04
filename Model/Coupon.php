@@ -265,6 +265,7 @@ class Coupon extends AppModel {
                     'message' => 'You have not met the minimum order of $'.number_format($coupon['Coupon']['minimum_order'],2,'.',',').'.',
                 );
                 break;
+            // Coupon less than total order amount
             case strcasecmp($coupon['Coupon']['type'], 'fixed')==0 && $coupon['Coupon']['amount'] >= $subTotal + $shipping:
                 return array(
                     'alert' => 'info',
