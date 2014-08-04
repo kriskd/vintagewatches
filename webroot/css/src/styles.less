@@ -349,7 +349,7 @@ body.hide-fat-footer {
     .content {
         .clearfix();
         margin-bottom: 255px;
-        a:link:not(.btn), a:visited:not(.btn), a:active:not(.btn) {
+        a:link:not(.btn):not(.alert-link), a:visited:not(.btn):not(.alert-link), a:hover:not(.alert-link), a:active:not(.btn):not(.alert-link) {
             color: @goldDark;
         }
         a:hover:not(.btn) {
@@ -960,11 +960,10 @@ body.hide-fat-footer {
                         margin-top: 33px;
                     }
                 }
-                .alert-info {
-                    display: none;
-                    a {
+                .coupon-alert {
+                    /*a {
                         color: darken(@alert-info-text, 15%);
-                    }
+                    }*/
                     a:link {
                         text-decoration: underline;
                     }

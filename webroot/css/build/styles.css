@@ -7079,9 +7079,10 @@ body.hide-fat-footer .container .content {
 .container .content:after {
   clear: both;
 }
-.container .content a:link:not(.btn),
-.container .content a:visited:not(.btn),
-.container .content a:active:not(.btn) {
+.container .content a:link:not(.btn):not(.alert-link),
+.container .content a:visited:not(.btn):not(.alert-link),
+.container .content a:hover:not(.alert-link),
+.container .content a:active:not(.btn):not(.alert-link) {
   color: #665600;
 }
 .container .content a:hover:not(.btn) {
@@ -7852,18 +7853,17 @@ body.hide-fat-footer .container .content {
 .container .content .orders .cart-details .coupon-fields .coupon-amount {
   margin-top: 33px;
 }
-.container .content .orders .cart-details .alert-info {
-  display: none;
+.container .content .orders .cart-details .coupon-alert {
+  /*a {
+                        color: darken(@alert-info-text, 15%);
+                    }*/
 }
-.container .content .orders .cart-details .alert-info a {
-  color: #1d4356;
-}
-.container .content .orders .cart-details .alert-info a:link {
+.container .content .orders .cart-details .coupon-alert a:link {
   text-decoration: underline;
 }
-.container .content .orders .cart-details .alert-info a:visited,
-.container .content .orders .cart-details .alert-info a:hover,
-.container .content .orders .cart-details .alert-info a:active {
+.container .content .orders .cart-details .coupon-alert a:visited,
+.container .content .orders .cart-details .coupon-alert a:hover,
+.container .content .orders .cart-details .coupon-alert a:active {
   text-decoration: none;
 }
 .container .content .orders .credit-card-order {

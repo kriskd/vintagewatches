@@ -6352,15 +6352,16 @@ var datepicker = $.datepicker;
           var shipping = data.shipping;
           var totalFormatted = data.totalFormatted;
           var couponAmount = data.couponAmount;
+          var message = data.alert;
           $('.shipping-amount').empty().append(shipping).find('.launch-tooltip').tooltip();
           $('.coupon-amount').empty();
           if (typeof(couponAmount) != 'undefined' && couponAmount !== null) {
             $('.coupon-amount').append('('+data.couponFormatted+')');
           }
           if ($('#CouponEmail').val().length>0 && $('#CouponCode').val().length>0 && (typeof(couponAmount)=='undefined' || couponAmount == null)) {
-            $('.cart-details .alert-info').show();
+            $('.cart-details .coupon-alert').empty().append(message);
           } else {
-            $('.cart-details .alert-info').hide();
+            $('.cart-details .coupon-alert').empty();
           }
           $('.total-formatted-amount').empty().append(totalFormatted);
           $('.shipping-inner').show();

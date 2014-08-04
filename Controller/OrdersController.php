@@ -311,7 +311,8 @@ class OrdersController extends AppController
             $this->Cart->setShipping($shipping);
             $subTotal = $this->Order->getSubTotal($this->cartWatches); 
             $couponAmount = 0;
-            if ($coupon = $this->Order->Coupon->valid($code, $email, $subTotal, $shipping)) {
+            $coupon = $this->Order->Coupon->valid($code, $email, $subTotal, $shipping);
+            if (isset($coupon['Coupon'])) {
                 switch ($coupon['Coupon']['type']) {
                 case 'fixed':
                     $couponAmount = $subTotal + $shipping > $coupon['Coupon']['amount'] ? $coupon['Coupon']['amount'] : $subTotal + $shipping;
@@ -323,11 +324,12 @@ class OrdersController extends AppController
                 $this->set(array(
                     'couponAmount' => $couponAmount,
                 ));
-                if (!empty($coupon) && !empty($email)) {
+                if (!empty($coupon['Coupon']) && !empty($email)) {
                     $this->Cart->setCoupon($coupon['Coupon']['id']);
                     $this->Cart->setEmail($email);
                 } 
             } else {
+                $this->set(compact('coupon')); // Contains error message
                 $this->Cart->clearCoupon();
             }
 

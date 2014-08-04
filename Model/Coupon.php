@@ -237,27 +237,42 @@ class Coupon extends AppModel {
             'recursive' => -1
         ));
 
-        // Coupon archived
-        if (empty($coupon)) return false;
-
-        // Coupon expired
-        if (!empty($coupon[0]['expire_date']) && strtotime($coupon[0]['expire_date']) < strtotime('now')) return false;
-
-        // Assigned to user
-        if (!empty($coupon['Coupon']['assigned_to']) && strcasecmp($email, $coupon['Coupon']['assigned_to'])!=0) return false;
-
-        // Coupon redeemed
-        if ($this->redeemed($email, $code)) return false;
-
-        // Coupon available
-        if ($this->available($coupon) < 1) return false;
-
-        // Minimum order met
-        if ($coupon['Coupon']['minimum_order'] && (float)$coupon['Coupon']['minimum_order'] > $subTotal) return false;
-
-        // Coupon smaller than total
-        if (strcasecmp($coupon['Coupon']['type'], 'fixed')==0 && $coupon['Coupon']['amount'] >= $subTotal + $shipping) return false;
-
+        switch($coupon) {
+            // Coupon archived
+            case empty($coupon):
+            // Assigned to user
+            case !empty($coupon['Coupon']['assigned_to']) && strcasecmp($email, $coupon['Coupon']['assigned_to']):
+            // Coupon redeemed
+            case $this->redeemed($email, $code):
+            // Coupon available
+            case $this->available($coupon) < 1:
+                return array(
+                    'alert' => 'danger',
+                    'message' => 'This coupon is not valid.' 
+                );
+                break;
+            // Coupon expired
+            case (!empty($coupon[0]['expire_date']) && strtotime($coupon[0]['expire_date']) < strtotime('now')):
+                return array(
+                    'alert' => 'danger',
+                    'message' => 'This coupon is expired.'
+                );
+                break;
+            // Minimum order met
+            case $coupon['Coupon']['minimum_order'] && (float)$coupon['Coupon']['minimum_order'] > $subTotal:
+                return array(
+                    'alert' => 'info',
+                    'message' => 'You have not met the minimum order of $'.number_format($coupon['Coupon']['minimum_order'],2,'.',',').'.',
+                );
+                break;
+            case strcasecmp($coupon['Coupon']['type'], 'fixed')==0 && $coupon['Coupon']['amount'] >= $subTotal + $shipping:
+                return array(
+                    'alert' => 'info',
+                    'message' => 'Order total must be at least $'.number_format($coupon['Coupon']['amount'],2,'.',',').' in order to use this coupon.',
+                );
+                break;
+        }
+        
         return $coupon;
     }
 
