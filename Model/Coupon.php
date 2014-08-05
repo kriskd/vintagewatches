@@ -15,7 +15,7 @@ class Coupon extends AppModel {
 	public $displayField = 'code';
 
     public $virtualFields = array(
-        'available' => 'select total-count(c.id)
+        'available' => 'select total-count(o.coupon_id)
                         from coupons c
                         left join orders o
                         on o.coupon_id=c.id
@@ -208,22 +208,6 @@ class Coupon extends AppModel {
     }
 
     /**
-     * Get the number of coupons available for a code
-     * @param array The coupon array 
-     * @return int
-     */
-    public function available($coupon) {
-        $count = $this->Order->find('count', array(
-            'conditions' => array(
-                'Order.coupon_id' => $coupon['Coupon']['id'],
-            ),
-            'recursive' => -1,
-        ));
-
-        return $coupon['Coupon']['total'] - $count;
-    }
-
-    /**
      * Is coupon valid for the user
      * @return bool
      */
@@ -236,7 +220,7 @@ class Coupon extends AppModel {
                 'Coupon.archived' => 0,
             ),
             'fields' => array(
-                'id', 'code', 'type', 'amount', 'total', 'assigned_to', 'minimum_order', 'DATE(expire_date) AS expire_date', 'archived'
+                'id', 'code', 'type', 'amount', 'total', 'available', 'assigned_to', 'minimum_order', 'DATE(expire_date) AS expire_date', 'archived'
             ),
             'recursive' => -1
         ));
@@ -249,7 +233,7 @@ class Coupon extends AppModel {
             // Coupon redeemed
             case $this->redeemed($email, $code):
             // Coupon available
-            case $this->available($coupon) < 1:
+            case ($coupon['Coupon']['available']) < 1:
                 return array(
                     'alert' => 'danger',
                     'message' => 'This coupon is not valid.' 
