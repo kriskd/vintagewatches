@@ -107,7 +107,7 @@
             </div>
             <div class="row">
                 <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-xxs-8">
-                    <h5 class="text-center">To redeem a coupon enter your email and coupon code. Your new balance will be reflected.</h5>
+                    <h5 class="text-center <?php echo $couponsAvailable == false ? 'hidden' : ''; ?>">To redeem a coupon enter your email and coupon code. Your new balance will be reflected.</h5>
                 </div>
             </div>
             <div class="row coupon-fields <?php echo $couponsAvailable == false ? 'hidden' : ''; ?>">
