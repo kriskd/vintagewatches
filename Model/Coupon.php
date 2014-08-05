@@ -14,6 +14,15 @@ class Coupon extends AppModel {
  */
 	public $displayField = 'code';
 
+    public $virtualFields = array(
+        'available' => 'select total-count(c.id)
+                        from coupons c
+                        left join orders o
+                        on o.coupon_id=c.id
+                        where Coupon.id=c.id
+                        group by c.id' 
+    );
+    
 /**
  * Validation rules
  *
@@ -162,15 +171,10 @@ class Coupon extends AppModel {
         }
         unset($value); 
         foreach ($results as &$result) {
-            if (isset($result[$this->name])) { 
-                if (isset($result[$this->name]['total'])) { 
-                    $result[$this->name]['available'] = $this->available($result);
-                }
-                foreach ($result as $key => &$orders) { 
-                    if (strcasecmp($key, 'Order')==0) {
-                        foreach($orders as &$order) {
-                           $order = array_merge($orderFields, $order); 
-                        }
+            foreach ($result as $key => &$orders) { 
+                if (strcasecmp($key, 'Order')==0) {
+                    foreach($orders as &$order) {
+                       $order = array_merge($orderFields, $order); 
                     }
                 }
             }
