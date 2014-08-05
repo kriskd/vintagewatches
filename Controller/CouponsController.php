@@ -18,6 +18,7 @@ class CouponsController extends AppController {
 
     public $paginate = array(
         'order' => array(
+            'Coupon.archived' => 'ASC',
             'Coupon.id' => 'DESC',
         ),
     );
@@ -28,7 +29,7 @@ class CouponsController extends AppController {
  * @return void
  */
 	public function admin_index() {
-		$this->Coupon->recursive = 0;
+        $this->Paginator->settings = $this->paginate;
 		$this->set('coupons', $this->Paginator->paginate());
 	}
 
