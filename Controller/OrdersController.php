@@ -105,14 +105,20 @@ class OrdersController extends AppController
         }
 
         // Check if any coupons are available
-        // TODO add check for available count
         $couponsAvailable = false;
-        if ($this->Order->Coupon->find('count', array(
+        $coupons = $this->Order->Coupon->find('count', array(
             'conditions' => array(
                 'archived' => 0,
-                'expire_date >' => date('Y-m-d'),
+                'OR' => array(
+                    'expire_date' => NULL,
+                    'expire_date >' => date('Y-m-d'),
+                ),
+                'available >' =>  0,
             ),
-        )) > 0) {
+            'recursive' => -1,
+        ));
+        
+        if ($coupons > 0) {
             $couponsAvailable = true;
         }
         $this->set(compact('couponsAvailable'));
