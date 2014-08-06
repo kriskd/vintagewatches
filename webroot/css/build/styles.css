@@ -7085,7 +7085,7 @@ body.hide-fat-footer .container .content {
 .container .content a:active:not(.btn):not(.alert-link) {
   color: #665600;
 }
-.container .content a:hover:not(.btn) {
+.container .content a:hover:not(.btn):not(.alert-link) {
   color: #b29600;
 }
 .container .content .label-warning {
@@ -7881,9 +7881,6 @@ body.hide-fat-footer .container .content {
 }
 .container .content .orders .review-cart .choose-ship .tooltip-inner {
   width: 200px;
-}
-.container .content .orders .shipping .shipping-inner {
-  display: none;
 }
 .container .content .orders .shipping .shipping-inner input[type=radio] {
   margin-left: 0px;
