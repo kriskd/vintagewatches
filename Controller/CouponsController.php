@@ -29,7 +29,7 @@ class CouponsController extends AppController {
  * @return void
  */
 	public function admin_index() {
-        $this->Coupon->recursive = -1;
+        $this->Coupon->contain = array('Brand');
         $this->Paginator->settings = $this->paginate;
 		$this->set('coupons', $this->Paginator->paginate());
 	}

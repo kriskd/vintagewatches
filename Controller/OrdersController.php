@@ -330,7 +330,7 @@ class OrdersController extends AppController
             $this->Cart->setShipping($shipping);
             $subTotal = $this->Order->getSubTotal($this->cartWatches); 
             $couponAmount = 0;
-            $coupon = $this->Order->Coupon->valid($code, $email, $subTotal, $shipping);
+            $coupon = $this->Order->Coupon->valid($code, $email, $subTotal, $shipping, $this->cartItemIds);
             if (isset($coupon['Coupon'])) {
                 switch ($coupon['Coupon']['type']) {
                 case 'fixed':

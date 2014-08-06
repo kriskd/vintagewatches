@@ -151,6 +151,13 @@ class Coupon extends AppModel {
 		)
 	);
 
+    public $belongsTo = array(
+        'Brand' => array(
+            'className' => 'Brand',
+            'foreignKey' => 'brand_id',
+        )
+    );
+
     public function beforeSave($options = array()) {
         if (isset($this->data['Coupon']['code'])) {
             $this->data['Coupon']['code'] = strtolower($this->data['Coupon']['code']);
@@ -190,6 +197,7 @@ class Coupon extends AppModel {
         $count = $this->find('count', array(
             'conditions' => array(
                 'Coupon.code' => $code,
+                'Coupon.archived' => 0,
                 'Order.email' => $email,
             ),
             'joins' => array(
@@ -204,6 +212,7 @@ class Coupon extends AppModel {
             ),
             'recursive' => -1,
         ));
+        
         return (bool) $count;
     }
 
@@ -211,7 +220,7 @@ class Coupon extends AppModel {
      * Is coupon valid for the user
      * @return bool
      */
-    public function valid($code, $email, $subTotal, $shipping) {
+    public function valid($code, $email, $subTotal, $shipping, $cartItemIds) {
         if (empty($code) || empty($email)) return false;
 
         $coupon = $this->find('first', array(
@@ -220,48 +229,82 @@ class Coupon extends AppModel {
                 'Coupon.archived' => 0,
             ),
             'fields' => array(
-                'id', 'code', 'type', 'amount', 'total', 'available', 'assigned_to', 'minimum_order', 'DATE(expire_date) AS expire_date', 'archived'
+                'id', 'code', 'type', 'amount', 'total', 'available', 'assigned_to', 'minimum_order', 'DATE(expire_date) AS expire_date', 'brand_id', 'archived'
             ),
             'recursive' => -1
         ));
-
-        switch($coupon) {
+        
+        if (
             // Coupon archived
-            case empty($coupon):
-            // Assigned to user
-            case !empty($coupon['Coupon']['assigned_to']) && strcasecmp($email, $coupon['Coupon']['assigned_to']):
-            // Coupon redeemed
-            case $this->redeemed($email, $code):
-            // Coupon available
-            case ($coupon['Coupon']['available']) < 1:
-                return array(
-                    'alert' => 'danger',
-                    'message' => 'This coupon is not valid.' 
-                );
-                break;
-            // Coupon expired
-            case (!empty($coupon[0]['expire_date']) && strtotime($coupon[0]['expire_date']) < strtotime('now')):
-                return array(
-                    'alert' => 'danger',
-                    'message' => 'This coupon is expired.'
-                );
-                break;
-            // Minimum order met
-            case $coupon['Coupon']['minimum_order'] && (float)$coupon['Coupon']['minimum_order'] > $subTotal:
+            empty($coupon) ||
+            // Not assigned to user
+            (!empty($coupon['Coupon']['assigned_to']) && strcasecmp($email, $coupon['Coupon']['assigned_to'])!=0) ||
+            // User already redeemed coupon
+            $this->redeemed($email, $code) ||
+            // Coupon not available
+            $coupon['Coupon']['available'] < 1
+        ) {
+            return array(
+                'alert' => 'danger',
+                'message' => 'This coupon is not valid.' 
+            );
+        }
+
+        // Coupon expired
+        if (!empty($coupon[0]['expire_date']) && strtotime($coupon[0]['expire_date']) < strtotime('now')) {
+            return array(
+                'alert' => 'danger',
+                'message' => 'This coupon is expired.'
+            );
+        }
+       
+        // Coupon not for right brand
+        if (!empty($coupon['Coupon']['brand_id'])) {
+            $cartWatchesForBrand = $this->Order->Watch->find('list', array(
+                'conditions' => array(
+                    'Watch.brand_id' => $coupon['Coupon']['brand_id'],
+                    'Watch.active' => 1,
+                    'Watch.id' => $cartItemIds,
+                ),
+                'fields' => array(
+                    'Watch.price'
+                ),
+                'recursive' => -1,
+            ));
+            $this->Brand->id = $coupon['Coupon']['brand_id'];
+            $brandName = $this->Brand->field('name');
+            if (empty($cartWatchesForBrand)) {
                 return array(
                     'alert' => 'info',
-                    'message' => 'You have not met the minimum order of $'.number_format($coupon['Coupon']['minimum_order'],2,'.',',').'.',
+                    'message' => 'Order must include at least one '.$brandName.' watch.',
                 );
-                break;
-            // Coupon less than total order amount
-            case strcasecmp($coupon['Coupon']['type'], 'fixed')==0 && $coupon['Coupon']['amount'] >= $subTotal + $shipping:
+            }
+            
+            $totalForBrand = array_sum($cartWatchesForBrand);
+            if (strcasecmp($coupon['Coupon']['type'], 'fixed')==0 && $coupon['Coupon']['amount'] >= $totalForBrand) {
                 return array(
                     'alert' => 'info',
-                    'message' => 'Order total must be at least $'.number_format($coupon['Coupon']['amount'],2,'.',',').' in order to use this coupon.',
+                    'message' => 'Total of '.$brandName.' watch(es) must be at least $'.number_format($coupon['Coupon']['amount'],2,'.',',').' in order to use this coupon.',
                 );
-                break;
+            }
+        }
+
+        // Minimum order not met
+        if ($coupon['Coupon']['minimum_order'] && (float)$coupon['Coupon']['minimum_order'] > $subTotal) {
+            return array(
+                'alert' => 'info',
+                'message' => 'You have not met the minimum order of $'.number_format($coupon['Coupon']['minimum_order'],2,'.',',').'.',
+            );
         }
         
+        // Coupon more than total order amount
+        if (strcasecmp($coupon['Coupon']['type'], 'fixed')==0 && $coupon['Coupon']['amount'] >= $subTotal + $shipping) {
+            return array(
+                'alert' => 'info',
+                'message' => 'Order total must be at least $'.number_format($coupon['Coupon']['amount'],2,'.',',').' in order to use this coupon.',
+            );
+        }
+            
         return $coupon;
     }
 

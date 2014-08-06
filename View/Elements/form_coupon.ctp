@@ -39,15 +39,20 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                <?php echo $this->Form->input('brand_id', array(
+                    'options' => array('' => 'Select One') + $brandsWithWatches, // Don't use array_merge here because keys get reset
+                )); ?>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                 <?php echo $this->Form->input('assigned_to'); ?>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                 <?php echo $this->Form->input('minimum_order', array(
                     'label' => 'Minimum Order Amount',
                 )); ?>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                 <?php echo $this->Form->input('expire_date', array(
                     'type' => 'text'
                 )); ?>

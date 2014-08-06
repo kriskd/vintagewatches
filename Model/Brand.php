@@ -52,7 +52,12 @@ class Brand extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
-		)
+        ),
+        'Coupon' => array(
+            'className' => 'Coupon',
+            'foreignKey' => 'brand_id',
+            'dependent' => false,
+        ),
 	);
         
         public function checkDelete($check)

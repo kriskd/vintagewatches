@@ -42,6 +42,11 @@
 			<?php echo h($coupon['Coupon']['assigned_to']); ?>
 			&nbsp;
 		</dd>
+		<dt><?php echo __('Brand'); ?></dt>
+		<dd>
+			<?php echo h($coupon['Brand']['name']); ?>
+			&nbsp;
+		</dd>
 		<dt><?php echo __('Minimum Order'); ?></dt>
 		<dd>
 			<?php echo h($coupon['Coupon']['minimum_order']); ?>

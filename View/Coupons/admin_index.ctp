@@ -17,6 +17,7 @@
 			<span class="table-head"><?php echo $this->Paginator->sort('type'); ?></span>
 			<span class="table-head"><?php echo $this->Paginator->sort('amount'); ?></span>
 			<span class="table-head"><?php echo $this->Paginator->sort('assigned_to'); ?></span>
+			<span class="table-head"><?php echo $this->Paginator->sort('Brand.name', 'Brand'); ?></span>
 			<span class="table-head"><?php echo $this->Paginator->sort('minimum_order'); ?></span>
 			<span class="table-head"><?php echo $this->Paginator->sort('expire_date'); ?></span>
         </div>
@@ -39,6 +40,7 @@
             <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['type']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['amount']), array('class' => 'table-cell text-right')); ?>
             <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['assigned_to']), array('class' => 'table-cell')); ?>
+            <?php $row .= $this->Html->tag('span',  h($coupon['Brand']['name']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['minimum_order']), array('class' => 'table-cell text-right')); ?>
             <?php $row .= $this->Html->tag('span',  h($coupon['Coupon']['expire_date']), array('class' => 'text-center table-cell')); ?>
             <?php echo $this->Html->link($row, array('action' => 'admin_view', $coupon['Coupon']['id'], 'admin' => true), array('class' => 'table-row', 'escape' => false)); ?>
