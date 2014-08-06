@@ -402,8 +402,7 @@ class OrdersController extends AppController
     /**
      * Get country based on state or province
      */
-    public function getCountry()
-    {
+    public function getCountry() {
         if($this->request->is('ajax')){
             $data = $this->request->query['data'];
             $type = key($data['Address']);
@@ -415,6 +414,15 @@ class OrdersController extends AppController
             $country = (isset($states[$state]) ? 'US' : (isset($provinces[$state]) ? 'CA' : ''));
 
             $this->set(array('data' => compact('country', 'type')));
+            $this->layout = 'ajax';
+        }
+    }
+
+    /**
+     * Block for customer to choose billing/shipping same or different
+     */
+    public function getShippingChoice() {
+        if ($this->request->is('ajax')) {
             $this->layout = 'ajax';
         }
     }

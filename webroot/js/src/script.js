@@ -134,8 +134,9 @@ $(document).ready(function(){
     if ($('.select-country input:radio').is(':checked')) {
         var country = $('.select-country input:radio:checked').val();
         computeTotal();
-        $('.shipping').removeClass('hide').addClass('show');
-        $('.shipping-inner').show();
+        getShippingChoice();
+        //$('.shipping').removeClass('hide').addClass('show');
+        //$('.shipping-inner').show();
     }
     
     /**
@@ -151,11 +152,25 @@ $(document).ready(function(){
         //Disable submit 
         $('.submit-payment').attr('disabled', 'disabled');
         //Show shipping block
-        $('.shipping').removeClass('hide').addClass('show');
+        //$('.shipping').removeClass('hide').addClass('show');
+        if ($('.checkout .shipping').is(':empty')) {
+          getShippingChoice();
+        }
         //Hide address and credit card blocks
         $('.address').removeClass('show').addClass('hide');
         $('.credit-card-order').removeClass('show').addClass('hide');
     });
+
+    function getShippingChoice() {
+      $.ajax({
+        url: '/orders/getShippingChoice',
+        dataType: 'html',
+        success: function(data) {
+          $('.checkout .shipping').html(data).find('.launch-tooltip').tooltip();
+;
+        }
+      });
+    }
 
     $('.cart-details').on('change', 'input', function() {
       computeTotal();
@@ -205,20 +220,21 @@ $(document).ready(function(){
             $('.cart-details .coupon-alert').empty();
           }
           $('.total-formatted-amount').empty().append(totalFormatted);
-          $('.shipping-inner').show();
+          //$('.shipping-inner').show();
         }
       });
     }
-    
-    $('.shipping .radio input').change(function(){
-        //Enable the submit button
-        $('.submit-payment').prop('disabled', false);
-        var country = $('.select-country input:radio:checked').val();
-        var shippingOption = $(this).val(); 
-        getAddressForm(country, shippingOption);
-        //Show address and credit card blocks
-        $('.address').removeClass('hide').addClass('show');
-        $('.credit-card-order').removeClass('hide').addClass('show');
+   
+    // Show address fields on shipping option select
+    $(document).on('change', '.shipping .radio input', function(){
+      //Enable the submit button
+      $('.submit-payment').prop('disabled', false);
+      var country = $('.select-country input:radio:checked').val();
+      var shippingOption = $(this).val(); 
+      getAddressForm(country, shippingOption);
+      //Show address and credit card blocks
+      $('.address').removeClass('hide').addClass('show');
+      $('.credit-card-order').removeClass('hide').addClass('show');
     });
     
     // Only for checkout page
