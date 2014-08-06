@@ -7081,11 +7081,11 @@ body.hide-fat-footer .container .content {
 }
 .container .content a:link:not(.btn):not(.alert-link),
 .container .content a:visited:not(.btn):not(.alert-link),
-.container .content a:hover:not(.alert-link),
+.container .content a:hover:not(.alert-link):not(.btn-primary):not(.btn-success):not(.btn-danger),
 .container .content a:active:not(.btn):not(.alert-link) {
   color: #665600;
 }
-.container .content a:hover:not(.btn):not(.alert-link) {
+.container .content a:hover:not(.btn-primary):not(.btn-success):not(.btn-danger):not(.alert-link) {
   color: #b29600;
 }
 .container .content .label-warning {

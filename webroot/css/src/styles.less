@@ -349,10 +349,10 @@ body.hide-fat-footer {
     .content {
         .clearfix();
         margin-bottom: 255px;
-        a:link:not(.btn):not(.alert-link), a:visited:not(.btn):not(.alert-link), a:hover:not(.alert-link), a:active:not(.btn):not(.alert-link) {
+        a:link:not(.btn):not(.alert-link), a:visited:not(.btn):not(.alert-link), a:hover:not(.alert-link):not(.btn-primary):not(.btn-success):not(.btn-danger), a:active:not(.btn):not(.alert-link) {
             color: @goldDark;
         }
-        a:hover:not(.btn):not(.alert-link) {
+        a:hover:not(.btn-primary):not(.btn-success):not(.btn-danger):not(.alert-link) {
             color: @gold;
         }
         .label-warning {
