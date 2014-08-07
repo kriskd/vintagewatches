@@ -335,7 +335,7 @@ class OrdersController extends AppController
                 $couponSubTotal = empty($coupon['Coupon']['brand_id']) ? $subTotal : $this->Order->Watch->sumWatchesForBrand($coupon['Coupon']['brand_id'], $this->cartItemIds);
                 switch ($coupon['Coupon']['type']) {
                     case 'fixed':
-                        $couponAmount = $couponSubTotal + $shipping > $coupon['Coupon']['amount'] ? $coupon['Coupon']['amount'] : $subTotal + $shipping;
+                        $couponAmount = $couponSubTotal + $shipping > $coupon['Coupon']['amount'] ? $coupon['Coupon']['amount'] : $couponSubTotal + $shipping;
                         break;
                     case 'percentage':
                         $couponAmount = $couponSubTotal * $coupon['Coupon']['amount'];
