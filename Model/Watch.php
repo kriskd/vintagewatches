@@ -243,4 +243,30 @@ class Watch extends AppModel {
         }
         return null;
     }
+    
+   /**
+    * Return the total price of watches in by brand
+    * @param int $brand_id
+    * @param array $watchIds
+    */ 
+    public function sumWatchesForBrand($brand_id, $watchIds) {
+        $watchesForBrandSum = $this->find('all', array(
+            'conditions' => array(
+                'Watch.brand_id' => $brand_id,
+                'Watch.active' => 1,
+                'Watch.id' => $watchIds,
+            ),
+            'fields' => array(
+                'sum(Watch.price)'
+            ),
+            'recursive' => -1,
+        ));
+        
+        while (is_array($watchesForBrandSum)) {
+            $watchesForBrandSum = current($watchesForBrandSum);
+        }
+
+        return $watchesForBrandSum;
+    }
+    
 }

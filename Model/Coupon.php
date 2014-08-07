@@ -260,28 +260,17 @@ class Coupon extends AppModel {
        
         // Coupon not for right brand
         if (!empty($coupon['Coupon']['brand_id'])) {
-            $cartWatchesForBrand = $this->Order->Watch->find('list', array(
-                'conditions' => array(
-                    'Watch.brand_id' => $coupon['Coupon']['brand_id'],
-                    'Watch.active' => 1,
-                    'Watch.id' => $cartItemIds,
-                ),
-                'fields' => array(
-                    'Watch.price'
-                ),
-                'recursive' => -1,
-            ));
+            $total = $this->Order->Watch->sumWatchesForBrand($coupon['Coupon']['brand_id'], $cartItemIds);
             $this->Brand->id = $coupon['Coupon']['brand_id'];
             $brandName = $this->Brand->field('name');
-            if (empty($cartWatchesForBrand)) {
+            if (empty($total)) {
                 return array(
                     'alert' => 'info',
                     'message' => 'Order must include at least one '.$brandName.' watch.',
                 );
             }
             
-            $totalForBrand = array_sum($cartWatchesForBrand);
-            if (strcasecmp($coupon['Coupon']['type'], 'fixed')==0 && $coupon['Coupon']['amount'] >= $totalForBrand) {
+            if (strcasecmp($coupon['Coupon']['type'], 'fixed')==0 && $coupon['Coupon']['amount'] >= $total) {
                 return array(
                     'alert' => 'info',
                     'message' => 'Total of '.$brandName.' watch(es) must be at least $'.number_format($coupon['Coupon']['amount'],2,'.',',').' in order to use this coupon.',
