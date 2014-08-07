@@ -332,15 +332,13 @@ class OrdersController extends AppController
             $couponAmount = 0;
             $coupon = $this->Order->Coupon->valid($code, $email, $subTotal, $shipping, $this->cartItemIds);
             if (isset($coupon['Coupon'])) {
-                if (!empty($coupon['Coupon']['brand_id'])) {
-                    $subTotal = $this->Order->Watch->sumWatchesForBrand($coupon['Coupon']['brand_id'], $this->cartItemIds);
-                }
+                $couponSubTotal = empty($coupon['Coupon']['brand_id']) ? $subTotal : $this->Order->Watch->sumWatchesForBrand($coupon['Coupon']['brand_id'], $this->cartItemIds);
                 switch ($coupon['Coupon']['type']) {
                     case 'fixed':
-                        $couponAmount = $subTotal + $shipping > $coupon['Coupon']['amount'] ? $coupon['Coupon']['amount'] : $subTotal + $shipping;
+                        $couponAmount = $couponSubTotal + $shipping > $coupon['Coupon']['amount'] ? $coupon['Coupon']['amount'] : $subTotal + $shipping;
                         break;
                     case 'percentage':
-                        $couponAmount = $subTotal * $coupon['Coupon']['amount'];
+                        $couponAmount = $couponSubTotal * $coupon['Coupon']['amount'];
                         break;
                 }
                 $this->set(array(
