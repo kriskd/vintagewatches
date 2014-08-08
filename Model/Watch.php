@@ -172,6 +172,22 @@ class Watch extends AppModel {
     }
 
     /**
+     * Is watch part of an order
+     * @return bool
+     */
+    public function hasOrder($id) {
+        $options = array(
+            'conditions' => array(
+                'Watch.' . $this->primaryKey => $id,
+            ),
+            'contain' => array(
+                'Order'	
+            )
+        );
+        return (bool) $this->find('first', $options);
+    }
+
+    /**
      * $count Number of watches to return
      * $image If watch image is required to exist
      */
@@ -213,13 +229,13 @@ class Watch extends AppModel {
     public function storeOpen()
     {
         $watchCount = $this->find('count', array(
-                'conditions' => array(
-                    'active' => 1,
-                    'order_id' => null
-                ),
-                'recursive' => -1
-            )
-        );
+            'conditions' => array(
+                'active' => 1,
+                'order_id' => null
+            ),
+            'recursive' => -1
+        )
+    );
 
         return $watchCount > 0 ? true : false;
     }
@@ -243,12 +259,12 @@ class Watch extends AppModel {
         }
         return null;
     }
-    
-   /**
-    * Return the total price of watches in by brand
-    * @param int $brand_id
-    * @param array $watchIds
-    */ 
+
+    /**
+     * Return the total price of watches in by brand
+     * @param int $brand_id
+     * @param array $watchIds
+     */ 
     public function sumWatchesForBrand($brand_id, $watchIds) {
         $watchesForBrandSum = $this->find('all', array(
             'conditions' => array(
@@ -261,12 +277,12 @@ class Watch extends AppModel {
             ),
             'recursive' => -1,
         ));
-        
+
         while (is_array($watchesForBrandSum)) {
             $watchesForBrandSum = current($watchesForBrandSum);
         }
 
         return $watchesForBrandSum;
     }
-    
+
 }
