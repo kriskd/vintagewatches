@@ -178,10 +178,12 @@ class Coupon extends AppModel {
         }
         unset($value); 
         foreach ($results as &$result) {
-            foreach ($result as $key => &$orders) { 
-                if (strcasecmp($key, 'Order')==0) {
-                    foreach($orders as &$order) {
-                       $order = array_merge($orderFields, $order); 
+            if (is_array($result)) {
+                foreach ($result as $key => &$orders) { 
+                    if (strcasecmp($key, 'Order')==0) {
+                        foreach($orders as &$order) {
+                           $order = array_merge($orderFields, $order); 
+                        }
                     }
                 }
             }

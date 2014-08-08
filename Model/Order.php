@@ -165,14 +165,14 @@ class Order extends AppModel {
         $options['contain'] = array('Address',
             'Watch' => array(
                 'fields' => array(
-                    'id', 'order_id', 'stockId', 'price', 'name',
+                    'id', 'order_id', 'Watch.brand_id', 'stockId', 'price', 'name',
                 ),
                 'Image'
             ),
             'Payment',
             'Coupon' => array(
                 'fields' => array(
-                    'Coupon.code', 'Coupon.type', 'Coupon.amount',
+                    'Coupon.code', 'Coupon.type', 'Coupon.amount', 'Coupon.brand_id',
                 ),
             ),
         );
