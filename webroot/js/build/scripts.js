@@ -6294,8 +6294,6 @@ var datepicker = $.datepicker;
         var country = $('.select-country input:radio:checked').val();
         computeTotal();
         getShippingChoice();
-        //$('.shipping').removeClass('hide').addClass('show');
-        //$('.shipping-inner').show();
     }
     
     /**
@@ -6326,7 +6324,9 @@ var datepicker = $.datepicker;
         dataType: 'html',
         success: function(data) {
           $('.checkout .shipping').html(data).find('.launch-tooltip').tooltip();
-;
+          if ($('.shipping .radio input').is(':checked')) { 
+            showAddressAndPayment();
+          }
         }
       });
     }
@@ -6398,25 +6398,29 @@ var datepicker = $.datepicker;
     
     // Only for checkout page
     if ($('.shipping .radio input').length>1) {
-            if ($('.shipping .radio input').is(':checked')) { 
-            //Enable submit button if shipping option selected
-            $('.submit-payment').prop('disabled', false);
-            var country = $('.select-country input:radio:checked').val();
-            var shippingOption = $('.shipping .radio input:radio:checked').val();
-            getAddressForm(country, shippingOption);
-            //Show address and credit card blocks
-            $('.address').removeClass('hide').addClass('show');
-            $('.credit-card-order').removeClass('hide').addClass('show');
-        }
-        else { 
-            //Hide special order instructions
-            $('.shipping-instructions').hide();
-            //Disable submit if no shipping option selected
-            $('.submit-payment').attr('disabled', 'disabled');
-            //Hide address and credit card blocks
-            $('.address').removeClass('show').addClass('hide');
-            $('.credit-card-order').removeClass('show').addClass('hide');
-        }
+      if ($('.shipping .radio input').is(':checked')) { 
+        showAddressAndPayment();
+      }
+      else { 
+        //Hide special order instructions
+        $('.shipping-instructions').hide();
+        //Disable submit if no shipping option selected
+        $('.submit-payment').attr('disabled', 'disabled');
+        //Hide address and credit card blocks
+        $('.address').removeClass('show').addClass('hide');
+        $('.credit-card-order').removeClass('show').addClass('hide');
+      }
+    }
+
+    function showAddressAndPayment() {
+        //Enable submit button if shipping option selected
+        $('.submit-payment').prop('disabled', false);
+        var country = $('.select-country input:radio:checked').val();
+        var shippingOption = $('.shipping .radio input:radio:checked').val();
+        getAddressForm(country, shippingOption);
+        //Show address and credit card blocks
+        $('.address').removeClass('hide').addClass('show');
+        $('.credit-card-order').removeClass('hide').addClass('show');
     }
     
     /**

@@ -168,7 +168,22 @@ class OrdersController extends AppController
                 //There is no data to checkout with
                 $this->redirect(array('controller' => 'watches', 'action' => 'index'));
             }
-
+            
+            // Check that watches are still active
+            $activeWatches = array_filter($this->cartWatches, function($item) {
+                return $item['Watch']['active'] == 1;
+            });
+            if (count($activeWatches) != $this->Cart->cartItemCount()) {
+                $activeIds = Hash::extract($activeWatches, '{n}.Watch.id');
+                $remove = array_diff($this->cartItemIds, $activeIds);
+                foreach ($remove as $id) {
+                    $this->Cart->remove($id);
+                }
+                $this->Session->write('Address', array('data' => $addresses));
+                $this->Session->setFlash('One or more of the items in your cart is no longer available.', 'warning');
+                $this->redirect(array('action' => 'checkout'));
+            }
+            
             //Add shipping to the order
             $data['Order']['shippingAmount'] = $this->Cart->getShipping();
             unset($data['Coupon']);
@@ -262,6 +277,7 @@ class OrdersController extends AppController
                 $this->Address->validationErrors = $fixErrors;
 
                 $this->Session->write('Address', array('errors' => $fixErrors, 'data' => $addresses));
+                $this->Session->write('Shipping.option',  $this->request->data['Shipping']['option']);
 
                 //Set a variable for the view to display a general error message
                 $this->set(array('errors' => true));
@@ -423,6 +439,9 @@ class OrdersController extends AppController
      */
     public function getShippingChoice() {
         if ($this->request->is('ajax')) {
+            if ($this->Session->check('Shipping.option')) {
+                $this->request->data['Shipping']['option'] = $this->Session->read('Shipping.option');
+            }
             $this->layout = 'ajax';
         }
     }
