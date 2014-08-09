@@ -15,8 +15,6 @@ class UsersController extends AppController
     
     public function login()
     {
-        $this->secure();
-        
         if($this->Auth->user() == true){ 
             $this->redirect($this->Auth->redirectUrl());
         }
@@ -34,8 +32,6 @@ class UsersController extends AppController
     
     public function logout()
     {
-        // Add session destroy because on prod the redirect alone not working perhaps due to https
-        $this->Session->destroy('Auth');
         $this->redirect($this->Auth->logout());
     }
     

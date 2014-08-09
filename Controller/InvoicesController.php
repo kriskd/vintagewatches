@@ -76,8 +76,6 @@ class InvoicesController extends AppController {
  */
 	public function pay($slug = null) {
 		
-		$this->secure();
-		
 		$invoice = $this->Invoice->find('first', array(
 								'conditions' => compact('slug'),
 								'contain' => array('InvoiceItem', 'Address')

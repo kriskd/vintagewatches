@@ -98,7 +98,6 @@ class OrdersController extends AppController
     }
 
     public function checkout() {
-        $this->secure();
 
         if($this->Cart->cartEmpty() == true){
             $this->redirect(array('controller' => 'watches', 'action' => 'index'));
