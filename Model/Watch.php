@@ -127,7 +127,7 @@ class Watch extends AppModel {
     {
         return $this->find('all', array(
             'conditions' => array('Watch.id' => $ids),
-            'fields' => array('id', 'stockId', 'price', 'name'),
+            'fields' => array('id', 'stockId', 'price', 'name', 'active'),
             'contain' => array(
                 'Brand' => array('fields' => 'name'),
                 'Image'
