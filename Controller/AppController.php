@@ -123,21 +123,9 @@ class AppController extends Controller {
     
     public function beforeFilter()
     {
-        $secure = array('invoices/getLineItem', 'watches/active', 'contacts/deleteModal', 'users/login', 'orders/checkout', 'orders/totalCart.json', 'orders/getAddress.html', 'orders/getCountry.json', 'orders/checkout.json');
-        $here = trim($this->here, '/'); 
-        
-        //Redirect to non-secure if https, not on checkout, not invoice or admin
-        if (prod() == true && (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS'])=='on') &&
-            (!in_array($here, $secure) && !preg_match('/[a-z0-9]{32}/', $here) && !preg_match('/invoices\/getLineItem\/\d+/', $here)) &&
-            empty($this->request->params['admin'])) {
-	    $this->redirect('http://' . env('SERVER_NAME') . $this->here);
-	}
-        
-        //Make admin pages secure
-        if (prod() == true && (!isset($_SERVER['HTTPS']) || !$_SERVER['HTTPS']) && !empty($this->request->params['admin'])) {
-            $this->redirect('https://' . env('SERVER_NAME') . $this->here);
-        }
-        
+        // All pages are now secure
+        $this->secure();
+
         $this->route = Router::parse($this->here); 
         
         //Logged in

@@ -9,8 +9,12 @@ $(document).ready(function(){
     $(document).on('click', '.fake-upload', function(){
         $('.image-upload').click();
     });
-    
+
     $('#OrderShipDate, #InvoiceShipDate, #InvoiceExpiration').datepicker({dateFormat: 'yy-mm-dd'});
+    $('#CouponExpireDate').datepicker({
+      dateFormat: 'yy-mm-dd',
+      minDate: new Date()
+    });
     
     //Disable and enable filter input field based on filter option
     orderAdmin($('.admin-index select').val());
@@ -40,7 +44,30 @@ $(document).ready(function(){
             type: 'post'
         });
     });
-    
+
+    $('.admin-index .archive-coupon').on('click', function() {
+      $('.alert-danger').remove();
+      var selected = $(this);
+      var value = 0;
+      if ($(this).is(':checked')) {
+        value = 1;
+      }
+      var couponid = $(this).data('couponid');
+      var couponcode = $(this).data('couponcode');
+      $.ajax({
+        url: '/coupons/archive',
+        data: {'archived': value, 'couponid' : couponid, 'couponcode' : couponcode },
+        dataType: 'json',
+        type: 'post',
+        success: function(data) {
+          if(data.msg != 'undefined' && data.msg.length > 0) {
+            $('.content').prepend('<div class="alert alert-danger">'+data.msg+'</div>');
+            selected.prop('checked', 'checked');
+          }
+        }
+      });
+    });
+
     //Set position of indicators on homepage carousel, not a perfect solution
     setHomeCarouselImageHeight();
     $(window).on('resize', function(){
@@ -106,8 +133,10 @@ $(document).ready(function(){
      */
     if ($('.select-country input:radio').is(':checked')) {
         var country = $('.select-country input:radio:checked').val();
-        computeTotal(country);
-        $('.shipping').removeClass('hide').addClass('show');
+        computeTotal();
+        getShippingChoice();
+        //$('.shipping').removeClass('hide').addClass('show');
+        //$('.shipping-inner').show();
     }
     
     /**
@@ -122,44 +151,90 @@ $(document).ready(function(){
         $('.shipping-instructions').hide();
         //Disable submit 
         $('.submit-payment').attr('disabled', 'disabled');
-        //Display correcting address form and shipping amount based on country
-        var country = $(this).val();
-        computeTotal(country);
         //Show shipping block
-        $('.shipping').removeClass('hide').addClass('show');
+        //$('.shipping').removeClass('hide').addClass('show');
+        if ($('.checkout .shipping').is(':empty')) {
+          getShippingChoice();
+        }
         //Hide address and credit card blocks
         $('.address').removeClass('show').addClass('hide');
         $('.credit-card-order').removeClass('show').addClass('hide');
     });
 
-    /**
-     * Compute shipping and total based on country
-     */
-    function computeTotal(country) {
-        $.ajax({
-            url: '/orders/totalCart.json',
-            data: {"country" : country},
-            dataType: 'json',
-            cache: false,
-            success: function(data){
-                var shipping = data.shipping;
-                var totalFormatted = data.totalFormatted;
-                $('.shipping-amount').empty().append(shipping).find('.launch-tooltip').tooltip();
-                $('.total-formatted-amount').empty().append(totalFormatted);
-                $('.shipping-inner').show();
-            }
-        });
+    function getShippingChoice() {
+      $.ajax({
+        url: '/orders/getShippingChoice',
+        dataType: 'html',
+        success: function(data) {
+          $('.checkout .shipping').html(data).find('.launch-tooltip').tooltip();
+;
+        }
+      });
     }
-    
-    $('.shipping .radio input').change(function(){
-        //Enable the submit button
-        $('.submit-payment').prop('disabled', false);
-        var country = $('.select-country input:radio:checked').val();
-        var shippingOption = $(this).val(); 
-        getAddressForm(country, shippingOption);
-        //Show address and credit card blocks
-        $('.address').removeClass('hide').addClass('show');
-        $('.credit-card-order').removeClass('hide').addClass('show');
+
+    $('.cart-details').on('change', 'input', function() {
+      computeTotal();
+    });
+
+    /**
+     * Coupon and Order email need to be the same
+     */
+    $('#CouponEmail').on('keyup', function() {
+      var couponEmail = $(this).val();
+      if (couponEmail.length > 0) {
+        $('#OrderEmail').val(couponEmail); 
+      }
+    });
+    // Only set Coupon email based on order email if Coupon email not empty
+      $('#OrderEmail').on('keyup', function() {
+        var couponEmail = $('#CouponEmail').val();
+        if (couponEmail.length > 0) {
+          var orderEmail = $(this).val();
+          $('#CouponEmail').val(orderEmail);
+          computeTotal();
+        }
+      });
+
+    /**
+     * Compute shipping,coupon amount and total
+     */
+    function computeTotal() {
+      $.ajax({
+        url: '/orders/totalCart.json',
+        data: $('#OrderCheckoutForm').serialize(),
+        dataType: 'json',
+        cache: false,
+        success: function(data){
+          var shipping = data.shipping;
+          var totalFormatted = data.totalFormatted;
+          var couponAmount = data.couponAmount;
+          var message = data.alert;
+          $('.shipping-amount').empty().append(shipping).find('.launch-tooltip').tooltip();
+          $('.coupon-amount').empty();
+          if (typeof(couponAmount) != 'undefined' && couponAmount !== null) {
+            $('.coupon-amount').append('('+data.couponFormatted+')');
+          }
+          if ($('#CouponEmail').val().length>0 && $('#CouponCode').val().length>0 && (typeof(couponAmount)=='undefined' || couponAmount == null)) {
+            $('.cart-details .coupon-alert').empty().append(message);
+          } else {
+            $('.cart-details .coupon-alert').empty();
+          }
+          $('.total-formatted-amount').empty().append(totalFormatted);
+          //$('.shipping-inner').show();
+        }
+      });
+    }
+   
+    // Show address fields on shipping option select
+    $(document).on('change', '.shipping .radio input', function(){
+      //Enable the submit button
+      $('.submit-payment').prop('disabled', false);
+      var country = $('.select-country input:radio:checked').val();
+      var shippingOption = $(this).val(); 
+      getAddressForm(country, shippingOption);
+      //Show address and credit card blocks
+      $('.address').removeClass('hide').addClass('show');
+      $('.credit-card-order').removeClass('hide').addClass('show');
     });
     
     // Only for checkout page
@@ -350,6 +425,30 @@ $(document).ready(function(){
         return false;
     });
     
+    //Delete coupon
+    $(document).on('click', '.delete-coupon', function(e) {
+        var couponId = $(this).data('coupon');
+        var couponCode = $(this).data('code');
+        $.ajax({
+            url: '/coupons/deleteModal',
+            dataType: 'html',
+            data: {'couponId' : couponId, 'couponCode' : couponCode},
+            type: 'post',
+            cache: false,
+            success: function(data){
+                $('body').append(data);
+                $('#delete-coupon').modal();
+            }
+        });
+        return false;
+    });
+
+    //Format coupon amount to 2 decimal places
+    $('#CouponAmount').on('blur', function() {
+      var val = $(this).val();
+      $(this).val(parseFloat(Math.round(val * 100) / 100).toFixed(2));
+    });
+
     //Disable submit button on click
     $(document).on('click', '.fake-contact-submit', function() { 
         $(this).prop('disabled', true);

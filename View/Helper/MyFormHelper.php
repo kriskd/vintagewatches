@@ -292,7 +292,14 @@ class MyFormHelper extends FormHelper
         }
         return parent::input($fieldName, $options);
     }
-    
+
+    public function inputSpan($fieldName, $options) {
+        $element = $this->input($fieldName, $options);
+        $element = str_replace('<div', '<span', $element);
+        $element = str_replace('</div>', '</span>', $element);
+        //var_dump($element);
+        return $element;
+    }    
     protected function _months()
     {
         return array_combine(range(1,12), range(1,12));

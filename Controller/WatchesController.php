@@ -242,6 +242,10 @@ class WatchesController extends AppController {
 		if (!$this->Watch->exists($id)) {
 			throw new NotFoundException(__('Invalid watch'));
 		}
+        if ($this->Watch->hasOrder($id)) {
+            $this->Session->setFlash('This watch can not be edited because there is an associated order.', 'warning');
+            $this->redirect(array('action' => 'view', $id, 'admin' => true));
+        }
 		if ($this->request->is('post') || $this->request->is('put')) {
 			$this->request->data['Watch']['id'] = $id; 
 			if ($this->Watch->save($this->request->data)) {
@@ -254,7 +258,7 @@ class WatchesController extends AppController {
 			$this->brandList();
 			$options = array(
 				'conditions' => array(
-					'Watch.' . $this->Watch->primaryKey => $id
+                    'Watch.' . $this->Watch->primaryKey => $id,
 				),
 				'contain' => array(
 					'Image',
@@ -262,7 +266,7 @@ class WatchesController extends AppController {
 					    'fields' => array(
 						'id', 'name'
 					    )
-					)
+                    ),
 				)
 			);
 			$this->request->data = $this->Watch->find('first', $options);

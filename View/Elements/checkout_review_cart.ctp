@@ -72,22 +72,6 @@
                         <?php echo h($this->Number->currency($watch['Watch']['price'], 'USD')); ?>
                     </div>
                 </div>
-                <?php /*
-                <div class="row">
-                    <div class="hidden-xs visible-xxs col-xxs-8">
-                        <small>
-                            <?php echo $this->Html->link(htmlspecialchars($watch['Watch']['name'], ENT_NOQUOTES, 'UTF-8'),
-                                                         array(
-                                                               'controller' => 'watches',
-                                                               'action' => 'view', $watch['Watch']['id']
-                                                               )
-                                                         ); ?>
-                        </small>
-                    </div>
-                    <div class="hidden-xs visible-xxs col-xxs-4">
-                        
-                    </div>
-                </div>*/ ?>
             <?php endforeach; ?>
             <div class="row choose-ship">
                 <div class="text-right col-lg-10 col-md-10 col-sm-10 col-xs-10 col-xxs-8">
@@ -122,7 +106,29 @@
                 </div>
             </div>
             <div class="row">
-                <div class="text-right col-lg-10 col-md-10 col-sm-10 col-xs-10 col-xxs-8">
+                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-xxs-8">
+                    <h5 class="text-center <?php echo $couponsAvailable == false ? 'hidden' : ''; ?>">To redeem a coupon enter your email and coupon code. Your new balance will be reflected.</h5>
+                </div>
+            </div>
+            <div class="row coupon-fields <?php echo $couponsAvailable == false ? 'hidden' : ''; ?>">
+                <div class="col-lg-6 col-md-6 col-sm-10 col-xs-10 col-xxs-8">
+                    <?php echo $this->Form->input('Coupon.email', array(
+                        'class' => 'form-control input-sm'
+                    )); ?>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-10 col-xs-10 col-xxs-8">
+                    <?php echo $this->Form->input('Coupon.code', array(
+                        'class' => 'form-control input-sm',
+                    )); ?> 
+                </div>
+                <div class="coupon-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-2 col-xxs-4">
+                </div>
+            </div>
+            <div class="row">
+                <div class="coupon-alert col-lg-8 col-md-8 col-sm-8 col-xs-8 col-xxx-4">
+
+                </div>
+                <div class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-2 col-xxs-4">
                     Total
                 </div>
                 <div class="total-formatted-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-2 col-xxs-4">

@@ -6924,9 +6924,6 @@ body.hide-fat-footer .container .content {
 .glyphicon {
   font-size: 120%;
 }
-.right {
-  text-align: right;
-}
 .navbar .navbar-header .credit-card-logos {
   display: none;
 }
@@ -7082,12 +7079,13 @@ body.hide-fat-footer .container .content {
 .container .content:after {
   clear: both;
 }
-.container .content a:link:not(.btn),
-.container .content a:visited:not(.btn),
-.container .content a:active:not(.btn) {
+.container .content a:link:not(.btn):not(.alert-link),
+.container .content a:visited:not(.btn):not(.alert-link),
+.container .content a:hover:not(.alert-link):not(.btn-primary):not(.btn-success):not(.btn-danger),
+.container .content a:active:not(.btn):not(.alert-link) {
   color: #665600;
 }
-.container .content a:hover:not(.btn) {
+.container .content a:hover:not(.btn-primary):not(.btn-success):not(.btn-danger):not(.alert-link) {
   color: #b29600;
 }
 .container .content .label-warning {
@@ -7120,6 +7118,9 @@ body.hide-fat-footer .container .content {
 }
 .container .content .checkbox-inline input {
   margin-top: 10px;
+}
+.container .content .admin-btns {
+  margin-top: 25px;
 }
 .container .content table {
   background: #eeeeee;
@@ -7516,9 +7517,6 @@ body.hide-fat-footer .container .content {
 .container .content .watches.admin-index .header .btn-primary {
   margin-right: 10px;
 }
-.container .content .watches.admin-index .watch-btns {
-  margin-top: 25px;
-}
 .container .content .watches.admin-index .btn-group {
   margin-top: 10px;
   text-align: center;
@@ -7848,6 +7846,26 @@ body.hide-fat-footer .container .content {
 .container .content .orders .cart-details .glyphicon-trash {
   text-align: center;
 }
+.container .content .orders .cart-details h5 {
+  font-size: 13px;
+  line-height: 17px;
+}
+.container .content .orders .cart-details .coupon-fields .coupon-amount {
+  margin-top: 33px;
+}
+.container .content .orders .cart-details .coupon-alert {
+  /*a {
+                        color: darken(@alert-info-text, 15%);
+                    }*/
+}
+.container .content .orders .cart-details .coupon-alert a:link {
+  text-decoration: underline;
+}
+.container .content .orders .cart-details .coupon-alert a:visited,
+.container .content .orders .cart-details .coupon-alert a:hover,
+.container .content .orders .cart-details .coupon-alert a:active {
+  text-decoration: none;
+}
 .container .content .orders .credit-card-order {
   display: none;
 }
@@ -7863,9 +7881,6 @@ body.hide-fat-footer .container .content {
 }
 .container .content .orders .review-cart .choose-ship .tooltip-inner {
   width: 200px;
-}
-.container .content .orders .shipping .shipping-inner {
-  display: none;
 }
 .container .content .orders .shipping .shipping-inner input[type=radio] {
   margin-left: 0px;
@@ -8076,4 +8091,7 @@ body.hide-fat-footer .container .content {
 }
 .container .content .ebays.admin-view .btn-success {
   margin-top: 20px;
+}
+.container .content .coupons.form input[type=checkbox] {
+  margin-left: 0px;
 }

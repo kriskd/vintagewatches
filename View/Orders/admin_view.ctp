@@ -77,6 +77,19 @@
             <td class="text-right">Shipping</td>
             <td class="total-formatted-amount text-right"><?php echo $this->Number->currency($order['Order']['shippingAmount'], 'USD'); ?></td>
         </tr>
+        <?php if (isset($order['Coupon'])): ?>
+            <tr class="total-row">
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="text-right">
+                    Coupon code <?php echo strtoupper($order['Coupon']['code']); ?> 
+                </td>
+                <td class="total-formatted-amount text-right">
+                    <?php echo $this->Number->couponValue($order); ?>
+                </td>
+            </tr>
+        <?php endif; ?>
         <tr class="total-row">
             <td></td>
             <td></td>

@@ -187,10 +187,6 @@ body.hide-fat-footer {
     font-size: 120%;
 }
 
-.right {
-    text-align: right;
-}
-
 .navbar {
     .navbar-header {
         // No ccd logos on 480 width
@@ -353,10 +349,10 @@ body.hide-fat-footer {
     .content {
         .clearfix();
         margin-bottom: 255px;
-        a:link:not(.btn), a:visited:not(.btn), a:active:not(.btn) {
+        a:link:not(.btn):not(.alert-link), a:visited:not(.btn):not(.alert-link), a:hover:not(.alert-link):not(.btn-primary):not(.btn-success):not(.btn-danger), a:active:not(.btn):not(.alert-link) {
             color: @goldDark;
         }
-        a:hover:not(.btn) {
+        a:hover:not(.btn-primary):not(.btn-success):not(.btn-danger):not(.alert-link) {
             color: @gold;
         }
         .label-warning {
@@ -393,7 +389,9 @@ body.hide-fat-footer {
                 margin-top: 10px;
             }
         }
-        
+        .admin-btns {
+            margin-top: 25px;
+        }
         table {
             background: @gray-lighter;
             th {
@@ -717,9 +715,6 @@ body.hide-fat-footer {
                     margin-right: 10px;
                 }
             }
-            .watch-btns {
-                margin-top: 25px;
-            }
             .btn-group {
                 > .btn {
                     float: none;
@@ -956,6 +951,26 @@ body.hide-fat-footer {
                 .glyphicon-trash {
                     text-align: center;
                 }
+                h5 {
+                    font-size: 13px;
+                    line-height: 17px;
+                }
+                .coupon-fields {
+                    .coupon-amount {
+                        margin-top: 33px;
+                    }
+                }
+                .coupon-alert {
+                    /*a {
+                        color: darken(@alert-info-text, 15%);
+                    }*/
+                    a:link {
+                        text-decoration: underline;
+                    }
+                    a:visited, a:hover, a:active {
+                        text-decoration: none;
+                    }
+                }
             }
 
             .credit-card-order {
@@ -980,7 +995,6 @@ body.hide-fat-footer {
             }
             .shipping {
                 .shipping-inner {
-                    display: none;
                     input[type=radio] {
                         margin-left: 0px;
                     }
@@ -1201,5 +1215,11 @@ body.hide-fat-footer {
                 margin-top: 20px;
             }
         }
+        .coupons.form {
+            input[type=checkbox] {
+                margin-left: 0px;
+            }
+        }
     }
 }
+

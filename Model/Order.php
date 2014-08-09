@@ -104,6 +104,13 @@ class Order extends AppModel {
 			'counterQuery' => ''
 		)
 	);
+
+    public $belongsTo = array(
+        'Coupon' => array(
+            'className' => 'Coupon',
+            'foreign_key' => 'coupon_id',
+        )
+    );
 	
 	public $hasOne = array(
         'Payment' => array(
@@ -157,10 +164,17 @@ class Order extends AppModel {
         
         $options['contain'] = array('Address',
             'Watch' => array(
-                'fields' => array('id', 'order_id', 'stockId', 'price', 'name'),
+                'fields' => array(
+                    'id', 'order_id', 'Watch.brand_id', 'stockId', 'price', 'name',
+                ),
                 'Image'
             ),
-            'Payment'
+            'Payment',
+            'Coupon' => array(
+                'fields' => array(
+                    'Coupon.code', 'Coupon.type', 'Coupon.amount', 'Coupon.brand_id',
+                ),
+            ),
         );
         return $this->find('first', $options);
     }
@@ -197,7 +211,8 @@ class Order extends AppModel {
         return array('conditions' => $conditions,
             'fields' => array(
                 'id', 'email', 'phone', 'shippingAmount', 
-                'notes', 'created', 'shipDate'
+                'notes', 'created', 'shipDate', 
+                'Coupon.code', 'Coupon.type', 'Coupon.amount',
                 ),
             'contain' => array(
                 'Address',
@@ -209,7 +224,8 @@ class Order extends AppModel {
                     'fields' => array(
                         'stripe_amount'
                     )
-                )
+                ),
+                'Coupon',
             ),
             'order' => array(
                 'created' => 'DESC'
@@ -217,18 +233,21 @@ class Order extends AppModel {
         );
     }
     
-    public function getShippingAmount($country = null)
+    public function getShippingAmount($country = '')
     {
         switch($country){
+            case '':
+                return '';
+                break;
             case 'us':
-            return '8';
-            break;
+                return '8';
+                break;
             case 'ca':
-            return '38';
-            break;
+                return '38';
+                break;
             default:
-            return '45';
-            break;
+                return '45';
+                break;
         }
     }
 }
