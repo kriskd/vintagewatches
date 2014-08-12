@@ -98,9 +98,13 @@ class OrdersController extends AppController
     }
 
     public function checkout() {
-
         if($this->Cart->cartEmpty() == true){
             $this->redirect(array('controller' => 'watches', 'action' => 'index'));
+        }
+
+        // For return to cart when item is not available
+        if ($this->Session->check('Address.select-country')) {
+            $this->request->data['Address']['select-country'] = $this->Session->read('Address.select-country');
         }
 
         // Check if any coupons are available
@@ -150,6 +154,7 @@ class OrdersController extends AppController
             $addresses = $data['Address'];
 
             $addressesToSave = array();
+            $country = $addresses['select-country'];
             unset($addresses['select-country']);
 
             foreach($addresses as $type => $item){
@@ -180,15 +185,18 @@ class OrdersController extends AppController
                     $this->Cart->remove($id);
                 }
                 $this->Session->write('Address', array('data' => $addresses));
+                $this->Session->write('Address.select-country', $country);
+                $this->Session->write('Shipping.option',  $this->request->data['Shipping']['option']);
                 $this->Session->setFlash('One or more of the items in your cart is no longer available.', 'warning');
                 $this->redirect(array('action' => 'checkout'));
             }
-            
+           
             //Add shipping to the order
             $data['Order']['shippingAmount'] = $this->Cart->getShipping();
             unset($data['Coupon']);
             $valid = $this->Order->validateAssociated($data); 
             if($valid == true){
+                $subTotal = $this->Order->getSubTotal($this->cartWatches); 
                 $amount = $this->Cart->getTotal(); 
                 $stripeToken = $this->request->data['stripeToken'];
 
@@ -343,19 +351,12 @@ class OrdersController extends AppController
             $code = $query['data']['Coupon']['code'];
             $shipping = $this->Order->getShippingAmount($country);
             $this->Cart->setShipping($shipping);
-            $subTotal = $this->Order->getSubTotal($this->cartWatches); 
+            //$subTotal = $this->Order->getSubTotal($this->cartWatches); 
             $couponAmount = 0;
-            $coupon = $this->Order->Coupon->valid($code, $email, $subTotal, $shipping, $this->cartItemIds);
+            $coupon = $this->Order->Coupon->valid($code, $email, $shipping, $this->cartItemIds);
             if (isset($coupon['Coupon'])) {
-                $couponSubTotal = empty($coupon['Coupon']['brand_id']) ? $subTotal : $this->Order->Watch->sumWatchesForBrand($coupon['Coupon']['brand_id'], $this->cartItemIds);
-                switch ($coupon['Coupon']['type']) {
-                    case 'fixed':
-                        $couponAmount = $couponSubTotal + $shipping > $coupon['Coupon']['amount'] ? $coupon['Coupon']['amount'] : $couponSubTotal + $shipping;
-                        break;
-                    case 'percentage':
-                        $couponAmount = $couponSubTotal * $coupon['Coupon']['amount'];
-                        break;
-                }
+                $couponSubTotal = $this->Order->Watch->sumWatchPrices($this->cartItemIds, $coupon['Coupon']['brand_id']);
+                $couponAmount = $this->Cart->couponAmount($coupon, $couponSubTotal);
                 $this->set(array(
                     'couponAmount' => $couponAmount,
                 ));
@@ -367,9 +368,7 @@ class OrdersController extends AppController
                 $this->set(compact('coupon')); // Contains error message
                 $this->Cart->clearCoupon();
             }
-
-            $this->Cart->setTotal($subTotal, $couponAmount);
-
+            //$this->Cart->setTotal($subTotal, $couponAmount);
             $this->set(array('data' => array(
                     'shipping' => $this->Cart->getShipping(),
                     'total' => $this->Cart->getTotal(),

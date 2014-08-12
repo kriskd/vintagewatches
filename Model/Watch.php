@@ -261,28 +261,32 @@ class Watch extends AppModel {
     }
 
     /**
-     * Return the total price of watches in by brand
-     * @param int $brand_id
+     * Return the total price of active watches
+     * Optionally send in a brand_id to sum just watches of that brand
      * @param array $watchIds
+     * @param int $brand_id
      */ 
-    public function sumWatchesForBrand($brand_id, $watchIds) {
-        $watchesForBrandSum = $this->find('all', array(
-            'conditions' => array(
-                'Watch.brand_id' => $brand_id,
-                'Watch.active' => 1,
-                'Watch.id' => $watchIds,
-            ),
+    public function sumWatchPrices($watchIds, $brand_id = null) {
+        $conditions = array(
+            'Watch.active' => 1,
+            'Watch.id' => $watchIds,
+        );
+        if (!empty($brand_id)) {
+            $conditions['Watch.brand_id'] = $brand_id;
+        }
+        $sum = $this->find('all', array(
+            'conditions' => $conditions,
             'fields' => array(
                 'sum(Watch.price)'
             ),
             'recursive' => -1,
         ));
 
-        while (is_array($watchesForBrandSum)) {
-            $watchesForBrandSum = current($watchesForBrandSum);
+        while (is_array($sum)) {
+            $sum = current($sum);
         }
 
-        return $watchesForBrandSum;
+        return $sum;
     }
 
 }

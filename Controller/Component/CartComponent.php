@@ -11,8 +11,7 @@ class CartComponent extends Component
     protected $email = null;
     protected $total = 0;
     
-    public function initialize(Controller $controller)
-    {
+    public function initialize(Controller $controller) {
         if($this->Session->check('Cart.items') == true){
             $this->items = $this->Session->read('Cart.items');  
         }
@@ -80,6 +79,7 @@ class CartComponent extends Component
         if(in_array($id, $this->items)){
             $key = array_search($id, $this->items);
             unset($this->items[$key]); 
+            //$this->Session->delete('Cart.total');
             $this->Session->write('Cart.items', $this->items);
         }
     }
@@ -135,5 +135,19 @@ class CartComponent extends Component
     {
         $this->total = $this->shipping > 0 ? $subTotal + $this->shipping - $couponAmount : 0;
         $this->Session->write('Cart.total', $this->total);
+    }
+
+    public function couponAmount($coupon, $couponSubTotal) {
+        switch ($coupon['Coupon']['type']) {
+            case 'fixed':
+                $couponAmount = $couponSubTotal + $this->getShipping > $coupon['Coupon']['amount'] ? $coupon['Coupon']['amount'] : $couponSubTotal + $shipping;
+                break;
+            case 'percentage':
+                $couponAmount = $couponSubTotal * $coupon['Coupon']['amount'];
+                break;
+            default:
+                $couponAmount = 0;
+        }
+        return $couponAmount;
     }
 }

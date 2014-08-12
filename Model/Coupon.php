@@ -79,7 +79,7 @@ class Coupon extends AppModel {
                 'message' => 'Enter a valid amount.',
             ),
             'amount' => array(
-                'rule' => array('couponAmount'),
+                'rule' => array('couponDiscount'),
                 'message' => 'Enter valid percentage or dollar amount.',
             ),
 		),
@@ -222,7 +222,7 @@ class Coupon extends AppModel {
      * Is coupon valid for the user
      * @return bool
      */
-    public function valid($code, $email, $subTotal, $shipping, $cartItemIds) {
+    public function valid($code, $email, $shipping, $cartItemIds) {
         if (empty($code) || empty($email)) return false;
 
         $coupon = $this->find('first', array(
@@ -235,7 +235,7 @@ class Coupon extends AppModel {
             ),
             'recursive' => -1
         ));
-        
+
         if (
             // Coupon archived
             empty($coupon) ||
@@ -260,19 +260,20 @@ class Coupon extends AppModel {
             );
         }
        
+        $subTotal = $this->Order->Watch->sumWatchPrices($cartItemIds, $coupon['Coupon']['brand_id']);
+        
         // Coupon not for right brand
         if (!empty($coupon['Coupon']['brand_id'])) {
-            $total = $this->Order->Watch->sumWatchesForBrand($coupon['Coupon']['brand_id'], $cartItemIds);
             $this->Brand->id = $coupon['Coupon']['brand_id'];
             $brandName = $this->Brand->field('name');
-            if (empty($total)) {
+            if (empty($subTotal)) {
                 return array(
                     'alert' => 'info',
                     'message' => 'Order must include at least one '.$brandName.' watch.',
                 );
             }
             
-            if (strcasecmp($coupon['Coupon']['type'], 'fixed')==0 && $coupon['Coupon']['amount'] >= $total) {
+            if (strcasecmp($coupon['Coupon']['type'], 'fixed')==0 && $coupon['Coupon']['amount'] >= $subTotal) {
                 return array(
                     'alert' => 'info',
                     'message' => 'Total of '.$brandName.' watch(es) must be at least $'.number_format($coupon['Coupon']['amount'],2,'.',',').' in order to use this coupon.',
@@ -332,7 +333,7 @@ class Coupon extends AppModel {
     /**
      * Validate coupon amount based on coupon type
      */
-    public function couponAmount() {
+    public function couponDiscount() {
         if ($this->data[$this->name]['type'] == 'percentage') {
             return $this->data[$this->name]['amount'] > 0 && $this->data[$this->name]['amount'] < 1 ? true : false;
         }
@@ -345,4 +346,5 @@ class Coupon extends AppModel {
     public function removeRequiredCode() {
         $this->validator()->remove('code');
     }
+
 }
