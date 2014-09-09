@@ -19,6 +19,7 @@ class OrderFixture extends FakerTestFixture {
 		'shipDate' => array('type' => 'date', 'null' => true, 'default' => null),
 		'notes' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'orderNotes' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+        'coupon_id' => array('type' => 'integer', 'null' => true, 'default' => null),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'indexes' => array(
