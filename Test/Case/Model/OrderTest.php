@@ -48,9 +48,6 @@ class OrderTest extends FakerTestCase {
         $this->assertEquals($result, $expected);
     }
 
-    /**
-     * This is failing due to unknown column Coupon.type ???
-     */
     public function testGetOrder() {
         
         $result = $this->Order->getOrder(1);
