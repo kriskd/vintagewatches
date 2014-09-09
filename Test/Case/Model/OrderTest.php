@@ -12,6 +12,7 @@ class OrderTest extends FakerTestCase {
         'app.address',
         'app.detect',
         'app.detectsorder',
+        'app.coupon',
     );
 
     public function setUp() {
@@ -32,6 +33,24 @@ class OrderTest extends FakerTestCase {
         $this->assertEquals($result, $expected);
     }
 
+    public function testGetSubTotalBrand() {
+        $result = $this->Order->getSubTotal(array(
+            array('Watch' => array(
+                'price' => 250,
+                'brand_id' => 1,
+            )),
+            array('Watch' => array(
+                'price' => 175,
+                'brand_id' => 2,
+            )),
+        ), 1);
+        $expected = 250;
+        $this->assertEquals($result, $expected);
+    }
+
+    /**
+     * This is failing due to unknown column Coupon.type ???
+     */
     public function testGetOrder() {
         
         $result = $this->Order->getOrder(1);

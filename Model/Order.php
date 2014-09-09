@@ -144,13 +144,15 @@ class Order extends AppModel {
         
     /**
      * $items array Array of Watch objects
+     * $brand_id int Optional brand_id
      */
-    public function getSubTotal($items)
-    {
+    public function getSubTotal($items, $brand_id = null) {
         if(!empty($items)){
-            return  array_reduce($items, function($return, $item){ 
+            return  array_reduce($items, function($return, $item) use ($brand_id) { 
                 if(isset($item['Watch']['price'])){
-                    $return += $item['Watch']['price'];
+                    if (empty($brand_id) || $brand_id == $item['Watch']['brand_id']) {
+                        $return += $item['Watch']['price'];
+                    }
                     return $return;
                 }
             });
@@ -162,7 +164,8 @@ class Order extends AppModel {
     {
         $options = array('conditions' => array('Order.' . $this->primaryKey => $id));
         
-        $options['contain'] = array('Address',
+        $options['contain'] = array(
+            'Address',
             'Watch' => array(
                 'fields' => array(
                     'id', 'order_id', 'Watch.brand_id', 'stockId', 'price', 'name',
