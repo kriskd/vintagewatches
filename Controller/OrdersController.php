@@ -351,11 +351,13 @@ class OrdersController extends AppController
             $code = $query['data']['Coupon']['code'];
             $shipping = $this->Order->getShippingAmount($country);
             $this->Cart->setShipping($shipping);
-            //$subTotal = $this->Order->getSubTotal($this->cartWatches); 
+            $subTotal = $this->Order->getSubTotal($this->cartWatches); 
             $couponAmount = 0;
             $coupon = $this->Order->Coupon->valid($code, $email, $shipping, $this->cartItemIds);
             if (isset($coupon['Coupon'])) {
-                $couponSubTotal = $this->Order->Watch->sumWatchPrices($this->cartItemIds, $coupon['Coupon']['brand_id']);
+                // Total eligible for coupon discount
+                //$couponSubTotal = $this->Order->Watch->sumWatchPrices($this->cartItemIds, $coupon['Coupon']['brand_id']);
+                $couponSubTotal = $this->Order->getSubTotal($this->cartWatches, $coupon['Coupon']['brand_id']);
                 $couponAmount = $this->Cart->couponAmount($coupon, $couponSubTotal);
                 $this->set(array(
                     'couponAmount' => $couponAmount,
