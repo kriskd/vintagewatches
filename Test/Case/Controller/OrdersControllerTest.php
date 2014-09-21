@@ -101,22 +101,22 @@ class OrdersControllerTest extends ControllerTestCase {
         $Orders = $this->generate('Orders', array(
             'components' => array(
                 'RequestHandler' => array('isAjax'),
-                'Cart' => array('CartItemIds')
+                'Cart' => array('getSubTotal', 'couponAmount')
             )
         ));
+
         $Orders->Cart
             ->expects($this->once())
-            ->method('cartItemIds')
-            ->will($this->returnValue(array(1,2)));
-
-        $model = $this->getMockForModel('Order', array('getSubTotal'));
-        $model->expects($this->once())
             ->method('getSubTotal')
             ->will($this->returnValue(400));
 
+        $Orders->Cart
+            ->expects($this->once())
+            ->method('couponAmount')
+            ->will($this->returnValue(60));
+
         $result = $this->testAction($url, $options);
-        debug($result); exit;
-        //$result = $this->testAction('/orders/totalCart', array('return' => 'vars', 'data' => $data, 'method' => 'get'));
+        $this->assertEquals($result['data']['total'], 348);        
 	}
 
 /**
