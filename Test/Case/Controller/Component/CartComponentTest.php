@@ -160,6 +160,21 @@ class CartComponentTest extends CakeTestCase {
         $result = $this->Cart->getSubTotal($items);
         $this->assertEqual($result, 225);
 	}
+    
+    public function testGetSubTotalBrand() {
+        $result = $this->Cart->getSubTotal(array(
+            array('Watch' => array(
+                'price' => 250,
+                'brand_id' => 1,
+            )),
+            array('Watch' => array(
+                'price' => 175,
+                'brand_id' => 2,
+            )),
+        ), 1);
+        $expected = 250;
+        $this->assertEquals($result, $expected);
+    }
 
 /**
  * testCouponAmount method
