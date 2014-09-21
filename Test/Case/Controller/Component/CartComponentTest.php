@@ -195,4 +195,68 @@ class CartComponentTest extends CakeTestCase {
         $this->assertEquals($result, 10);
     }
 
+    public function testCouponAmountBigFixed() {
+        $coupon = array(
+            'Coupon' => array(
+                'type' => 'fixed',
+                'amount' => 1000,
+                'brand_id' => null,
+            )
+        );
+        $shipping = 8;
+        $result = $this->Cart->couponAmount($this->items, $shipping, $coupon);
+        $this->assertEquals($result, 233);
+    }
+    
+    public function testCouponAmountPercentage() {
+        $coupon = array(
+            'Coupon' => array(
+                'type' => 'percentage',
+                'amount' => .1,
+                'brand_id' => null,
+            )
+        );
+        $shipping = 8;
+        $result = $this->Cart->couponAmount($this->items, $shipping, $coupon);
+        $this->assertEquals($result, 22.5);
+    }
+    
+    public function testCouponAmountPercentageBrand() {
+        $coupon = array(
+            'Coupon' => array(
+                'type' => 'percentage',
+                'amount' => .1,
+                'brand_id' => 1,
+            )
+        );
+        $shipping = 8;
+        $result = $this->Cart->couponAmount($this->items, $shipping, $coupon);
+        $this->assertEquals($result, 10);
+    }
+    
+    public function testCouponAmountFixedBrand1() {
+        $coupon = array(
+            'Coupon' => array(
+                'type' => 'fixed',
+                'amount' => 110,
+                'brand_id' => 1,
+            )
+        );
+        $shipping = 8;
+        $result = $this->Cart->couponAmount($this->items, $shipping, $coupon);
+        $this->assertEquals($result, 108);
+    }
+    
+    public function testCouponAmountFixedBrand2() {
+        $coupon = array(
+            'Coupon' => array(
+                'type' => 'fixed',
+                'amount' => 110,
+                'brand_id' => 2,
+            )
+        );
+        $shipping = 8;
+        $result = $this->Cart->couponAmount($this->items, $shipping, $coupon);
+        $this->assertEquals($result, 110);
+    }
 }
