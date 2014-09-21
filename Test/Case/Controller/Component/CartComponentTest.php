@@ -32,6 +32,22 @@ class CartComponentTest extends CakeTestCase {
         'app.detectsorder',
         'app.coupon',
     );
+
+    public $items = array(
+        0 => array(
+            'Watch' => array(
+                'price' => 100,
+                'brand_id' => 1,
+            ), 
+        ),
+        1 => array(
+            'Watch' => array(
+                'price' => 125,
+                'brand_id' => 2,
+            ),
+        ),
+    );
+
 /**
  * setUp method
  *
@@ -145,34 +161,13 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testGetSubTotal() {
-        $items = array(
-            0 => array(
-                'Watch' => array(
-                    'price' => 100,
-                ), 
-            ),
-            1 => array(
-                'Watch' => array(
-                    'price' => 125,
-                ),
-            ),
-        );
-        $result = $this->Cart->getSubTotal($items);
+        $result = $this->Cart->getSubTotal($this->items);
         $this->assertEqual($result, 225);
 	}
     
     public function testGetSubTotalBrand() {
-        $result = $this->Cart->getSubTotal(array(
-            array('Watch' => array(
-                'price' => 250,
-                'brand_id' => 1,
-            )),
-            array('Watch' => array(
-                'price' => 175,
-                'brand_id' => 2,
-            )),
-        ), 1);
-        $expected = 250;
+        $result = $this->Cart->getSubTotal($this->items, 1);
+        $expected = 100;
         $this->assertEquals($result, $expected);
     }
 
@@ -182,7 +177,22 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testCouponAmount() {
-		$this->markTestIncomplete('testCouponAmount not implemented.');
+        $shipping = 8;
+        $result = $this->Cart->couponAmount($this->items, $shipping);
+        $this->assertEquals($result, 0);
 	}
+
+    public function testCouponAmountFixed() {
+        $coupon = array(
+            'Coupon' => array(
+                'type' => 'fixed',
+                'amount' => 10,
+                'brand_id' => null,
+            )
+        );
+        $shipping = 8;
+        $result = $this->Cart->couponAmount($this->items, $shipping, $coupon);
+        $this->assertEquals($result, 10);
+    }
 
 }
