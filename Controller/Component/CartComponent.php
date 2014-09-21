@@ -109,9 +109,10 @@ class CartComponent extends Component
 
     /**
      * $items array Array of Watch objects
+     * $shipping int Shipping amount
      * $coupon object
      */
-    public function couponAmount($items, $coupon = array()) {
+    public function couponAmount($items, $shipping, $coupon = array()) {
         if (empty($coupon['Coupon'])) {
             return 0;
         }
@@ -119,7 +120,7 @@ class CartComponent extends Component
         $couponSubTotal = $this->getSubTotal($items, $coupon['Coupon']['brand_id']);
         switch ($coupon['Coupon']['type']) {
             case 'fixed':
-                $couponAmount = $couponSubTotal + $this->getShipping > $coupon['Coupon']['amount'] ? $coupon['Coupon']['amount'] : $couponSubTotal + $shipping;
+                $couponAmount = $couponSubTotal + $shipping > $coupon['Coupon']['amount'] ? $coupon['Coupon']['amount'] : $couponSubTotal + $shipping;
                 break;
             case 'percentage':
                 $couponAmount = $couponSubTotal * $coupon['Coupon']['amount'];
