@@ -109,23 +109,7 @@ class OrdersController extends AppController
         }
 
         // Check if any coupons are available
-        $couponsAvailable = false;
-        $coupons = $this->Order->Coupon->find('count', array(
-            'conditions' => array(
-                'archived' => 0,
-                'OR' => array(
-                    'expire_date' => NULL,
-                    'expire_date >' => date('Y-m-d'),
-                ),
-                'available >' =>  0,
-            ),
-            'recursive' => -1,
-        ));
-        
-        if ($coupons > 0) {
-            $couponsAvailable = true;
-        }
-        $this->set(compact('couponsAvailable'));
+        $this->set('couponsAvailable', $this->Order->Coupon->couponsAvailable());
         
         //Handle ajax request for autocomplete
         if($this->request->is('ajax')){

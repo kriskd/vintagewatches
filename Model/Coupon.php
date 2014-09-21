@@ -359,4 +359,27 @@ class Coupon extends AppModel {
         ));
         return $coupon['Coupon']['id'];
     }
+
+    /**
+     * Check if any coupons are available to redeem
+     * @return bool
+     */
+    public function couponsAvailable() {
+        $coupons = $this->find('count', array(
+            'conditions' => array(
+                'archived' => 0,
+                'OR' => array(
+                    'expire_date' => NULL,
+                    'expire_date >' => date('Y-m-d'),
+                ),
+                'available >' =>  0,
+            ),
+            'recursive' => -1,
+        ));
+        
+        if ($coupons > 0) {
+            return true;
+        }
+        return false;
+    }
 }
