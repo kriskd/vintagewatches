@@ -142,24 +142,6 @@ class Order extends AppModel {
 		)
 	);
         
-    /**
-     * $items array Array of Watch objects
-     * $brand_id int Optional brand_id
-     */
-    public function getSubTotal($items, $brand_id = null) {
-        if(!empty($items)){
-            return  array_reduce($items, function($return, $item) use ($brand_id) { 
-                if(isset($item['Watch']['price'])){
-                    if (empty($brand_id) || $brand_id == $item['Watch']['brand_id']) {
-                        $return += $item['Watch']['price'];
-                    }
-                    return $return;
-                }
-            });
-        }
-        return null;
-    }
-
     public function getOrder($id)
     {
         $options = array('conditions' => array('Order.' . $this->primaryKey => $id));
@@ -236,21 +218,4 @@ class Order extends AppModel {
         );
     }
     
-    public function getShippingAmount($country = '')
-    {
-        switch($country){
-            case '':
-                return '';
-                break;
-            case 'us':
-                return '8';
-                break;
-            case 'ca':
-                return '38';
-                break;
-            default:
-                return '45';
-                break;
-        }
-    }
 }

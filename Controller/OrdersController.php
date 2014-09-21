@@ -157,6 +157,7 @@ class OrdersController extends AppController
             $country = $addresses['select-country'];
             unset($addresses['select-country']);
 
+            $shipping = $this->Cart->getShippingAmount($country);
             foreach($addresses as $type => $item){
                 $address = $item;
                 $address['type'] = $type;
@@ -165,9 +166,7 @@ class OrdersController extends AppController
 
             $data['Address'] = $addressesToSave;
 
-            $checkoutData = ($this->Cart->getShipping() > 0) &&
-                ($this->Cart->cartItemCount() > 0) &&
-                ($this->Cart->getTotal() > 0);
+            $checkoutData = ($shipping > 0) && ($this->Cart->cartItemCount() > 0);
 
             if(!$checkoutData){
                 //There is no data to checkout with
@@ -192,12 +191,19 @@ class OrdersController extends AppController
             }
            
             //Add shipping to the order
-            $data['Order']['shippingAmount'] = $this->Cart->getShipping();
+            $data['Order']['shippingAmount'] = $shipping;
+            $couponCode = isset($data['Coupon']['code']) ? $data['Coupon']['code'] : null;
+            $couponEmail = isset($data['Coupon']['email']) ? $data['Coupon']['email'] : null;
             unset($data['Coupon']);
             $valid = $this->Order->validateAssociated($data); 
             if($valid == true){
-                $subTotal = $this->Order->getSubTotal($this->cartWatches); 
-                $amount = $this->Cart->getTotal(); 
+                $subTotal = $this->Cart->getSubTotal($this->cartWatches); 
+                $couponAmount = 0;
+                if (!empty($couponCode) && !empty($couponEmail)) {
+                    $coupon = $this->Order->Coupon->valid($couponCode, $couponEmail, $shipping, $this->cartItemIds);
+                    $couponAmount = $this->Cart->couponAmount($this->cartWatches, $coupon);
+                }
+                $total = $this->Cart->totalCart($subTotal, $shipping, $couponAmount);
                 $stripeToken = $this->request->data['stripeToken'];
 
                 //Create a description of brands to send to Stripe
@@ -209,7 +215,7 @@ class OrdersController extends AppController
                 $description = implode(',', $brands);
 
                 $stripeData = array(
-                    'amount' => $amount,
+                    'amount' => $total,
                     'stripeToken' => $stripeToken,
                     'description' => $description
                 );
@@ -218,8 +224,8 @@ class OrdersController extends AppController
                 if(is_array($result) && $result['stripe_paid'] == true){
                     unset($this->Order->Address->validate['foreign_id']);
 
-                    if ($coupon_id = $this->Cart->getCoupon()) {
-                        $data['Order']['coupon_id'] = $coupon_id;
+                    if ($couponAmount > 0) {
+                        $data['Order']['coupon_id'] = $this->Order->Coupon->getCouponId($couponCode);
                     }
 
                     //Add the results of stripe to the data array
@@ -291,21 +297,10 @@ class OrdersController extends AppController
                 $this->set(array('errors' => true));
             }
         } else {
-            $couponId = $this->Cart->getCoupon();
-            $email = $this->Cart->getEmail();
-            if (!empty($couponId) && !empty($email)) {
-                if ($coupon = $this->Order->Coupon->find('first', array(
-                    'conditions' => array(
-                        'id' => $couponId,
-                    ),
-                    'recursive' => -1,
-                ))) {
-                    $code = $coupon['Coupon']['code'];
-                    $this->request->data['Coupon']['email'] = $email;
-                    $this->request->data['Coupon']['code'] = $code;
-                    $this->request->data['Order']['email'] = $email;
-                }
-            }
+            // This previously got the coupon id and coupon email out of session
+            // In order to populate the form if user previously entered those items,
+            // left checkout and returned. Those are no longer stored in session.
+            // Keep or go?
         }
 
         $title = 'Checkout';
@@ -347,33 +342,22 @@ class OrdersController extends AppController
         if($this->request->is('ajax')){
             $query = $this->request->query; 
             $country = $query['data']['Address']['select-country'];
+            $shipping = $this->Cart->getShippingAmount($country);
+            $itemsTotal = $this->Cart->getSubTotal($this->cartWatches); 
+            $couponAmount = 0;
             $email = $query['data']['Coupon']['email'];
             $code = $query['data']['Coupon']['code'];
-            $shipping = $this->Order->getShippingAmount($country);
-            $this->Cart->setShipping($shipping);
-            $subTotal = $this->Order->getSubTotal($this->cartWatches); 
-            $couponAmount = 0;
-            $coupon = $this->Order->Coupon->valid($code, $email, $shipping, $this->cartItemIds);
-            if (isset($coupon['Coupon'])) {
-                // Total eligible for coupon discount
-                //$couponSubTotal = $this->Order->Watch->sumWatchPrices($this->cartItemIds, $coupon['Coupon']['brand_id']);
-                $couponSubTotal = $this->Order->getSubTotal($this->cartWatches, $coupon['Coupon']['brand_id']);
-                $couponAmount = $this->Cart->couponAmount($coupon, $couponSubTotal);
+            if (!empty($email) && !empty($code)) {
+                $coupon = $this->Order->Coupon->valid($code, $email, $shipping, $this->cartItemIds);
+                $couponAmount = $this->Cart->couponAmount($this->cartWatches, $coupon);
                 $this->set(array(
                     'couponAmount' => $couponAmount,
+                    'coupon' => $coupon, // Contains error message if any
                 ));
-                if (!empty($coupon['Coupon']) && !empty($email)) {
-                    $this->Cart->setCoupon($coupon['Coupon']['id']);
-                    $this->Cart->setEmail($email);
-                } 
-            } else {
-                $this->set(compact('coupon')); // Contains error message
-                $this->Cart->clearCoupon();
             }
-            //$this->Cart->setTotal($subTotal, $couponAmount);
             $this->set(array('data' => array(
-                    'shipping' => $this->Cart->getShipping(),
-                    'total' => $this->Cart->getTotal(),
+                    'shipping' => $this->Cart->getShippingAmount($country),
+                    'total' => $this->Cart->totalCart($itemsTotal, $shipping, $couponAmount),
                 )
             ));
             $this->layout = 'ajax';

@@ -347,4 +347,16 @@ class Coupon extends AppModel {
         $this->validator()->remove('code');
     }
 
+    /**
+     * Get the coupon ID based on the code
+     */
+    public function getCouponId($code) {
+        $coupon = $this->find('first', array(
+            'conditions' => array(
+                'code' => $code,
+                'archived' => 0,
+            )
+        ));
+        return $coupon['Coupon']['id'];
+    }
 }
