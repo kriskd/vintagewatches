@@ -105,6 +105,7 @@ class OrdersController extends AppController
         // For return to cart when item is not available
         if ($this->Session->check('Address.select-country')) {
             $this->request->data['Address']['select-country'] = $this->Session->read('Address.select-country');
+            $this->request->data['Order'] = $this->Session->read('Order');
         }
 
         // Check if any coupons are available
@@ -186,6 +187,8 @@ class OrdersController extends AppController
                 $this->Session->write('Address', array('data' => $addresses));
                 $this->Session->write('Address.select-country', $country);
                 $this->Session->write('Shipping.option',  $this->request->data['Shipping']['option']);
+                $this->Session->write('Order.email', $this->request->data['Order']['email']);
+                $this->Session->write('Order.phone', $this->request->data['Order']['phone']);
                 $this->Session->setFlash('One or more of the items in your cart is no longer available.', 'warning');
                 $this->redirect(array('action' => 'checkout'));
             }
