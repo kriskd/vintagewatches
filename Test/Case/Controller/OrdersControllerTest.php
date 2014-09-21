@@ -82,7 +82,22 @@ class OrdersControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testTotalCart() {
-        //$_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        //$_ENV['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        $query = array(
+            'data' => array(
+                'Address' => array(
+                    'select-country' => 'us',
+                ),
+                'Coupon' => array(
+                    'email' => 'KeithMDecker@dayrep.com',
+                    'code' => 'third',
+                ),
+            )
+        );
+        $url = Router::url(array('controller' => 'orders', 'action' => 'totalCart', 'ext' => 'json', '?' => $query));
+        $options = array(
+            'return' => 'vars'
+        );
         $Orders = $this->generate('Orders', array(
             'components' => array(
                 'RequestHandler' => array('isAjax'),
@@ -94,18 +109,14 @@ class OrdersControllerTest extends ControllerTestCase {
             ->method('cartItemIds')
             ->will($this->returnValue(array(1,2)));
 
-        $data = array(
-            'data' => array(
-                'Address' => array(
-                    'select-country' => 'us',
-                ),
-                'Coupon' => array(
-                    'email' => 'KeithMDecker@dayrep.com',
-                    'code' => 'third',
-                ),
-            )
-        );
-        $result = $this->testAction('/orders/totalCart', array('data' => $data, 'method' => 'get'));
+        $model = $this->getMockForModel('Order', array('getSubTotal'));
+        $model->expects($this->once())
+            ->method('getSubTotal')
+            ->will($this->returnValue(400));
+
+        $result = $this->testAction($url, $options);
+        debug($result); exit;
+        //$result = $this->testAction('/orders/totalCart', array('return' => 'vars', 'data' => $data, 'method' => 'get'));
 	}
 
 /**
