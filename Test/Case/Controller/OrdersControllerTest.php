@@ -1,5 +1,6 @@
 <?php
 App::uses('OrdersController', 'Controller');
+App::uses('CakeRequest', 'Network');
 
 /**
  * OrdersController Test Case
@@ -82,7 +83,7 @@ class OrdersControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testTotalCart() {
-        //$_ENV['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $query = array(
             'data' => array(
                 'Address' => array(
@@ -98,9 +99,10 @@ class OrdersControllerTest extends ControllerTestCase {
         $options = array(
             'return' => 'vars'
         );
+
         $Orders = $this->generate('Orders', array(
             'components' => array(
-                'RequestHandler' => array('isAjax'),
+                'RequestHandler' => array(),
                 'Cart' => array('getSubTotal', 'couponAmount')
             )
         ));
@@ -116,6 +118,7 @@ class OrdersControllerTest extends ControllerTestCase {
             ->will($this->returnValue(60));
 
         $result = $this->testAction($url, $options);
+        unset($_SERVER['HTTP_X_REQUESTED_WITH']);
         $this->assertEquals($result['data']['total'], 348);        
 	}
 
