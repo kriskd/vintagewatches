@@ -244,6 +244,7 @@ class OrdersController extends AppController
                 } else {
                     //Decline
                     $this->Session->write('Address', array('data' => $addresses));
+                    $this->Session->write('Shipping.option',  $this->request->data['Shipping']['option']);
                     $this->Session->setFlash('<span class="glyphicon glyphicon-warning-sign"></span> ' . $result,
                         'default', array('class' => 'alert alert-danger'));
                 }
