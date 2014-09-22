@@ -6428,7 +6428,7 @@ var datepicker = $.datepicker;
      */
     $(document).on('keyup', '#AddressBillingCountryName', function(){
         $('#AddressBillingCountryName').autocomplete({
-            source: '/orders/checkout.json',
+            source: '/countries/getCountries.json',
             minLength: 3,
             select: function(event,ui){
                 $(this).val(ui.item.value); 

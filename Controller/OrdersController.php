@@ -111,26 +111,6 @@ class OrdersController extends AppController
         // Check if any coupons are available
         $this->set('couponsAvailable', $this->Order->Coupon->couponsAvailable());
         
-        //Handle ajax request for autocomplete
-        if($this->request->is('ajax')){
-            $query = $this->request->query; 
-            $search = $query['term'];
-            if(!$search){ 
-                throw new NotFoundException('Search term required');
-            }
-
-            $filtered = array();
-            $countries = $this->Country->getList();
-            foreach($countries as $key => $country){
-                if(stripos($country, htmlentities($search)) !== false){
-                    $filtered[] = array('id' => $key, 'value' => html_entity_decode($country, ENT_COMPAT, 'UTF-8'));
-                }
-            }
-
-            $this->set(compact('filtered'));
-            $this->layout = 'ajax';
-        }
-
         //Form submitted
         if($this->request->is('post')) {
             $data = $this->request->data;
