@@ -211,10 +211,10 @@ $(document).ready(function(){
           var message = data.alert;
           $('.shipping-amount').empty().append(shipping).find('.launch-tooltip').tooltip();
           $('.coupon-amount').empty();
-          if (typeof(couponAmount) != 'undefined' && couponAmount !== null) {
+          if (typeof(couponAmount) != 'undefined' && couponAmount !== null && couponAmount > 0) {
             $('.coupon-amount').append('('+data.couponFormatted+')');
           }
-          if ($('#CouponEmail').val().length>0 && $('#CouponCode').val().length>0 && (typeof(couponAmount)=='undefined' || couponAmount == null)) {
+          if ($('#CouponEmail').val().length>0 && $('#CouponCode').val().length>0 && (typeof(couponAmount)=='undefined' || couponAmount == null || couponAmount == 0)) {
             $('.cart-details .coupon-alert').empty().append(message);
           } else {
             $('.cart-details .coupon-alert').empty();
