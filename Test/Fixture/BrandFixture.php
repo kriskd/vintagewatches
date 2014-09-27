@@ -1,13 +1,17 @@
 <?php
-App::uses('FakerTestFixture', 'CakeFaker.Lib');
-
 /**
  * BrandFixture
  *
  */
-class BrandFixture extends FakerTestFixture {
+class BrandFixture extends CakeTestFixture {
 
-    protected $model_name = 'Brand', $num_records = 5;
+/**
+ * Import
+ *
+ * @var array
+ */
+	public $import = array('model' => 'Brand', 'records' => true, 'connection' => 'development');
+
 /**
  * Fields
  *
