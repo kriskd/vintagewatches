@@ -170,22 +170,13 @@ class OrdersController extends AppController
                     $coupon = $this->Order->Coupon->valid($couponCode, $couponEmail, $shipping, $this->cartItemIds);
                     $couponAmount = $this->Cart->couponAmount($this->cartWatches, $shipping, $coupon);
                 }
-                $total = $this->Cart->totalCart($subTotal, $shipping, $couponAmount);
-                $stripeToken = $this->request->data['stripeToken'];
-
-                //Create a description of brands to send to Stripe
-                $watches = $this->cartWatches; 
-                $brands = array();
-                foreach($watches as $watch) {
-                    $brands[] = $watch['Brand']['name'];
-                }
-                $description = implode(',', $brands);
-
+                
                 $stripeData = array(
-                    'amount' => $total,
-                    'stripeToken' => $stripeToken,
-                    'description' => $description
+                    'amount' => $this->Cart->totalCart($subTotal, $shipping, $couponAmount),
+                    'stripeToken' => $this->request->data['stripeToken'],
+                    'description' => $this->Cart->stripeDescription($this->cartWatches),
                 );
+
                 $result = $this->Stripe->charge($stripeData);
 
                 if(is_array($result) && $result['stripe_paid'] == true){

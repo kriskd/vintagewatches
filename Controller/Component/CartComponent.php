@@ -130,4 +130,17 @@ class CartComponent extends Component
         }
         return $couponAmount;
     }
+
+    /**
+     * Create string of watch brands to send to Stripe as description
+     * @param array $watches
+     * @return string
+     */
+    public function stripeDescription($watches) {
+        $brands = array();
+        foreach($watches as $watch) {
+            $brands[] = $watch['Brand']['name'];
+        }
+        return implode(',', $brands);
+    }
 }
