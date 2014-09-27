@@ -91,7 +91,7 @@ class OrdersControllerTest extends ControllerTestCase {
                 ),
                 'Coupon' => array(
                     'email' => 'KeithMDecker@dayrep.com',
-                    'code' => 'third',
+                    'code' => 'fixedgood',
                 ),
             )
         );
