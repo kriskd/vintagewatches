@@ -164,13 +164,13 @@ class OrdersController extends AppController
             unset($data['Coupon']);
             $valid = $this->Order->validateAssociated($data); 
             if($valid == true){
-                $subTotal = $this->Cart->getSubTotal($this->cartWatches); 
                 $couponAmount = 0;
                 if (!empty($couponCode) && !empty($couponEmail)) {
                     $coupon = $this->Order->Coupon->valid($couponCode, $couponEmail, $shipping, $this->cartItemIds);
                     $couponAmount = $this->Cart->couponAmount($this->cartWatches, $shipping, $coupon);
                 }
                 
+                $subTotal = $this->Cart->getSubTotal($this->cartWatches); 
                 $stripeData = array(
                     'amount' => $this->Cart->totalCart($subTotal, $shipping, $couponAmount),
                     'stripeToken' => $this->request->data['stripeToken'],
@@ -304,10 +304,10 @@ class OrdersController extends AppController
             $shipping = $this->Cart->getShippingAmount($country);
             $itemsTotal = $this->Cart->getSubTotal($this->cartWatches); 
             $couponAmount = 0;
-            $email = $query['data']['Coupon']['email'];
-            $code = $query['data']['Coupon']['code'];
-            if (!empty($email) && !empty($code)) {
-                $coupon = $this->Order->Coupon->valid($code, $email, $shipping, $this->cartItemIds);
+            $couponEmail = $query['data']['Coupon']['email'];
+            $couponCode = $query['data']['Coupon']['code'];
+            if (!empty($couponEmail) && !empty($couponCode)) {
+                $coupon = $this->Order->Coupon->valid($couponCode, $couponEmail, $shipping, $this->cartItemIds);
                 $couponAmount = $this->Cart->couponAmount($this->cartWatches, $shipping, $coupon);
                 $this->set(array(
                     'couponAmount' => $couponAmount,
