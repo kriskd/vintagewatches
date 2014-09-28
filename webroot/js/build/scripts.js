@@ -6368,18 +6368,26 @@ var datepicker = $.datepicker;
           var totalFormatted = data.totalFormatted;
           var couponAmount = data.couponAmount;
           var message = data.alert;
+          if (message.length > 0) {
+            $('.cart-details .coupon-alert').empty().append(message);
+          } else {
+            $('.cart-details .coupon-alert').empty();
+          }
+          if (typeof(shipping) == 'undefined' || typeof(totalFormatted) == 'undefined') {
+            $('section.shipping').remove();
+            return;
+          }
           $('.shipping-amount').empty().append(shipping).find('.launch-tooltip').tooltip();
           $('.coupon-amount').empty();
           if (typeof(couponAmount) != 'undefined' && couponAmount !== null && couponAmount > 0) {
             $('.coupon-amount').append('('+data.couponFormatted+')');
           }
-          if ($('#CouponEmail').val().length>0 && $('#CouponCode').val().length>0 && (typeof(couponAmount)=='undefined' || couponAmount == null || couponAmount == 0)) {
+          $('.total-formatted-amount').empty().append(totalFormatted);
+          /*if ($('#CouponEmail').val().length>0 && $('#CouponCode').val().length>0 && (typeof(couponAmount)=='undefined' || couponAmount == null || couponAmount == 0)) {
             $('.cart-details .coupon-alert').empty().append(message);
           } else {
             $('.cart-details .coupon-alert').empty();
-          }
-          $('.total-formatted-amount').empty().append(totalFormatted);
-          //$('.shipping-inner').show();
+          }*/
         }
       });
     }
