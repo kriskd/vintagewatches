@@ -98,74 +98,12 @@ class OrdersController extends AppController
     }
 
     public function checkout() {
-
-        if($this->Cart->cartEmpty() == true){
-            $this->redirect(array('controller' => 'watches', 'action' => 'index'));
-        }
-
-        // Check if any coupons are available
-        $couponsAvailable = false;
-        $coupons = $this->Order->Coupon->find('count', array(
-            'conditions' => array(
-                'archived' => 0,
-                'OR' => array(
-                    'expire_date' => NULL,
-                    'expire_date >' => date('Y-m-d'),
-                ),
-                'available >' =>  0,
-            ),
-            'recursive' => -1,
-        ));
-        
-        if ($coupons > 0) {
-            $couponsAvailable = true;
-        }
-        $this->set(compact('couponsAvailable'));
-        
-        //Handle ajax request for autocomplete
-        if($this->request->is('ajax')){
-            $query = $this->request->query; 
-            $search = $query['term'];
-            if(!$search){ 
-                throw new NotFoundException('Search term required');
-            }
-
-            $filtered = array();
-            $countries = $this->Country->getList();
-            foreach($countries as $key => $country){
-                if(stripos($country, htmlentities($search)) !== false){
-                    $filtered[] = array('id' => $key, 'value' => html_entity_decode($country, ENT_COMPAT, 'UTF-8'));
-                }
-            }
-
-            $this->set(compact('filtered'));
-            $this->layout = 'ajax';
-        }
-
         //Form submitted
         if($this->request->is('post')) {
-            $data = $this->request->data;
-            unset($data['Shipping']);
-
-            $addresses = $data['Address'];
-
-            $addressesToSave = array();
-            unset($addresses['select-country']);
-
-            foreach($addresses as $type => $item){
-                $address = $item;
-                $address['type'] = $type;
-                $addressesToSave[] = $address;
-            }
-
-            $data['Address'] = $addressesToSave;
-
-            $checkoutData = ($this->Cart->getShipping() > 0) &&
-                ($this->Cart->cartItemCount() > 0) &&
-                ($this->Cart->getTotal() > 0);
-
-            if(!$checkoutData){
+            if($this->Cart->cartEmpty()){
                 //There is no data to checkout with
+                $this->Cart->setCheckoutData($this->request->data);
+                $this->Session->setFlash('There was a problem with your cart, please add your items again.', 'warning');
                 $this->redirect(array('controller' => 'watches', 'action' => 'index'));
             }
             
@@ -179,39 +117,48 @@ class OrdersController extends AppController
                 foreach ($remove as $id) {
                     $this->Cart->remove($id);
                 }
-                $this->Session->write('Address', array('data' => $addresses));
+                $this->Cart->setCheckoutData($this->request->data);
                 $this->Session->setFlash('One or more of the items in your cart is no longer available.', 'warning');
                 $this->redirect(array('action' => 'checkout'));
             }
-            
+           
+            $data = $this->request->data;
+            unset($data['Shipping']);
+
+            $addresses = $data['Address'];
+            $country = $addresses['select-country'];
+            unset($addresses['select-country']);
+
+            $data['Address'] = $this->Cart->formatAddresses($addresses);
             //Add shipping to the order
-            $data['Order']['shippingAmount'] = $this->Cart->getShipping();
+            $shipping = $this->Cart->getShippingAmount($country);
+            $data['Order']['shippingAmount'] = $shipping;
+            $couponCode = isset($data['Coupon']['code']) ? $data['Coupon']['code'] : null;
+            $couponEmail = isset($data['Coupon']['email']) ? $data['Coupon']['email'] : null;
             unset($data['Coupon']);
+
             $valid = $this->Order->validateAssociated($data); 
             if($valid == true){
-                $amount = $this->Cart->getTotal(); 
-                $stripeToken = $this->request->data['stripeToken'];
-
-                //Create a description of brands to send to Stripe
-                $watches = $this->cartWatches; 
-                $brands = array();
-                foreach($watches as $watch) {
-                    $brands[] = $watch['Brand']['name'];
+                $couponAmount = 0;
+                if (!empty($couponCode) && !empty($couponEmail)) {
+                    $coupon = $this->Order->Coupon->valid($couponCode, $couponEmail, $shipping, $this->cartItemIds);
+                    $couponAmount = $this->Cart->couponAmount($this->cartWatches, $shipping, $coupon);
                 }
-                $description = implode(',', $brands);
-
+                
+                $subTotal = $this->Cart->getSubTotal($this->cartWatches); 
                 $stripeData = array(
-                    'amount' => $amount,
-                    'stripeToken' => $stripeToken,
-                    'description' => $description
+                    'amount' => $this->Cart->totalCart($subTotal, $shipping, $couponAmount),
+                    'stripeToken' => $this->request->data['stripeToken'],
+                    'description' => $this->Cart->stripeDescription($this->cartWatches),
                 );
+
                 $result = $this->Stripe->charge($stripeData);
 
                 if(is_array($result) && $result['stripe_paid'] == true){
                     unset($this->Order->Address->validate['foreign_id']);
 
-                    if ($coupon_id = $this->Cart->getCoupon()) {
-                        $data['Order']['coupon_id'] = $coupon_id;
+                    if ($couponAmount > 0) {
+                        $data['Order']['coupon_id'] = $this->Order->Coupon->getCouponId($couponCode);
                     }
 
                     //Add the results of stripe to the data array
@@ -262,7 +209,7 @@ class OrdersController extends AppController
                     $this->render('confirm');
                 } else {
                     //Decline
-                    $this->Session->write('Address', array('data' => $addresses));
+                    $this->Cart->setCheckoutData($this->request->data);
                     $this->Session->setFlash('<span class="glyphicon glyphicon-warning-sign"></span> ' . $result,
                         'default', array('class' => 'alert alert-danger'));
                 }
@@ -276,32 +223,36 @@ class OrdersController extends AppController
                 }
                 $this->Address->validationErrors = $fixErrors;
 
-                $this->Session->write('Address', array('errors' => $fixErrors, 'data' => $addresses));
-                $this->Session->write('Shipping.option',  $this->request->data['Shipping']['option']);
+                $this->Cart->setCheckoutData($this->request->data, $fixErrors);
 
                 //Set a variable for the view to display a general error message
                 $this->set(array('errors' => true));
             }
         } else {
-            $couponId = $this->Cart->getCoupon();
-            $email = $this->Cart->getEmail();
-            if (!empty($couponId) && !empty($email)) {
-                if ($coupon = $this->Order->Coupon->find('first', array(
-                    'conditions' => array(
-                        'id' => $couponId,
-                    ),
-                    'recursive' => -1,
-                ))) {
-                    $code = $coupon['Coupon']['code'];
-                    $this->request->data['Coupon']['email'] = $email;
-                    $this->request->data['Coupon']['code'] = $code;
-                    $this->request->data['Order']['email'] = $email;
-                }
+            // This previously got the coupon id and coupon email out of session
+            // In order to populate the form if user previously entered those items,
+            // left checkout and returned. Those are no longer stored in session.
+            // Keep or go?
+            if($this->Cart->cartEmpty() == true){
+                $this->redirect(array('controller' => 'watches', 'action' => 'index'));
             }
         }
 
+        // Check if any coupons are available. This needs to live outside of `if`, needed by both.
+        $this->set('couponsAvailable', $this->Order->Coupon->couponsAvailable());
+
+        // For return to cart on item fail
+        if ($this->Session->check('Order')) {
+            $this->request->data['Order'] = $this->Session->read('Order');
+            $this->Session->delete('Order');
+        }
+        if ($this->Session->check('Address.select-country')) {
+            $this->request->data['Address']['select-country'] = $this->Session->read('Address.select-country');
+            $this->Session->delete('Address.select-country');
+        }
+
         $title = 'Checkout';
-        $this->set(compact('months', 'years', 'total', 'title') + array('watches' => $this->cartWatches));
+        $this->set(compact('title') + array('watches' => $this->cartWatches));
     }
 
     public function add($id = null)
@@ -339,44 +290,26 @@ class OrdersController extends AppController
         if($this->request->is('ajax')){
             $query = $this->request->query; 
             $country = $query['data']['Address']['select-country'];
-            $email = $query['data']['Coupon']['email'];
-            $code = $query['data']['Coupon']['code'];
-            $shipping = $this->Order->getShippingAmount($country);
-            $this->Cart->setShipping($shipping);
-            $subTotal = $this->Order->getSubTotal($this->cartWatches); 
+            $shipping = $this->Cart->getShippingAmount($country);
+            $subTotal = $this->Cart->getSubTotal($this->cartWatches); 
+            if ($subTotal <= 0) return; 
             $couponAmount = 0;
-            $coupon = $this->Order->Coupon->valid($code, $email, $subTotal, $shipping, $this->cartItemIds);
-            if (isset($coupon['Coupon'])) {
-                $couponSubTotal = empty($coupon['Coupon']['brand_id']) ? $subTotal : $this->Order->Watch->sumWatchesForBrand($coupon['Coupon']['brand_id'], $this->cartItemIds);
-                switch ($coupon['Coupon']['type']) {
-                    case 'fixed':
-                        $couponAmount = $couponSubTotal + $shipping > $coupon['Coupon']['amount'] ? $coupon['Coupon']['amount'] : $couponSubTotal + $shipping;
-                        break;
-                    case 'percentage':
-                        $couponAmount = $couponSubTotal * $coupon['Coupon']['amount'];
-                        break;
-                }
+            $couponEmail = $query['data']['Coupon']['email'];
+            $couponCode = $query['data']['Coupon']['code'];
+            if (!empty($couponEmail) && !empty($couponCode)) {
+                $coupon = $this->Order->Coupon->valid($couponCode, $couponEmail, $shipping, $this->cartItemIds);
+                $couponAmount = $this->Cart->couponAmount($this->cartWatches, $shipping, $coupon);
                 $this->set(array(
                     'couponAmount' => $couponAmount,
+                    'coupon' => $coupon, // Contains error message if any
                 ));
-                if (!empty($coupon['Coupon']) && !empty($email)) {
-                    $this->Cart->setCoupon($coupon['Coupon']['id']);
-                    $this->Cart->setEmail($email);
-                } 
-            } else {
-                $this->set(compact('coupon')); // Contains error message
-                $this->Cart->clearCoupon();
             }
-
-            $this->Cart->setTotal($subTotal, $couponAmount);
-
-            $this->set(array('data' => array(
-                    'shipping' => $this->Cart->getShipping(),
-                    'total' => $this->Cart->getTotal(),
-                )
+            $this->set(array(
+                'shipping' => $this->Cart->getShippingAmount($country),
+                'total' => $this->Cart->totalCart($subTotal, $shipping, $couponAmount),
             ));
-            $this->layout = 'ajax';
         }
+        $this->layout = 'ajax';
     }
 
     /**
@@ -394,7 +327,8 @@ class OrdersController extends AppController
             //Address data and errors in the session
             if($this->Session->check('Address') == true){
                 $data['errors'] = $this->Session->read('Address.errors');
-                $data['values'] = $this->Session->read('Address.data');
+                $this->request->data['Address'] = $this->Session->read('Address.data');
+                $this->Session->delete('Address');
 
                 //For other countries we need to take the error message in country
                 //and put it in countryName
@@ -407,8 +341,6 @@ class OrdersController extends AppController
                     }
                     $data['errors'] = $newErrors;
                 }
-
-                $this->Session->delete('Address'); 
             } 
             $this->set(compact('data'));
             $this->layout = 'ajax';

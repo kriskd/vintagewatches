@@ -1,74 +1,41 @@
 <?php
-App::uses('FakerTestFixture', 'CakeFaker.Lib');
+App::uses('MyTestFixture', 'Test/Fixture');
+/**
+ * AddressFixture
+ *
+ */
+class AddressFixture extends MyTestFixture {
 
-class AddressFixture extends FakerTestFixture {
-    protected $model_name = 'Address', $num_records = 5;
-    public $fields = array(
-        'id' => array('type' => 'integer', 'key' => 'primary'),
-        'class' => array(
-            'type' => 'string',
-            'length' => 30,
-            'null' => false
-        ),
-        'foreign_id' => array(
-            'type' => 'integer',
-            'null' => false,
-        ),
-        'type' => array(
-            'type' => 'string',
-            'length' => 30,
-            'null' => false
-        ),
-        'firstName' => array(
-            'type' => 'string',
-            'length' => 50,
-            'null' => false
-        ),
-        'lastName' => array(
-            'type' => 'string',
-            'length' => 50,
-            'null' => false
-        ),
-        'company' => array(
-            'type' => 'string',
-            'length' => 200,
-        ),
-        'address1' => array(
-            'type' => 'string',
-            'length' => 100,
-            'null' => false
-        ),
-        'address2' => array(
-            'type' => 'string',
-            'length' => 100,
-        ),
-        'city' => array(
-            'type' => 'string',
-            'length' => 50,
-            'null' => false
-        ),
-        'state' => array(
-            'type' => 'string',
-            'length' => 2,
-            'null' => false
-        ),
-        'postalCode' => array(
-            'type' => 'string',
-            'length' => 20,
-            'null' => false
-        ),
-        'country' => array(
-            'type' => 'string',
-            'length' => 2,
-            'null' => false
-        ),
-    );
-    protected function alterFields($generator) {
-        return array(
-            'city' => function() use ($generator) { return $generator->city; },
-            'state' => function() use ($generator) { return $generator->stateAbbr; },
-            'postalCode' => function() use ($generator) { return $generator->postcode; },
-            'country' => function() use ($generator) { return $generator->countryCode; },
-        );
-    }
+/**
+ * Import
+ *
+ * @var array
+ */
+	public $import = array('model' => 'Address', 'records' => true, 'connection' => 'development');
+
+/**
+ * Fields
+ *
+ * @var array
+ */
+	public $fields = array(
+		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => true, 'key' => 'primary'),
+		'class' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 30, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'foreign_id' => array('type' => 'integer', 'null' => true, 'default' => null, 'unsigned' => false),
+		'type' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 50, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'firstName' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 50, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'lastName' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 50, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'company' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 200, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'address1' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 100, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'address2' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 100, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'city' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 50, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'state' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 2, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'postalCode' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 20, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'country' => array('type' => 'string', 'null' => true, 'default' => null, 'length' => 2, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'indexes' => array(
+			'PRIMARY' => array('column' => 'id', 'unique' => 1)
+		),
+		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
+	);
+
 }

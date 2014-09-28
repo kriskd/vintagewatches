@@ -12,6 +12,7 @@ class OrderTest extends FakerTestCase {
         'app.address',
         'app.detect',
         'app.detectsorder',
+        'app.coupon',
     );
 
     public function setUp() {
@@ -19,19 +20,6 @@ class OrderTest extends FakerTestCase {
         $this->Order = ClassRegistry::init('Order');
     }
     
-    public function testGetSubTotal() {
-        $result = $this->Order->getSubTotal(array(
-            array('Watch' => array(
-                'price' => 250
-            )),
-            array('Watch' => array(
-                'price' => 175
-            )),
-        ));
-        $expected = 425;
-        $this->assertEquals($result, $expected);
-    }
-
     public function testGetOrder() {
         
         $result = $this->Order->getOrder(1);

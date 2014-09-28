@@ -1,10 +1,9 @@
 <?php
-App::uses('FakerTestFixture', 'CakeFaker.Lib');
 /**
  * OrderFixture
  *
  */
-class OrderFixture extends FakerTestFixture {
+class OrderFixture extends CakeTestFixture {
 
 /**
  * Fields
@@ -19,6 +18,7 @@ class OrderFixture extends FakerTestFixture {
 		'shipDate' => array('type' => 'date', 'null' => true, 'default' => null),
 		'notes' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'orderNotes' => array('type' => 'text', 'null' => true, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+        'coupon_id' => array('type' => 'integer', 'null' => true, 'default' => null),
 		'created' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'modified' => array('type' => 'datetime', 'null' => false, 'default' => null),
 		'indexes' => array(
@@ -28,25 +28,28 @@ class OrderFixture extends FakerTestFixture {
     );
     //public $import = array('model' => 'Order', 'connection' => 'development');
 
+    public $records = array();
+
     public function setUp() {
         parent::setUp();
     }
 
     public function init() {
+        $this->records = array(
+                array(
+                'id' => 1,
+                'email' => 'PeterRHarris@teleworm.us',
+                'phone' => '260-423-3273',
+                'shippingAmount' => '8.00',
+                'shipDate' => date('Y-m-d', strtotime('-3 day')),
+                'notes' => 'Lorem ipsum',
+                'orderNotes' => 'Loreum ipsum',
+                'coupon_id' => 3,
+                'created' => date('Y-m-d H:i:s', strtotime('-4 day')),
+                'modified' => date('Y-m-d H:i:s', strtotime('-4 day')),
+            ),
+        ); 
         parent::init();
     }
 
-    protected $model_name = 'Order', $num_records = 5;
-    protected function alterFields($generator) {
-        return array(
-            'email' => function() use ($generator) { return $generator->email; },
-            'phone' => function() use ($generator) { return $generator->phoneNumber; },
-            'shippingAmount' => function() use ($generator) { return $generator->randomDigit; },
-            'shipDate' => function() use ($generator) { return $generator->date(); },
-            //'notes' => function() use ($generator) { return $generator->text; },
-            //'orderNotes' => function() use ($generator) { return $generator->text; },
-            //'created' => function() use ($generator) { return $generator->dateTime(); },
-            //'modified' => function() use ($generator) { return $generator->dateTime(); },
-        );
-    }
 }

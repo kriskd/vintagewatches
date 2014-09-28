@@ -209,18 +209,26 @@ $(document).ready(function(){
           var totalFormatted = data.totalFormatted;
           var couponAmount = data.couponAmount;
           var message = data.alert;
-          $('.shipping-amount').empty().append(shipping).find('.launch-tooltip').tooltip();
-          $('.coupon-amount').empty();
-          if (typeof(couponAmount) != 'undefined' && couponAmount !== null) {
-            $('.coupon-amount').append('('+data.couponFormatted+')');
-          }
-          if ($('#CouponEmail').val().length>0 && $('#CouponCode').val().length>0 && (typeof(couponAmount)=='undefined' || couponAmount == null)) {
+          if (message.length > 0) {
             $('.cart-details .coupon-alert').empty().append(message);
           } else {
             $('.cart-details .coupon-alert').empty();
           }
+          if (typeof(shipping) == 'undefined' || typeof(totalFormatted) == 'undefined') {
+            $('section.shipping').remove();
+            return;
+          }
+          $('.shipping-amount').empty().append(shipping).find('.launch-tooltip').tooltip();
+          $('.coupon-amount').empty();
+          if (typeof(couponAmount) != 'undefined' && couponAmount !== null && couponAmount > 0) {
+            $('.coupon-amount').append('('+data.couponFormatted+')');
+          }
           $('.total-formatted-amount').empty().append(totalFormatted);
-          //$('.shipping-inner').show();
+          /*if ($('#CouponEmail').val().length>0 && $('#CouponCode').val().length>0 && (typeof(couponAmount)=='undefined' || couponAmount == null || couponAmount == 0)) {
+            $('.cart-details .coupon-alert').empty().append(message);
+          } else {
+            $('.cart-details .coupon-alert').empty();
+          }*/
         }
       });
     }
@@ -269,7 +277,7 @@ $(document).ready(function(){
      */
     $(document).on('keyup', '#AddressBillingCountryName', function(){
         $('#AddressBillingCountryName').autocomplete({
-            source: '/orders/checkout.json',
+            source: '/countries/getCountries.json',
             minLength: 3,
             select: function(event,ui){
                 $(this).val(ui.item.value); 
@@ -311,11 +319,6 @@ $(document).ready(function(){
                 $('.address textarea').show();
                 $('.address-forms .input.required label').append(' <span class="required">*</span>');
                 $('.address-forms').find('.launch-tooltip').tooltip();
-                //Check to see if we have a billing country and fill in shipping with it
-                if ($('#AddressBillingCountry').val() != '') {
-                    var countryName = $('#AddressBillingCountryName').val(); 
-                    $('.billing-country-name').empty().append(countryName);
-                }
 
                 //Check to see if state dropdown has a value and fill in the hidden country field
                 $('select.us-ca').each(function(){

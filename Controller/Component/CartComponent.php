@@ -6,49 +6,29 @@ class CartComponent extends Component
     public $components = array('Session');
     
     protected $items = array();
-    protected $shipping = 0;
-    protected $coupon = null;
-    protected $email = null;
-    protected $total = 0;
     
-    public function initialize(Controller $controller)
-    {
+    public function initialize(Controller $controller) {
         if($this->Session->check('Cart.items') == true){
             $this->items = $this->Session->read('Cart.items');  
-        }
-        if($this->Session->check('Cart.shipping') == true){
-            $this->shipping = $this->Session->read('Cart.shipping');  
-        }
-        if($this->Session->check('Cart.total') == true){
-            $this->total = $this->Session->read('Cart.total');  
-        }
-        if($this->Session->check('Cart.coupon') == true) {
-            $this->coupon = $this->Session->read('Cart.coupon');  
-        }
-        if($this->Session->check('Cart.email') == true) {
-            $this->email = $this->Session->read('Cart.email');  
         }
     }
     
     /**
      * Clear the Cart session, reset $items array
      */
-    public function emptyCart()
-    {
+    public function emptyCart() {
         $this->items = array();
         $this->Session->delete('Cart');
     }
     
-    public function cartEmpty()
-    {
+    public function cartEmpty() {
         if(!empty($this->items)){
             return false;
         }
         return true;
     }
     
-    public function cartItemCount()
-    {
+    public function cartItemCount() {
         if(!empty($this->items)){
             return count($this->items);
         }
@@ -58,16 +38,14 @@ class CartComponent extends Component
     /**
      * Returns an array of Watch IDs in the cart
      */
-    public function cartItemIds()
-    {
+    public function cartItemIds() {
         return $this->items;
     }
     
     /**
      * Add an item to the cart
      */
-    public function add($id)
-    {
+    public function add($id) {
         $this->items[] = $id; 
         $this->Session->write('Cart.items', $this->items);
     }
@@ -75,8 +53,7 @@ class CartComponent extends Component
     /**
      * Remove an item from the cart
      */
-    public function remove($id)
-    {
+    public function remove($id) {
         if(in_array($id, $this->items)){
             $key = array_search($id, $this->items);
             unset($this->items[$key]); 
@@ -84,56 +61,121 @@ class CartComponent extends Component
         }
     }
     
-    public function inCart($id = null)
-    {
+    public function inCart($id = null) {
         if(is_array($this->items) && in_array($id, $this->items)){
             return true;
         }
         return false;
     }
 
-    public function clearCoupon() {
-        $this->Session->delete('Cart.email');
-        $this->Session->delete('Cart.coupon');
+    public function getShippingAmount($country = '') {
+        switch($country){
+            case '':
+                return '';
+                break;
+            case 'us':
+                return '8';
+                break;
+            case 'ca':
+                return '38';
+                break;
+            default:
+                return '45';
+                break;
+        }
     }
     
-    public function getShipping()
-    {
-        return $this->shipping;
-    }
-    
-    public function setShipping($shipping)
-    {
-        $this->shipping = $shipping;
-        $this->Session->write('Cart.shipping', $this->shipping);
+    public function totalCart($itemsTotal, $shipping, $couponAmount) {
+        return $itemsTotal + $shipping - $couponAmount;
     }
 
-    public function getCoupon() {
-        return $this->coupon;
+    /**
+     * $items array Array of Watch objects
+     * $brand_id int Optional brand_id
+     */
+    public function getSubTotal($items, $brand_id = null) {
+        if(!empty($items)){
+            return  array_reduce($items, function($return, $item) use ($brand_id) { 
+                if(isset($item['Watch']['price'])){
+                    if (empty($brand_id) || $brand_id == $item['Watch']['brand_id']) {
+                        $return += $item['Watch']['price'];
+                    }
+                    return $return;
+                }
+            });
+        }
+        return null;
     }
 
-    public function setCoupon($couponId) {
-        $this->coupon = $couponId;
-        $this->Session->write('Cart.coupon', $this->coupon);
+    /**
+     * $items array Array of Watch objects
+     * $shipping int Shipping amount
+     * $coupon object
+     */
+    public function couponAmount($items, $shipping, $coupon = array()) {
+        if (empty($coupon['Coupon'])) {
+            return 0;
+        }
+        // Total eligible for coupon
+        $couponSubTotal = $this->getSubTotal($items, $coupon['Coupon']['brand_id']);
+        switch ($coupon['Coupon']['type']) {
+            case 'fixed':
+                $couponAmount = $couponSubTotal + $shipping > $coupon['Coupon']['amount'] ? $coupon['Coupon']['amount'] : $couponSubTotal + $shipping;
+                break;
+            case 'percentage':
+                $couponAmount = $couponSubTotal * $coupon['Coupon']['amount'];
+                break;
+            default:
+                $couponAmount = 0;
+        }
+        return $couponAmount;
     }
 
-    public function getEmail() {
-        return $this->email;
+    /**
+     * Create string of watch brands to send to Stripe as description
+     * @param array $watches
+     * @return string
+     */
+    public function stripeDescription($watches) {
+        $brands = array();
+        foreach($watches as $watch) {
+            $brands[] = $watch['Brand']['name'];
+        }
+        return implode(',', $brands);
     }
 
-    public function setEmail($email) {
-        $this->email = $email;
-        $this->Session->write('Cart.email', $this->email);
+    /**
+     * Reformat addresses in request data from array('type' => $address) 
+     * to array(0 => $addressWithType)
+     * @param array $addresses from request
+     * @return array
+     */
+    public function formatAddresses($addresses) {
+        $addressesToSave = array();
+        foreach($addresses as $type => $item){
+            $address = $item;
+            $address['type'] = $type;
+            $addressesToSave[] = $address;
+        }
+        return $addressesToSave;
     }
-    
-    public function getTotal()
-    {
-        return $this->total;
-    }
-    
-    public function setTotal($subTotal, $couponAmount)
-    {
-        $this->total = $this->shipping > 0 ? $subTotal + $this->shipping - $couponAmount : 0;
-        $this->Session->write('Cart.total', $this->total);
+
+    /**
+     * Save checkout data to session on cart fail so it doesn't have to be re-entered on checkout again
+     * @param array the request data
+     * @param array optional form errors
+     * @return void
+     */
+    public function setCheckoutData($data, $errors = array()) {
+        // data key used in getAddress method in OrdersController
+        $this->Session->write('Address.data', $data['Address']);
+        if (!empty($errors)) {
+            $this->Session->write('Address.errors', $errors);
+        }
+        // Write select-country in separate Session key since we don't use data key, will set $this->request->data
+        $this->Session->write('Address.select-country', $data['Address']['select-country']);
+        // Used in getShippingChoice method in OrdersController, will set $this->request->data
+        $this->Session->write('Shipping.option',  $data['Shipping']['option']);
+        $this->Session->write('Order', $data['Order']);
     }
 }
