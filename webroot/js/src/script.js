@@ -319,11 +319,6 @@ $(document).ready(function(){
                 $('.address textarea').show();
                 $('.address-forms .input.required label').append(' <span class="required">*</span>');
                 $('.address-forms').find('.launch-tooltip').tooltip();
-                //Check to see if we have a billing country and fill in shipping with it
-                if ($('#AddressBillingCountry').val() != '') {
-                    var countryName = $('#AddressBillingCountryName').val(); 
-                    $('.billing-country-name').empty().append(countryName);
-                }
 
                 //Check to see if state dropdown has a value and fill in the hidden country field
                 $('select.us-ca').each(function(){

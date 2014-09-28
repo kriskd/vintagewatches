@@ -236,10 +236,10 @@ class OrdersController extends AppController
             if($this->Cart->cartEmpty() == true){
                 $this->redirect(array('controller' => 'watches', 'action' => 'index'));
             }
-            
-            // Check if any coupons are available
-            $this->set('couponsAvailable', $this->Order->Coupon->couponsAvailable());
         }
+
+        // Check if any coupons are available. This needs to live outside of `if`, needed by both.
+        $this->set('couponsAvailable', $this->Order->Coupon->couponsAvailable());
 
         // For return to cart on item fail
         if ($this->Session->check('Order')) {
@@ -327,7 +327,8 @@ class OrdersController extends AppController
             //Address data and errors in the session
             if($this->Session->check('Address') == true){
                 $data['errors'] = $this->Session->read('Address.errors');
-                $data['values'] = $this->Session->read('Address.data');
+                $this->request->data['Address'] = $this->Session->read('Address.data');
+                $this->Session->delete('Address');
 
                 //For other countries we need to take the error message in country
                 //and put it in countryName
@@ -340,8 +341,6 @@ class OrdersController extends AppController
                     }
                     $data['errors'] = $newErrors;
                 }
-
-                $this->Session->delete('Address'); 
             } 
             $this->set(compact('data'));
             $this->layout = 'ajax';
