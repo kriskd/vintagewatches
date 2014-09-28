@@ -98,43 +98,12 @@ class OrdersController extends AppController
     }
 
     public function checkout() {
-        if($this->Cart->cartEmpty() == true){
-            $this->redirect(array('controller' => 'watches', 'action' => 'index'));
-        }
-
-        // For return to cart when item is not available
-        if ($this->Session->check('Address.select-country')) {
-            $this->request->data['Address']['select-country'] = $this->Session->read('Address.select-country');
-            $this->request->data['Order'] = $this->Session->read('Order');
-        }
-
-        // Check if any coupons are available
-        $this->set('couponsAvailable', $this->Order->Coupon->couponsAvailable());
-        
         //Form submitted
         if($this->request->is('post')) {
-            $data = $this->request->data;
-            unset($data['Shipping']);
-
-            $addresses = $data['Address'];
-
-            $addressesToSave = array();
-            $country = $addresses['select-country'];
-            unset($addresses['select-country']);
-
-            $shipping = $this->Cart->getShippingAmount($country);
-            foreach($addresses as $type => $item){
-                $address = $item;
-                $address['type'] = $type;
-                $addressesToSave[] = $address;
-            }
-
-            $data['Address'] = $addressesToSave;
-
-            $checkoutData = ($shipping > 0) && ($this->Cart->cartItemCount() > 0);
-
-            if(!$checkoutData){
+            if($this->Cart->cartEmpty()){
                 //There is no data to checkout with
+                $this->Cart->setCheckoutData($this->request->data);
+                $this->Session->setFlash('There was a problem with your cart, please add your items again.', 'warning');
                 $this->redirect(array('controller' => 'watches', 'action' => 'index'));
             }
             
@@ -148,20 +117,26 @@ class OrdersController extends AppController
                 foreach ($remove as $id) {
                     $this->Cart->remove($id);
                 }
-                $this->Session->write('Address', array('data' => $addresses));
-                $this->Session->write('Address.select-country', $country);
-                $this->Session->write('Shipping.option',  $this->request->data['Shipping']['option']);
-                $this->Session->write('Order.email', $this->request->data['Order']['email']);
-                $this->Session->write('Order.phone', $this->request->data['Order']['phone']);
+                $this->Cart->setCheckoutData($this->request->data);
                 $this->Session->setFlash('One or more of the items in your cart is no longer available.', 'warning');
                 $this->redirect(array('action' => 'checkout'));
             }
            
+            $data = $this->request->data;
+            unset($data['Shipping']);
+
+            $addresses = $data['Address'];
+            $country = $addresses['select-country'];
+            unset($addresses['select-country']);
+
+            $data['Address'] = $this->Cart->formatAddresses($addresses);
             //Add shipping to the order
+            $shipping = $this->Cart->getShippingAmount($country);
             $data['Order']['shippingAmount'] = $shipping;
             $couponCode = isset($data['Coupon']['code']) ? $data['Coupon']['code'] : null;
             $couponEmail = isset($data['Coupon']['email']) ? $data['Coupon']['email'] : null;
             unset($data['Coupon']);
+
             $valid = $this->Order->validateAssociated($data); 
             if($valid == true){
                 $couponAmount = 0;
@@ -234,8 +209,7 @@ class OrdersController extends AppController
                     $this->render('confirm');
                 } else {
                     //Decline
-                    $this->Session->write('Address', array('data' => $addresses));
-                    $this->Session->write('Shipping.option',  $this->request->data['Shipping']['option']);
+                    $this->Cart->setCheckoutData($this->request->data);
                     $this->Session->setFlash('<span class="glyphicon glyphicon-warning-sign"></span> ' . $result,
                         'default', array('class' => 'alert alert-danger'));
                 }
@@ -249,8 +223,7 @@ class OrdersController extends AppController
                 }
                 $this->Address->validationErrors = $fixErrors;
 
-                $this->Session->write('Address', array('errors' => $fixErrors, 'data' => $addresses));
-                $this->Session->write('Shipping.option',  $this->request->data['Shipping']['option']);
+                $this->Cart->setCheckoutData($this->request->data, $fixErrors);
 
                 //Set a variable for the view to display a general error message
                 $this->set(array('errors' => true));
@@ -260,10 +233,26 @@ class OrdersController extends AppController
             // In order to populate the form if user previously entered those items,
             // left checkout and returned. Those are no longer stored in session.
             // Keep or go?
+            if($this->Cart->cartEmpty() == true){
+                $this->redirect(array('controller' => 'watches', 'action' => 'index'));
+            }
+            
+            // Check if any coupons are available
+            $this->set('couponsAvailable', $this->Order->Coupon->couponsAvailable());
+        }
+
+        // For return to cart on item fail
+        if ($this->Session->check('Order')) {
+            $this->request->data['Order'] = $this->Session->read('Order');
+            $this->Session->delete('Order');
+        }
+        if ($this->Session->check('Address.select-country')) {
+            $this->request->data['Address']['select-country'] = $this->Session->read('Address.select-country');
+            $this->Session->delete('Address.select-country');
         }
 
         $title = 'Checkout';
-        $this->set(compact('months', 'years', 'total', 'title') + array('watches' => $this->cartWatches));
+        $this->set(compact('title') + array('watches' => $this->cartWatches));
     }
 
     public function add($id = null)
@@ -302,7 +291,8 @@ class OrdersController extends AppController
             $query = $this->request->query; 
             $country = $query['data']['Address']['select-country'];
             $shipping = $this->Cart->getShippingAmount($country);
-            $itemsTotal = $this->Cart->getSubTotal($this->cartWatches); 
+            $subTotal = $this->Cart->getSubTotal($this->cartWatches); 
+            if ($subTotal <= 0) return; 
             $couponAmount = 0;
             $couponEmail = $query['data']['Coupon']['email'];
             $couponCode = $query['data']['Coupon']['code'];
@@ -314,13 +304,12 @@ class OrdersController extends AppController
                     'coupon' => $coupon, // Contains error message if any
                 ));
             }
-            $this->set(array('data' => array(
-                    'shipping' => $this->Cart->getShippingAmount($country),
-                    'total' => $this->Cart->totalCart($itemsTotal, $shipping, $couponAmount),
-                )
+            $this->set(array(
+                'shipping' => $this->Cart->getShippingAmount($country),
+                'total' => $this->Cart->totalCart($subTotal, $shipping, $couponAmount),
             ));
-            $this->layout = 'ajax';
         }
+        $this->layout = 'ajax';
     }
 
     /**
