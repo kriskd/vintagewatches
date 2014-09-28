@@ -143,4 +143,39 @@ class CartComponent extends Component
         }
         return implode(',', $brands);
     }
+
+    /**
+     * Reformat addresses in request data from array('type' => $address) 
+     * to array(0 => $addressWithType)
+     * @param array $addresses from request
+     * @return array
+     */
+    public function formatAddresses($addresses) {
+        $addressesToSave = array();
+        foreach($addresses as $type => $item){
+            $address = $item;
+            $address['type'] = $type;
+            $addressesToSave[] = $address;
+        }
+        return $addressesToSave;
+    }
+
+    /**
+     * Save checkout data to session on cart fail so it doesn't have to be re-entered on checkout again
+     * @param array the request data
+     * @param array optional form errors
+     * @return void
+     */
+    public function setCheckoutData($data, $errors = array()) {
+        // data key used in getAddress method in OrdersController
+        $this->Session->write('Address.data', $data['Address']);
+        if (!empty($errors)) {
+            $this->Session->write('Address.errors', $errors);
+        }
+        // Write select-country in separate Session key since we don't use data key, will set $this->request->data
+        $this->Session->write('Address.select-country', $data['Address']['select-country']);
+        // Used in getShippingChoice method in OrdersController, will set $this->request->data
+        $this->Session->write('Shipping.option',  $data['Shipping']['option']);
+        $this->Session->write('Order', $data['Order']);
+    }
 }
