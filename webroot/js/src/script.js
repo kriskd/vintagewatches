@@ -124,6 +124,7 @@ $(document).ready(function(){
             dataType: 'html',
             beforeSend: function() {
               $('.announcement-list-signup .buttons button').hide();
+              $('.announcement-list-signup .announce-error').hide();
               $('.announcement-list-signup .buttons').append('<p class="text-center">Please wait...</p>');
             },
             success: function(data) {
