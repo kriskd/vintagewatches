@@ -7031,6 +7031,10 @@ body.hide-fat-footer .container .content {
   color: #9d261d;
   display: none;
 }
+.footer .navbar-default .announcement-list .announcement-list-signup .response {
+  padding-left: 10px;
+  padding-right: 10px;
+}
 .footer .navbar-default .announcement-list .announcement-list-signup form {
   margin-bottom: 5px;
   display: inline;

@@ -68,22 +68,31 @@
                         <div class="announcement-list-signup">
                             <p class="title">Join My Mailing List</p>
                             <p class="announce-error">Please enter a valid email address.</p>
-                            <form action="http://scripts.dreamhost.com/add_list.cgi" method="post" class="form-inline" role="form">
-                                <input type="hidden" name="list" value="bruce" />
-                                <input type="hidden" name="domain" value="brucesvintagewatches.com" />
-                                <input type="hidden" name="url" value="http://SubscribedURL" /> 
-                                <input type="hidden" name="unsuburl" value="<?php echo $currentUrl; ?>" /> 
-                                <input type="hidden" name="alreadyonurl" value="<?php echo $currentUrl; ?>" /> 
-                                <input type="hidden" name="notonurl" value="<?php echo $currentUrl; ?>" /> 
-                                <input type="hidden" name="invalidurl" value="<?php echo $currentUrl; ?>" /> 
-                                <input type="hidden" name="emailconfirmurl" value="<?php echo $currentUrl; ?>" /> 
-                                <label>Email:</label>
-                                <input type="text" name="email" class="form-control input-sm">
-                                <div class="buttons">
-                                    <input type="submit" name="submit" value="Join" class="submit btn join btn-gold btn-sm" />
-                                    <input type="submit" name="unsub" value="Unsubscribe" class="submit btn unsub btn-sm" />
-                                </div>
-                            </form>
+                            <div class="response"></div>
+                            <?php echo $this->Form->create('Page', array(
+                                'class' => 'form-inline',
+                                'role' => 'form',
+                                'url' => '/mailinglist',
+                            )); ?>
+                            <?php $this->Form->input('currentUrl', array(
+                                'type' => 'hidden',
+                                'value' => $currentUrl,
+                            )); ?>
+                            <?php echo $this->Form->input('email', array(
+                                'class' => 'form-control input-sm',
+                            )); ?>
+                            <?php echo $this->Form->input('unsub', array(
+                                'type' => 'hidden',
+                            )); ?>
+                            <div class="buttons">
+                                <?php echo $this->Form->button('Join', array(
+                                    'class' => 'submit btn join btn-gold btn-sm',
+                                )); ?>
+                                <?php echo $this->Form->button('Unsubscribe', array(
+                                    'class' => 'submit btn unsub btn-gold btn-sm',
+                                )); ?>
+                            </div>
+                            <?php echo $this->Form->end(); ?>
                         </div>
                     </div>
                 </div>

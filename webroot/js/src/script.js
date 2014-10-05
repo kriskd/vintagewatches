@@ -104,12 +104,36 @@ $(document).ready(function(){
         $(this).submit(); 
     });
     
-    $(document).on('click', '.announcement-list-signup input[type=submit]', function(e){
-        var val = $('input[name=email]').val();
-        if (val=='') {
+    $('.announcement-list-signup .unsub').on('click', function(){
+      $('#PageUnsub').prop('value', 'unsub');
+    });
+
+    $('.announcement-list-signup .join').on('click', function(){
+      $('#PageUnsub').prop('value', '');
+    });
+
+    $(document).on('click', '.announcement-list-signup button', function(e){
+        e.preventDefault();
+        var email = $('#PageEmail').val();
+        if (email=='') {
             $('.announcement-list-signup .announce-error').show();
-            e.preventDefault();
-        } 
+        } else {
+          $.ajax({
+            url: $(this).parents('#PageDisplayForm').prop('action'),
+            data: $('#PageDisplayForm').serialize(), 
+            dataType: 'html',
+            beforeSend: function() {
+              $('.announcement-list-signup .buttons button').hide();
+              $('.announcement-list-signup .buttons').append('<p class="text-center">Please wait...</p>');
+            },
+            success: function(data) {
+              $('.announcement-list-signup .response').html(data);
+              $('#PageEmail').prop('value', '');
+              $('.announcement-list-signup .buttons .text-center').remove();
+              $('.announcement-list-signup .buttons button').show();
+            }
+          });
+        }
     });
     
     /**

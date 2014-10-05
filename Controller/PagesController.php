@@ -20,6 +20,7 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 App::uses('AppController', 'Controller');
+App::uses('HttpSocket', 'Network/Http');
 
 /**
  * Static content controller
@@ -145,14 +146,12 @@ class PagesController extends AppController {
 		$this->render(implode('/', $path));*/
 	}
 	
-	public function admin_index()
-	{
+	public function admin_index() {
 		$pages = $this->Paginator->paginate('Page');
 		$this->set('pages', $pages);
 	}
 	
-	public function admin_edit($id = null)
-	{
+	public function admin_edit($id = null) {
 		if (!$this->Page->exists($id)) {
 			throw new NotFoundException(__('Invalid page'));
 		}
@@ -182,4 +181,76 @@ class PagesController extends AppController {
 			}
 		}
 	}
+
+    /**
+     * Handle posting to non-secure mailing list url
+     */
+    public function mailinglist() {
+        if ($this->request->is('ajax')) {
+            $email = $this->request->query['data']['Page']['email'];
+            $unsub = $this->request->query['data']['Page']['unsub'];
+            $HttpSocket = new HttpSocket();
+
+            $data = array(
+                'list' => 'bruce',
+                'domain' => 'brucesvintagewatches.com',
+                'url' => $this->referer(),
+                'unsuburl' => $this->referer(),
+                'alreadyonurl' => $this->referer(),
+                'notonurl' => $this->referer(),
+                'invalidurl' => $this->referer(),
+                'emailconfirmurl' => $this->referer(),
+                'email' => $email,
+            );
+
+            if (!empty($unsub)) {
+                $data['unsub'] = $unsub;
+            }
+
+            $results = $HttpSocket->post('http://scripts.dreamhost.com/add_list.cgi', $data);
+            $url = $results->headers['Location'];
+            $parse = Router::parse($url);
+            $code = $parse['?']['code'];
+            switch($code) {
+                case 1:
+                    $this->set(array(
+                        'template' => 'success',
+                        'message' => 'Thank you for subscribing.'
+                    ));
+                    break;
+                case 2:
+                case -2:
+                    $this->set(array(
+                        'template' => 'success',
+                        'message' => 'You have unsubscribed from the list.'
+                    ));
+                    break;
+                case 3:
+                    $this->set(array(
+                        'template' => 'info',
+                        'message' => 'You are not QUITE subscribed yet. Please now check your email right now for the last step to confirm your subscription to our list!'
+                    ));
+                    break;
+                case -1:
+                    $this->set(array(
+                        'template' => 'info',
+                        'message' => 'You are already on the list.'
+                    ));
+                    break;
+                case -3:
+                    $this->set(array(
+                        'template' => 'danger',
+                        'message' => 'Invalid email address, try again.'
+                    ));
+                    break;
+                case -4:
+                    $this->set(array(
+                        'template' => 'danger',
+                        'message' => 'Email is required.'
+                    ));
+                    break;
+            }
+        }
+        $this->layout = 'ajax';
+    }
 }
