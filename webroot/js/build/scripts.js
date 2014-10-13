@@ -6344,8 +6344,7 @@ var datepicker = $.datepicker;
         //Disable submit 
         $('.submit-payment').attr('disabled', 'disabled');
         //Show shipping block
-        //$('.shipping').removeClass('hide').addClass('show');
-        if ($('.checkout .shipping').is(':empty')) {
+        if ($('.checkout .shipping .shipping-inner').length < 1) {
           getShippingChoice();
         }
         //Hide address and credit card blocks
@@ -6357,8 +6356,12 @@ var datepicker = $.datepicker;
       $.ajax({
         url: '/orders/getShippingChoice',
         dataType: 'html',
+        beforeSend: function() {
+          $('.checkout .shipping .progress').show();
+        },
         success: function(data) {
-          $('.checkout .shipping').html(data).find('.launch-tooltip').tooltip();
+          $('.checkout .shipping .progress').hide();
+          $('.checkout .shipping').append(data).find('.launch-tooltip').tooltip();
           if ($('.shipping .radio input').is(':checked')) { 
             showAddressAndPayment();
           }
@@ -6418,11 +6421,6 @@ var datepicker = $.datepicker;
             $('.coupon-amount').append('('+data.couponFormatted+')');
           }
           $('.total-formatted-amount').empty().append(totalFormatted);
-          /*if ($('#CouponEmail').val().length>0 && $('#CouponCode').val().length>0 && (typeof(couponAmount)=='undefined' || couponAmount == null || couponAmount == 0)) {
-            $('.cart-details .coupon-alert').empty().append(message);
-          } else {
-            $('.cart-details .coupon-alert').empty();
-          }*/
         }
       });
     }
@@ -6456,6 +6454,7 @@ var datepicker = $.datepicker;
     }
 
     function showAddressAndPayment() {
+      console.log('here');
         //Enable submit button if shipping option selected
         $('.submit-payment').prop('disabled', false);
         var country = $('.select-country input:radio:checked').val();
@@ -6507,7 +6506,11 @@ var datepicker = $.datepicker;
             data: {"country" : country, "shipping" : shippingOption},
             dataType: 'html',
             cache: false,
+            beforeSend: function() {
+              $('.address .progress').show();
+            },
             success: function(data){ 
+                $('.address .progress').hide();
                 $('.address-forms').empty().append(data);
                 $('.shipping-instructions').show();
                 $('.address textarea').show();

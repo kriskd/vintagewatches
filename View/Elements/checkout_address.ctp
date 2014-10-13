@@ -1,5 +1,9 @@
 <section class="address hide">
     <h3>Address<small class="pull-right hidden-xxs"><span class="glyphicon glyphicon-arrow-right"></span> Enter Address(es)</small></h3>
+    <div class="progress">
+      <div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+      </div>
+    </div>
     <div class="address-forms"></div>
     <div class="shipping-instructions">
         <h5>Email and Phone Number</h5>
