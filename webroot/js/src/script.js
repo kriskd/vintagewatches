@@ -295,138 +295,137 @@ $(document).ready(function(){
     }
 
     function showAddressAndPayment() {
-      console.log('here');
-        //Enable submit button if shipping option selected
-        $('.submit-payment').prop('disabled', false);
-        var country = $('.select-country input:radio:checked').val();
-        var shippingOption = $('.shipping .radio input:radio:checked').val();
-        getAddressForm(country, shippingOption);
-        //Show address and credit card blocks
-        $('.address').removeClass('hide').addClass('show');
-        $('.credit-card-order').removeClass('hide').addClass('show');
+      //Enable submit button if shipping option selected
+      $('.submit-payment').prop('disabled', false);
+      var country = $('.select-country input:radio:checked').val();
+      var shippingOption = $('.shipping .radio input:radio:checked').val();
+      getAddressForm(country, shippingOption);
+      //Show address and credit card blocks
+      $('.address').removeClass('hide').addClass('show');
+      $('.credit-card-order').removeClass('hide').addClass('show');
     }
     
     /**
      * Billing country autocomplete
      */
     $(document).on('keyup', '#AddressBillingCountryName', function(){
-        $('#AddressBillingCountryName').autocomplete({
-            source: '/countries/getCountries.json',
-            minLength: 3,
-            select: function(event,ui){
-                $(this).val(ui.item.value); 
-                $('.billing-country-name').empty().append(ui.item.value);
-                $('#AddressBillingCountry').attr('value', ui.item.id);
-                $('#AddressShippingCountry').attr('value', ui.item.id);
-            }
-        });
+      $('#AddressBillingCountryName').autocomplete({
+        source: '/countries/getCountries.json',
+        minLength: 3,
+        select: function(event,ui){
+          $(this).val(ui.item.value); 
+          $('.billing-country-name').empty().append(ui.item.value);
+          $('#AddressBillingCountry').attr('value', ui.item.id);
+          $('#AddressShippingCountry').attr('value', ui.item.id);
+        }
+      });
     });
     
     /**
      * Show shipping address form when ship to different address is selected
      */
     $(document).on('click', '#AddressShipping-address', function(){
-        $('.address-form-shipping').toggle(this.checked);
+      $('.address-form-shipping').toggle(this.checked);
     });
     
     //Get the country from the combo US/Canada form
     $(document).on('change', '.us-ca', function(){
-        getCountry($(this));
+      getCountry($(this));
     });
     
     $('.table a.table-row').hover(function(){
-        $(this).addClass('row-hover');
+      $(this).addClass('row-hover');
     },
     function(){
-        $(this).removeClass('row-hover');    
+      $(this).removeClass('row-hover');    
     });
     
     function getAddressForm(country, shippingOption) { 
-        $.ajax({
-            url: '/orders/getAddress.html',
-            data: {"country" : country, "shipping" : shippingOption},
-            dataType: 'html',
-            cache: false,
-            beforeSend: function() {
-              $('.address .progress').show();
-            },
-            success: function(data){ 
-                $('.address .progress').hide();
-                $('.address-forms').empty().append(data);
-                $('.shipping-instructions').show();
-                $('.address textarea').show();
-                $('.address-forms .input.required label').append(' <span class="required">*</span>');
-                $('.address-forms').find('.launch-tooltip').tooltip();
+      $.ajax({
+        url: '/orders/getAddress.html',
+        data: {"country" : country, "shipping" : shippingOption},
+        dataType: 'html',
+        cache: false,
+        beforeSend: function() {
+          $('.address .progress').show();
+        },
+        success: function(data){ 
+          $('.address .progress').hide();
+          $('.address-forms').empty().append(data);
+          $('.shipping-instructions').show();
+          $('.address textarea').show();
+          $('.address-forms .input.required label').append(' <span class="required">*</span>');
+          $('.address-forms').find('.launch-tooltip').tooltip();
 
-                //Check to see if state dropdown has a value and fill in the hidden country field
-                $('select.us-ca').each(function(){
-                    getCountry($(this));
-                })
-                
-                //Add required asterisk
-                $('.address-forms .required label').append(' <span class="required">*</span>');
-            }
-        });
+          //Check to see if state dropdown has a value and fill in the hidden country field
+          $('select.us-ca').each(function(){
+              getCountry($(this));
+          })
+          
+          //Add required asterisk
+          $('.address-forms .required label').append(' <span class="required">*</span>');
+        }
+      });
     }
     
     function getCountry (value) {
-        $.ajax({
-            url: '/orders/getCountry.json',
-            data: value,
-            dataType: 'json',
-            cache: false,
-            success: function(data){
-                var country = data.country;
-                var type = data.type;
-                $('#Address' + type + 'Country').val(country);
-            }
-        })
+      $.ajax({
+        url: '/orders/getCountry.json',
+        data: value,
+        dataType: 'json',
+        cache: false,
+        success: function(data){
+          var country = data.country;
+          var type = data.type;
+          $('#Address' + type + 'Country').val(country);
+        }
+      })
     }
     
     /**
      * Add line item to invoice in admin
      */
     $(document).on('click', '.invoices .add-line-item', function(){
-        var count = $('.line-item').length;
-        $.ajax({
-            url: '/invoices/getLineItem/' + count,
-            dataType: 'html',
-            cache: false,
-            success: function(data){
-                $('.invoices .line-items').append(data).find('.launch-tooltip').tooltip();;
-                // Remove all required spans and add to avoid multiple span on elements already in DOM
-                $('.invoices .input.required label').each(function(){
-                    $(this).find('span').remove();
-                    $(this).append(' <span class="required">*</span>');
-                });
-            }
-        });
-        return false;
+      var count = $('.line-item').length;
+      $.ajax({
+        url: '/invoices/getLineItem/' + count,
+        dataType: 'html',
+        cache: false,
+        success: function(data){
+          $('.invoices .line-items').append(data).find('.launch-tooltip').tooltip();;
+          // Remove all required spans and add to avoid multiple span on elements already in DOM
+          $('.invoices .input.required label').each(function(){
+              $(this).find('span').remove();
+              $(this).append(' <span class="required">*</span>');
+          });
+        }
+      });
+      return false;
     });
     
     $(document).on('click', '.remove-line-item', function() { 
-        var count = $(this).parent().data('count');
-        if (typeof(count) != "undefined") {
-            // Line item edit
-            var description = $(this).parent().data('description');
-            var invoice_id = $(this).parent().data('invoice_id');
-            var item_id = $(this).parent().data('item_id');
-            $.ajax({
-                url: '/invoices/deleteModal',
-                dataType: 'html',
-                data: {'description' : description, 'invoice_id' : invoice_id, 'item_id' : item_id},
-                type: 'post',
-                cache: false,
-                success: function(data){
-                    $('body').append(data);
-                    $('#delete-line-item').modal();
-                }
-            });
-        } else {
-            // Line item add, just delete row from DOM
-            $(this).parents('.line-item').remove();
-        }
-        return false;
+      var count = $(this).parent().data('count');
+      if (typeof(count) != "undefined") {
+        // Line item edit
+        var description = $(this).parent().data('description');
+        var invoice_id = $(this).parent().data('invoice_id');
+        var item_id = $(this).parent().data('item_id');
+        $.ajax({
+          url: '/invoices/deleteModal',
+          dataType: 'html',
+          data: {'description' : description, 'invoice_id' : invoice_id, 'item_id' : item_id},
+          type: 'post',
+          cache: false,
+          success: function(data){
+              $('body').append(data);
+              $('#delete-line-item').modal();
+          }
+        });
+      } else {
+        // Line item add, just delete row from DOM
+        $(this).parents('.line-item').remove();
+      }
+      return false;
     });
     
     $(document).on('click', '.invoice-url', function(){
@@ -453,39 +452,39 @@ $(document).ready(function(){
     
     //Delete contact
     $(document).on('click', '.delete-contact', function(e) {
-        var contactId = $(this).data('contactid');
-        var contactName = $(this).data('contactname');
-        var query = $(this).data('query'); 
-        $.ajax({
-            url: '/contacts/deleteModal',
-            dataType: 'html',
-            data: {'contactId' : contactId, 'contactName' : contactName, 'query' : query},
-            type: 'post',
-            cache: false,
-            success: function(data){
-                $('body').append(data);
-                $('#delete-contact').modal();
-            }
-        });
-        return false;
+      var contactId = $(this).data('contactid');
+      var contactName = $(this).data('contactname');
+      var query = $(this).data('query'); 
+      $.ajax({
+        url: '/contacts/deleteModal',
+        dataType: 'html',
+        data: {'contactId' : contactId, 'contactName' : contactName, 'query' : query},
+        type: 'post',
+        cache: false,
+        success: function(data){
+          $('body').append(data);
+          $('#delete-contact').modal();
+        }
+      });
+      return false;
     });
     
     //Delete coupon
     $(document).on('click', '.delete-coupon', function(e) {
-        var couponId = $(this).data('coupon');
-        var couponCode = $(this).data('code');
-        $.ajax({
-            url: '/coupons/deleteModal',
-            dataType: 'html',
-            data: {'couponId' : couponId, 'couponCode' : couponCode},
-            type: 'post',
-            cache: false,
-            success: function(data){
-                $('body').append(data);
-                $('#delete-coupon').modal();
-            }
-        });
-        return false;
+      var couponId = $(this).data('coupon');
+      var couponCode = $(this).data('code');
+      $.ajax({
+        url: '/coupons/deleteModal',
+        dataType: 'html',
+        data: {'couponId' : couponId, 'couponCode' : couponCode},
+        type: 'post',
+        cache: false,
+        success: function(data){
+          $('body').append(data);
+          $('#delete-coupon').modal();
+        }
+      });
+      return false;
     });
 
     //Format coupon amount to 2 decimal places
