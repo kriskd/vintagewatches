@@ -39,7 +39,7 @@ $(document).ready(function(){
         }
         var watchid = $(this).data('watchid');
         $.ajax({
-            url: '/watches/active',
+            url: '/admin/watches/active',
             data: {'active': value, 'watchid': watchid},
             type: 'post'
         });

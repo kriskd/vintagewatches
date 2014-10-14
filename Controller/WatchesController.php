@@ -316,8 +316,7 @@ class WatchesController extends AppController {
 	    $this->set(compact('brands'));
 	}
 	
-	public function active()
-	{
+	public function admin_active() {
 		if($this->request->is('ajax')){
 			$data = $this->request->data;
 			$active = $data['active'];
