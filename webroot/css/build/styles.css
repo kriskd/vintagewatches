@@ -6738,6 +6738,9 @@ button.close {
 .progress .progress-bar {
   width: 100%;
 }
+.progress .progress-bar-gold {
+  background-color: #806c00;
+}
 @media (max-width: 480px) {
   .col-xxs-12 {
     width: 100%;
