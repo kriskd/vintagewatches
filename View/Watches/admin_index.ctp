@@ -62,7 +62,7 @@
             <?php $row = ''; ?>
             <?php $row .= $this->Html->tag('span', $this->Html->thumbPrimary($watch), array('class' => 'table-cell')); ?>
         <?php $orderButton = $this->Form->button('Order', array('data-orderid' => $watch['Watch']['order_id'], 'class' => 'btn btn-primary goto-order')); ?>
-        <?php $activeCheckbox = $this->Form->input('Watch.active', array('data-watchid' => $watch['Watch']['id'], 'class' => 'switch-mini', 'div' => array('class' => 'text-center'), 'label' => false, 'checked' => $watch['Watch']['active'])); ?>
+        <?php $activeCheckbox = $this->Form->input('Watch.'.$watch['Watch']['id'].'.active', array('data-watchid' => $watch['Watch']['id'], 'class' => '', 'div' => array('class' => 'active-checkbox text-center'), 'label' => false, 'checked' => $watch['Watch']['active'])); ?>
         <?php $row .= $this->Html->tag('span', empty($watch['Watch']['order_id']) ? $activeCheckbox : $orderButton, array('class' => 'table-cell text-center', 'escape' => false)); ?>
             <?php $brand = isset($watch['Brand']['name']) ? $watch['Brand']['name'] : ''; ?>
             <?php $row .= $this->Html->tag('span', $brand, array('class' => 'table-cell')); ?>

@@ -6699,8 +6699,15 @@ button.close {
 .navbar-inverse .navbar-link:hover {
   color: #ffffff;
 }
-.ui-autocomplete-loading {
+.ui-autocomplete-loading,
+.ajax-loading {
   background: url('/css/images/ui-anim_basic_16x16.gif') no-repeat right center;
+}
+.ajax-loading {
+  display: none;
+  height: 16px;
+  width: 100%;
+  background-position: center center;
 }
 .btn-gold {
   background-color: #03302e !important;

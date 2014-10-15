@@ -6189,7 +6189,7 @@ var datepicker = $.datepicker;
         }
     }
     
-    $(document).on('click', '.admin-index #WatchActive', function(){
+    $('.admin-index .active-checkbox input').on('click', function(){
         var value;
         if ($(this).is(':checked')) {
             value = 1;
@@ -6197,10 +6197,19 @@ var datepicker = $.datepicker;
             value = 0;
         }
         var watchid = $(this).data('watchid');
+        var that = $(this);
         $.ajax({
-            url: '/admin/watches/active',
-            data: {'active': value, 'watchid': watchid},
-            type: 'post'
+          url: '/admin/watches/active',
+          data: {'active': value, 'watchid': watchid},
+          type: 'post',
+          beforeSend: function() {
+            that.hide();
+            that.parent().addClass('ajax-loading').show();
+          },
+          success: function() {
+            that.parent().removeClass('ajax-loading');
+            that.show();
+          } 
         });
     });
 
