@@ -21,7 +21,8 @@ $(document).ready(function(){
     $(document).on('change', '.admin-index select', function(){
         orderAdmin($(this).val());
     });
-    
+   
+    // #WatchesActive was refactored out and I don't see any results from this code so I'm unsure if it's needed??
     function orderAdmin(filterValue) { 
         if (filterValue == '') {
             $('.admin-index .input input:not("#WatchActive")').val('').prop('disabled', true);
