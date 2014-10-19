@@ -6180,13 +6180,13 @@ var datepicker = $.datepicker;
     $(document).on('change', '.admin-index select', function(){
         orderAdmin($(this).val());
     });
-   
-    // #WatchesActive was refactored out and I don't see any results from this code so I'm unsure if it's needed??
+  
+    // Be careful of this deactiving watch checkboxes if class names change for example
     function orderAdmin(filterValue) { 
         if (filterValue == '') {
-            $('.admin-index .input input:not("#WatchActive")').val('').prop('disabled', true);
+            $('.admin-index .input input').val('').prop('disabled', true);
         } else {
-            $('.admin-index .input input:not("#WatchActive")').prop('disabled', false);
+            $('.admin-index .input input').prop('disabled', false);
         }
     }
     
