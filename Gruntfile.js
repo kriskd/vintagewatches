@@ -50,21 +50,29 @@ module.exports = function(grunt) {
 		},
         watch: {
 			jss: {
-			    files: ['webroot/js/src/*.js'],
-                 tasks: ['concat', 'uglify']
-                 },
-                 css: {
-                 files: ['webroot/css/src/styles.less'],
-                 tasks: ['less', 'cssmin']
-                 }
-                 },
-                 });
+              files: ['webroot/js/src/*.js'],
+               tasks: ['concat', 'uglify']
+               },
+               css: {
+               files: ['webroot/css/src/styles.less'],
+               tasks: ['less', 'cssmin']
+               }
+       },
+       bowercopy: {
+         options: {
+            srcPrefix: 'bower_components',
+            destPrefix: 'webroot/css'
+          },
+          fonts: 'bootstrap/fonts'
+      }
+   });
 
-                 grunt.loadNpmTasks('grunt-contrib-concat');
-                 grunt.loadNpmTasks('grunt-contrib-uglify');
-                 grunt.loadNpmTasks('grunt-contrib-cssmin');
-                 grunt.loadNpmTasks('grunt-contrib-watch');
-                 grunt.loadNpmTasks('grunt-contrib-less');
+               grunt.loadNpmTasks('grunt-contrib-concat');
+               grunt.loadNpmTasks('grunt-contrib-uglify');
+               grunt.loadNpmTasks('grunt-contrib-cssmin');
+               grunt.loadNpmTasks('grunt-contrib-watch');
+               grunt.loadNpmTasks('grunt-contrib-less');
+                grunt.loadNpmTasks('grunt-bowercopy');
 
-                 grunt.registerTask('default', ['concat:dist', 'uglify']);
-                                         };
+               grunt.registerTask('default', ['concat:dist', 'uglify']);
+};
