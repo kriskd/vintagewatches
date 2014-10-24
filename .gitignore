@@ -5,3 +5,4 @@ Vendor/*
 /Plugin/*
 /webroot/files
 node_modules
+bower_components

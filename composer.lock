@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3d0b7faf4ad03adaabb185ab94c65e39",
+    "hash": "672c789f0c7c7592a5972313aaf35a42",
     "packages": [
         {
             "name": "Datasources",
@@ -39,16 +39,16 @@
         },
         {
             "name": "cakephp/debug_kit",
-            "version": "2.2.3",
+            "version": "2.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/debug_kit.git",
-                "reference": "fce9fca6e2e54469c4826d26392322d3f2e3cb9d"
+                "reference": "61d91e8eac30b7d6eb3d145101ea1622bd6e8c34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/fce9fca6e2e54469c4826d26392322d3f2e3cb9d",
-                "reference": "fce9fca6e2e54469c4826d26392322d3f2e3cb9d",
+                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/61d91e8eac30b7d6eb3d145101ea1622bd6e8c34",
+                "reference": "61d91e8eac30b7d6eb3d145101ea1622bd6e8c34",
                 "shasum": ""
             },
             "require": {
@@ -84,7 +84,7 @@
                 "debug",
                 "kit"
             ],
-            "time": "2014-02-01 21:15:24"
+            "time": "2014-07-29 01:27:30"
         },
         {
             "name": "chronon/mobile_detect",
@@ -135,12 +135,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "41cf781ed1271e25bf31b715416a349996aa2527"
+                "reference": "09e2192a7cd08008e273355fddd38942d8de2992"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/41cf781ed1271e25bf31b715416a349996aa2527",
-                "reference": "41cf781ed1271e25bf31b715416a349996aa2527",
+                "url": "https://api.github.com/repos/composer/installers/zipball/09e2192a7cd08008e273355fddd38942d8de2992",
+                "reference": "09e2192a7cd08008e273355fddd38942d8de2992",
                 "shasum": ""
             },
             "replace": {
@@ -182,6 +182,7 @@
                 "Hurad",
                 "MODX Evo",
                 "OXID",
+                "Thelia",
                 "WolfCMS",
                 "agl",
                 "annotatecms",
@@ -194,6 +195,7 @@
                 "drupal",
                 "elgg",
                 "fuelphp",
+                "grav",
                 "installer",
                 "joomla",
                 "kohana",
@@ -217,20 +219,20 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2014-07-22 17:04:15"
+            "time": "2014-10-15 03:40:33"
         },
         {
             "name": "mjohnson/transit",
-            "version": "1.5.1",
+            "version": "1.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/milesj/transit.git",
-                "reference": "01fb3d8300fb4be58370979083404e37eee75afc"
+                "reference": "b8aabc383036e018bccc885cec8859f129120da1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/milesj/transit/zipball/01fb3d8300fb4be58370979083404e37eee75afc",
-                "reference": "01fb3d8300fb4be58370979083404e37eee75afc",
+                "url": "https://api.github.com/repos/milesj/transit/zipball/b8aabc383036e018bccc885cec8859f129120da1",
+                "reference": "b8aabc383036e018bccc885cec8859f129120da1",
                 "shasum": ""
             },
             "require": {
@@ -290,20 +292,20 @@
                 "validator",
                 "video"
             ],
-            "time": "2014-03-31 01:15:36"
+            "time": "2014-08-24 22:50:21"
         },
         {
             "name": "mjohnson/uploader",
-            "version": "4.5.4",
+            "version": "4.5.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/milesj/uploader.git",
-                "reference": "8c11938216fef70696bbc9d2a6c1f6b79e8b25a0"
+                "reference": "d46df03d01b8f2073d4823a9c2cd759013dd21f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/milesj/uploader/zipball/8c11938216fef70696bbc9d2a6c1f6b79e8b25a0",
-                "reference": "8c11938216fef70696bbc9d2a6c1f6b79e8b25a0",
+                "url": "https://api.github.com/repos/milesj/uploader/zipball/d46df03d01b8f2073d4823a9c2cd759013dd21f9",
+                "reference": "d46df03d01b8f2073d4823a9c2cd759013dd21f9",
                 "shasum": ""
             },
             "require": {
@@ -340,7 +342,7 @@
                 "uploader",
                 "validation"
             ],
-            "time": "2014-05-24 18:54:12"
+            "time": "2014-10-21 04:54:05"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
@@ -435,57 +437,6 @@
                 "stripe"
             ],
             "time": "2014-06-18 00:21:25"
-        },
-        {
-            "name": "twitter/bootstrap",
-            "version": "v3.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "c068162161154a4b85110ea1e7dd3d7897ce2b72"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/c068162161154a4b85110ea1e7dd3d7897ce2b72",
-                "reference": "c068162161154a4b85110ea1e7dd3d7897ce2b72",
-                "shasum": ""
-            },
-            "replace": {
-                "twitter/bootstrap": "self.version"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.2.x-dev"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jacob Thornton",
-                    "email": "jacobthornton@gmail.com"
-                },
-                {
-                    "name": "Mark Otto",
-                    "email": "markdotto@gmail.com"
-                }
-            ],
-            "description": "The most popular front-end framework for developing responsive, mobile first projects on the web.",
-            "homepage": "http://getbootstrap.com",
-            "keywords": [
-                "JS",
-                "css",
-                "framework",
-                "front-end",
-                "less",
-                "mobile-first",
-                "responsive",
-                "web"
-            ],
-            "time": "2014-06-26 16:36:48"
         },
         {
             "name": "zeroasterisk/CakePHP-ArrayToXml-Lib",
@@ -593,23 +544,23 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "1.2.17",
+            "version": "1.2.18",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "6ef2bf3a1c47eca07ea95f0d8a902a6340390b34"
+                "reference": "fe2466802556d3fe4e4d1d58ffd3ccfd0a19be0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/6ef2bf3a1c47eca07ea95f0d8a902a6340390b34",
-                "reference": "6ef2bf3a1c47eca07ea95f0d8a902a6340390b34",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/fe2466802556d3fe4e4d1d58ffd3ccfd0a19be0b",
+                "reference": "fe2466802556d3fe4e4d1d58ffd3ccfd0a19be0b",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3",
                 "phpunit/php-file-iterator": ">=1.3.0@stable",
                 "phpunit/php-text-template": ">=1.2.0@stable",
-                "phpunit/php-token-stream": ">=1.1.3@stable"
+                "phpunit/php-token-stream": ">=1.1.3,<1.3.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "3.7.*@dev"
@@ -650,7 +601,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-03-28 10:53:45"
+            "time": "2014-09-02 10:13:14"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -837,16 +788,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "3.7.37",
+            "version": "3.7.38",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "ae6cefd7cc84586a5ef27e04bae11ee940ec63dc"
+                "reference": "38709dc22d519a3d1be46849868aa2ddf822bcf6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ae6cefd7cc84586a5ef27e04bae11ee940ec63dc",
-                "reference": "ae6cefd7cc84586a5ef27e04bae11ee940ec63dc",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/38709dc22d519a3d1be46849868aa2ddf822bcf6",
+                "reference": "38709dc22d519a3d1be46849868aa2ddf822bcf6",
                 "shasum": ""
             },
             "require": {
@@ -906,7 +857,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-04-30 12:24:19"
+            "time": "2014-10-17 09:04:17"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -959,17 +910,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.5.2",
+            "version": "v2.5.5",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "f868ecdbcc0276b6158dfbf08b9e98ce07f014e1"
+                "reference": "b1dbc53593b98c2d694ebf383660ac9134d30b96"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/f868ecdbcc0276b6158dfbf08b9e98ce07f014e1",
-                "reference": "f868ecdbcc0276b6158dfbf08b9e98ce07f014e1",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/b1dbc53593b98c2d694ebf383660ac9134d30b96",
+                "reference": "b1dbc53593b98c2d694ebf383660ac9134d30b96",
                 "shasum": ""
             },
             "require": {
@@ -992,24 +943,20 @@
             ],
             "authors": [
                 {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
                     "name": "Symfony Community",
                     "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
                 }
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2014-07-09 09:05:48"
+            "time": "2014-09-22 09:14:18"
         }
     ],
-    "aliases": [
-
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
         "composer/installers": 20,
@@ -1018,10 +965,6 @@
         "burriko/cake-faker": 20
     },
     "prefer-stable": false,
-    "platform": [
-
-    ],
-    "platform-dev": [
-
-    ]
+    "platform": [],
+    "platform-dev": []
 }
