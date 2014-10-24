@@ -20,6 +20,7 @@
         <?php echo $this->Form->end(array('class' => 'btn btn-gold submit-payment',
                                       'label' => 'Submit Payment',
                                       'div' => 'submit col-xs-11')); ?>
+        <div class="ajax-loading"></div>
     </div>
 </div>
 

@@ -199,6 +199,11 @@ $(document).ready(function(){
         dataType: 'html',
         beforeSend: function() {
           $('.checkout .shipping .progress').show();
+          for (var i=1; i<100; i++) {
+            setTimeout(function(){
+              $('.checkout .shipping .progress .progress-bar').css('width', i+'%');
+            }, 1000);
+          }
         },
         success: function(data) {
           $('.checkout .shipping .progress').hide();
@@ -348,6 +353,11 @@ $(document).ready(function(){
         cache: false,
         beforeSend: function() {
           $('.address .progress').show();
+          for (var i=1; i<100; i++) {
+            setTimeout(function(){
+              $('.address .progress .progress-bar').css('width', i+'%');
+            }, 1000);
+          }
         },
         success: function(data){ 
           $('.address .progress').hide();
@@ -500,7 +510,8 @@ $(document).ready(function(){
     });
     
     $('.payment-form').submit(function(){ 
-        $('.submit-payment').attr('disabled', 'disabled');
+        $('.submit-payment').attr('disabled', 'disabled').hide();
+        $('.ajax-loading').show();
         var form = $(this); 
         var error = false;
  

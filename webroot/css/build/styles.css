@@ -6708,6 +6708,7 @@ button.close {
   height: 16px;
   width: 100%;
   background-position: center center;
+  clear: both;
 }
 .btn-gold {
   background-color: #03302e !important;
@@ -6734,9 +6735,9 @@ button.close {
 }
 .progress {
   display: none;
-}
-.progress .progress-bar {
-  width: 100%;
+  /*.progress-bar {
+        width: 100%;
+    }*/
 }
 .progress .progress-bar-gold {
   background-color: #806c00;
