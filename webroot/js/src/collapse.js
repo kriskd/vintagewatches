@@ -1,1 +1,1 @@
-../../../Vendor/twitter/bootstrap/js/collapse.js
+../../../bower_components/bootstrap/js/collapse.js
