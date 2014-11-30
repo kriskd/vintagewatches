@@ -125,7 +125,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="coupon-alert col-lg-8 col-md-8 col-sm-8 col-xs-8 col-xxx-4">
+                <div class="coupon-alert col-lg-8 col-md-8 col-sm-8 col-xs-8 col-xxs-4">
 
                 </div>
                 <div class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-2 col-xxs-4">
