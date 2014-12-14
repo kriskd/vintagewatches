@@ -289,12 +289,12 @@ class MyFormHelper extends FormHelper
         $element = $this->input($fieldName, $options);
         $element = str_replace('<div', '<span', $element);
         $element = str_replace('</div>', '</span>', $element);
-        //var_dump($element);
         return $element;
     }    
-    protected function _months()
-    {
-        return array_combine(range(1,12), range(1,12));
+
+    protected function _months() {
+        $formatted = array_map(function($num) { return sprintf('%02d', $num); }, range(1,12));
+        return array_combine(range(1,12), $formatted);
     }
     
     protected function _years()
