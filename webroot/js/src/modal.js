@@ -1,1 +1,1 @@
-../../../Vendor/twitter/bootstrap/js/modal.js
+../../../bower_components/bootstrap/js/modal.js

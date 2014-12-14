@@ -1,1 +1,1 @@
-../../../Vendor/twitter/bootstrap/js/transition.js
+../../../bower_components/bootstrap/js/transition.js

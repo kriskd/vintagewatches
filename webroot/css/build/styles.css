@@ -6708,6 +6708,7 @@ button.close {
   height: 16px;
   width: 100%;
   background-position: center center;
+  clear: both;
 }
 .btn-gold {
   background-color: #03302e !important;
@@ -6731,6 +6732,15 @@ button.close {
   font-weight: bold;
   text-align: center;
   margin: -18px 0 20px;
+}
+.progress {
+  display: none;
+  /*.progress-bar {
+        width: 100%;
+    }*/
+}
+.progress .progress-bar-gold {
+  background-color: #806c00;
 }
 @media (max-width: 480px) {
   .col-xxs-12 {
