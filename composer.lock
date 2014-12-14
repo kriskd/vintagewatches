@@ -4,17 +4,18 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "672c789f0c7c7592a5972313aaf35a42",
+    "hash": "0f5661a7096cd99223283e4697296829",
     "packages": [
         {
             "name": "Datasources",
-            "version": "2.3",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/datasources",
-                "reference": "2.3"
+                "reference": "origin/master"
             },
-            "type": "cakephp-plugin"
+            "type": "cakephp-plugin",
+            "time": "2014-02-19 14:14:38"
         },
         {
             "name": "HtmlPurifier",
@@ -38,53 +39,47 @@
             "type": "cakephp-plugin"
         },
         {
-            "name": "cakephp/debug_kit",
-            "version": "2.2.4",
+            "name": "cakephp/cakephp",
+            "version": "2.5.7",
             "source": {
                 "type": "git",
-                "url": "https://github.com/cakephp/debug_kit.git",
-                "reference": "61d91e8eac30b7d6eb3d145101ea1622bd6e8c34"
+                "url": "https://github.com/cakephp/cakephp.git",
+                "reference": "ef28b42b2b8885a2be216c11adbbf32919e04a5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/61d91e8eac30b7d6eb3d145101ea1622bd6e8c34",
-                "reference": "61d91e8eac30b7d6eb3d145101ea1622bd6e8c34",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/ef28b42b2b8885a2be216c11adbbf32919e04a5b",
+                "reference": "ef28b42b2b8885a2be216c11adbbf32919e04a5b",
                 "shasum": ""
             },
             "require": {
-                "composer/installers": "*",
-                "php": ">=5.3.0"
+                "ext-mcrypt": "*",
+                "php": ">=5.2.8"
             },
-            "type": "cakephp-plugin",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.2.x-dev"
-                },
-                "installer-name": "DebugKit"
+            "require-dev": {
+                "cakephp/debug_kit": "2.2.*",
+                "phpunit/phpunit": "3.7.*"
             },
+            "bin": [
+                "lib/Cake/Console/cake"
+            ],
+            "type": "library",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
             "authors": [
                 {
-                    "name": "Mark Story",
-                    "homepage": "http://mark-story.com",
-                    "role": "Author"
-                },
-                {
                     "name": "CakePHP Community",
-                    "homepage": "https://github.com/cakephp/debug_kit/graphs/contributors"
+                    "homepage": "https://github.com/cakephp/cakephp/graphs/contributors"
                 }
             ],
-            "description": "CakePHP Debug Kit",
-            "homepage": "https://github.com/cakephp/debug_kit",
+            "description": "The CakePHP framework",
+            "homepage": "http://cakephp.org",
             "keywords": [
-                "cakephp",
-                "debug",
-                "kit"
+                "framework"
             ],
-            "time": "2014-07-29 01:27:30"
+            "time": "2014-12-09 01:50:35"
         },
         {
             "name": "chronon/mobile_detect",
@@ -135,12 +130,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "09e2192a7cd08008e273355fddd38942d8de2992"
+                "reference": "89d77bfbee79e16653f7162c86e602cc188471db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/09e2192a7cd08008e273355fddd38942d8de2992",
-                "reference": "09e2192a7cd08008e273355fddd38942d8de2992",
+                "url": "https://api.github.com/repos/composer/installers/zipball/89d77bfbee79e16653f7162c86e602cc188471db",
+                "reference": "89d77bfbee79e16653f7162c86e602cc188471db",
                 "shasum": ""
             },
             "replace": {
@@ -192,6 +187,7 @@
                 "codeigniter",
                 "concrete5",
                 "croogo",
+                "dokuwiki",
                 "drupal",
                 "elgg",
                 "fuelphp",
@@ -219,20 +215,20 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2014-10-15 03:40:33"
+            "time": "2014-11-29 01:29:17"
         },
         {
             "name": "mjohnson/transit",
-            "version": "1.5.2",
+            "version": "1.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/milesj/transit.git",
-                "reference": "b8aabc383036e018bccc885cec8859f129120da1"
+                "reference": "100f0de5954703b5b6b2f485b0d319328dba96c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/milesj/transit/zipball/b8aabc383036e018bccc885cec8859f129120da1",
-                "reference": "b8aabc383036e018bccc885cec8859f129120da1",
+                "url": "https://api.github.com/repos/milesj/transit/zipball/100f0de5954703b5b6b2f485b0d319328dba96c4",
+                "reference": "100f0de5954703b5b6b2f485b0d319328dba96c4",
                 "shasum": ""
             },
             "require": {
@@ -242,7 +238,7 @@
                 "php": ">=5.3.3"
             },
             "require-dev": {
-                "aws/aws-sdk-php": "*",
+                "aws/aws-sdk-php": "~2.7.0",
                 "ext-exif": "*",
                 "rackspace/php-opencloud": "*"
             },
@@ -292,20 +288,20 @@
                 "validator",
                 "video"
             ],
-            "time": "2014-08-24 22:50:21"
+            "time": "2014-11-23 03:44:13"
         },
         {
             "name": "mjohnson/uploader",
-            "version": "4.5.5",
+            "version": "4.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/milesj/uploader.git",
-                "reference": "d46df03d01b8f2073d4823a9c2cd759013dd21f9"
+                "reference": "8eb36f6eee0f4b8e350baecea00a414049df9238"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/milesj/uploader/zipball/d46df03d01b8f2073d4823a9c2cd759013dd21f9",
-                "reference": "d46df03d01b8f2073d4823a9c2cd759013dd21f9",
+                "url": "https://api.github.com/repos/milesj/uploader/zipball/8eb36f6eee0f4b8e350baecea00a414049df9238",
+                "reference": "8eb36f6eee0f4b8e350baecea00a414049df9238",
                 "shasum": ""
             },
             "require": {
@@ -313,11 +309,11 @@
                 "ext-curl": "*",
                 "ext-fileinfo": "*",
                 "ext-mbstring": "*",
-                "mjohnson/transit": "~1.5",
+                "mjohnson/transit": "~1.6",
                 "php": ">=5.3.3"
             },
             "suggest": {
-                "aws/aws-sdk-php": "~2.2",
+                "aws/aws-sdk-php": "~2.7",
                 "ext-exif": "Extract exif data from images",
                 "ext-gd": "Enable the GD library for image transforming"
             },
@@ -342,7 +338,8 @@
                 "uploader",
                 "validation"
             ],
-            "time": "2014-10-21 04:54:05"
+            "abandoned": true,
+            "time": "2014-11-10 02:27:48"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
@@ -457,17 +454,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/burriko/cakephp-faker-fixtures.git",
-                "reference": "e85efea6277910abca6ba00a11e7f4fe0451002d"
+                "reference": "3cd2bc31468aca7fa2e3cce218bb486699aae85e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/burriko/cakephp-faker-fixtures/zipball/e85efea6277910abca6ba00a11e7f4fe0451002d",
-                "reference": "e85efea6277910abca6ba00a11e7f4fe0451002d",
+                "url": "https://api.github.com/repos/burriko/cakephp-faker-fixtures/zipball/3cd2bc31468aca7fa2e3cce218bb486699aae85e",
+                "reference": "3cd2bc31468aca7fa2e3cce218bb486699aae85e",
                 "shasum": ""
             },
             "require": {
                 "composer/installers": "*",
-                "fzaninotto/faker": "v1.2.0",
+                "fzaninotto/faker": "v1.4.0",
                 "php": ">=5.3.0"
             },
             "type": "cakephp-plugin",
@@ -494,30 +491,81 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2013-09-16 10:14:32"
+            "time": "2014-11-24 12:16:53"
         },
         {
-            "name": "fzaninotto/faker",
-            "version": "v1.2.0",
+            "name": "cakephp/debug_kit",
+            "version": "2.2.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "4ad4bc4b5c8d3c0f3cf55d2fedc2f65b313ec62f"
+                "url": "https://github.com/cakephp/debug_kit.git",
+                "reference": "c91103061d9b7ec3141e642913f88090a292b2bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/4ad4bc4b5c8d3c0f3cf55d2fedc2f65b313ec62f",
-                "reference": "4ad4bc4b5c8d3c0f3cf55d2fedc2f65b313ec62f",
+                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/c91103061d9b7ec3141e642913f88090a292b2bf",
+                "reference": "c91103061d9b7ec3141e642913f88090a292b2bf",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "cakephp-plugin",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2.x-dev"
+                },
+                "installer-name": "DebugKit"
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Story",
+                    "homepage": "http://mark-story.com",
+                    "role": "Author"
+                },
+                {
+                    "name": "CakePHP Community",
+                    "homepage": "https://github.com/cakephp/debug_kit/graphs/contributors"
+                }
+            ],
+            "description": "CakePHP Debug Kit",
+            "homepage": "https://github.com/cakephp/debug_kit",
+            "keywords": [
+                "cakephp",
+                "debug",
+                "kit"
+            ],
+            "time": "2014-11-22 17:58:32"
+        },
+        {
+            "name": "fzaninotto/faker",
+            "version": "v1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fzaninotto/Faker.git",
+                "reference": "010c7efedd88bf31141a02719f51fb44c732d5a0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/010c7efedd88bf31141a02719f51fb44c732d5a0",
+                "reference": "010c7efedd88bf31141a02719f51fb44c732d5a0",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
             },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "~1.5"
+            },
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "1.2.x-dev"
-                }
+                "branch-alias": []
             },
             "autoload": {
                 "psr-0": {
@@ -540,7 +588,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2013-06-09 18:05:57"
+            "time": "2014-06-04 14:43:02"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -910,17 +958,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.5.5",
+            "version": "v2.6.1",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "b1dbc53593b98c2d694ebf383660ac9134d30b96"
+                "reference": "3346fc090a3eb6b53d408db2903b241af51dcb20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/b1dbc53593b98c2d694ebf383660ac9134d30b96",
-                "reference": "b1dbc53593b98c2d694ebf383660ac9134d30b96",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/3346fc090a3eb6b53d408db2903b241af51dcb20",
+                "reference": "3346fc090a3eb6b53d408db2903b241af51dcb20",
                 "shasum": ""
             },
             "require": {
@@ -929,7 +977,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.5-dev"
+                    "dev-master": "2.6-dev"
                 }
             },
             "autoload": {
@@ -953,18 +1001,20 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2014-09-22 09:14:18"
+            "time": "2014-12-02 20:19:20"
         }
     ],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
         "composer/installers": 20,
+        "datasources": 20,
         "htmlpurifier": 20,
         "zeroasterisk/cakephp-arraytoxml-lib": 20,
         "burriko/cake-faker": 20
     },
     "prefer-stable": false,
+    "prefer-lowest": false,
     "platform": [],
     "platform-dev": []
 }
