@@ -61,10 +61,10 @@
         "HtmlPurifier": "dev-master",
         "chronon/mobile_detect": "1.1.0",
         "zeroasterisk/CakePHP-ArrayToXml-Lib": "dev-master",
+        "cakephp/debug_kit": "2.2.*",
         "cakephp/cakephp": "2.*"
     },
     "require-dev": {
-        "cakephp/debug_kit": "2.2.*",
         "phpunit/phpunit": "3.7.*",
         "burriko/cake-faker": "2.0.*@dev"
     },
