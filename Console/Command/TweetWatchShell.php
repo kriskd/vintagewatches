@@ -45,7 +45,7 @@ class TweetWatchShell extends AppShell
         ));
 
         if ($watch) {
-            $tweet = strtoupper($watch['Brand']['name']) . ' - ' . $watch['Watch']['name'] . ' $' . $watch['Watch']['price'] . ' http://brucesvintagewatches.com/watches/view/' . $watch['Watch']['id'];
+            $tweet = strtoupper($watch['Brand']['name']) . ' - ' . $watch['Watch']['name'] . ' $' . $watch['Watch']['price'] . ' https://brucesvintagewatches.com/watches/view/' . $watch['Watch']['id'];
 
             $request = array(
                 'method' => 'POST',
