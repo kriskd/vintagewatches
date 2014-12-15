@@ -75,7 +75,10 @@ class TweetWatchShell extends AppShell
             $response = $this->Http->request($request);
             if ($response->headers['status'] == '200 OK') {
                 $this->Watch->id = $watch['Watch']['id'];
-                $this->Watch->save(array('tweeted_at' => date('Y-m-d H:i:s')));
+                $this->Watch->save(array(
+                    'tweeted_at' => date('Y-m-d H:i:s'),
+                    'modified' => false,
+                ));
             }
         }
     }
