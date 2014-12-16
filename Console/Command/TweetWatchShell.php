@@ -16,8 +16,7 @@ class TweetWatchShell extends AppShell
         $this->Http = new HttpSocketOauth();
     }
 
-    public function tweet()
-    { 
+    public function tweet() { 
         $watch = $this->Watch->find('first', array(
             'conditions' => array(
                 'active' => 1,
@@ -25,7 +24,7 @@ class TweetWatchShell extends AppShell
             ),
             'order' => 'tweeted_at, Watch.id',
             'fields' => array(
-                'Watch.id', 'price', 'name'
+                'Watch.id', 'price', 'name', 'modified',
             ),
             'contain' => array(
                 'Image' => array(
@@ -77,7 +76,7 @@ class TweetWatchShell extends AppShell
                 $this->Watch->id = $watch['Watch']['id'];
                 $this->Watch->save(array(
                     'tweeted_at' => date('Y-m-d H:i:s'),
-                    'modified' => false,
+                    'modified' => $watch['Watch']['modified'], // 'modified' => false did not work
                 ));
             }
         }
