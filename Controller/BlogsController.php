@@ -1,13 +1,18 @@
 <?php
-App::uses('HttpSocket', 'Network/Http');
+//App::uses('HttpSocket', 'Network/Http');
 
 class BlogsController extends AppController {
 
+    public $paginate = array(
+        'limit' => 5,
+        'order' => array(
+            'Blog.published' => 'desc'
+        )
+    );
     public function index() {
-        $HttpSocket = new HttpSocket();
-        $results = $HttpSocket->get('http://budgetwatchcollecting.blogspot.com/feeds/posts/default');
-        $body = $results->body;
-        $xml = simplexml_load_string($body);
-        $this->set('xml', $xml);
+        $this->Paginator->settings = $this->paginate;
+        $blogs = $this->Paginator->paginate('Blog');
+        //debug($blogs); exit;
+        $this->set('blogs', $blogs);
     }
 }
