@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    
+/*    
     $('.launch-tooltip').tooltip();
     $('.carousel').carousel({
         pause: 'hover'    
@@ -427,8 +427,8 @@ $(document).ready(function(){
           type: 'post',
           cache: false,
           success: function(data){
-              $('body').append(data);
-              $('#delete-line-item').modal();
+            $('body').append(data);
+            $('#delete-line-item').modal();
           }
         });
       } else {
@@ -471,6 +471,9 @@ $(document).ready(function(){
         data: {'contactId' : contactId, 'contactName' : contactName, 'query' : query},
         type: 'post',
         cache: false,
+        beforeSend: function() {
+          $('.modal').remove();
+        },
         success: function(data){
           $('body').append(data);
           $('#delete-contact').modal();
@@ -478,7 +481,7 @@ $(document).ready(function(){
       });
       return false;
     });
-    
+
     //Delete coupon
     $(document).on('click', '.delete-coupon', function(e) {
       var couponId = $(this).data('coupon');
