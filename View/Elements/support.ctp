@@ -5,5 +5,6 @@
                                                       'admin' => false)); ?></li>
     <?php endforeach; ?>
 <?php endif; ?>
+<li><?php echo $this->Html->link('Blog', '/blog'); ?></li>
 <li><?php echo $this->Html->link('Order History', array('controller' => 'orders', 'action' => 'index', 'admin' => false)); ?></li>
 <li><?php echo $this->Html->link('Contact Me', array('controller' => 'contacts', 'action' => 'index', 'admin' => false)); ?></li>
