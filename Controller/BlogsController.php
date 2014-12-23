@@ -2,6 +2,10 @@
 
 class BlogsController extends AppController {
 
+    public $helpers = array('Cache');
+
+    public $cacheAction = "1 day";
+
     public $paginate = array(
         'limit' => 5,
         'order' => array(
