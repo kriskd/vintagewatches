@@ -6291,7 +6291,7 @@ var datepicker = $.datepicker;
 
 }(jQuery);
 ;$(document).ready(function(){
-/*    
+
     $('.launch-tooltip').tooltip();
     $('.carousel').carousel({
         pause: 'hover'    
