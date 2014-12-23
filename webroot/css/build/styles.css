@@ -8727,3 +8727,7 @@ body.hide-fat-footer .container .content {
 .container .blogs.view h5 {
   text-transform: uppercase;
 }
+.container .blogs.view h6 {
+  margin-left: 5px;
+  font-weight: normal;
+}
