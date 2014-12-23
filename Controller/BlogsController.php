@@ -30,6 +30,7 @@ class BlogsController extends AppController {
         }
 
         $blogIndex = $this->Blog->blogIndex();
+
         $this->set(compact('blog', 'blogIndex'));
     }
 }

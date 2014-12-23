@@ -45,19 +45,17 @@ class Blog extends AppModel {
     public function blogIndex() {
         $blogs = $this->find('all', array(
             'fields' => array(
-                'id', 'published'
+                'id', 'published', 'title',
             )
         ));
 
         $ret = array();
         foreach ($blogs as $blog) {
+            $id = $blog['Blog']['id'];
+            $title = $blog['Blog']['title'];
             $year = date('Y', strtotime($blog['Blog']['published']));
             $month = date('m', strtotime($blog['Blog']['published']));
-            $count = 0;
-            if (isset($ret[$year][$month])) {
-                $count = $ret[$year][$month];
-            }
-            $ret[$year][$month] = ++$count;
+            $ret[$year][$month][$id] = $title;
         }
 
         return $ret;
