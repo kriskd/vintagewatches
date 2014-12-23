@@ -14,7 +14,10 @@ class Blog extends AppModel {
     public $useTable = false;
 
     public $fields = array(
-            'id' => array('type' => 'integer', 'key' => 'primary'),
+        'id' => array('type' => 'integer', 'key' => 'primary'),
+        'published' => array('type' => 'datetime'),
+        'title' => array('type' => 'string', 'length' => 1024),
+        'content' => array('type' => 'text'),
     );
 
     public $records = array();
@@ -29,12 +32,34 @@ class Blog extends AppModel {
         $array = json_decode($json, TRUE);            
         $entries = $array['entry'];
         $count = count($entries);
-        // Set a primary ID, rename blogspot ID
+        // Set a primary ID, rename blogspot ID, format dates
         foreach ($entries as $id => $entry) {
             $this->records[$id] = array('blog_id' => $entry['id']) + $entry;
             unset($this->records[$id]['id']);
             $this->records[$id] = array('id' => $count - $id) + $this->records[$id];
+            $this->records[$id]['published'] = date('Y-m-d H:i:s', strtotime($this->records[$id]['published']));
+            $this->records[$id]['updated'] = date('Y-m-d H:i:s', strtotime($this->records[$id]['updated']));
+        }
+    }
+
+    public function blogIndex() {
+        $blogs = $this->find('all', array(
+            'fields' => array(
+                'id', 'published'
+            )
+        ));
+
+        $ret = array();
+        foreach ($blogs as $blog) {
+            $year = date('Y', strtotime($blog['Blog']['published']));
+            $month = date('m', strtotime($blog['Blog']['published']));
+            $count = 0;
+            if (isset($ret[$year][$month])) {
+                $count = $ret[$year][$month];
+            }
+            $ret[$year][$month] = ++$count;
         }
 
+        return $ret;
     }
 }

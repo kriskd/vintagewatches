@@ -17,16 +17,19 @@ class BlogsController extends AppController {
     }
 
     public function view($id = null) {
-		if (!$this->Watch->exists($id)) {
-			throw new NotFoundException(__('Invalid blog'));
-		}
+        if (empty($id)) {
+            $blog = $this->Blog->find('first', array(
+                'order' => 'id DESC',
+            ));
+        } else {
+            $blog = $this->Blog->find('first', array(
+                'conditions' => array(
+                    'id' => $id,
+                )
+            ));
+        }
 
-        $blog = $this->Blog->find('first', array(
-            'conditions' => array(
-                'id' => $id,
-            ),
-        ));
-
-        $this->set('blog', $blog);
+        $blogIndex = $this->Blog->blogIndex();
+        $this->set(compact('blog', 'blogIndex'));
     }
 }
