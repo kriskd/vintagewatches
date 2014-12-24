@@ -24,21 +24,24 @@ class Blog extends AppModel {
 
     public function __construct() {
         parent::__construct();
-        $this->Http = new HttpSocket();
-        $results = $this->Http->get('http://budgetwatchcollecting.blogspot.com/feeds/posts/default');
-        $body = $results->body;
-        $xml = simplexml_load_string($body);
-        $json = json_encode($xml);
-        $array = json_decode($json, TRUE);            
-        $entries = $array['entry'];
-        $count = count($entries);
-        // Set a primary ID, rename blogspot ID, format dates
-        foreach ($entries as $id => $entry) {
-            $this->records[$id] = array('blog_id' => $entry['id']) + $entry;
-            unset($this->records[$id]['id']);
-            $this->records[$id] = array('id' => $count - $id) + $this->records[$id];
-            $this->records[$id]['published'] = date('Y-m-d H:i:s', strtotime($this->records[$id]['published']));
-            $this->records[$id]['updated'] = date('Y-m-d H:i:s', strtotime($this->records[$id]['updated']));
+        try {
+            $this->Http = new HttpSocket();
+            $results = $this->Http->get(Configure::read('blog'));
+            $body = $results->body;
+            $xml = simplexml_load_string($body);
+            $json = json_encode($xml);
+            $array = json_decode($json, TRUE);            
+            $entries = $array['entry'];
+            $count = count($entries);
+            // Set a primary ID, rename blogspot ID, format dates
+            foreach ($entries as $id => $entry) {
+                $this->records[$id] = array('blog_id' => $entry['id']) + $entry;
+                unset($this->records[$id]['id']);
+                $this->records[$id] = array('id' => $count - $id) + $this->records[$id];
+                $this->records[$id]['published'] = date('Y-m-d H:i:s', strtotime($this->records[$id]['published']));
+                $this->records[$id]['updated'] = date('Y-m-d H:i:s', strtotime($this->records[$id]['updated']));
+            }
+        } catch (SocketException $e) {
         }
     }
 
@@ -50,12 +53,15 @@ class Blog extends AppModel {
         ));
 
         $ret = array();
+
         foreach ($blogs as $blog) {
-            $id = $blog['Blog']['id'];
-            $title = $blog['Blog']['title'];
-            $year = date('Y', strtotime($blog['Blog']['published']));
-            $month = date('m', strtotime($blog['Blog']['published']));
-            $ret[$year][$month][$id] = $title;
+            if (!empty($blog['Blog'])) {
+                $id = $blog['Blog']['id'];
+                $title = $blog['Blog']['title'];
+                $year = date('Y', strtotime($blog['Blog']['published']));
+                $month = date('m', strtotime($blog['Blog']['published']));
+                $ret[$year][$month][$id] = $title;
+            }
         }
 
         return $ret;
