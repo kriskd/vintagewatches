@@ -4,7 +4,7 @@
         <div class="col-lg-10 col-md-8 col-sm-8 col-xs-12">
             <?php if (!empty($blog)): ?>
                 <h5><?php echo date('F j, Y g:i A', strtotime($blog['Blog']['published'])); ?></h5>
-                <?php echo $blog['Blog']['content']; ?>
+                <div class="blog-content"><?php echo $blog['Blog']['content']; ?></div>
             <?php endif; ?>
         </div>
         <div class="col-lg-2 col-md-4 col-sm-4 col-xs-12">

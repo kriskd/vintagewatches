@@ -569,6 +569,8 @@ $(document).ready(function(){
         $(this).prop('disabled', true);
         $('form').get(0).submit();
     });
+
+    $('.blog-content img').addClass('img-responsive');
     
     $('.payment-form').submit(function(){ 
         $('.payment-errors').empty();
