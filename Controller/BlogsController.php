@@ -35,6 +35,18 @@ class BlogsController extends AppController {
 
         $blogIndex = $this->Blog->blogIndex();
 
+        if (empty($blog) || empty($blogIndex)) {
+            $blogRetryCount = $this->Session->check('BlogRetryCount') ? $this->Session->read('BlogRetryCount') : 0;
+            ++$blogRetryCount;
+            $this->log($blogRetryCount, 'error');
+            $this->Session->write('BlogRetryCount', $blogRetryCount); 
+            if ($blogRetryCount > 5) {
+                $this->Session->setFlash('Blog temporarily unavailable.', 'info');
+                CakeSession::delete('BlogRetryCount');
+                $this->redirect('/');
+            }
+            $this->redirect($this->here);
+        }
         $this->set(compact('blog', 'blogIndex'));
     }
 }
