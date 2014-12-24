@@ -8731,3 +8731,6 @@ body.hide-fat-footer .container .content {
   margin-left: 5px;
   font-weight: normal;
 }
+.container .blogs .img-responsive {
+  margin: 0 auto;
+}
