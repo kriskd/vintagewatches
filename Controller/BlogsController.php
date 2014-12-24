@@ -42,7 +42,7 @@ class BlogsController extends AppController {
             $this->Session->write('BlogRetryCount', $blogRetryCount); 
             if ($blogRetryCount > 5) {
                 $this->Session->setFlash('Blog temporarily unavailable.', 'info');
-                CakeSession::delete('BlogRetryCount');
+                $this->Session->delete('BlogRetryCount');
                 $this->redirect('/');
             }
             $this->redirect($this->here);
