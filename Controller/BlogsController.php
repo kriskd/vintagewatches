@@ -27,7 +27,7 @@ class BlogsController extends AppController {
             }
         }
 
-        $blogIndex = Cache::read('blog_index', 'long');
+        $blogIndex = Cache::read('blog_index', 'blog');
         if (!$blogIndex) {
             $blogIndex = $this->Blog->blogIndex();
             Cache::write('blog_index', $blogIndex, 'blog');
