@@ -26,10 +26,10 @@
                 )); ?>
                 <div class="watch-details">
                     <div class="row">
-                        <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9">
+                        <div class="col-lg-10 col-md-10 col-sm-9 col-xs-8">
                             <h4><?php echo $this->Html->link($watch['Watch']['name'], array('controller' => 'watches', 'action' => 'view', $watch['Watch']['id'])); ?></h4>
                         </div>
-                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-right">
+                        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-4 text-right">
                             <h4><?php echo $this->Number->currency($watch['Watch']['price'], 'USD'); ?></h4>
                         </div>
                     </div>
