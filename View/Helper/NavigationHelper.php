@@ -52,6 +52,8 @@ class NavigationHelper extends AppHelper
                 array('controller' => 'pages', 'action' => 'index', 'admin' => true),
             '<span class="glyphicon glyphicon-envelope"></span> Contacts' =>
                 array('controller' => 'contacts', 'action' => 'index', 'admin' => true),
+            '<span class="glyphicon glyphicon-refresh"></span> Clear Blog Cache' =>
+                array('controller' => 'blogs', 'action' => 'clear', 'admin' => true),
             '<span class="glyphicon glyphicon-off"></span> Logout' =>
                 array('controller' => 'users', 'action' => 'logout', 'admin' => false),
         );

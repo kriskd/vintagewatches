@@ -8,18 +8,30 @@ class BlogsController extends AppController {
 
     public function view($id = null) {
         if (empty($id)) {
-            $blog = $this->Blog->find('first', array(
-                'order' => 'id DESC',
-            ));
+            $blog = Cache::read('blog', 'blog');
+            if (!$blog) {
+                $blog = $this->Blog->find('first', array(
+                    'order' => 'id DESC',
+                ));
+                Cache::write('blog', $blog, 'blog');
+            }
         } else {
-            $blog = $this->Blog->find('first', array(
-                'conditions' => array(
-                    'id' => $id,
-                )
-            ));
+            $blog = Cache::read('blog_'.$id, 'blog');
+            if (!$blog) {
+                $blog = $this->Blog->find('first', array(
+                    'conditions' => array(
+                        'id' => $id,
+                    )
+                ));
+                Cache::write('blog_'.$id, $blog, 'blog');
+            }
         }
 
-        $blogIndex = $this->Blog->blogIndex();
+        $blogIndex = Cache::read('blog_index', 'long');
+        if (!$blogIndex) {
+            $blogIndex = $this->Blog->blogIndex();
+            Cache::write('blog_index', $blogIndex, 'blog');
+        }
 
         if (empty($blog) || empty($blogIndex)) {
             $blogRetryCount = $this->Session->check('BlogRetryCount') ? $this->Session->read('BlogRetryCount') : 0;
@@ -35,5 +47,11 @@ class BlogsController extends AppController {
         }
         $this->set('title', $blog['Blog']['title']);
         $this->set(compact('blog', 'blogIndex'));
+    }
+
+    public function admin_clear() {
+        Cache::clear();
+        $this->Session->setFlash('Blog cache cleared.', 'success');
+        $this->redirect($this->referer());
     }
 }
