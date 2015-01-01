@@ -220,18 +220,19 @@ class Address extends AppModel {
 	 */
 	public function afterFind($results, $primary = false)
 	{
+        $name = $this->name;
 	    $countries = ClassRegistry::init('Country')->getList();
 	    
-	    $results = array_map(function($item) use ($countries) {
-		if (!empty($item[$this->name]['country'])) {
-		    $item[$this->name]['countryName'] = $countries[$item[$this->name]['country']];
+	    $results = array_map(function($item) use ($countries, $name) {
+		if (!empty($item[$name]['country'])) {
+		    $item[$name]['countryName'] = $countries[$item[$name]['country']];
 		}
 		return $item;
 	    }, $results);
 	    
-	    $results = array_map(function($item) { 
-		if (empty($item[$this->name]['state']) && isset($item[$this->name]['city']) && isset($item[$this->name]['postalCode'])) {
-		    $item[$this->name]['cityStZip'] = $item[$this->name]['city'] . ', ' . $item[$this->name]['postalCode'];
+	    $results = array_map(function($item) use ($name) { 
+		if (empty($item[$name]['state']) && isset($item[$name]['city']) && isset($item[$name]['postalCode'])) {
+		    $item[$name]['cityStZip'] = $item[$name]['city'] . ', ' . $item[$name]['postalCode'];
 		}
 		return $item;
 	    }, $results);
