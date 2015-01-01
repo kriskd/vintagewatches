@@ -47,12 +47,12 @@ class UsersController extends AppController
             
             $xml = $this->Ebay->fetchTokenXml($ebaySessionId);
 
-            $results = $this->Ebay->HttpSocket->request([
+            $results = $this->Ebay->HttpSocket->request(array(
                 'method' => 'POST',
                 'uri' => Configure::read('eBay.apiUrl'),
                 'header' => $this->Ebay->ebayHeaders,
                 'body' => $xml
-            ]);
+            ));
             
             $xml = simplexml_load_string($results->body);
             
