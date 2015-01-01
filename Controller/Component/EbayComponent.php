@@ -16,7 +16,7 @@ class EbayComponent extends Component
             'X-EBAY-API-CERT-NAME' => Configure::read('eBay.certid'),
             'X-EBAY-API-SITEID' => '0'
         );
-        $this->HttpSocket = new HttpSocket(['ssl_allow_self_signed' => true]);
+        $this->HttpSocket = new HttpSocket(array('ssl_allow_self_signed' => true));
     }
     
     public function decodeToken($encodedToken)
