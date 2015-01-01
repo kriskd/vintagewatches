@@ -42,12 +42,12 @@ class EbayComponent extends Component
         $this->ebayHeaders['X-EBAY-API-CALL-NAME'] = 'GetSellerList'; 
         $xml = $this->getSellerListXml($token);
         
-        $results = $this->HttpSocket->request([
+        $results = $this->HttpSocket->request(array(
             'method' => 'POST', 
             'uri' => Configure::read('eBay.apiUrl'),
             'header' => $this->ebayHeaders,
             'body' => $xml
-        ]);
+        ));
         
         return simplexml_load_string($results->body);
     }
@@ -57,12 +57,12 @@ class EbayComponent extends Component
         $this->ebayHeaders['X-EBAY-API-CALL-NAME'] = 'GetItem';
         $xml = $this->getItemXml($token, $itemId); 
         
-        $results = $this->HttpSocket->request([
+        $results = $this->HttpSocket->request(array(
             'method' => 'POST', 
             'uri' => Configure::read('eBay.apiUrl'),
             'header' => $this->ebayHeaders,
             'body' => $xml
-        ]);
+        ));
         
         return simplexml_load_string($results->body);
     }
