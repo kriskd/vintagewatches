@@ -19,10 +19,6 @@
 @goldDark:              #665600;
 
 .rounded-corners (@radius: 5px) {
-  -webkit-border-radius: @radius;
-  -moz-border-radius: @radius;
-  -ms-border-radius: @radius;
-  -o-border-radius: @radius;
   border-radius: @radius;
 }
 
@@ -42,12 +38,6 @@
     background-color: hsl(177, 90%, 10%) !important;
     background-repeat: repeat-x;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="@gold", endColorstr="@goldDark");
-    background-image: -khtml-gradient(linear, left top, left bottom, from(@gold), to(@goldDark));
-    background-image: -moz-linear-gradient(top, @gold, @goldDark);
-    background-image: -ms-linear-gradient(top, @gold, @goldDark);
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, @gold), color-stop(100%, @goldDark));
-    background-image: -webkit-linear-gradient(top, @gold, @goldDark);
-    background-image: -o-linear-gradient(top, @gold, @goldDark);
     background-image: linear-gradient(@gold, @goldDark);
     border-color: @goldDark @goldDark hsl(177, 90%, 5%);
     color: #fff !important;
