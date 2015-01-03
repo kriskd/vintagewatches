@@ -253,7 +253,7 @@ class Coupon extends AppModel {
         }
 
         // Coupon expired
-        if (!empty($coupon[0]['expire_date']) && strtotime($coupon[0]['expire_date']) < strtotime('now')) {
+        if (!empty($coupon[0]['expire_date']) && strtotime($coupon[0]['expire_date'].' 23:59:59') < strtotime('now')) {
             return array(
                 'alert' => 'danger',
                 'message' => 'This coupon is expired.'
@@ -370,7 +370,7 @@ class Coupon extends AppModel {
                 'archived' => 0,
                 'OR' => array(
                     'expire_date' => NULL,
-                    'expire_date >' => date('Y-m-d'),
+                    'expire_date >=' => date('Y-m-d'),
                 ),
                 'available >' =>  0,
             ),
