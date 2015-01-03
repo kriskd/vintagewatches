@@ -52,16 +52,16 @@ class NavigationHelper extends AppHelper
                 array('controller' => 'pages', 'action' => 'index', 'admin' => true),
             '<span class="glyphicon glyphicon-envelope"></span> Contacts' =>
                 array('controller' => 'contacts', 'action' => 'index', 'admin' => true),
-            '<span class="glyphicon glyphicon-refresh"></span> Clear Blog Cache' =>
-                array('controller' => 'blogs', 'action' => 'clear', 'admin' => true),
+            '<span class="glyphicon glyphicon-refresh"></span> Clear Cache' =>
+                array('controller' => 'pages', 'action' => 'clear', 'admin' => true),
             '<span class="glyphicon glyphicon-off"></span> Logout' =>
                 array('controller' => 'users', 'action' => 'logout', 'admin' => false),
         );
 
         foreach ($links as $link => $attrs) {
             $html .= $this->Html->tag('li',
-                        $this->Html->link($link, $attrs, array('escape' => false))
-                    );
+                $this->Html->link($link, $attrs, array('escape' => false))
+            );
         }
 
         return $html;

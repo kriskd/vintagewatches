@@ -49,9 +49,4 @@ class BlogsController extends AppController {
         $this->set(compact('blog', 'blogIndex'));
     }
 
-    public function admin_clear() {
-        Cache::clear();
-        $this->Session->setFlash('Blog cache cleared.', 'success');
-        $this->redirect($this->referer());
-    }
 }
