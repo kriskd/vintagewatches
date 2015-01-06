@@ -7,47 +7,47 @@
         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 info">
             <div class="info-inner">
                 <?php echo $this->Element('watch_view_head', compact('watch')); ?>
-		<div class="row body">
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 description">
-                        <?php echo $this->Text->truncate($watch['Watch']['description'], 300, array('exact' => false, 'html' => false)); ?>
-			<dl>
-			    <dt><?php echo __('Active'); ?></dt>
-			    <dd>
-				<?php echo h($watch['Watch']['active'] == 1 ? 'Yes' : 'No'); ?>
-			    </dd>
-			    <dt><?php echo __('Created'); ?></dt>
-			    <dd>
-				<?php echo h($watch['Watch']['created']); ?>
-			    </dd>
-			    <dt><?php echo __('Modified'); ?></dt>
-			    <dd>
-				<?php echo h($watch['Watch']['modified']); ?>
-			    </dd>
-			    <?php if(isset($watch['Order']['id'])):  ?>
-				<dt>Sold <?php echo date('Y-m-d', strtotime($watch['Order']['created'])); ?></dt>
-				<dd>
-				    <?php echo $this->Html->link('Go To Order',
-						     array('controller' => 'orders', 'action' => 'view',
-						       $watch['Order']['id'],
-						       'admin' => true),
-						     array('class' => 'btn btn-primary'));
-				    ?>
-				</dd>
-			    <?php endif; ?>
-			</dl>
+                <div class="row body">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 description">
+                    <?php echo $watch['Watch']['description']; ?>
+                <dl>
+                    <dt><?php echo __('Active'); ?></dt>
+                    <dd>
+                    <?php echo h($watch['Watch']['active'] == 1 ? 'Yes' : 'No'); ?>
+                    </dd>
+                    <dt><?php echo __('Created'); ?></dt>
+                    <dd>
+                    <?php echo h($watch['Watch']['created']); ?>
+                    </dd>
+                    <dt><?php echo __('Modified'); ?></dt>
+                    <dd>
+                    <?php echo h($watch['Watch']['modified']); ?>
+                    </dd>
+                    <?php if(isset($watch['Order']['id'])):  ?>
+                        <dt>Sold <?php echo date('Y-m-d', strtotime($watch['Order']['created'])); ?></dt>
+                        <dd>
+                            <?php echo $this->Html->link('Go To Order',
+                                     array('controller' => 'orders', 'action' => 'view',
+                                       $watch['Order']['id'],
+                                       'admin' => true),
+                                     array('class' => 'btn btn-primary'));
+                            ?>
+                        </dd>
+                    <?php endif; ?>
+                </dl>
                     </div>
                 </div>
                 <div class="row">
                     <p class="text-center bottom">
-                        <?php echo $this->Html->link('Edit Watch', array('action' => 'edit', $watch['Watch']['id']), array('class' => 'btn btn-primary', 'admin' => true)); ?>
-			<?php if ($watch['Watch']['order_id'] == null): ?>
-			    <?php echo $this->Html->link('Delete Watch', '#delete-watch',
-							array(
-							    'class' => 'btn btn-danger',
-							    'data-toggle' => 'modal'
-							)
-						    ); ?>
-			<?php endif; ?>
+                        <?php if ($watch['Watch']['order_id'] == null): ?>
+                            <?php echo $this->Html->link('Edit Watch', array('action' => 'edit', $watch['Watch']['id']), array('class' => 'btn btn-primary', 'admin' => true)); ?>
+                            <?php echo $this->Html->link('Delete Watch', '#delete-watch',
+                                        array(
+                                            'class' => 'btn btn-danger',
+                                            'data-toggle' => 'modal'
+                                        )
+                                        ); ?>
+                        <?php endif; ?>
                     </p>
                 </div>
             </div>
