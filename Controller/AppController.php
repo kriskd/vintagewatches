@@ -60,6 +60,8 @@ class AppController extends Controller {
     public $route;
     
     public $token;
+
+    public $scheme;
     
     /**
      * Send the Controller object to the View so Helpers can initialize a Component with it
@@ -97,12 +99,13 @@ class AppController extends Controller {
         parent::beforeRender();
     }
     
-    public function beforeFilter()
-    {
+    public function beforeFilter() {
         // All pages are now secure
         $this->secure();
 
-        $this->route = Router::parse($this->here); 
+        $this->route = Router::parse($this->request->here); 
+        $here = Router::url($this->request->here, true);
+        $this->scheme = parse_url($here, PHP_URL_SCHEME);
         
         //Logged in
         $loggedIn = false;

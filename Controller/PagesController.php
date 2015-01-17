@@ -61,7 +61,7 @@ class PagesController extends AppController {
 		if (empty($path)) {
 			$this->redirect('/');
 		}
-		$slug = current($path); //var_dump(strcasecmp($slug, 'sitemap')); exit;
+		$slug = current($path); 
 		
 		//The router passes in the slug "home" for the homepage
 		if (strcasecmp($slug, 'home')==0) { 
@@ -87,7 +87,7 @@ class PagesController extends AppController {
 			foreach($watches as $watch) {
 				$watchXml[] = array(
 						'url' => array(
-							'loc' => 'http://' . env('SERVER_NAME') . DS . 'watches' . DS . 'view' . DS . $watch['Watch']['id'],
+							'loc' => $this->scheme.'://' . env('SERVER_NAME') . DS . 'watches' . DS . 'view' . DS . $watch['Watch']['id'],
 							'lastmod' => $watch['Watch']['modified']
 						)
 					);
@@ -97,19 +97,19 @@ class PagesController extends AppController {
 			foreach ($pages as $page) {
 				$pageXml[] = array(
 					'url' => array(
-						'loc' => 'http://' . env('SERVER_NAME') . DS . 'pages' . DS . $page['Page']['slug'],
+						'loc' => $this->scheme.'://' . env('SERVER_NAME') . DS . 'pages' . DS . $page['Page']['slug'],
 						'lastmod' => $page['Page']['modified']
 					)	
 				);
 			}
 			$pageXml[] = array(
 				'url' => array(
-					'loc' => 'http://' . env('SERVER_NAME') . DS . 'orders'
+					'loc' => $this->scheme.'://' . env('SERVER_NAME') . DS . 'orders'
 				)
 			);
 			$pageXml[] = array(
 				'url' => array(
-					'loc' => 'http://' . env('SERVER_NAME') . DS . 'contact-us'
+					'loc' => $this->scheme.'://' . env('SERVER_NAME') . DS . 'contact-us'
 				)
 			);
 			
