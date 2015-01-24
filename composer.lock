@@ -40,16 +40,16 @@
         },
         {
             "name": "cakephp/cakephp",
-            "version": "2.5.7",
+            "version": "2.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "ef28b42b2b8885a2be216c11adbbf32919e04a5b"
+                "reference": "09e5e43d0950bcee1b1792bc1355492024a5e54c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/ef28b42b2b8885a2be216c11adbbf32919e04a5b",
-                "reference": "ef28b42b2b8885a2be216c11adbbf32919e04a5b",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/09e5e43d0950bcee1b1792bc1355492024a5e54c",
+                "reference": "09e5e43d0950bcee1b1792bc1355492024a5e54c",
                 "shasum": ""
             },
             "require": {
@@ -79,7 +79,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-12-09 01:50:35"
+            "time": "2015-01-16 02:36:35"
         },
         {
             "name": "cakephp/debug_kit",
@@ -179,12 +179,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "89d77bfbee79e16653f7162c86e602cc188471db"
+                "reference": "2d91dc9ce37bbf876cd408d483270a07001d8c7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/89d77bfbee79e16653f7162c86e602cc188471db",
-                "reference": "89d77bfbee79e16653f7162c86e602cc188471db",
+                "url": "https://api.github.com/repos/composer/installers/zipball/2d91dc9ce37bbf876cd408d483270a07001d8c7d",
+                "reference": "2d91dc9ce37bbf876cd408d483270a07001d8c7d",
                 "shasum": ""
             },
             "replace": {
@@ -226,6 +226,7 @@
                 "Hurad",
                 "MODX Evo",
                 "OXID",
+                "SMF",
                 "Thelia",
                 "WolfCMS",
                 "agl",
@@ -264,20 +265,20 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2014-11-29 01:29:17"
+            "time": "2015-01-21 21:08:45"
         },
         {
             "name": "mjohnson/transit",
-            "version": "1.6.1",
+            "version": "1.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/milesj/transit.git",
-                "reference": "100f0de5954703b5b6b2f485b0d319328dba96c4"
+                "reference": "0fb92e36b17462b36646d839f05924510f5b1988"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/milesj/transit/zipball/100f0de5954703b5b6b2f485b0d319328dba96c4",
-                "reference": "100f0de5954703b5b6b2f485b0d319328dba96c4",
+                "url": "https://api.github.com/repos/milesj/transit/zipball/0fb92e36b17462b36646d839f05924510f5b1988",
+                "reference": "0fb92e36b17462b36646d839f05924510f5b1988",
                 "shasum": ""
             },
             "require": {
@@ -337,20 +338,20 @@
                 "validator",
                 "video"
             ],
-            "time": "2014-11-23 03:44:13"
+            "time": "2015-01-18 20:05:15"
         },
         {
             "name": "mjohnson/uploader",
-            "version": "4.6.0",
+            "version": "4.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/milesj/uploader.git",
-                "reference": "8eb36f6eee0f4b8e350baecea00a414049df9238"
+                "reference": "9e22c68f1e3eb1b77d476bb8c8240ff399f33da2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/milesj/uploader/zipball/8eb36f6eee0f4b8e350baecea00a414049df9238",
-                "reference": "8eb36f6eee0f4b8e350baecea00a414049df9238",
+                "url": "https://api.github.com/repos/milesj/uploader/zipball/9e22c68f1e3eb1b77d476bb8c8240ff399f33da2",
+                "reference": "9e22c68f1e3eb1b77d476bb8c8240ff399f33da2",
                 "shasum": ""
             },
             "require": {
@@ -388,7 +389,7 @@
                 "validation"
             ],
             "abandoned": true,
-            "time": "2014-11-10 02:27:48"
+            "time": "2015-01-18 19:49:52"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
@@ -958,17 +959,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.6.1",
+            "version": "v2.6.3",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "3346fc090a3eb6b53d408db2903b241af51dcb20"
+                "reference": "82462a90848a52c2533aa6b598b107d68076b018"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/3346fc090a3eb6b53d408db2903b241af51dcb20",
-                "reference": "3346fc090a3eb6b53d408db2903b241af51dcb20",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/82462a90848a52c2533aa6b598b107d68076b018",
+                "reference": "82462a90848a52c2533aa6b598b107d68076b018",
                 "shasum": ""
             },
             "require": {
@@ -1001,7 +1002,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2014-12-02 20:19:20"
+            "time": "2015-01-03 15:33:07"
         }
     ],
     "aliases": [],
