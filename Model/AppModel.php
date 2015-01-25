@@ -41,13 +41,7 @@ class AppModel extends Model {
     /**
      * For State, Province and Country
      */
-    public function getList()
-    {
-        $list = array();
-        $all = $this->find('all');
-        foreach($all as $item) {
-            $list[$item[$this->alias]['abbreviation']] = $item[$this->alias]['name'];
-        }
-        return $list;
+    public function getList($fields = ['abbreviation', 'name']) {
+        return $this->find('list', compact('fields'));
     }
 }
