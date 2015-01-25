@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "580b14ac9b93020ad739e7c7292780b0",
+    "hash": "635dd4a6d5a6f02792b1c7225eaa7b38",
     "packages": [
         {
             "name": "Datasources",
@@ -74,16 +74,16 @@
         },
         {
             "name": "cakephp/cakephp",
-            "version": "2.5.8",
+            "version": "2.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "667e2be2d27ad210769f919fefdb35e45ab354d5"
+                "reference": "09e5e43d0950bcee1b1792bc1355492024a5e54c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/667e2be2d27ad210769f919fefdb35e45ab354d5",
-                "reference": "667e2be2d27ad210769f919fefdb35e45ab354d5",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/09e5e43d0950bcee1b1792bc1355492024a5e54c",
+                "reference": "09e5e43d0950bcee1b1792bc1355492024a5e54c",
                 "shasum": ""
             },
             "require": {
@@ -113,7 +113,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-12-23 16:21:16"
+            "time": "2015-01-16 02:36:35"
         },
         {
             "name": "cakephp/debug_kit",

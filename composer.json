@@ -41,7 +41,7 @@
     ],
     "require": {
         "composer/installers": "dev-master",
-        "cakephp/cakephp": "2.5.*",
+        "cakephp/cakephp": "2.*",
         "cakephp/debug_kit": "2.2.*",
         "mjohnson/uploader": "4.*",
         "Stripe": "2.0.3",
