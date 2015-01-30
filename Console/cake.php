@@ -20,7 +20,7 @@
  */
 $ds = DIRECTORY_SEPARATOR;
 $root = dirname(dirname(dirname(__FILE__)));
-$dispatcher = $root . $ds . 'cakephp' . $ds . 'lib' . $ds . 'Cake' . $ds . 'Console' . $ds . 'ShellDispatcher.php';
+$dispatcher = $root . $ds . 'Lib' . $ds . 'Cake' . $ds . 'Console' . $ds . 'ShellDispatcher.php';
 
 if (function_exists('ini_set')) {
 	// the following line differs from its sibling
