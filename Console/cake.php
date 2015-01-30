@@ -19,7 +19,8 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 $ds = DIRECTORY_SEPARATOR;
-$root = dirname(dirname(dirname(__FILE__)));
+$root = dirname(dirname(__FILE__));
+
 $dispatcher = $root . $ds . 'Lib' . $ds . 'Cake' . $ds . 'Console' . $ds . 'ShellDispatcher.php';
 
 if (function_exists('ini_set')) {
