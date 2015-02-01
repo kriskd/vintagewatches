@@ -14,7 +14,9 @@
                 </div>
                 <div class="row">
                     <p class="text-center bottom">
-                        <?php echo $this->Element('add_to_cart', compact('watch') + array('class' => 'btn btn-gold btn-lg')); ?>
+                        <?php if ($watch['Watch']['active'] == 1 && !$watch['Watch']['order_id']): ?>
+                            <?php echo $this->Element('add_to_cart', compact('watch') + array('class' => 'btn btn-gold btn-lg')); ?>
+                        <?php endif; ?>
                     </p>
                 </div>
             </div>
