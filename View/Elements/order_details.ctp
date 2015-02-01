@@ -31,7 +31,7 @@
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                 <?php echo $this->Html->link($watch['name'], array(
                     'controller' => 'watches',
-                    'action' => 'view', $watch['id'], 
+                    'action' => 'view', $watch['id'], true,
                 )); ?>
             </div>
             <div class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
