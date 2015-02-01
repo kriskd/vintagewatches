@@ -121,6 +121,37 @@ class Watch extends AppModel {
     );
 
     /**
+     * Get watch for display.  Will return watch if active and no order
+     * or watch belongs to a customer.
+     * @param $id ID of the watch
+     * @param $verify_order Include the Order and Address in the Watch contain in order to verify user email and billing postalCode 
+     */
+    public function getWatch($id, $verify_order = false) {
+        $contain = [
+            'Image',
+            'Brand',
+        ];
+        if ($verify_order) {
+            $contain['Order'] = 'Address';
+        }
+        $watch = $this->find('first', array(
+            'conditions' => [
+				'Watch.id' => $id,
+            ],
+            'contain' => $contain
+        ));
+
+        if ($watch['Watch']['active'] == 1 && !$watch['Watch']['order_id']) return $watch;
+
+        $email = CakeSession::check('Order.email') ? CakeSession::read('Order.email') : '';
+        $postalCode = CakeSession::check('Address.postalCode') ? CakeSession::read('Address.postalCode') : '';
+
+        if (isset($watch['Order']['email']) && $watch['Order']['email'] == $email && isset($watch['Order']['Address']) && $watch['Order']['Address'][0]['postalCode'] == $postalCode) return $watch;
+
+        return false;
+    }
+
+    /**
      * $ids array Array of watch Ids
      */
     public function getCartWatches($ids)

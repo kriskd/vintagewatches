@@ -22,7 +22,7 @@
                                                                     'class' => 'img-responsive',
                                                                     'url' => array(
                                                                         'controller' => 'watches',
-                                                                        'action' => 'view', $watch['id'])
+                                                                        'action' => 'view', $watch['id'], true)
                                                                     )); ?>
             </div>
             <div class="text-center col-lg-2 col-md-2 col-sm-2 col-xs-2">

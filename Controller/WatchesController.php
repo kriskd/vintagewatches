@@ -82,77 +82,13 @@ class WatchesController extends AppController {
  * @param string $id
  * @return void
  */
-	public function view($id = null, $email = null, $postalCode = null) {
-		/*if (!$this->Watch->sellable($id)) {
-            $this->Session->setFlash('This watch is not available.', 'info');
-			$this->redirect(array('controller' => 'pages', 'action' => 'home', 'display'));
-        }*/
+	public function view($id = null, $verify_order = false) {
         if (empty($id)) {
 			$this->redirect(array('controller' => 'pages', 'action' => 'home', 'display'));
         }
-        /*
-		$options = array(
-				'conditions' => array(
-					'Watch.' . $this->Watch->primaryKey => $id,
-                    'OR' => array(
-                        array(
-                            'order_id' => null,
-                            'active' => 1,
-                        ),
-                        array(
-                            'Order.email' => $email,
-                            'Address.type' => 'billing',
-                            'Address.postalCode' => $postalCode, 
-                        ),
-                    )
-				),
-				'contain' => array(
-					'Image',
-					'Brand' => array(
-					    'fields' => array(
-                            'id', 'name'
-					    )
-                    ),
-                    'Order' => array(
-                        'fields' => array(
-                            'email',
-                        ),
-                        'Address' => array(
-                            'fields' => array(
-                                'postalCode'
-                            ),
-                        ),
-                    ),
-				)
-            );*/
-        $watch = $this->Watch->find('first', array(
-            'conditions' => [
-				'Watch.id' => $id,
-                'OR' => array(
-                    array(
-                        //'order_id' => null,
-                        //'active' => 1,
-                    ),
-                    array(
-                        'Order.email' => $email,
-                        //'Address.type' => 'billing',
-                        //'Address.postalCode' => $postalCode, 
-                    ),
-                )
-            ],
-            'contain' => [
-                'Image',
-                'Brand',
-                'Order' => [
-                    'Address' => [
-                        'fields' => [
-                            'type', 'postalCode',
-                        ]
-                    ],
-                ],
-            ]
-        ));
-        debug($watch); exit;
+
+        $watch = $this->Watch->getWatch($id, $verify_order);
+
         if (!$watch) {
             $this->Session->setFlash('This watch is not available.', 'info');
 			$this->redirect(array('controller' => 'pages', 'action' => 'home', 'display'));
