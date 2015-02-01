@@ -132,7 +132,13 @@ class Watch extends AppModel {
             'Brand',
         ];
         if ($verify_order) {
-            $contain['Order'] = 'Address';
+            $contain['Order'] = [
+                'Address' => [
+                    'conditions' => [
+                        'type' => 'billing'
+                    ]
+                ]
+            ];
         }
         $watch = $this->find('first', array(
             'conditions' => [
