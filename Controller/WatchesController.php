@@ -90,8 +90,14 @@ class WatchesController extends AppController {
         $watch = $this->Watch->getWatch($id, $verify_order);
 
         if (!$watch) {
-            $this->Session->setFlash('This watch is not available.', 'info');
-			$this->redirect(array('controller' => 'pages', 'action' => 'home', 'display'));
+            $flash = 'This watch is not available.';
+            $redirect = array('controller' => 'pages', 'action' => 'home', 'display');
+            if ($verify_order) {
+                $flash = 'Please enter your email and billing postal code to view this watch.';
+                $redirect = array('controller' => 'orders');
+            }
+            $this->Session->setFlash($flash, 'info');
+			$this->redirect($redirect);
         }
 
 		$this->set('watch', $watch);
