@@ -28,8 +28,8 @@ class OrdersControllerTest extends ControllerTestCase {
 		'app.state',
 		'app.province',
 		'app.country',
-		'app.page',
-		'app.content'
+		//'app.page',
+		//'app.content'
 	);
 
 /**
@@ -56,7 +56,66 @@ class OrdersControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testCheckout() {
-		$this->markTestIncomplete('testCheckout not implemented.');
+        $order = array(
+            'stripeToken' => 'tok_5dC2WijiayVQOK',
+            'Address' => array(
+                'select-country' => 'us',
+                'billing' => array(
+                    'firstName' => 'Sandra',
+                    'lastName' => 'Irwin',
+                    'company' => '',
+                    'address1' => '2215 Gateway Road',
+                    'address2' => '',
+                    'city' => 'Portland',
+                    'state' => 'OR',
+                    'postalCode' => '97205',
+                    'country' => 'US'
+                )
+            ),
+            'Coupon' => array(
+                'email' => '',
+                'code' => ''
+            ),
+            'Shipping' => array(
+                'option' => 'billing'
+            ),
+            'Order' => array(
+                'email' => 'SandraPIrvin@armyspy.com',
+                'phone' => '503-326-9436',
+                'notes' => ''
+            )
+        );
+        $Orders = $this->generate('Orders', array(
+            'components' => array(
+                'Session',
+                'Cart' => array('cartEmpty', 'cartItemCount', 'cartItemIds')
+            )
+        ));
+        $Orders->Cart->staticExpects($this->any())
+            ->method('cartEmpty')
+            ->will($this->returnValue(false));
+        $Orders->Cart->staticExpects($this->any())
+            ->method('cartItemCount')
+            ->will($this->returnValue(1));
+        $Orders->Cart->staticExpects($this->any())
+            ->method('cartItemIds')
+            ->will($this->returnValue(array(1)));
+        $Orders->Stripe->expects($this->any()) // Throwing undefined method How do I mock this?
+            ->method('charge')
+            ->will($this->returnvalue(array(
+                'stripe_paid' => 1,
+                'stripe_id' => 'ch_5dBkC3pJMgqjkD',
+                'stripe_last4' => '4242',
+                'stripe_zip_check' => 'pass',
+                'stripe_cvc_check' => 'pass',
+                'stripe_amount' => '18300', // Bogus number for now
+            )));
+        $result = $this->testAction(
+            '/orders/checkout',
+            array('data' => $order, 'method' => 'post')
+        );
+        debug($result); exit;
+		//$this->markTestIncomplete('testCheckout not implemented.');
 	}
 
 /**
@@ -82,7 +141,7 @@ class OrdersControllerTest extends ControllerTestCase {
  *
  * @return void
  */
-	public function testTotalCart() {
+	public function xtestTotalCart() {
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $query = array(
             'data' => array(
