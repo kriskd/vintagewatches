@@ -100,9 +100,11 @@ class OrdersControllerTest extends ControllerTestCase {
         $Orders->Cart->staticExpects($this->any())
             ->method('cartItemIds')
             ->will($this->returnValue(array(1)));
-        $Orders->Stripe->expects($this->any()) // Throwing undefined method How do I mock this?
+
+        $mock = $this->getMock('Stripe');
+        $mock->expects($this->any()) // Error Cannot redeclare class Stripe ??? 
             ->method('charge')
-            ->will($this->returnvalue(array(
+            ->will($this->returnValue(array(
                 'stripe_paid' => 1,
                 'stripe_id' => 'ch_5dBkC3pJMgqjkD',
                 'stripe_last4' => '4242',
