@@ -82,28 +82,42 @@ class WatchesController extends AppController {
  * @param string $id
  * @return void
  */
-	public function view($id = null, $verify_order = false) {
+	public function view($id = null) {
         if (empty($id)) {
 			$this->redirect(array('controller' => 'pages', 'action' => 'home', 'display'));
         }
 
-        $watch = $this->Watch->getWatch($id, $verify_order);
+        $watch = $this->Watch->getWatch($id);
 
         if (!$watch) {
-            $flash = 'This watch is not available.';
-            $redirect = array('controller' => 'pages', 'action' => 'home', 'display');
-            if ($verify_order) {
-                $flash = 'Please enter your email and billing postal code to view this watch.';
-                $redirect = array('controller' => 'orders');
-            }
-            $this->Session->setFlash($flash, 'info');
-			$this->redirect($redirect);
+            $this->Session->setFlash('This watch is not available.', 'info');
+			$this->redirect(array('controller' => 'pages', 'action' => 'home', 'display'));
         }
 
 		$this->set('watch', $watch);
 		$this->set(array('title' => $watch['Watch']['name']));
 	}
-    
+
+    /**
+     * Get a watch on customer's order
+     */ 
+    public function order($id) {
+        if (empty($id)) {
+			$this->redirect(array('controller' => 'pages', 'action' => 'home', 'display'));
+        }
+
+        $watch = $this->Watch->getWatch($id, true);
+
+        if (!$watch) {
+            $this->Session->setFlash('Please enter your email and billing postal code to view this watch.', 'info');
+			$this->redirect(array('controller' => 'orders'));
+        }
+
+		$this->set('watch', $watch);
+        $this->render('view');
+		$this->set(array('title' => $watch['Watch']['name']));
+    }
+
     public function xml()
     {
         App::import('Vendor', 'zeroasterisk/CakePHP-ArrayToXml-Lib/libs/array_to_xml');

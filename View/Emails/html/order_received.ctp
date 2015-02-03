@@ -26,7 +26,7 @@
                     'fullBase' => true,
                     'url' => array(
                         'controller' => 'watches',
-                        'action' => 'view', $watch['id'], true,
+                        'action' => 'order', $watch['id'],
                         'full_base' => true,
                     ),
                 )); ?>
@@ -34,7 +34,7 @@
             <td><?php echo $watch['stockId']; ?></td>
             <td><?php echo $this->Html->link($watch['name'], array(
                 'controller' => 'watches',
-                'action' => 'view', $watch['id'], true, 
+                'action' => 'order', $watch['id'],
                 'full_base' => true,
             )); ?></td>
             <td style="text-align: right"><?php echo $this->Number->currency($watch['price'], 'USD'); ?></td>

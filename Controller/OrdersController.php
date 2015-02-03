@@ -42,7 +42,7 @@ class OrdersController extends AppController
 
         $email = $this->Session->read('Order.email');
         $postalCode = $this->Session->read('Address.postalCode'); 
-
+debug($email); debug($postalCode);
         if($this->request->is('post')){
             $data = $this->request->data;
             $email = $data['Order']['email'];
@@ -199,6 +199,13 @@ class OrdersController extends AppController
 
                     $this->Cart->emptyCart();
                     $order = $this->Order->getOrder($order_id); 
+                    // Put order email and billing postal into session
+                    $email = $order['Order']['email'];
+                    $this->Session->write('Order.email', $email);
+                    $address = Hash::extract($order, 'Address.{n}[type=billing]');
+                    $address = current($address);
+                    $postalCode = $address['postalCode']; 
+                    $this->Session->write('Address.postalCode', $postalCode);
                     $this->emailOrder($order);
                     $title = 'Thank You For Your Order';
                     $this->set(compact('order', 'title'));   
@@ -645,35 +652,4 @@ class OrdersController extends AppController
         return;
     }
 
-    /**
-     * Proof of concept for address validation
-     */
-    /*public function test()
-    {
-    if($this->request->is('post')){
-        $data = $this->request->data; 
-        $addresses = $data['Address'];
-        foreach($addresses as $type => $item){ 
-        $address = $item;
-        $address['type'] = $type;
-        $addressesToSave[] = $address;
-        } 
-
-        $this->Address->set($addressesToSave);
-        //Grab the form data because the save attempt munges it
-        $data = $this->Address->data;
-        if($this->Address->saveMany($addressesToSave)){
-        $this->Session->setFlash('valid');
-        }  
-        else{
-        $errors = $this->Address->validationErrors;
-        $fixErrors['billing'] = $errors[0];
-        if(isset($errors[1])){
-            $fixErrors['shipping'] = $errors[1];
-        }
-        $this->Address->validationErrors = $fixErrors;
-        $this->Address->data = $data;
-        }
-    }
-    }*/
 }
