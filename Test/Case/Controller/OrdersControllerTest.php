@@ -1,6 +1,8 @@
 <?php
 App::uses('OrdersController', 'Controller');
 App::uses('CakeRequest', 'Network');
+App::uses('ComponentCollection', 'Controller');
+App::uses('StripeComponent', 'Stripe.Controller/Component');
 
 /**
  * OrdersController Test Case
@@ -88,21 +90,20 @@ class OrdersControllerTest extends ControllerTestCase {
         $Orders = $this->generate('Orders', array(
             'components' => array(
                 'Session',
-                'Cart' => array('cartEmpty', 'cartItemCount', 'cartItemIds')
+                'Cart' => array('cartEmpty', 'cartItemCount', 'cartItemIds'),
+                'Stripe.Stripe' => array('charge'),
             )
         ));
-        $Orders->Cart->staticExpects($this->any())
+        $Orders->Cart->expects($this->any())
             ->method('cartEmpty')
             ->will($this->returnValue(false));
-        $Orders->Cart->staticExpects($this->any())
+        $Orders->Cart->expects($this->any())
             ->method('cartItemCount')
             ->will($this->returnValue(1));
-        $Orders->Cart->staticExpects($this->any())
+        $Orders->Cart->expects($this->any())
             ->method('cartItemIds')
             ->will($this->returnValue(array(1)));
-
-        $mock = $this->getMock('Stripe');
-        $mock->expects($this->any()) // Error Cannot redeclare class Stripe ??? 
+        $Orders->Stripe->expects($this->any())
             ->method('charge')
             ->will($this->returnValue(array(
                 'stripe_paid' => 1,
@@ -112,12 +113,12 @@ class OrdersControllerTest extends ControllerTestCase {
                 'stripe_cvc_check' => 'pass',
                 'stripe_amount' => '18300', // Bogus number for now
             )));
+
         $result = $this->testAction(
             '/orders/checkout',
             array('data' => $order, 'method' => 'post')
         );
-        debug($result); exit;
-		//$this->markTestIncomplete('testCheckout not implemented.');
+        //debug($result); exit;
 	}
 
 /**
