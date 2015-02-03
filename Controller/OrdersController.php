@@ -42,7 +42,7 @@ class OrdersController extends AppController
 
         $email = $this->Session->read('Order.email');
         $postalCode = $this->Session->read('Address.postalCode'); 
-debug($email); debug($postalCode);
+
         if($this->request->is('post')){
             $data = $this->request->data;
             $email = $data['Order']['email'];
