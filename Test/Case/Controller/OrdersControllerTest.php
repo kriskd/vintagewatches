@@ -128,11 +128,16 @@ class OrdersControllerTest extends ControllerTestCase {
 
         $result = $this->testAction(
             '/orders/checkout',
-            array('data' => $order, 'method' => 'post')
+            array(
+                'data' => $order, 
+                'method' => 'post',
+                'return' => 'vars', 
+            )
         );
-        debug(CakeSession::read('Order.email'));
-        debug(CakeSession::read('Address.postalCode'));
-        //debug($result); exit;
+        debug(CakeSession::read('Order'));
+        //debug(CakeSession::read('Order.email'));
+        //debug(CakeSession::read('Address.postalCode'));
+        debug($result); exit;
 	}
 
 /**
