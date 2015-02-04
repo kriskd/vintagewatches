@@ -30,7 +30,7 @@ class OrdersControllerTest extends ControllerTestCase {
 		'app.state',
 		'app.province',
 		'app.country',
-		//'app.page',
+		'app.page',
 		//'app.content'
 	);
 
@@ -102,7 +102,7 @@ class OrdersControllerTest extends ControllerTestCase {
             ->will($this->returnValue(1));
         $Orders->Cart->expects($this->any())
             ->method('cartItemIds')
-            ->will($this->returnValue(array(1)));
+            ->will($this->returnValue(array(3)));
         $Orders->Stripe->expects($this->any())
             ->method('charge')
             ->will($this->returnValue(array(
@@ -111,13 +111,16 @@ class OrdersControllerTest extends ControllerTestCase {
                 'stripe_last4' => '4242',
                 'stripe_zip_check' => 'pass',
                 'stripe_cvc_check' => 'pass',
-                'stripe_amount' => '18300', // Bogus number for now
+                'stripe_amount' => '18300',
             )));
 
         $result = $this->testAction(
             '/orders/checkout',
             array('data' => $order, 'method' => 'post')
         );
+        debug(CakeSession::read('Order.email'));
+        debug(CakeSession::read('Address.postalCode'));
+        exit;
         //debug($result); exit;
 	}
 
