@@ -1,17 +1,9 @@
 <?php
-App::uses('MyTestFixture', 'Test/Fixture');
 /**
  * AddressFixture
  *
  */
-class AddressFixture extends MyTestFixture {
-
-/**
- * Import
- *
- * @var array
- */
-	public $import = array('model' => 'Address', 'records' => true, 'connection' => 'development');
+class AddressFixture extends CakeTestFixture {
 
 /**
  * Fields
@@ -37,5 +29,23 @@ class AddressFixture extends MyTestFixture {
 		),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
 	);
+
+    public $records = array(
+        array(
+            'id' => 1,
+            'class' => 'Order',
+            'foreign_id' => 1,
+            'type' =>'billing',
+            'firstName' => 'Peter',
+            'lastName' => 'Harris',
+            'company' => '',
+            'address1' => '2042 Matthews Street',
+            'address2' => '',
+            'city' => 'Peoria',
+            'state' => 'IL',
+            'postalCode' => '61602',
+            'country' => 'US',
+        )
+    );
 
 }
