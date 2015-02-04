@@ -3,6 +3,7 @@ App::uses('OrdersController', 'Controller');
 App::uses('CakeRequest', 'Network');
 App::uses('ComponentCollection', 'Controller');
 App::uses('StripeComponent', 'Stripe.Controller/Component');
+App::uses('SessionComponent', 'Controller/Component');
 
 /**
  * OrdersController Test Case
@@ -40,7 +41,17 @@ class OrdersControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testIndex() {
-		$this->markTestIncomplete('testIndex not implemented.');
+        $this->ComponentCollection = new ComponentCollection();
+        $Session = new SessionComponent($this->ComponentCollection);
+
+        $Session->write('Order.email', 'PeterRHarris@teleworm.us');
+        $Session->write('Address.postalCode', '61602');
+        $results = $this->testAction('/orders', array(
+            'method' => 'GET',
+            'return' => 'vars',
+        ));
+        $this->assertEquals($results['orders'][0]['Order']['email'], $Session->read('Order.email'));
+        $this->assertEquals($results['orders'][0]['Address'][0]['postalCode'], $Session->read('Address.postalCode'));
 	}
 
 /**
@@ -92,6 +103,7 @@ class OrdersControllerTest extends ControllerTestCase {
                 'Session',
                 'Cart' => array('cartEmpty', 'cartItemCount', 'cartItemIds'),
                 'Stripe.Stripe' => array('charge'),
+                'Session',
             )
         ));
         $Orders->Cart->expects($this->any())
@@ -120,7 +132,6 @@ class OrdersControllerTest extends ControllerTestCase {
         );
         debug(CakeSession::read('Order.email'));
         debug(CakeSession::read('Address.postalCode'));
-        exit;
         //debug($result); exit;
 	}
 
