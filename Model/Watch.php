@@ -149,8 +149,8 @@ class Watch extends AppModel {
 
         if ($watch['Watch']['active'] == 1 && !$watch['Watch']['order_id']) return $watch;
 
-        $email = CakeSession::check('Order.email') ? CakeSession::read('Order.email') : '';
-        $postalCode = CakeSession::check('Address.postalCode') ? CakeSession::read('Address.postalCode') : '';
+        $email = CakeSession::check('Watch.Order.email') ? CakeSession::read('Watch.Order.email') : '';
+        $postalCode = CakeSession::check('Watch.Address.postalCode') ? CakeSession::read('Watch.Address.postalCode') : '';
 
         if (isset($watch['Order']['email']) && $watch['Order']['email'] == $email && isset($watch['Order']['Address']) && $watch['Order']['Address'][0]['postalCode'] == $postalCode) return $watch;
 

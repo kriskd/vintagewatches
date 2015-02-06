@@ -35,13 +35,13 @@ class OrdersController extends AppController
      */
     public function index($reset = false) {
         if ($reset == true) {
-            $this->Session->delete('Order');
-            $this->Session->delete('Address');
+            $this->Session->delete('Watch.Order');
+            $this->Session->delete('Watch.Address');
             $this->redirect(array('action' => 'index'));
         }
 
-        $email = $this->Session->read('Order.email');
-        $postalCode = $this->Session->read('Address.postalCode'); 
+        $email = $this->Session->read('Watch.Order.email');
+        $postalCode = $this->Session->read('Watch.Address.postalCode'); 
 
         if($this->request->is('post')){
             $data = $this->request->data;
@@ -53,8 +53,8 @@ class OrdersController extends AppController
                     'danger', array('class' => 'alert alert-error'));
             }
 
-            $this->Session->write('Order.email', $email);
-            $this->Session->write('Address.postalCode', $postalCode);
+            $this->Session->write('Watch.Order.email', $email);
+            $this->Session->write('Watch.Address.postalCode', $postalCode);
         }
 
         $options = $this->Order->getCustomerOrderOptions($email, $postalCode); 
@@ -77,8 +77,8 @@ class OrdersController extends AppController
     }
 
     public function view($id = null) {
-        $email = $this->Session->read('Order.email');
-        $postalCode = $this->Session->read('Address.postalCode');
+        $email = $this->Session->read('Watch.Order.email');
+        $postalCode = $this->Session->read('Watch.Address.postalCode');
 
         if (empty($email) || empty($postalCode) || empty($id)) {
             $this->redirect(array('action' => 'index'));
@@ -201,11 +201,11 @@ class OrdersController extends AppController
                     $order = $this->Order->getOrder($order_id); 
                     // Put order email and billing postal into session
                     $email = $order['Order']['email'];
-                    $this->Session->write('Order.email', $email);
+                    $this->Session->write('Watch.Order.email', $email);
                     $address = Hash::extract($order, 'Address.{n}[type=billing]');
                     $address = current($address);
                     $postalCode = $address['postalCode']; 
-                    $this->Session->write('Address.postalCode', $postalCode);
+                    $this->Session->write('Watch.Address.postalCode', $postalCode);
                     $this->emailOrder($order);
                     $title = 'Thank You For Your Order';
                     $this->set(compact('order', 'title'));   
