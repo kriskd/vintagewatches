@@ -44,14 +44,14 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->ComponentCollection = new ComponentCollection();
         $Session = new SessionComponent($this->ComponentCollection);
 
-        $Session->write('Order.email', 'PeterRHarris@teleworm.us');
-        $Session->write('Address.postalCode', '61602');
+        $Session->write('Watch.Order.email', 'PeterRHarris@teleworm.us');
+        $Session->write('Watch.Address.postalCode', '61602');
         $results = $this->testAction('/orders', array(
             'method' => 'GET',
             'return' => 'vars',
         ));
-        $this->assertEquals($results['orders'][0]['Order']['email'], $Session->read('Order.email'));
-        $this->assertEquals($results['orders'][0]['Address'][0]['postalCode'], $Session->read('Address.postalCode'));
+        $this->assertEquals($results['orders'][0]['Order']['email'], $Session->read('Watch.Order.email'));
+        $this->assertEquals($results['orders'][0]['Address'][0]['postalCode'], $Session->read('Watch.Address.postalCode'));
 	}
 
 /**
@@ -134,10 +134,6 @@ class OrdersControllerTest extends ControllerTestCase {
                 'return' => 'vars', 
             )
         );
-        debug(CakeSession::read('Order'));
-        //debug(CakeSession::read('Order.email'));
-        //debug(CakeSession::read('Address.postalCode'));
-        debug($result); exit;
 	}
 
 /**
