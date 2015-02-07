@@ -100,16 +100,25 @@ class WatchesController extends AppController {
 
     /**
      * Get a watch on customer's order
+     * @param $id int Id of the watch to get
      */ 
     public function order($id) {
         if (empty($id)) {
 			$this->redirect(array('controller' => 'pages', 'action' => 'home', 'display'));
         }
 
-        $watch = $this->Watch->getWatch($id, true);
+        $email = $this->Session->check('Watch.Order.email') ? $this->Session->read('Watch.Order.email') : '';
+        $postalCode = $this->Session->check('Watch.Address.postalCode') ? $this->Session->read('Watch.Address.postalCode') : ''; 
+
+        if (empty($email) || empty($postalCode)) {
+            $this->Session->setFlash('Please enter your email and billing postal code to view this watch.', 'info');
+			$this->redirect(array('controller' => 'orders'));
+        }
+
+        $watch = $this->Watch->getWatch($id, $email, $postalCode);
 
         if (!$watch) {
-            $this->Session->setFlash('Please enter your email and billing postal code to view this watch.', 'info');
+            $this->Session->setFlash('This watch was not found on any of your orders.', 'info');
 			$this->redirect(array('controller' => 'orders'));
         }
 

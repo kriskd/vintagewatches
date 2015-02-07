@@ -123,15 +123,17 @@ class Watch extends AppModel {
     /**
      * Get watch for display.  Will return watch if active and no order
      * or watch belongs to a customer.
+     * If params include $email and $postalCode, include those in find contain
      * @param $id ID of the watch
-     * @param $verify_order Include the Order and Address in the Watch contain in order to verify user email and billing postalCode 
+     * @param $email string Customer's email
+     * @param $postalCode int Customer's billing postal code
      */
-    public function getWatch($id, $verify_order = false) {
+    public function getWatch($id, $email = '', $postalCode = '') {
         $contain = [
             'Image',
             'Brand',
         ];
-        if ($verify_order) {
+        if (!empty($email) && !empty($postalCode)) {
             $contain['Order'] = [
                 'Address' => [
                     'conditions' => [
@@ -148,9 +150,6 @@ class Watch extends AppModel {
         ));
 
         if ($watch['Watch']['active'] == 1 && !$watch['Watch']['order_id']) return $watch;
-
-        $email = CakeSession::check('Watch.Order.email') ? CakeSession::read('Watch.Order.email') : '';
-        $postalCode = CakeSession::check('Watch.Address.postalCode') ? CakeSession::read('Watch.Address.postalCode') : '';
 
         if (isset($watch['Order']['email']) && $watch['Order']['email'] == $email && isset($watch['Order']['Address']) && $watch['Order']['Address'][0]['postalCode'] == $postalCode) return $watch;
 
