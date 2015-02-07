@@ -111,7 +111,7 @@ class WatchesController extends AppController {
         $postalCode = $this->Session->check('Watch.Address.postalCode') ? $this->Session->read('Watch.Address.postalCode') : ''; 
 
         if (empty($email) || empty($postalCode)) {
-            $this->Session->setFlash('Please enter your email and billing postal code to view this watch.', 'info');
+            $this->Session->setFlash('Please enter your email and billing postal code to view your orders.', 'info');
 			$this->redirect(array('controller' => 'orders'));
         }
 
