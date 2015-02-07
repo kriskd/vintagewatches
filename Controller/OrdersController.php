@@ -52,9 +52,6 @@ class OrdersController extends AppController
                 $this->Session->setFlash('Email and postal code are required to search for orders.',
                     'danger', array('class' => 'alert alert-error'));
             }
-
-            $this->Session->write('Watch.Order.email', $email);
-            $this->Session->write('Watch.Address.postalCode', $postalCode);
         }
 
         $options = $this->Order->getCustomerOrderOptions($email, $postalCode); 
@@ -63,6 +60,8 @@ class OrdersController extends AppController
 
         if (!empty($orders)) {
             $this->set('orders', $orders);
+            $this->Session->write('Watch.Order.email', $email);
+            $this->Session->write('Watch.Address.postalCode', $postalCode);
         }
 
         //Set flash message if we have an email and postalCode but no orders
