@@ -159,7 +159,7 @@ class OrdersControllerTest extends ControllerTestCase {
  *
  * @return void
  */
-	public function xtestTotalCart() {
+	public function testTotalCart() {
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $query = array(
             'data' => array(
@@ -179,7 +179,6 @@ class OrdersControllerTest extends ControllerTestCase {
 
         $Orders = $this->generate('Orders', array(
             'components' => array(
-                'RequestHandler' => array(),
                 'Cart' => array('getSubTotal', 'couponAmount')
             )
         ));
@@ -196,7 +195,7 @@ class OrdersControllerTest extends ControllerTestCase {
 
         $result = $this->testAction($url, $options);
         unset($_SERVER['HTTP_X_REQUESTED_WITH']);
-        $this->assertEquals($result['data']['total'], 348);        
+        $this->assertEquals($result['total'], 348);        
 	}
 
 /**
