@@ -48,7 +48,7 @@ class WatchFixture extends CakeTestFixture {
         $this->records = array(
             array(
                 'id' => '1',
-                'order_id' => '7',
+                'order_id' => '1',
                 'brand_id' => '16',
                 'stockId' => rand(1000, 9999),
                 'price' => '695.00',

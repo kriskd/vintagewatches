@@ -22,10 +22,21 @@
     <?php foreach($order['Watch'] as $watch): ?>
         <tr style="padding: 5px">
             <td>
-                <?php echo $this->Html->thumbPrimary($watch, array('fullBase' => true)); ?>
+                <?php echo $this->Html->thumbPrimary($watch, array(
+                    'fullBase' => true,
+                    'url' => array(
+                        'controller' => 'watches',
+                        'action' => 'order', $watch['id'],
+                        'full_base' => true,
+                    ),
+                )); ?>
             </td>
             <td><?php echo $watch['stockId']; ?></td>
-            <td><?php echo $watch['name']; ?></td>
+            <td><?php echo $this->Html->link($watch['name'], array(
+                'controller' => 'watches',
+                'action' => 'order', $watch['id'],
+                'full_base' => true,
+            )); ?></td>
             <td style="text-align: right"><?php echo $this->Number->currency($watch['price'], 'USD'); ?></td>
         </tr>
     <?php endforeach; ?>

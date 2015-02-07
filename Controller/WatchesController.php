@@ -83,29 +83,50 @@ class WatchesController extends AppController {
  * @return void
  */
 	public function view($id = null) {
-		if (!$this->Watch->sellable($id)) {
+        if (empty($id)) {
+			$this->redirect(array('controller' => 'pages', 'action' => 'home', 'display'));
+        }
+
+        $watch = $this->Watch->getWatch($id);
+
+        if (!$watch) {
             $this->Session->setFlash('This watch is not available.', 'info');
 			$this->redirect(array('controller' => 'pages', 'action' => 'home', 'display'));
-		}
-		$options = array(
-				'conditions' => array(
-					'Watch.' . $this->Watch->primaryKey => $id
-				),
-				'contain' => array(
-					'Image',
-					'Brand' => array(
-					    'fields' => array(
-						'id', 'name'
-					    )
-					)
-				)
-			);
-		$watch = $this->Watch->find('first', $options);
+        }
+
 		$this->set('watch', $watch);
-		
 		$this->set(array('title' => $watch['Watch']['name']));
 	}
-    
+
+    /**
+     * Get a watch on customer's order
+     * @param $id int Id of the watch to get
+     */ 
+    public function order($id) {
+        if (empty($id)) {
+			$this->redirect(array('controller' => 'pages', 'action' => 'home', 'display'));
+        }
+
+        $email = $this->Session->check('Watch.Order.email') ? $this->Session->read('Watch.Order.email') : '';
+        $postalCode = $this->Session->check('Watch.Address.postalCode') ? $this->Session->read('Watch.Address.postalCode') : ''; 
+
+        if (empty($email) || empty($postalCode)) {
+            $this->Session->setFlash('Please enter your email and billing postal code to view your orders.', 'info');
+			$this->redirect(array('controller' => 'orders'));
+        }
+
+        $watch = $this->Watch->getWatch($id, $email, $postalCode);
+
+        if (!$watch) {
+            $this->Session->setFlash('This watch was not found on any of your orders.', 'info');
+			$this->redirect(array('controller' => 'orders'));
+        }
+
+		$this->set('watch', $watch);
+        $this->render('view');
+		$this->set(array('title' => $watch['Watch']['name']));
+    }
+
     public function xml()
     {
         App::import('Vendor', 'zeroasterisk/CakePHP-ArrayToXml-Lib/libs/array_to_xml');

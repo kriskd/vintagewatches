@@ -35,13 +35,13 @@ class OrdersController extends AppController
      */
     public function index($reset = false) {
         if ($reset == true) {
-            $this->Session->delete('Order');
-            $this->Session->delete('Address');
+            $this->Session->delete('Watch.Order');
+            $this->Session->delete('Watch.Address');
             $this->redirect(array('action' => 'index'));
         }
 
-        $email = $this->Session->read('Order.email');
-        $postalCode = $this->Session->read('Address.postalCode'); 
+        $email = $this->Session->read('Watch.Order.email');
+        $postalCode = $this->Session->read('Watch.Address.postalCode'); 
 
         if($this->request->is('post')){
             $data = $this->request->data;
@@ -52,9 +52,6 @@ class OrdersController extends AppController
                 $this->Session->setFlash('Email and postal code are required to search for orders.',
                     'danger', array('class' => 'alert alert-error'));
             }
-
-            $this->Session->write('Order.email', $email);
-            $this->Session->write('Address.postalCode', $postalCode);
         }
 
         $options = $this->Order->getCustomerOrderOptions($email, $postalCode); 
@@ -63,6 +60,12 @@ class OrdersController extends AppController
 
         if (!empty($orders)) {
             $this->set('orders', $orders);
+            if (!$this->Session->check('Watch.Order.email')) {
+                $this->Session->write('Watch.Order.email', $email);
+            }
+            if (!$this->Session->check('Watch.Address.postalCode')) {
+                $this->Session->write('Watch.Address.postalCode', $postalCode);
+            }
         }
 
         //Set flash message if we have an email and postalCode but no orders
@@ -77,8 +80,8 @@ class OrdersController extends AppController
     }
 
     public function view($id = null) {
-        $email = $this->Session->read('Order.email');
-        $postalCode = $this->Session->read('Address.postalCode');
+        $email = $this->Session->read('Watch.Order.email');
+        $postalCode = $this->Session->read('Watch.Address.postalCode');
 
         if (empty($email) || empty($postalCode) || empty($id)) {
             $this->redirect(array('action' => 'index'));
@@ -199,6 +202,13 @@ class OrdersController extends AppController
 
                     $this->Cart->emptyCart();
                     $order = $this->Order->getOrder($order_id); 
+                    // Put order email and billing postal into session
+                    $email = $order['Order']['email'];
+                    $this->Session->write('Watch.Order.email', $email);
+                    $address = Hash::extract($order, 'Address.{n}[type=billing]');
+                    $address = current($address);
+                    $postalCode = $address['postalCode']; 
+                    $this->Session->write('Watch.Address.postalCode', $postalCode);
                     $this->emailOrder($order);
                     $title = 'Thank You For Your Order';
                     $this->set(compact('order', 'title'));   
@@ -645,35 +655,4 @@ class OrdersController extends AppController
         return;
     }
 
-    /**
-     * Proof of concept for address validation
-     */
-    /*public function test()
-    {
-    if($this->request->is('post')){
-        $data = $this->request->data; 
-        $addresses = $data['Address'];
-        foreach($addresses as $type => $item){ 
-        $address = $item;
-        $address['type'] = $type;
-        $addressesToSave[] = $address;
-        } 
-
-        $this->Address->set($addressesToSave);
-        //Grab the form data because the save attempt munges it
-        $data = $this->Address->data;
-        if($this->Address->saveMany($addressesToSave)){
-        $this->Session->setFlash('valid');
-        }  
-        else{
-        $errors = $this->Address->validationErrors;
-        $fixErrors['billing'] = $errors[0];
-        if(isset($errors[1])){
-            $fixErrors['shipping'] = $errors[1];
-        }
-        $this->Address->validationErrors = $fixErrors;
-        $this->Address->data = $data;
-        }
-    }
-    }*/
 }

@@ -19,15 +19,20 @@
         <div class="row watch">
             <div class="image col-lg-4 col-md-4 col-sm-4 col-xs-4">
                 <?php echo $this->Html->thumbPrimary($watch, array(
-                                                                    'class' => 'img-responsive'
-                                                                )
-                                                          ); ?>
+                                                                    'class' => 'img-responsive',
+                                                                    'url' => array(
+                                                                        'controller' => 'watches',
+                                                                        'action' => 'order', $watch['id'])
+                                                                    )); ?>
             </div>
             <div class="text-center col-lg-2 col-md-2 col-sm-2 col-xs-2">
                 <?php echo h($watch['stockId']); ?>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                <?php echo $watch['name']; ?>
+                <?php echo $this->Html->link($watch['name'], array(
+                    'controller' => 'watches',
+                    'action' => 'order', $watch['id'],
+                )); ?>
             </div>
             <div class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
                 <?php echo h($this->Number->currency($watch['price'], 'USD')); ?>
