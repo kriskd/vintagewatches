@@ -4,6 +4,7 @@ App::uses('CakeRequest', 'Network');
 App::uses('ComponentCollection', 'Controller');
 App::uses('StripeComponent', 'Stripe.Controller/Component');
 App::uses('SessionComponent', 'Controller/Component');
+App::uses('Order', 'Model');
 
 /**
  * OrdersController Test Case
@@ -34,6 +35,11 @@ class OrdersControllerTest extends ControllerTestCase {
 		'app.page',
 		//'app.content'
 	);
+
+    public function setUp() {
+        parent::setUp();
+        $this->Order = ClassRegistry::init('Order');
+    }
 
 /**
  * testIndex method
@@ -126,7 +132,7 @@ class OrdersControllerTest extends ControllerTestCase {
                 'stripe_amount' => '18300',
             )));
 
-        $result = $this->testAction(
+        $this->testAction(
             '/orders/checkout',
             array(
                 'data' => $order, 
@@ -134,6 +140,16 @@ class OrdersControllerTest extends ControllerTestCase {
                 'return' => 'vars', 
             )
         );
+        
+        $order = $this->Order->find('first', array(
+            'order' => array(
+                'Order.created' => 'DESC',
+            )
+        ));
+        
+        $this->assertEquals($order['Order']['email'], 'SandraPIrvin@armyspy.com');        
+        $this->assertEquals($order['Payment']['stripe_id'], 'ch_5dBkC3pJMgqjkD');
+        $this->assertEquals($order['Watch'][0]['id'], 3);
 	}
 
 /**
@@ -204,7 +220,18 @@ class OrdersControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testGetAddress() {
-		$this->markTestIncomplete('testGetAddress not implemented.');
+        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        $query = array(
+            'country' => '',
+            'shipping' => 8,
+        );
+        $url = Router::url(array('controller' => 'orders', 'action' => 'getAddress', '?' => $query));
+        $options = array(
+            'return' => 'vars'
+        );
+
+        $result = $this->testAction($url, $options);
+        //debug($result); exit;
 	}
 
 /**
