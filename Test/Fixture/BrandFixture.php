@@ -10,7 +10,7 @@ class BrandFixture extends CakeTestFixture {
  *
  * @var array
  */
-	public $import = array('model' => 'Brand', 'records' => true, 'connection' => 'development');
+	public $import = array('records' => true);
 
 /**
  * Fields

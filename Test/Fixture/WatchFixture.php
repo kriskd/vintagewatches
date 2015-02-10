@@ -10,7 +10,7 @@ class WatchFixture extends CakeTestFixture {
  *
  * @var array
  */
-	public $import = array('connection' => 'development');
+	public $import = array('records' => true);
 
 /**
  * Fields
