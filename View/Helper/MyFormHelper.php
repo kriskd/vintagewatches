@@ -70,60 +70,29 @@ class MyFormHelper extends FormHelper
 
         switch ($country){
             case 'us':
-                $this->nameToOptionsMap['state'] = array(
-                    'label' => 'State',
-                    'stripe' => 'address_state',
-                    'class' => 'form-control',
-                    'options' => $data['statesProvinces']['states'],
-                    'empty' => 'Choose One',
-                 );
-                $this->nameToOptionsMap['postalCode'] = array(
-                    'label' => 'Zip Code',
-                    'stripe' => 'address_zip',
-                    'class' => 'form-control',
-                    'size' => '5',
-                );
-                $this->nameToOptionsMap['country'] = array(
-                    'type' => 'hidden', 
-                    'stripe' => 'address_country', 
-                    'value' => 'US'
-                );
+                $this->_getState($data['statesProvinces']['states'], 'State', array('form-control'));
+                $this->_getPostalCode('Zip Code', array('form-control'));
+                $this->_getCountry('US');
                 break;
             case 'ca':
-                $this->nameToOptionsMap['state'] = array(
-                    'label' => 'Province',
-                    'stripe' => 'address_state',
-                    'class' => 'form-control',
-                    'options' => $data['statesProvinces']['provinces'],
-                    'empty' => 'Choose One',
-                 );
-                $this->nameToOptionsMap['postalCode'] = array(
-                    'label' => 'Postal Code',
-                    'stripe' => 'address_zip',
-                    'class' => 'form-control',
-                    'size' => '7',
-                );
-                $this->nameToOptionsMap['country'] = array(
-                    'type' => 'hidden', 
-                    'stripe' => 'address_country', 
-                    'value' => 'CA'
-                );
+                $this->_getState($data['statesProvinces']['provinces'], 'Province', array('form-control'));
+                $this->_getPostalCode('Postal Code', array('form-control'));
+                $this->_getCountry('CA');
                 break;
             case 'us-ca':
                 $options = array('U.S.' => $data['statesProvinces']['states'], 'Canada' => $data['statesProvinces']['provinces']);
-                $this->_getCommonFields($options);
+                $this->_getState($options);
+                $this->_getPostalCode();
+                $this->_getCountry();
                 break;
             case 'ca-us':
                 $options = array('Canada' => $data['statesProvinces']['provinces'], 'U.S.' => $data['statesProvinces']['states']);
-                $this->_getCommonFields($options);
+                $this->_getState($options);
+                $this->_getPostalCode();
+                $this->_getCountry();
                 break;
             case 'other':
-                $this->nameToOptionsMap['postalCode'] = array(
-                    'label' => 'Postal Code',
-                    'stripe' => 'address_zip',
-                    'class' => 'form-control',
-                    'size' => '7',
-                );
+                $this->_getPostalCode('Postal Code');
                 if ($stripe == true) {
                     $tooltip = $this->Html->link('<i class="glyphicon glyphicon-question-sign"></i>', '#', array(
                             'title' => 'Enter any portion of the country name and select your country from the options that appear.',
@@ -315,17 +284,29 @@ class MyFormHelper extends FormHelper
         return $years;
     }
     
-    protected function _getCommonFields($options)
-    {
-        $this->nameToOptionsMap['state'] = array('label' => 'State or Province',
-                                                 'stripe' => 'address_state',
-                                                 'options' => $options,
-                                                 'empty' => 'Choose One',
-                                                 'class' => 'us-ca form-control');
-        $this->nameToOptionsMap['postalCode'] = array('label' => 'Zip/Postal Code',
-                                                      'stripe' => 'address_zip',
-                                                      'class' => 'form-control',
-                                                      );
-        $this->nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country');
+    protected function _getState($options, $label = 'State or Province', $class = array('us-ca', 'form-control')) {
+        $this->nameToOptionsMap['state'] = array(
+            'label' => $label, 
+            'stripe' => 'address_state',
+            'options' => $options,
+            'empty' => 'Choose One',
+            'class' => implode(' ', $class), 
+        );
+    }
+
+    protected function _getPostalCode($label = 'Zip/Postal Code', $class = array('form-control')) {
+        $this->nameToOptionsMap['postalCode'] = array(
+            'label' => $label, 
+            'stripe' => 'address_zip',
+            'class' => implode(' ', $class), 
+        );
+    }
+
+    protected function _getCountry($value = '') {
+        $this->nameToOptionsMap['country'] = array(
+            'type' => 'hidden', 
+            'stripe' => 'address_country',
+            'value' => $value,
+        );
     }
 }
