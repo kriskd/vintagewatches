@@ -38,92 +38,101 @@ class MyFormHelper extends FormHelper
     
     protected $nameToOptionsMap;
     
-    protected function setNameToOptionsMap()
-    {
-        $this->nameToOptionsMap = array('firstName' => array('label' => 'First Name'),
-                                  'lastName' => array('label' => 'Last Name', 'stripe' => 'name'),
-                                  'company' => array('label' => 'Company'),
-                                  'address1' => array('label' => 'Address 1', 'stripe' => 'address_line1'),
-                                  'address2' => array('label' => 'Address 2', 'stripe' =>'address_line2'),
-                                  'city' => array('label' => 'City', 'stripe' => 'address_city'),
-                                 );
+    protected function setNameToOptionsMap() {
+        $this->nameToOptionsMap = array(
+            'firstName' => array('label' => 'First Name'),
+            'lastName' => array('label' => 'Last Name', 'stripe' => 'name'),
+            'company' => array('label' => 'Company'),
+            'address1' => array('label' => 'Address 1', 'stripe' => 'address_line1'),
+            'address2' => array('label' => 'Address 2', 'stripe' =>'address_line2'),
+            'city' => array('label' => 'City', 'stripe' => 'address_city'),
+        );
     }
     
     /**
      * @param enum $type 'billing or 'shipping'
-     * @param array $data Form data: country, statesProvinces, values, errors
+     * @param array $data Form data: country, statesProvinces, errors
      */
-    public function addressForm($type, $data, $stripe = false, $required = false)
-    {   
+    public function addressForm($type, $data, $stripe = false, $required = false) {   
         $country = $data['country']; 
-        $statesProvinces = $data['statesProvinces'];
-        $values = isset($data['values'][$type]) ? $data['values'][$type] : null; 
         $errors = isset($data['errors'][$type]) ? $data['errors'][$type] : null; 
         
         $this->setNameToOptionsMap();
         $requiredAttrs = array('firstName', 'lastName', 'address1', 'city', 'state', 'postalCode', 'countryName', 'country');
-        $this->inputDefaults(array('label' => array('class' => 'control-label col-xs-12 col-sm-4 col-md-4 col-lg-4'),
-                                    'div' => 'form-group row',
-                                    'class' => 'form-control',
-                                    'between' => '<div class="clearfix"><div class="col-xs-11 col-sm-7 col-md-7 col-lg-7">',
-                                    'after' => '</div></div>'
-                                    )
-                            );
+        $this->inputDefaults(array(
+                'label' => array('class' => 'control-label col-xs-12 col-sm-4 col-md-4 col-lg-4'),
+                'div' => 'form-group row',
+                'class' => 'form-control',
+                'between' => '<div class="clearfix"><div class="col-xs-11 col-sm-7 col-md-7 col-lg-7">',
+                'after' => '</div></div>'
+            )
+        );
 
-        $states = $statesProvinces['states'];
-        $provinces = $statesProvinces['provinces'];
         switch ($country){
             case 'us':
-                $this->nameToOptionsMap['state'] = array('label' => 'State',
-                                                         'stripe' => 'address_state',
-                                                         'class' => 'form-control',
-                                                         'options' => $states,
-                                                         'empty' => 'Choose One',
-                                                         );
-                $this->nameToOptionsMap['postalCode'] = array('label' => 'Zip Code',
-                                                              'stripe' => 'address_zip',
-                                                              'class' => 'form-control',
-                                                              'size' => '5',
-                                                              );
-                $this->nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => 'US');
+                $this->nameToOptionsMap['state'] = array(
+                    'label' => 'State',
+                    'stripe' => 'address_state',
+                    'class' => 'form-control',
+                    'options' => $data['statesProvinces']['states'],
+                    'empty' => 'Choose One',
+                 );
+                $this->nameToOptionsMap['postalCode'] = array(
+                    'label' => 'Zip Code',
+                    'stripe' => 'address_zip',
+                    'class' => 'form-control',
+                    'size' => '5',
+                );
+                $this->nameToOptionsMap['country'] = array(
+                    'type' => 'hidden', 
+                    'stripe' => 'address_country', 
+                    'value' => 'US'
+                );
                 break;
             case 'ca':
-                $this->nameToOptionsMap['state'] = array('label' => 'Province',
-                                                         'stripe' => 'address_state',
-                                                         'class' => 'form-control',
-                                                         'options' => $provinces,
-                                                         'empty' => 'Choose One',
-                                                         );
-                $this->nameToOptionsMap['postalCode'] = array('label' => 'Postal Code',
-                                                              'stripe' => 'address_zip',
-                                                              'class' => 'form-control',
-                                                              'size' => '7',
-                                                              );
-                $this->nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country', 'value' => 'CA');
+                $this->nameToOptionsMap['state'] = array(
+                    'label' => 'Province',
+                    'stripe' => 'address_state',
+                    'class' => 'form-control',
+                    'options' => $data['statesProvinces']['provinces'],
+                    'empty' => 'Choose One',
+                 );
+                $this->nameToOptionsMap['postalCode'] = array(
+                    'label' => 'Postal Code',
+                    'stripe' => 'address_zip',
+                    'class' => 'form-control',
+                    'size' => '7',
+                );
+                $this->nameToOptionsMap['country'] = array(
+                    'type' => 'hidden', 
+                    'stripe' => 'address_country', 
+                    'value' => 'CA'
+                );
                 break;
             case 'us-ca':
-                $options = array('U.S.' => $states, 'Canada' => $provinces);
+                $options = array('U.S.' => $data['statesProvinces']['states'], 'Canada' => $data['statesProvinces']['provinces']);
                 $this->_getCommonFields($options);
                 break;
             case 'ca-us':
-                $options = array('Canada' => $provinces, 'U.S.' => $states);
+                $options = array('Canada' => $data['statesProvinces']['provinces'], 'U.S.' => $data['statesProvinces']['states']);
                 $this->_getCommonFields($options);
                 break;
             case 'other':
-                $this->nameToOptionsMap['postalCode'] = array('label' => 'Postal Code',
-                                                              'stripe' => 'address_zip',
-                                                              'class' => 'form-control',
-                                                              'size' => '7',
-                                                              );
+                $this->nameToOptionsMap['postalCode'] = array(
+                    'label' => 'Postal Code',
+                    'stripe' => 'address_zip',
+                    'class' => 'form-control',
+                    'size' => '7',
+                );
                 if ($stripe == true) {
                     $tooltip = $this->Html->link('<i class="glyphicon glyphicon-question-sign"></i>', '#', array(
-                                                                    'title' => 'Enter any portion of the country name and select your country from the options that appear.',
-                                                                    'class' => 'launch-tooltip',
-                                                                    'data-toggle' => 'tooltip',
-                                                                    'data-placement' => 'top',
-                                                                    'escape' => false
-                                                                )
-                                               );
+                            'title' => 'Enter any portion of the country name and select your country from the options that appear.',
+                            'class' => 'launch-tooltip',
+                            'data-toggle' => 'tooltip',
+                            'data-placement' => 'top',
+                            'escape' => false
+                        )
+                    );
                     $this->nameToOptionsMap['countryName'] = array('label' => 'Country ' . $tooltip, 'placeholder' => 'Full Name, No Abbreviations.');
                 }
                 $this->nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country');
