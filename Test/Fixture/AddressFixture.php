@@ -1,9 +1,10 @@
 <?php
+App::uses('MyTestFixture', 'Test/Fixture');
 /**
  * AddressFixture
  *
  */
-class AddressFixture extends CakeTestFixture {
+class AddressFixture extends MyTestFixture {
 
 /**
  * Fields
