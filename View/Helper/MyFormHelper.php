@@ -70,30 +70,30 @@ class MyFormHelper extends FormHelper
 
         switch ($country){
             case 'us':
-                $this->_getState($data['statesProvinces']['states'], 'State', array('form-control'));
-                $this->_getPostalCode('Zip Code', array('form-control'));
-                $this->_getCountry('US');
+                $this->getState($data['statesProvinces']['states'], 'State', array('form-control'));
+                $this->getPostalCode('Zip Code', array('form-control'));
+                $this->getCountry('US');
                 break;
             case 'ca':
-                $this->_getState($data['statesProvinces']['provinces'], 'Province', array('form-control'));
-                $this->_getPostalCode('Postal Code', array('form-control'));
-                $this->_getCountry('CA');
+                $this->getState($data['statesProvinces']['provinces'], 'Province', array('form-control'));
+                $this->getPostalCode('Postal Code', array('form-control'));
+                $this->getCountry('CA');
                 break;
             case 'us-ca':
                 $options = array('U.S.' => $data['statesProvinces']['states'], 'Canada' => $data['statesProvinces']['provinces']);
-                $this->_getState($options);
-                $this->_getPostalCode();
-                $this->_getCountry();
+                $this->getState($options);
+                $this->getPostalCode();
+                $this->getCountry();
                 break;
             case 'ca-us':
                 $options = array('Canada' => $data['statesProvinces']['provinces'], 'U.S.' => $data['statesProvinces']['states']);
-                $this->_getState($options);
-                $this->_getPostalCode();
-                $this->_getCountry();
+                $this->getState($options);
+                $this->getPostalCode();
+                $this->getCountry();
                 break;
             case 'other':
-                $this->_getPostalCode('Postal Code');
-                if ($stripe == true) {
+                $this->getPostalCode('Postal Code');
+                if ($stripe) {
                     $tooltip = $this->Html->link('<i class="glyphicon glyphicon-question-sign"></i>', '#', array(
                             'title' => 'Enter any portion of the country name and select your country from the options that appear.',
                             'class' => 'launch-tooltip',
@@ -102,9 +102,12 @@ class MyFormHelper extends FormHelper
                             'escape' => false
                         )
                     );
-                    $this->nameToOptionsMap['countryName'] = array('label' => 'Country ' . $tooltip, 'placeholder' => 'Full Name, No Abbreviations.');
+                    $this->nameToOptionsMap['countryName'] = array(
+                        'label' => 'Country ' . $tooltip, 
+                        'placeholder' => 'Full Name, No Abbreviations.'
+                    );
                 }
-                $this->nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country');
+                $this->getCountry();
                 break;
         }
         
@@ -147,8 +150,7 @@ class MyFormHelper extends FormHelper
     /*
      * Pass in the Order, return a checkbox to delete the shipping address
      */
-    public function shippingDelete($order)
-    {
+    public function shippingDelete($order) {
         $shippingAddress = array_filter($order['Address'], function($item){
             return strcasecmp($item['type'], 'shipping')==0;
         });
@@ -158,8 +160,7 @@ class MyFormHelper extends FormHelper
         return $this->checkbox('delete_shipping_address', array('value' => $id, 'hiddenField' => false));
     }
     
-    public function ccd($payment_type = '')
-    {
+    public function ccd($payment_type = '') {
         $options = array(
                         'name' => false,
                         'data-stripe' => 'number',
@@ -184,28 +185,30 @@ class MyFormHelper extends FormHelper
         return $this->input('Card.number', $options);
     }
     
-    public function cvc($payment_type = '')
-    {
+    public function cvc($payment_type = '') {
         $options = array(
-                        'name' => false,
-                        'data-stripe' => 'cvc',
-                        'autocomplete' => 'off',
-                        'placeHolder' => 'CVC',
-                        'class' => 'card-cvc form-control',
-                        'label' => array('text' => 'CVC <a class="launch-tooltip"
-                                                    data-toggle="tooltip" data-placement="top"
-                                                    title="The CVC is the three-digit number
-                                                    that appears on the reverse side of your
-                                                    credit/debit card.">
-                                                    <span class="glyphicon glyphicon-question-sign"></span>
-                                                    </a>',
-                                         'class' => 'control-label col-xs-11 col-sm-4 col-md-4 col-lg-4'
-                                         ),
-                        'div' => array('class' => 'cvc-div input required'),
-                        'required' => 'required',
-                        'between' => '<div class="col-xs-11 col-sm-7 col-md-7 col-lg-7">',
-                        'after' => '</div>'
-                    );
+            'name' => false,
+            'data-stripe' => 'cvc',
+            'autocomplete' => 'off',
+            'placeHolder' => 'CVC',
+            'class' => 'card-cvc form-control',
+            'label' => array(
+                'text' => 'CVC <a class="launch-tooltip"
+                            data-toggle="tooltip" data-placement="top"
+                            title="The CVC is the three-digit number
+                            that appears on the reverse side of your
+                            credit/debit card.">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                            </a>',
+                             'class' => 'control-label col-xs-11 col-sm-4 col-md-4 col-lg-4'
+                 ),
+                 'div' => array(
+                     'class' => 'cvc-div input required'
+                 ),
+            'required' => 'required',
+            'between' => '<div class="col-xs-11 col-sm-7 col-md-7 col-lg-7">',
+            'after' => '</div>'
+        );
         
         switch ($payment_type) {
             case 'invoice':
@@ -216,8 +219,7 @@ class MyFormHelper extends FormHelper
         return $this->input('Card.cvc', $options);
     }
     
-    public function expy($payment_type = '')
-    {
+    public function expy($payment_type = '') {
         switch ($payment_type) {
             case 'invoice':
                 $div = 'col-xxs-6 col-xs-6 col-sm-6 col-md-6 col-lg-6';
@@ -255,8 +257,7 @@ class MyFormHelper extends FormHelper
     /**
      * Disable editing line item or shipping if invoice is paid.
      */
-    public function invoiceItem($fieldName, $options = array(), $invoice = array())
-    {
+    public function invoiceItem($fieldName, $options = array(), $invoice = array()) {
         if (isset($invoice['Payment']) && $invoice['Payment']['stripe_paid'] == 1) {
             $options['disabled'] = 'disabled';
         }
@@ -275,8 +276,7 @@ class MyFormHelper extends FormHelper
         return array_combine(range(1,12), $formatted);
     }
     
-    protected function _years()
-    {
+    protected function _years() {
         $year = date('Y'); 
         for($i=date('Y'); $i<=date('Y')+10; $i++){
             $years[$i] = $i;
@@ -284,7 +284,7 @@ class MyFormHelper extends FormHelper
         return $years;
     }
     
-    protected function _getState($options, $label = 'State or Province', $class = array('us-ca', 'form-control')) {
+    public function getState($options, $label = 'State or Province', $class = array('us-ca', 'form-control')) {
         $this->nameToOptionsMap['state'] = array(
             'label' => $label, 
             'stripe' => 'address_state',
@@ -294,7 +294,7 @@ class MyFormHelper extends FormHelper
         );
     }
 
-    protected function _getPostalCode($label = 'Zip/Postal Code', $class = array('form-control')) {
+    public function getPostalCode($label = 'Zip/Postal Code', $class = array('form-control')) {
         $this->nameToOptionsMap['postalCode'] = array(
             'label' => $label, 
             'stripe' => 'address_zip',
@@ -302,7 +302,7 @@ class MyFormHelper extends FormHelper
         );
     }
 
-    protected function _getCountry($value = '') {
+    public function getCountry($value = '') {
         $this->nameToOptionsMap['country'] = array(
             'type' => 'hidden', 
             'stripe' => 'address_country',
