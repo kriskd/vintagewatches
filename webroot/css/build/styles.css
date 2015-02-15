@@ -7757,6 +7757,7 @@ body.hide-fat-footer .container .content {
 }
 .container .content .checkout-form .payment-errors {
   display: none;
+  font-size: 95%;
 }
 .container .content .checkout-form .card-number-div {
   height: 52px;
