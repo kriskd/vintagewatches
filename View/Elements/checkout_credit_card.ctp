@@ -1,6 +1,6 @@
 <h3><small class="pull-right hidden-xxs"><span class="glyphicon glyphicon-arrow-right"></span> Enter Credit Card</small>Credit Card</h3>
 <div class="checkout-form">
-    <div class="payment-errors alert alert-error"></div>
+    <div class="payment-errors"></div>
     <?php echo $this->Form->ccd($payment_type); ?>
     <?php echo $this->Form->cvc($payment_type); ?>
     <div class="input select required">
