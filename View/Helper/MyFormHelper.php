@@ -88,7 +88,7 @@ class MyFormHelper extends FormHelper
             $this->getState($data['options'][$type], $data['labels'][$type]['region']);
             $this->getPostalCode($data['labels'][$type]['postal'], array('form-control'));
         }
-        $this->getCountry($data['country']);
+        $this->getCountry($country);
 
         $form = '';
         foreach($this->nameToOptionsMap as $name => $attrs){
