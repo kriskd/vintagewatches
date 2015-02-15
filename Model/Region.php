@@ -101,15 +101,15 @@ class Region extends AppModel {
         );
 
     public $labels = array(
-        'US' => array(
+        'us' => array(
             'region' => 'State', 
             'postal' => 'Zip Code',
         ),
-        'CA' => array(
+        'ca' => array(
             'region' => 'Province', 
             'postal' => 'Postal Code'
         ),
-        'OTHER' => array(
+        'other' => array(
             'region' => '', 
             'postal' => 'Postal Code'
         ),
@@ -128,6 +128,8 @@ class Region extends AppModel {
      *
      */
     public function options($country, $secondary = '') {
+        $country = strtoupper($country);
+        $secondary = strtoupper($secondary);
         $countries = array($country);
         $fields = ['abbreviation', 'name'];
 
@@ -142,6 +144,10 @@ class Region extends AppModel {
             ),
             'fields' => $fields,
         ));
+
+        if (empty($options)) {
+            return array();
+        }
 
         if (empty($secondary)) {
             return array('billing' => $options);
@@ -174,7 +180,7 @@ class Region extends AppModel {
         return array(
             'billing' => array(
                 'region' => 'State or Province', 
-                'postal' => 'Zip/Postal Code',
+                'postal' => strcasecmp($country, 'other') == 0 ? 'Postal Code' : 'Zip/Postal Code', 
             ),
             'shipping' => $this->labels[$country],
         );

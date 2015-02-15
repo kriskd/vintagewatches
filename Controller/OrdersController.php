@@ -328,8 +328,8 @@ class OrdersController extends AppController
     public function getAddress() {
         if($this->request->is('ajax')){
             $query = $this->request->query; 
-            $country = strtoupper($query['country']);
-            $countries = array_pad(explode('_', $country), 2, '');
+            $country = $query['country'];
+            $countries = explode('_', $country);
             list($country, $secondary) = $countries;
             $shipping = $query['shipping'];
             if ($shipping == 'billing') {
@@ -338,7 +338,6 @@ class OrdersController extends AppController
             
             $options = $this->Region->options($country, $secondary);
             $labels = $this->Region->labels($country, $secondary);
-            $country = empty($options) ? '' : $country;
             $data = compact('shipping', 'country', 'options', 'labels');
 
             //Address data and errors in the session
