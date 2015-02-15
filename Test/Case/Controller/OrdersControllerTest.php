@@ -146,8 +146,9 @@ class OrdersControllerTest extends ControllerTestCase {
                 'Order.created' => 'DESC',
             )
         ));
-        
+       
         $this->assertEquals($order['Order']['email'], 'SandraPIrvin@armyspy.com');        
+        $this->assertEquals($order['Address'][0]['country'], 'US');
         $this->assertEquals($order['Payment']['stripe_id'], 'ch_5dBkC3pJMgqjkD');
         $this->assertEquals($order['Watch'][0]['id'], 3);
 	}
@@ -222,8 +223,8 @@ class OrdersControllerTest extends ControllerTestCase {
 	public function testGetAddress() {
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $query = array(
-            'country' => '',
-            'shipping' => 8,
+            'country' => 'ca',
+            'shipping' => 'billing',
         );
         $url = Router::url(array('controller' => 'orders', 'action' => 'getAddress', '?' => $query));
         $options = array(
@@ -232,6 +233,7 @@ class OrdersControllerTest extends ControllerTestCase {
 
         $result = $this->testAction($url, $options);
         //debug($result); exit;
+        //exit;
 	}
 
 /**
