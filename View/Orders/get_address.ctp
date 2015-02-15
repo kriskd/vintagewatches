@@ -11,17 +11,12 @@
     <div class="address-form-billing"></div>
         <h5>Billing Address</h5>
         <div class="checkout-form">
-            <?php //Reassign $data to a different var since billing can be either US or Canada, ?>
-            <?php //Otherwise shipping options will be US and Canada ?>
-            <?php $billingData = $data; ?>
-            <?php //Billing for shipping to US or Canada can be US or Canada ?>
-            <?php $billingData['country'] = (strcasecmp($billingData['country'], 'us') == 0 ? 'us-ca' : (strcasecmp($billingData['country'], 'ca') == 0 ? 'ca-us' : $billingData['country'])); ?>
-            <?php echo $this->Form->addressForm('billing', $billingData, true, true); ?>
+            <?php echo $this->Form->addressForm('billing', $data, true, true); ?>
         </div>
     </div>
     <div class="address-form-shipping">
         <h5>Shipping Address</h5>
-        <?php if (strcasecmp($billingData['country'], 'other')==0): ?>
+        <?php if (strcasecmp($data['country'], 'other')==0): ?>
             <p class="country-ship-rule">
                 Orders must be shipped with in the same country as the billing
                 address. <?php echo $this->Html->link('Contact me', array(
@@ -33,7 +28,7 @@
         <?php endif; ?>
         <div class="checkout-form">
             <?php echo $this->Form->addressForm('shipping', $data, false, true); ?>
-            <?php if($data['country'] == 'other'): ?>
+            <?php if(strcasecmp($data['country'], 'other')==0): ?>
                 <div class="form-group">
                     <?php echo $this->Form->label('Address.shipping.' . $data['country'], 'Country', array('class' => 'control-label col-xs-12 col-sm-4 col-md-4 col-lg-4')); ?>
                     <div class="clearfix">

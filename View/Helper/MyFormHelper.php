@@ -68,49 +68,28 @@ class MyFormHelper extends FormHelper
             )
         );
 
-        switch ($country){
-            case 'us':
-                $this->getState($data['statesProvinces']['states'], 'State', array('form-control'));
-                $this->getPostalCode('Zip Code', array('form-control'));
-                $this->getCountry('US');
-                break;
-            case 'ca':
-                $this->getState($data['statesProvinces']['provinces'], 'Province', array('form-control'));
-                $this->getPostalCode('Postal Code', array('form-control'));
-                $this->getCountry('CA');
-                break;
-            case 'us-ca':
-                $options = array('U.S.' => $data['statesProvinces']['states'], 'Canada' => $data['statesProvinces']['provinces']);
-                $this->getState($options);
-                $this->getPostalCode();
-                $this->getCountry();
-                break;
-            case 'ca-us':
-                $options = array('Canada' => $data['statesProvinces']['provinces'], 'U.S.' => $data['statesProvinces']['states']);
-                $this->getState($options);
-                $this->getPostalCode();
-                $this->getCountry();
-                break;
-            case 'other':
-                $this->getPostalCode('Postal Code');
-                if ($stripe) {
-                    $tooltip = $this->Html->link('<i class="glyphicon glyphicon-question-sign"></i>', '#', array(
-                            'title' => 'Enter any portion of the country name and select your country from the options that appear.',
-                            'class' => 'launch-tooltip',
-                            'data-toggle' => 'tooltip',
-                            'data-placement' => 'top',
-                            'escape' => false
-                        )
-                    );
-                    $this->nameToOptionsMap['countryName'] = array(
-                        'label' => 'Country ' . $tooltip, 
-                        'placeholder' => 'Full Name, No Abbreviations.'
-                    );
-                }
-                $this->getCountry();
-                break;
+        if (strcasecmp($country, 'other')==0) {
+            $this->getPostalCode($data['labels'][$type]['postal']);
+            if ($stripe) {
+                $tooltip = $this->Html->link('<i class="glyphicon glyphicon-question-sign"></i>', '#', array(
+                        'title' => 'Enter any portion of the country name and select your country from the options that appear.',
+                        'class' => 'launch-tooltip',
+                        'data-toggle' => 'tooltip',
+                        'data-placement' => 'top',
+                        'escape' => false
+                    )
+                );
+                $this->nameToOptionsMap['countryName'] = array(
+                    'label' => 'Country ' . $tooltip, 
+                    'placeholder' => 'Full Name, No Abbreviations.'
+                );
+            }
+        } else {
+            $this->getState($data['options'][$type], $data['labels'][$type]['region']);
+            $this->getPostalCode($data['labels'][$type]['postal'], array('form-control'));
         }
-        
+        $this->getCountry($data['country']);
+
         $form = '';
         foreach($this->nameToOptionsMap as $name => $attrs){
             //Label

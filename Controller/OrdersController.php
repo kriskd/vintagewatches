@@ -3,7 +3,7 @@ App::uses('AppController', 'Controller');
 App::uses('Address', 'Model');
 class OrdersController extends AppController
 {
-    public $uses = array('Watch', 'Address', 'Order', 'State', 'Province', 'Country');
+    public $uses = array('Watch', 'Address', 'Order', 'State', 'Province', 'Region', 'Country');
 
     public $paginate = array(
         'limit' => 10,
@@ -325,14 +325,21 @@ class OrdersController extends AppController
     /**
      * Get address form based on country
      */
-    public function getAddress()
-    {
+    public function getAddress() {
         if($this->request->is('ajax')){
             $query = $this->request->query; 
-            $country = $query['country'];
+            $country = strtoupper($query['country']);
+            $countries = array_pad(explode('_', $country), 2, '');
+            list($country, $secondary) = $countries;
             $shipping = $query['shipping'];
-            $statesProvinces = array('states' => $this->State->getList(), 'provinces' => $this->Province->getList());
-            $data = compact('shipping', 'country', 'statesProvinces');
+            if ($shipping == 'billing') {
+                $secondary = '';                
+            }
+            
+            $options = $this->Region->options($country, $secondary);
+            $labels = $this->Region->labels($country, $secondary);
+            $country = empty($options) ? '' : $country;
+            $data = compact('shipping', 'country', 'options', 'labels');
 
             //Address data and errors in the session
             if($this->Session->check('Address') == true){
