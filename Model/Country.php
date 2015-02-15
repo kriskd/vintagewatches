@@ -282,5 +282,29 @@ class Country extends AppModel {
 	    array('abbreviation' => 'YE', 'name' => 'Yemen'),
 	    array('abbreviation' => 'ZM', 'name' => 'Zambia'),
 	    array('abbreviation' => 'ZW', 'name' => 'Zimbabwe'),
-            );
+    );
+
+    public $hasMany = array(
+        'Region' => array(
+            'className' => 'Region',
+            'order' => 'Region.name',
+            'foreignKey' => 'abbreviation',
+        )
+    );
+
+    /**
+     * @param $counties array of country codes
+     * @return array List of abbreviation/country
+     */
+    public function names($countries) {
+        return $this->find('list', array(
+            'fields' => array(
+                'abbreviation', 'name'
+            ),
+            'conditions' => array(
+                'abbreviation' => $countries, 
+            ),
+            'recursive' => -1,
+        ));
+    }
 }
