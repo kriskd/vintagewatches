@@ -51,10 +51,19 @@ class MyFormHelper extends FormHelper
     
     /**
      * @param enum $type 'billing or 'shipping'
-     * @param array $data Form data: country, statesProvinces, errors
+     * @param array $data Form data: 
+     *        - shipping: Either billing (billing/shipping are the same) or shipping (billing/shipping are different)
+     *        - country: us, ca or other 
+     *        - options: state options or empty
+     *        - labels: label for region and postal code fields
+     * @param bool $stripe A field that stripe API is using
+     * @param bool $required Field is required
+     * @return string The form HTML
      */
     public function addressForm($type, $data, $stripe = false, $required = false) {   
         $country = $data['country']; 
+        $regionOptions = $data['options'];
+        $labels = $data['labels'];
         $errors = isset($data['errors'][$type]) ? $data['errors'][$type] : null; 
         
         $this->setNameToOptionsMap();
@@ -68,27 +77,26 @@ class MyFormHelper extends FormHelper
             )
         );
 
-        if (strcasecmp($country, 'other')==0) {
-            $this->getPostalCode($data['labels'][$type]['postal']);
-            if ($stripe) {
-                $tooltip = $this->Html->link('<i class="glyphicon glyphicon-question-sign"></i>', '#', array(
-                        'title' => 'Enter any portion of the country name and select your country from the options that appear.',
-                        'class' => 'launch-tooltip',
-                        'data-toggle' => 'tooltip',
-                        'data-placement' => 'top',
-                        'escape' => false
-                    )
-                );
-                $this->nameToOptionsMap['countryName'] = array(
-                    'label' => 'Country ' . $tooltip, 
-                    'placeholder' => 'Full Name, No Abbreviations.'
-                );
-            }
-        } else {
-            $this->getState($data['options'][$type], $data['labels'][$type]['region']);
-            $this->getPostalCode($data['labels'][$type]['postal'], array('form-control'));
+        if (!empty($regionOptions)) {
+            $this->getState($regionOptions[$type], $labels[$type]['region']);
         }
+        $this->getPostalCode($labels[$type]['postal']);
         $this->getCountry($country);
+
+        if (strcasecmp($country, 'other')==0 && $stripe) {
+            $tooltip = $this->Html->link('<span class="glyphicon glyphicon-question-sign"></span>', '#', array(
+                    'title' => 'Enter any portion of the country name and select your country from the options that appear.',
+                    'class' => 'launch-tooltip',
+                    'data-toggle' => 'tooltip',
+                    'data-placement' => 'top',
+                    'escape' => false
+                )
+            );
+            $this->nameToOptionsMap['countryName'] = array(
+                'label' => 'Country ' . $tooltip, 
+                'placeholder' => 'Full Name, No Abbreviations.'
+            );
+        } 
 
         $form = '';
         foreach($this->nameToOptionsMap as $name => $attrs){
@@ -105,7 +113,7 @@ class MyFormHelper extends FormHelper
                 $options['required'] = false;
             }
             //All others
-            $common = array('options', 'empty', 'class', 'size', 'value', 'type', 'placeholder');
+            $common = array('options', 'empty', 'class', 'size', 'type', 'placeholder');
             foreach($common as $item){
                 if(isset($attrs[$item])){
                     $options[$item] = $attrs[$item];
@@ -263,21 +271,21 @@ class MyFormHelper extends FormHelper
         return $years;
     }
     
-    public function getState($options, $label = 'State or Province', $class = array('us-ca', 'form-control')) {
+    public function getState($options, $label = 'State or Province') {
         $this->nameToOptionsMap['state'] = array(
             'label' => $label, 
             'stripe' => 'address_state',
             'options' => $options,
             'empty' => 'Choose One',
-            'class' => implode(' ', $class), 
+            'class' => 'us-ca form-control', // us-ca needed? conditionally needed?
         );
     }
 
-    public function getPostalCode($label = 'Zip/Postal Code', $class = array('form-control')) {
+    public function getPostalCode($label = 'Zip/Postal Code') {
         $this->nameToOptionsMap['postalCode'] = array(
             'label' => $label, 
             'stripe' => 'address_zip',
-            'class' => implode(' ', $class), 
+            'class' => 'form-control' 
         );
     }
 
