@@ -513,6 +513,7 @@ $(document).ready(function(){
     });
     
     $('.payment-form').submit(function(){ 
+        $('.payment-errors').empty();
         $('.submit-payment').attr('disabled', 'disabled').hide();
         $('.ajax-loading').show();
         var form = $(this); 
@@ -555,11 +556,14 @@ $(document).ready(function(){
     
     function reportError(msg) {
         // Show the error in the form:
-        $('.payment-errors').show().text(msg).addClass('error');
+        var icon = '<span class="glyphicon glyphicon-remove"></span> ';
+        var div = $('<div>').attr('class', 'alert alert-danger').html(icon + ' ' + msg);
+        $('.payment-errors').show().append(div).addClass('error');
      
         // Re-enable the submit button:
-        $('.submit-payment').prop('disabled', false);
-     
+        $('.submit-payment').prop('disabled', false).show();
+        $('.ajax-loading').hide();
+
         return false;
     }
     
