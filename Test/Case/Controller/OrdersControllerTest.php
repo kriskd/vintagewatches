@@ -33,8 +33,21 @@ class OrdersControllerTest extends ControllerTestCase {
 		'app.province',
 		'app.country',
 		'app.page',
-		//'app.content'
+        //'app.content',
+        'app.region',
 	);
+
+    public $address = array(
+        'firstName' => 'Sandra',
+        'lastName' => 'Irwin',
+        'company' => '',
+        'address1' => '2215 Gateway Road',
+        'address2' => '',
+        'city' => 'Portland',
+        'state' => 'OR',
+        'postalCode' => '97205',
+        'country' => 'US'
+    );
 
     public function setUp() {
         parent::setUp();
@@ -79,17 +92,7 @@ class OrdersControllerTest extends ControllerTestCase {
             'stripeToken' => 'tok_5dC2WijiayVQOK',
             'Address' => array(
                 'select-country' => 'us',
-                'billing' => array(
-                    'firstName' => 'Sandra',
-                    'lastName' => 'Irwin',
-                    'company' => '',
-                    'address1' => '2215 Gateway Road',
-                    'address2' => '',
-                    'city' => 'Portland',
-                    'state' => 'OR',
-                    'postalCode' => '97205',
-                    'country' => 'US'
-                )
+                'billing' => $this->address,
             ),
             'Coupon' => array(
                 'email' => '',
@@ -153,6 +156,66 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->assertEquals($order['Watch'][0]['id'], 3);
 	}
 
+	public function testCheckoutNoState() {
+        $this->address['state'] = '';
+        $order = array(
+            'stripeToken' => 'tok_5dC2WijiayVQOK',
+            'Address' => array(
+                'select-country' => 'us',
+                'billing' => $this->address,
+            ),
+            'Coupon' => array(
+                'email' => '',
+                'code' => ''
+            ),
+            'Shipping' => array(
+                'option' => 'billing'
+            ),
+            'Order' => array(
+                'email' => 'SandraPIrvin@armyspy.com',
+                'phone' => '503-326-9436',
+                'notes' => ''
+            )
+        );
+        $Orders = $this->generate('Orders', array(
+            'components' => array(
+                'Session',
+                'Cart' => array('cartEmpty', 'cartItemCount', 'cartItemIds'),
+                'Stripe.Stripe' => array('charge'),
+                'Session',
+            )
+        ));
+        $Orders->Cart->expects($this->any())
+            ->method('cartEmpty')
+            ->will($this->returnValue(false));
+        $Orders->Cart->expects($this->any())
+            ->method('cartItemCount')
+            ->will($this->returnValue(1));
+        $Orders->Cart->expects($this->any())
+            ->method('cartItemIds')
+            ->will($this->returnValue(array(3)));
+
+        $results = $this->testAction(
+            '/orders/checkout',
+            array(
+                'data' => $order, 
+                'method' => 'post',
+                'return' => 'vars', 
+            )
+        );
+        
+        debug($results); exit;
+        $order = $this->Order->find('first', array(
+            'order' => array(
+                'Order.created' => 'DESC',
+            )
+        ));
+       
+        $this->assertEquals($order['Order']['email'], 'SandraPIrvin@armyspy.com');        
+        $this->assertEquals($order['Address'][0]['country'], 'US');
+        $this->assertEquals($order['Payment']['stripe_id'], 'ch_5dBkC3pJMgqjkD');
+        $this->assertEquals($order['Watch'][0]['id'], 3);
+	}
 /**
  * testAdd method
  *
