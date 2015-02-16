@@ -60,7 +60,7 @@ class MyFormHelper extends FormHelper
      * @param bool $required Field is required
      * @return string The form HTML
      */
-    public function addressForm($type, $data, $stripe = false, $required = false) {   
+    public function addressForm($type, $data, $stripe = false, $required = false, $class = '') {   
         $country = $data['country']; 
         $regionOptions = $data['options'];
         $labels = $data['labels'];
@@ -78,7 +78,7 @@ class MyFormHelper extends FormHelper
         );
 
         if (!empty($regionOptions)) {
-            $this->getState($regionOptions[$type], $labels[$type]['region']);
+            $this->getState($regionOptions[$type], $labels[$type]['region'], $class);
         }
         $this->getPostalCode($labels[$type]['postal']);
         $this->getCountry($country);
@@ -113,7 +113,7 @@ class MyFormHelper extends FormHelper
                 $options['required'] = false;
             }
             //All others
-            $common = array('options', 'empty', 'class', 'size', 'type', 'placeholder');
+            $common = array('options', 'empty', 'class', 'value', 'type', 'placeholder');
             foreach($common as $item){
                 if(isset($attrs[$item])){
                     $options[$item] = $attrs[$item];
@@ -271,13 +271,17 @@ class MyFormHelper extends FormHelper
         return $years;
     }
     
-    public function getState($options, $label = 'State or Province') {
+    public function getState($options, $label = 'State or Province', $class) {
+        $classes = array('form-control');
+        if (!empty($class)) {
+            $classes[] = $class;
+        }
         $this->nameToOptionsMap['state'] = array(
             'label' => $label, 
             'stripe' => 'address_state',
             'options' => $options,
             'empty' => 'Choose One',
-            'class' => 'us-ca form-control', // us-ca needed? conditionally needed?
+            'class' => implode(' ', $classes), 
         );
     }
 

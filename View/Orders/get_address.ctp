@@ -11,7 +11,7 @@
     <div class="address-form-billing"></div>
         <h5>Billing Address</h5>
         <div class="checkout-form">
-            <?php echo $this->Form->addressForm('billing', $data, true, true); ?>
+            <?php echo $this->Form->addressForm('billing', $data, true, true, 'us-ca'); ?>
         </div>
     </div>
     <div class="address-form-shipping">
