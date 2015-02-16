@@ -95,9 +95,9 @@
                         <?php echo $this->Form->input('Address.select-country', array(
                             'type' => 'radio',
                             'options' => array(
-                                'us_ca' => 'U.S.',
-                                'ca_us' => 'Canada', 
-                                'other_other' => 'Other'
+                                'us' => 'U.S.',
+                                'ca' => 'Canada', 
+                                'other' => 'Other'
                             ),
                             'legend' => false,
                             //'hiddenField' => false,

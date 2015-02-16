@@ -130,11 +130,13 @@ class OrdersController extends AppController
 
             $addresses = $data['Address'];
             $country = $addresses['select-country'];
+
             unset($addresses['select-country']);
 
             $data['Address'] = $this->Cart->formatAddresses($addresses);
             //Add shipping to the order
             $shipping = $this->Cart->getShippingAmount($country);
+
             $data['Order']['shippingAmount'] = $shipping;
             $couponCode = isset($data['Coupon']['code']) ? $data['Coupon']['code'] : null;
             $couponEmail = isset($data['Coupon']['email']) ? $data['Coupon']['email'] : null;
@@ -329,11 +331,10 @@ class OrdersController extends AppController
         if($this->request->is('ajax')){
             $query = $this->request->query; 
             $country = $query['country'];
-            $countries = explode('_', $country);
-            list($country, $secondary) = $countries;
             $shipping = $query['shipping'];
-            if ($shipping == 'billing') {
-                $secondary = '';                
+            $secondary = '';
+            if ($shipping == 'shipping') {
+                $secondary = $this->Cart->getSecondaryCountry($country); 
             }
             
             $options = $this->Region->options($country, $secondary);
