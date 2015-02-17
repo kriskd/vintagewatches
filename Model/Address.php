@@ -9,17 +9,17 @@ class Address extends AppModel {
     
     public $virtualFields = array(
         'name' => 'CONCAT(Address.firstName, " ", Address.lastName)',
-	'cityStZip' => 'CONCAT(Address.city, ", ", Address.state, " ", Address.postalCode)'
+        'cityStZip' => 'CONCAT(Address.city, ", ", Address.state, " ", Address.postalCode)'
     );
     
     public $actsAs = array(
-	'HtmlPurifier.HtmlPurifier' => array( 
-	    'config' => 'StripAll',
-	    'fields' => array(
-		'firstName', 'lastName', 'company', 'address1',
-		'address2', 'city', 'state', 'postalCode', 'country'
-	    )
-	)
+        'HtmlPurifier.HtmlPurifier' => array( 
+            'config' => 'StripAll',
+            'fields' => array(
+            'firstName', 'lastName', 'company', 'address1',
+            'address2', 'city', 'state', 'postalCode', 'country'
+            )
+        )
     );
 
 /**
@@ -219,20 +219,20 @@ class Address extends AppModel {
 	public function afterFind($results, $primary = false)
 	{
         $name = $this->name;
-	    $countries = ClassRegistry::init('Country')->getList();
+        $countries = $this->Country->getList();
 	    
 	    $results = array_map(function($item) use ($countries, $name) {
 		if (!empty($item[$name]['country'])) {
 		    $item[$name]['countryName'] = $countries[$item[$name]['country']];
 		}
-		return $item;
+            return $item;
 	    }, $results);
 	    
 	    $results = array_map(function($item) use ($name) { 
 		if (empty($item[$name]['state']) && isset($item[$name]['city']) && isset($item[$name]['postalCode'])) {
 		    $item[$name]['cityStZip'] = $item[$name]['city'] . ', ' . $item[$name]['postalCode'];
 		}
-		return $item;
+            return $item;
 	    }, $results);
 	    
 	    return $results;
@@ -259,7 +259,11 @@ class Address extends AppModel {
 			'conditions' => array('Address.class' => 'Invoice'),
 			'fields' => '',
 			'order' => ''
-		)
+        ),
+        'Country' => array(
+            'className' => 'Country',
+            'foreignKey' => 'abbreviation'
+        ),
 	);
 	
 	/**

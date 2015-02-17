@@ -289,7 +289,11 @@ class Country extends AppModel {
             'className' => 'Region',
             'order' => 'Region.name',
             'foreignKey' => 'abbreviation',
-        )
+        ),
+        'Address' => array(
+            'className' => 'Address',
+            'foreignKey' => 'abbreviation',
+        ),
     );
 
     /**
