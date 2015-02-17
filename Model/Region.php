@@ -101,15 +101,15 @@ class Region extends AppModel {
         );
 
     public $labels = array(
-        'us' => array(
+        'US' => array(
             'region' => 'State', 
             'postal' => 'Zip Code',
         ),
-        'ca' => array(
+        'CA' => array(
             'region' => 'Province', 
             'postal' => 'Postal Code'
         ),
-        'other' => array(
+        'OTHER' => array(
             'region' => '', 
             'postal' => 'Postal Code'
         ),
@@ -128,8 +128,6 @@ class Region extends AppModel {
      *
      */
     public function options($country, $secondary = '') {
-        $country = strtoupper($country);
-        $secondary = strtoupper($secondary);
         $countries = array($country);
         $fields = ['abbreviation', 'name'];
 

@@ -330,7 +330,7 @@ class OrdersController extends AppController
     public function getAddress() {
         if($this->request->is('ajax')){
             $query = $this->request->query; 
-            $country = $query['country'];
+            $country = strtoupper($query['country']);
             $shipping = $query['shipping'];
             $secondary = '';
             if ($shipping == 'shipping') {

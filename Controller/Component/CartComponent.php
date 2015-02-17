@@ -90,9 +90,9 @@ class CartComponent extends Component
      */
     public function getSecondaryCountry($country) {
         $countries = array(
-            'us' => 'ca',
-            'ca' => 'us',
-            'other' => 'other'
+            'US' => 'CA',
+            'CA' => 'US',
+            'OTHER' => 'OTHER'
         );
 
         if (!in_array($country, $countries)) return '';
