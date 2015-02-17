@@ -202,16 +202,15 @@ class Address extends AppModel {
         return true;
 	}
         
-        /**
-         * Set the state to null if not US or CA
-         */
-        public function beforeSave($options = array())
-        {
-            if (isset($this->data['Address']['country']) && !in_array($this->data['Address']['country'], array('US', 'CA'))) {
-                $this->data['Address']['state'] = '';
-            }
-            return true;
+    /**
+     * Set the state to null if not US or CA
+     */
+    public function beforeSave($options = array()) {
+        if (isset($this->data['Address']['country']) && !in_array(strtoupper($this->data['Address']['country']), array('US', 'CA'))) {
+            $this->data['Address']['state'] = '';
         }
+        return true;
+    }
 	
 	/**
 	 * Include full country name in results
