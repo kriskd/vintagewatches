@@ -140,8 +140,8 @@ class Address extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-                //Set required to false since country doesn't have a state
-                'state' => array(
+        //Set required to false since country doesn't have a state
+        'state' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
 				'message' => 'Please select your state or province.',
@@ -195,12 +195,11 @@ class Address extends AppModel {
 	/**
 	 * Remove state validation if not US or CA
 	 */
-	public function beforeValidate($options = array())
-	{
-            if (isset($this->data['Address']['country']) && !in_array($this->data['Address']['country'], array('US', 'CA'))) {
-                $this->removeStateValidation();
-            }
-            return true;
+	public function beforeValidate($options = array()) {
+        if (isset($this->data['Address']['country']) && !in_array(strtoupper($this->data['Address']['country']), array('US', 'CA'))) {
+            $this->removeStateValidation();
+        }
+        return true;
 	}
         
         /**
