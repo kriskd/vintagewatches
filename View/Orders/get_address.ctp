@@ -3,7 +3,7 @@
     <div class="address-form-billing">
         <h5>Billing and Shipping Address</h5>
         <div class="checkout-form">
-            <?php echo $this->Form->addressForm('billing', $data, true, true); ?>
+            <?php echo $this->Form->addressForm('billing', true, true); ?>
         </div>
     </div>
 <?php endif; ?>
@@ -11,7 +11,7 @@
     <div class="address-form-billing"></div>
         <h5>Billing Address</h5>
         <div class="checkout-form">
-            <?php echo $this->Form->addressForm('billing', $data, true, true, 'us-ca'); ?>
+            <?php echo $this->Form->addressForm('billing', true, true, 'us-ca'); ?>
         </div>
     </div>
     <div class="address-form-shipping">
@@ -27,7 +27,7 @@
             </p>
         <?php endif; ?>
         <div class="checkout-form">
-            <?php echo $this->Form->addressForm('shipping', $data, false, true); ?>
+            <?php echo $this->Form->addressForm('shipping', false, true); ?>
             <?php if(strcasecmp($data['country'], 'other')==0): ?>
                 <div class="form-group">
                     <?php echo $this->Form->label('Address.shipping.' . $data['country'], 'Country', array('class' => 'control-label col-xs-12 col-sm-4 col-md-4 col-lg-4')); ?>

@@ -4,6 +4,16 @@ App::uses('FormHelper', 'View/Helper');
 
 class MyFormHelper extends FormHelper
 {
+    public function __construct(View $view, $settings = array()) {
+        parent::__construct($view, $settings);
+        $data = $view->get('data');
+        if (!empty($data)) {
+            $this->country = $data['country'];
+            $this->options = $data['options'];
+            $this->labels = $data['labels'];
+            $this->errors = isset($data['errors']) ? $data['errors'] : null;
+        }
+    }
 /**
  * Generates input options array
  * Override to merge label options set per element with inputDefaults instead of overriding
@@ -37,8 +47,12 @@ class MyFormHelper extends FormHelper
     }
     
     protected $nameToOptionsMap;
+    protected $country = '';
+    protected $options = array();
+    protected $labels = array();
+    protected $errors = null;
     
-    protected function setNameToOptionsMap() {
+    protected function setupForm() {
         $this->nameToOptionsMap = array(
             'firstName' => array('label' => 'First Name'),
             'lastName' => array('label' => 'Last Name', 'stripe' => 'name'),
@@ -47,27 +61,7 @@ class MyFormHelper extends FormHelper
             'address2' => array('label' => 'Address 2', 'stripe' =>'address_line2'),
             'city' => array('label' => 'City', 'stripe' => 'address_city'),
         );
-    }
-    
-    /**
-     * @param enum $type 'billing or 'shipping'
-     * @param array $data Form data: 
-     *        - shipping: Either billing (billing/shipping are the same) or shipping (billing/shipping are different)
-     *        - country: us, ca or other 
-     *        - options: state options or empty
-     *        - labels: label for region and postal code fields
-     * @param bool $stripe A field that stripe API is using
-     * @param bool $required Field is required
-     * @return string The form HTML
-     */
-    public function addressForm($type, $data, $stripe = false, $required = false, $class = '') {   
-        $country = $data['country']; 
-        $regionOptions = $data['options'];
-        $labels = $data['labels'];
-        $errors = isset($data['errors'][$type]) ? $data['errors'][$type] : null; 
         
-        $this->setNameToOptionsMap();
-        $requiredAttrs = array('firstName', 'lastName', 'address1', 'city', 'state', 'postalCode', 'countryName', 'country');
         $this->inputDefaults(array(
                 'label' => array('class' => 'control-label col-xs-12 col-sm-4 col-md-4 col-lg-4'),
                 'div' => 'form-group row',
@@ -76,32 +70,47 @@ class MyFormHelper extends FormHelper
                 'after' => '</div></div>'
             )
         );
-
-        if (!empty($regionOptions)) {
+    }
+    
+    /**
+     * @param enum $type 'billing or 'shipping'
+     * @param bool $stripe A field that stripe API is using
+     * @param bool $required Field is required
+     * @param string $class Class for dual state/province field
+     * @return string The form HTML
+     */
+    public function addressForm($type, $stripe = false, $required = false, $class = '') {   
+        $this->setupForm();
+        //$this->setupStatePostalCountry($class);
+        if (!empty($this->options)) {
             $classes = array('form-control');
             if (!empty($class)) {
                 $classes[] = $class;
             }
             $this->nameToOptionsMap['state'] = array(
-                'label' => $labels[$type]['region'],
+                'label' => $this->labels[$type]['region'],
                 'stripe' => 'address_state',
-                'options' => $regionOptions[$type],
+                'options' => $this->options[$type],
                 'empty' => 'Choose One',
                 'class' => implode(' ', $classes), 
             );
         }
         $this->nameToOptionsMap['postalCode'] = array(
-            'label' => $labels[$type]['postal'],
+            'label' => $this->labels[$type]['postal'],
             'stripe' => 'address_zip',
             'class' => 'form-control' 
         );
-        $this->nameToOptionsMap['country'] = array(
+        
+        $countryAttributes = array(
             'type' => 'hidden', 
             'stripe' => 'address_country',
-            'value' => $country, // Currently populates with 'OTHER' for non-US/CA should be empty
         );
+        if (empty($this->request->data[$type]['country'])) {
+            $countryAttributes['value'] = in_array($this->country, ['US', 'CA']) ? $this->country : '';
+        } 
+        $this->nameToOptionsMap['country'] = $countryAttributes;
 
-        if (strcasecmp($country, 'other')==0 && $stripe) {
+        if (strcasecmp($this->country, 'other')==0 && $stripe) {
             $tooltip = $this->Html->link('<span class="glyphicon glyphicon-question-sign"></span>', '#', array(
                     'title' => 'Enter any portion of the country name and select your country from the options that appear.',
                     'class' => 'launch-tooltip',
@@ -116,7 +125,9 @@ class MyFormHelper extends FormHelper
             );
         } 
 
-        // Move this to a new method
+        // Uses $type, $data, $stripe, $required
+        $requiredAttrs = array('firstName', 'lastName', 'address1', 'city', 'state', 'postalCode', 'countryName', 'country');
+        $errors = isset($this->errors[$type]) ? $this->errors[$type] : null; 
         $form = '';
         foreach($this->nameToOptionsMap as $name => $attrs){
             //Label
@@ -153,6 +164,14 @@ class MyFormHelper extends FormHelper
         return $form;
     }
     
+    protected function buildForm() {
+
+    }
+
+    // Uses $type, $data, $class, $stripe
+    protected function setupStatePostalCountry($type, $data, $stripe, $class) {
+    }
+
     /*
      * Pass in the Order, return a checkbox to delete the shipping address
      */
