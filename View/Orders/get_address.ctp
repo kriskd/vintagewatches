@@ -30,7 +30,7 @@
             <?php echo $this->Form->addressForm('shipping', false, true); ?>
             <?php if(strcasecmp($data['country'], 'other')==0): ?>
                 <div class="form-group">
-                    <?php echo $this->Form->label('Address.shipping.' . $data['country'], 'Country', array('class' => 'control-label col-xs-12 col-sm-4 col-md-4 col-lg-4')); ?>
+                    <?php echo $this->Form->label('Address.shipping.CountryName', 'Country', array('class' => 'control-label col-xs-12 col-sm-4 col-md-4 col-lg-4')); ?>
                     <div class="clearfix">
                         <div class="col-xs-11 col-sm-7 col-md-7 col-lg-7">
                             <div class="billing-country-name">
