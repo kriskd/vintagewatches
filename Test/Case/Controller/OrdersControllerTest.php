@@ -204,17 +204,15 @@ class OrdersControllerTest extends ControllerTestCase {
             )
         );
         
-        debug($results); exit;
         $order = $this->Order->find('first', array(
             'order' => array(
                 'Order.created' => 'DESC',
             )
         ));
        
-        $this->assertEquals($order['Order']['email'], 'SandraPIrvin@armyspy.com');        
-        $this->assertEquals($order['Address'][0]['country'], 'US');
-        $this->assertEquals($order['Payment']['stripe_id'], 'ch_5dBkC3pJMgqjkD');
-        $this->assertEquals($order['Watch'][0]['id'], 3);
+        $this->assertEquals($order['Order']['email'], 'PeterRHarris@teleworm.us');        
+        $this->assertEquals($order['Payment']['stripe_id'], 'ch_5dYcjsXUf5Gzy1');
+        $this->assertEquals($order['Watch'][0]['id'], 1);
 	}
 /**
  * testAdd method
