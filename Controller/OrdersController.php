@@ -374,11 +374,19 @@ class OrdersController extends AppController
             $state = $data['Address'][$type]['state'];
             $type = ucfirst($type);
 
-            $states = $this->State->getList();
-            $provinces = $this->Province->getList();
-            $country = (isset($states[$state]) ? 'US' : (isset($provinces[$state]) ? 'CA' : ''));
+            $country = $this->Region->find('first', [
+                'conditions' => [
+                    'abbreviation' => $state,
+                ],
+                'fields' => [
+                    'country'
+                ],
+            ]);
 
-            $this->set(array('data' => compact('country', 'type')));
+            $this->set(array('data' => array(
+                'type' => $type,
+                'country' => $country['Region']['country'], 
+            )));
             $this->layout = 'ajax';
         }
     }
