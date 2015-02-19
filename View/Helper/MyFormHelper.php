@@ -8,9 +8,9 @@ class MyFormHelper extends FormHelper
         parent::__construct($view, $settings);
         $data = $view->get('data');
         if (!empty($data)) {
-            $this->country = $data['country'];
-            $this->options = $data['options'];
-            $this->labels = $data['labels'];
+            $this->country = isset($data['country']) ? $data['country'] : null;
+            $this->options = isset($data['options']) ? $data['options'] : null;
+            $this->labels = isset($data['labels']) ? $data['labels'] : null;
             $this->errors = isset($data['errors']) ? $data['errors'] : null;
         }
     }
