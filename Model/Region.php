@@ -177,8 +177,8 @@ class Region extends AppModel {
 
         return array(
             'billing' => array(
-                'region' => 'State or Province', 
-                'postal' => strcasecmp($country, 'other') == 0 ? 'Postal Code' : 'Zip/Postal Code', 
+                'region' => strcasecmp($country, 'other') == 0 ? $this->labels[$country]['region'] : 'State or Province', 
+                'postal' => strcasecmp($country, 'other') == 0 ? $this->labels[$country]['postal'] : 'Zip/Postal Code', 
             ),
             'shipping' => $this->labels[$country],
         );
