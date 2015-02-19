@@ -284,7 +284,7 @@ class OrdersControllerTest extends ControllerTestCase {
 	public function testGetAddress() {
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $query = array(
-            'country' => 'ca',
+            'country' => 'CA', 
             'shipping' => 'billing',
         );
         $url = Router::url(array('controller' => 'orders', 'action' => 'getAddress', '?' => $query));
@@ -293,8 +293,13 @@ class OrdersControllerTest extends ControllerTestCase {
         );
 
         $result = $this->testAction($url, $options);
-        //debug($result); exit;
-        //exit;
+        $data = $result['data'];
+        $this->assertEquals($query['shipping'], $data['shipping']);
+        $this->assertEquals($query['country'], $data['country']);
+        $this->assertContains('Alberta', $data['options'][$data['shipping']]);
+        $this->assertContains('Yukon Territory', $data['options'][$data['shipping']]);
+        $this->assertContains('Province', $data['labels'][$data['shipping']]);
+        $this->assertContains('Postal Code', $data['labels'][$data['shipping']]);
 	}
 
 /**
