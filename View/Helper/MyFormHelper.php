@@ -105,7 +105,7 @@ class MyFormHelper extends FormHelper
             'type' => 'hidden', 
             'stripe' => 'address_country',
         );
-        if (empty($this->request->data[$type]['country'])) {
+        if (empty($this->request->data['Address'][$type]['country'])) {
             $countryAttributes['value'] = in_array($this->country, ['US', 'CA']) ? $this->country : '';
         } 
         $this->nameToOptionsMap['country'] = $countryAttributes;
