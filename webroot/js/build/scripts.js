@@ -6681,7 +6681,7 @@ var datepicker = $.datepicker;
           var type = data.type;
           $('#Address' + type + 'Country').val(country);
         }
-      })
+      });
     }
     
     /**
