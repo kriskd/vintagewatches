@@ -281,7 +281,53 @@ class OrdersControllerTest extends ControllerTestCase {
  *
  * @return void
  */
-	public function testGetAddress() {
+	public function testGetUsAddress() {
+        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        $query = array(
+            'country' => 'US', 
+            'shipping' => 'billing',
+        );
+        $url = Router::url(array('controller' => 'orders', 'action' => 'getAddress', '?' => $query));
+        $options = array(
+            'return' => 'vars'
+        );
+
+        $result = $this->testAction($url, $options);
+        $data = $result['data'];
+        $this->assertEquals($query['shipping'], $data['shipping']);
+        $this->assertEquals($query['country'], $data['country']);
+        $this->assertContains('Alabama', $data['options'][$data['shipping']]);
+        $this->assertContains('Wyoming', $data['options'][$data['shipping']]);
+        $this->assertContains('State', $data['labels'][$data['shipping']]);
+        $this->assertContains('Zip Code', $data['labels'][$data['shipping']]);
+	}
+    
+	public function testGetUsShippingAddress() {
+        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        $query = array(
+            'country' => 'US', 
+            'shipping' => 'shipping',
+        );
+        $url = Router::url(array('controller' => 'orders', 'action' => 'getAddress', '?' => $query));
+        $options = array(
+            'return' => 'vars'
+        );
+
+        $result = $this->testAction($url, $options);
+        $data = $result['data'];
+        $this->assertEquals($query['shipping'], $data['shipping']);
+        $this->assertEquals($query['country'], $data['country']);
+        $this->assertArrayHasKey('United States', $data['options']['billing']);
+        $this->assertArrayHasKey('Canada', $data['options']['billing']);
+        $this->assertContains('Alabama', $data['options'][$data['shipping']]);
+        $this->assertContains('Wyoming', $data['options'][$data['shipping']]);
+        $this->assertContains('State or Province', $data['labels']['billing']);
+        $this->assertContains('Zip/Postal Code', $data['labels']['billing']);
+        $this->assertContains('State', $data['labels'][$data['shipping']]);
+        $this->assertContains('Zip Code', $data['labels'][$data['shipping']]);
+	}
+    
+	public function testGetCaAddress() {
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $query = array(
             'country' => 'CA', 
@@ -300,6 +346,73 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->assertContains('Yukon Territory', $data['options'][$data['shipping']]);
         $this->assertContains('Province', $data['labels'][$data['shipping']]);
         $this->assertContains('Postal Code', $data['labels'][$data['shipping']]);
+	}
+
+	public function testGetCaShippingAddress() {
+        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        $query = array(
+            'country' => 'CA', 
+            'shipping' => 'shipping',
+        );
+        $url = Router::url(array('controller' => 'orders', 'action' => 'getAddress', '?' => $query));
+        $options = array(
+            'return' => 'vars'
+        );
+
+        $result = $this->testAction($url, $options);
+        $data = $result['data'];
+        $this->assertEquals($query['shipping'], $data['shipping']);
+        $this->assertEquals($query['country'], $data['country']);
+        $this->assertArrayHasKey('United States', $data['options']['billing']);
+        $this->assertArrayHasKey('Canada', $data['options']['billing']);
+        $this->assertContains('Alberta', $data['options'][$data['shipping']]);
+        $this->assertContains('Yukon Territory', $data['options'][$data['shipping']]);
+        $this->assertContains('State or Province', $data['labels']['billing']);
+        $this->assertContains('Zip/Postal Code', $data['labels']['billing']);
+        $this->assertContains('Province', $data['labels'][$data['shipping']]);
+        $this->assertContains('Postal Code', $data['labels'][$data['shipping']]);
+	}
+    
+    public function testGetOtherAddress() {
+        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        $query = array(
+            'country' => 'OTHER', 
+            'shipping' => 'billing',
+        );
+        $url = Router::url(array('controller' => 'orders', 'action' => 'getAddress', '?' => $query));
+        $options = array(
+            'return' => 'vars'
+        );
+
+        $result = $this->testAction($url, $options);
+        $data = $result['data'];
+        $this->assertEquals($query['shipping'], $data['shipping']);
+        $this->assertEquals($query['country'], $data['country']);
+        $this->assertEmpty($data['options']);
+        $this->assertEmpty($data['labels'][$data['shipping']]['region']);
+        $this->assertContains('Postal Code', $data['labels'][$data['shipping']]);
+	}
+
+    public function testGetOtherShippingAddress() {
+        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        $query = array(
+            'country' => 'OTHER', 
+            'shipping' => 'shipping',
+        );
+        $url = Router::url(array('controller' => 'orders', 'action' => 'getAddress', '?' => $query));
+        $options = array(
+            'return' => 'vars'
+        );
+
+        $result = $this->testAction($url, $options);
+        $data = $result['data'];
+        $this->assertEquals($query['shipping'], $data['shipping']);
+        $this->assertEquals($query['country'], $data['country']);
+        $this->assertEmpty($data['options']);
+        $this->assertEmpty($data['labels']['billing']['region']);
+        $this->assertEmpty($data['labels']['shipping']['region']);
+        $this->assertContains('Postal Code', $data['labels']['shipping']);
+        $this->assertContains('Postal Code', $data['labels']['billing']);
 	}
 
 /**
