@@ -3,7 +3,7 @@ App::uses('AppController', 'Controller');
 App::uses('Address', 'Model');
 class OrdersController extends AppController
 {
-    public $uses = array('Watch', 'Address', 'Order', 'State', 'Province', 'Region', 'Country');
+    public $uses = array('Watch', 'Address', 'Order', 'Region', 'Country');
 
     public $paginate = array(
         'limit' => 10,
@@ -586,11 +586,14 @@ class OrdersController extends AppController
         $addressFields = array('firstName', 'lastName', 'company', 'address1', 'address2', 'city', 'state',
             'postalCode', 'country');
 
-        $statesUS = array('' => 'Select One') + $this->State->getList();
-        $statesCA = array('' => 'Select One') + $this->Province->getList();
+        $regions = $this->Region->find('list', array(
+            'fields' => array(
+                'abbreviation', 'name', 'country'
+            ),
+        ));
         $countries = $this->Country->getList();
 
-        $this->set(compact('addressFields', 'statesUS', 'statesCA', 'countries'));
+        $this->set(compact('addressFields', 'regions', 'countries'));
     }
 
     /**
