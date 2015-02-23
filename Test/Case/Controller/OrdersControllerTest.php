@@ -52,6 +52,9 @@ class OrdersControllerTest extends ControllerTestCase {
     public function setUp() {
         parent::setUp();
         $this->Order = ClassRegistry::init('Order');
+        $this->ComponentCollection = new ComponentCollection();
+        $this->Session = new SessionComponent($this->ComponentCollection);
+
     }
 
 /**
@@ -60,17 +63,14 @@ class OrdersControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testIndex() {
-        $this->ComponentCollection = new ComponentCollection();
-        $Session = new SessionComponent($this->ComponentCollection);
-
-        $Session->write('Watch.Order.email', 'PeterRHarris@teleworm.us');
-        $Session->write('Watch.Address.postalCode', '61602');
+        $this->Session->write('Watch.Order.email', 'PeterRHarris@teleworm.us');
+        $this->Session->write('Watch.Address.postalCode', '61602');
         $results = $this->testAction('/orders', array(
             'method' => 'GET',
             'return' => 'vars',
         ));
-        $this->assertEquals($results['orders'][0]['Order']['email'], $Session->read('Watch.Order.email'));
-        $this->assertEquals($results['orders'][0]['Address'][0]['postalCode'], $Session->read('Watch.Address.postalCode'));
+        $this->assertEquals($results['orders'][0]['Order']['email'], $this->Session->read('Watch.Order.email'));
+        $this->assertEquals($results['orders'][0]['Address'][0]['postalCode'], $this->Session->read('Watch.Address.postalCode'));
 	}
 
 /**
@@ -413,6 +413,43 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->assertEmpty($data['labels']['shipping']['region']);
         $this->assertContains('Postal Code', $data['labels']['shipping']);
         $this->assertContains('Postal Code', $data['labels']['billing']);
+	}
+
+    public function testGetAddressErrors() {
+        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        $query = array(
+            'country' => 'US', 
+            'shipping' => 'billing',
+        );
+        $url = Router::url(array('controller' => 'orders', 'action' => 'getAddress', '?' => $query));
+        $options = array(
+            'return' => 'view',
+        );
+
+        unset($this->address['postalCode']); 
+        $this->Session->write('Address.data.billing', $this->address);
+        $this->Session->write('Address.errors.billing.postal.code', array('Please enter a postal code.'));
+        $expectedTags = array(
+            'tag' => 'input',
+            'attributes' => array(
+                'value' => 'Irwin',
+            ),
+        );
+
+        $result = $this->testAction($url, $options); debug($result); exit;
+        $this->assertTag($expectedTags, $result);
+
+        $options = array(
+            'return' => 'vars',
+        );
+        $result = $this->testAction($url, $options);
+        $data = $result['data'];
+        $this->assertEquals($query['shipping'], $data['shipping']);
+        $this->assertEquals($query['country'], $data['country']);
+        $this->assertContains('Alabama', $data['options'][$data['shipping']]);
+        $this->assertContains('Wyoming', $data['options'][$data['shipping']]);
+        $this->assertContains('State', $data['labels'][$data['shipping']]);
+        $this->assertContains('Zip Code', $data['labels'][$data['shipping']]);
 	}
 
 /**
