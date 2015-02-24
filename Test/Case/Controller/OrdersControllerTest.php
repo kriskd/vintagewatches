@@ -415,7 +415,10 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->assertContains('Postal Code', $data['labels']['billing']);
 	}
 
-    public function testGetAddressErrors() {
+    /**
+     * Test that a form input value gets written to HTML
+     */
+    public function testGetAddressErrorsTags() {
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $query = array(
             'country' => 'US', 
@@ -428,7 +431,8 @@ class OrdersControllerTest extends ControllerTestCase {
 
         unset($this->address['postalCode']); 
         $this->Session->write('Address.data.billing', $this->address);
-        $this->Session->write('Address.errors.billing.postal.code', array('Please enter a postal code.'));
+        $errorMessage = 'Please enter a postal code.';
+        $this->Session->write('Address.errors.billing.postalCode', array($errorMessage));
         $expectedTags = array(
             'tag' => 'input',
             'attributes' => array(
@@ -436,9 +440,25 @@ class OrdersControllerTest extends ControllerTestCase {
             ),
         );
 
-        $result = $this->testAction($url, $options); debug($result); exit;
+        $result = $this->testAction($url, $options);
         $this->assertTag($expectedTags, $result);
+    }
 
+    /**
+     * Test data sent to view has correct values on form error
+     */
+    public function testGetAddressErrorsData() {
+        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        $query = array(
+            'country' => 'US', 
+            'shipping' => 'billing',
+        );
+        $url = Router::url(array('controller' => 'orders', 'action' => 'getAddress', '?' => $query));
+
+        unset($this->address['postalCode']); 
+        $this->Session->write('Address.data.billing', $this->address);
+        $errorMessage = 'Please enter a postal code.';
+        $this->Session->write('Address.errors.billing.postalCode', array($errorMessage));
         $options = array(
             'return' => 'vars',
         );
@@ -446,12 +466,72 @@ class OrdersControllerTest extends ControllerTestCase {
         $data = $result['data'];
         $this->assertEquals($query['shipping'], $data['shipping']);
         $this->assertEquals($query['country'], $data['country']);
+        $this->assertEquals($errorMessage, $data['errors']['billing']['postalCode'][0]);
         $this->assertContains('Alabama', $data['options'][$data['shipping']]);
         $this->assertContains('Wyoming', $data['options'][$data['shipping']]);
         $this->assertContains('State', $data['labels'][$data['shipping']]);
         $this->assertContains('Zip Code', $data['labels'][$data['shipping']]);
 	}
 
+    public function testGetOtherShippingAddressErrorsTags() {
+        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        $query = array(
+            'country' => 'OTHER', 
+            'shipping' => 'shipping',
+        );
+        $url = Router::url(array('controller' => 'orders', 'action' => 'getAddress', '?' => $query));
+        $options = array(
+            'return' => 'view',
+        );
+
+        unset($this->address['state']); 
+        unset($this->address['postalCode']); 
+        $this->Session->write('Address.data.billing', $this->address);
+        $this->Session->write('Address.data.shipping', $this->address);
+        $errorMessage = 'Please enter a postal code.';
+        $this->Session->write('Address.errors.billing.postalCode', array($errorMessage));
+        $this->Session->write('Address.errors.shipping.postalCode', array($errorMessage));
+        $expectedTags = array(
+            'tag' => 'input',
+            'attributes' => array(
+                'value' => 'Irwin',
+            ),
+        );
+
+        $result = $this->testAction($url, $options);
+        $this->assertTag($expectedTags, $result);
+	}
+
+    public function testGetOtherShippingAddressErrorsData() {
+        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        $query = array(
+            'country' => 'OTHER', 
+            'shipping' => 'shipping',
+        );
+        $url = Router::url(array('controller' => 'orders', 'action' => 'getAddress', '?' => $query));
+
+        unset($this->address['state']); 
+        unset($this->address['postalCode']); 
+        $this->Session->write('Address.data.billing', $this->address);
+        $this->Session->write('Address.data.shipping', $this->address);
+        $errorMessage = 'Please enter a postal code.';
+        $this->Session->write('Address.errors.billing.postalCode', array($errorMessage));
+        $this->Session->write('Address.errors.shipping.postalCode', array($errorMessage));
+        $options = array(
+            'return' => 'vars'
+        );
+
+        $result = $this->testAction($url, $options);
+        $data = $result['data'];
+        $this->assertEquals($query['shipping'], $data['shipping']);
+        $this->assertEquals($query['country'], $data['country']);
+        $this->assertEquals($errorMessage, $data['errors']['billing']['postalCode'][0]);
+        $this->assertEmpty($data['options']);
+        $this->assertEmpty($data['labels']['billing']['region']);
+        $this->assertEmpty($data['labels']['shipping']['region']);
+        $this->assertContains('Postal Code', $data['labels']['shipping']);
+        $this->assertContains('Postal Code', $data['labels']['billing']);
+	}
 /**
  * testGetCountry method
  *
