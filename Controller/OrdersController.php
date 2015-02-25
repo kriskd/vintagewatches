@@ -374,7 +374,7 @@ class OrdersController extends AppController
             $state = $data['Address'][$type]['state'];
             $type = ucfirst($type);
 
-            $country = $this->Region->find('first', [
+            $result = $this->Region->find('first', [
                 'conditions' => [
                     'Region.abbreviation' => $state,
                 ],
@@ -383,9 +383,11 @@ class OrdersController extends AppController
                 ],
             ]);
 
+            $country = empty($result['Region']) ? '' : $result['Region']['country'];
+
             $this->set(array('data' => array(
                 'type' => $type,
-                'country' => $country['Region']['country'], 
+                'country' => $country,
             )));
             $this->layout = 'ajax';
         }
