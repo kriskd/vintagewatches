@@ -81,7 +81,6 @@ class MyFormHelper extends FormHelper
      */
     public function addressForm($type, $stripe = false, $required = false, $class = '') {   
         $this->setupForm();
-        //$this->setupStatePostalCountry($class);
         if (!empty($this->options)) {
             $classes = array('form-control');
             if (!empty($class)) {
@@ -164,14 +163,6 @@ class MyFormHelper extends FormHelper
         return $form;
     }
     
-    protected function buildForm() {
-
-    }
-
-    // Uses $type, $data, $class, $stripe
-    protected function setupStatePostalCountry($type, $data, $stripe, $class) {
-    }
-
     /*
      * Pass in the Order, return a checkbox to delete the shipping address
      */
