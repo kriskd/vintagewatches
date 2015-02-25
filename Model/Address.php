@@ -9,17 +9,17 @@ class Address extends AppModel {
     
     public $virtualFields = array(
         'name' => 'CONCAT(Address.firstName, " ", Address.lastName)',
-	'cityStZip' => 'CONCAT(Address.city, ", ", Address.state, " ", Address.postalCode)'
+        'cityStZip' => 'CONCAT(Address.city, ", ", Address.state, " ", Address.postalCode)'
     );
     
     public $actsAs = array(
-	'HtmlPurifier.HtmlPurifier' => array( 
-	    'config' => 'StripAll',
-	    'fields' => array(
-		'firstName', 'lastName', 'company', 'address1',
-		'address2', 'city', 'state', 'postalCode', 'country'
-	    )
-	)
+        'HtmlPurifier.HtmlPurifier' => array( 
+            'config' => 'StripAll',
+            'fields' => array(
+            'firstName', 'lastName', 'company', 'address1',
+            'address2', 'city', 'state', 'postalCode', 'country'
+            )
+        )
     );
 
 /**
@@ -140,8 +140,8 @@ class Address extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-                //Set required to false since country doesn't have a state
-                'state' => array(
+        //Set required to false since country doesn't have a state
+        'state' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
 				'message' => 'Please select your state or province.',
@@ -195,24 +195,22 @@ class Address extends AppModel {
 	/**
 	 * Remove state validation if not US or CA
 	 */
-	public function beforeValidate($options = array())
-	{
-            if (isset($this->data['Address']['country']) && !in_array($this->data['Address']['country'], array('US', 'CA'))) {
-                $this->removeStateValidation();
-            }
-            return true;
+	public function beforeValidate($options = array()) {
+        if (isset($this->data['Address']['country']) && !in_array(strtoupper($this->data['Address']['country']), array('US', 'CA'))) {
+            $this->removeStateValidation();
+        }
+        return true;
 	}
         
-        /**
-         * Set the state to null if not US or CA
-         */
-        public function beforeSave($options = array())
-        {
-            if (isset($this->data['Address']['country']) && !in_array($this->data['Address']['country'], array('US', 'CA'))) {
-                $this->data['Address']['state'] = '';
-            }
-            return true;
+    /**
+     * Set the state to null if not US or CA
+     */
+    public function beforeSave($options = array()) {
+        if (isset($this->data['Address']['country']) && !in_array(strtoupper($this->data['Address']['country']), array('US', 'CA'))) {
+            $this->data['Address']['state'] = '';
         }
+        return true;
+    }
 	
 	/**
 	 * Include full country name in results
@@ -221,20 +219,20 @@ class Address extends AppModel {
 	public function afterFind($results, $primary = false)
 	{
         $name = $this->name;
-	    $countries = ClassRegistry::init('Country')->getList();
+        $countries = $this->Country->getList();
 	    
 	    $results = array_map(function($item) use ($countries, $name) {
 		if (!empty($item[$name]['country'])) {
 		    $item[$name]['countryName'] = $countries[$item[$name]['country']];
 		}
-		return $item;
+            return $item;
 	    }, $results);
 	    
 	    $results = array_map(function($item) use ($name) { 
 		if (empty($item[$name]['state']) && isset($item[$name]['city']) && isset($item[$name]['postalCode'])) {
 		    $item[$name]['cityStZip'] = $item[$name]['city'] . ', ' . $item[$name]['postalCode'];
 		}
-		return $item;
+            return $item;
 	    }, $results);
 	    
 	    return $results;
@@ -261,7 +259,11 @@ class Address extends AppModel {
 			'conditions' => array('Address.class' => 'Invoice'),
 			'fields' => '',
 			'order' => ''
-		)
+        ),
+        'Country' => array(
+            'className' => 'Country',
+            'foreignKey' => 'abbreviation'
+        ),
 	);
 	
 	/**

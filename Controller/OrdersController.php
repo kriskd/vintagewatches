@@ -3,7 +3,7 @@ App::uses('AppController', 'Controller');
 App::uses('Address', 'Model');
 class OrdersController extends AppController
 {
-    public $uses = array('Watch', 'Address', 'Order', 'State', 'Province', 'Country');
+    public $uses = array('Watch', 'Address', 'Order', 'Region', 'Country');
 
     public $paginate = array(
         'limit' => 10,
@@ -130,11 +130,13 @@ class OrdersController extends AppController
 
             $addresses = $data['Address'];
             $country = $addresses['select-country'];
+
             unset($addresses['select-country']);
 
             $data['Address'] = $this->Cart->formatAddresses($addresses);
             //Add shipping to the order
             $shipping = $this->Cart->getShippingAmount($country);
+
             $data['Order']['shippingAmount'] = $shipping;
             $couponCode = isset($data['Coupon']['code']) ? $data['Coupon']['code'] : null;
             $couponEmail = isset($data['Coupon']['email']) ? $data['Coupon']['email'] : null;
@@ -325,14 +327,19 @@ class OrdersController extends AppController
     /**
      * Get address form based on country
      */
-    public function getAddress()
-    {
+    public function getAddress() {
         if($this->request->is('ajax')){
             $query = $this->request->query; 
-            $country = $query['country'];
+            $country = strtoupper($query['country']);
             $shipping = $query['shipping'];
-            $statesProvinces = array('states' => $this->State->getList(), 'provinces' => $this->Province->getList());
-            $data = compact('shipping', 'country', 'statesProvinces');
+            $secondary = '';
+            if ($shipping == 'shipping') {
+                $secondary = $this->Cart->getSecondaryCountry($country); 
+            }
+            
+            $options = $this->Region->options($country, $secondary);
+            $labels = $this->Region->labels($country, $secondary);
+            $data = compact('shipping', 'country', 'options', 'labels');
 
             //Address data and errors in the session
             if($this->Session->check('Address') == true){
@@ -367,11 +374,21 @@ class OrdersController extends AppController
             $state = $data['Address'][$type]['state'];
             $type = ucfirst($type);
 
-            $states = $this->State->getList();
-            $provinces = $this->Province->getList();
-            $country = (isset($states[$state]) ? 'US' : (isset($provinces[$state]) ? 'CA' : ''));
+            $result = $this->Region->find('first', [
+                'conditions' => [
+                    'Region.abbreviation' => $state,
+                ],
+                'fields' => [
+                    'country'
+                ],
+            ]);
 
-            $this->set(array('data' => compact('country', 'type')));
+            $country = empty($result['Region']) ? '' : $result['Region']['country'];
+
+            $this->set(array('data' => array(
+                'type' => $type,
+                'country' => $country,
+            )));
             $this->layout = 'ajax';
         }
     }
@@ -571,11 +588,14 @@ class OrdersController extends AppController
         $addressFields = array('firstName', 'lastName', 'company', 'address1', 'address2', 'city', 'state',
             'postalCode', 'country');
 
-        $statesUS = array('' => 'Select One') + $this->State->getList();
-        $statesCA = array('' => 'Select One') + $this->Province->getList();
+        $regions = $this->Region->find('list', array(
+            'fields' => array(
+                'abbreviation', 'name', 'country'
+            ),
+        ));
         $countries = $this->Country->getList();
 
-        $this->set(compact('addressFields', 'statesUS', 'statesCA', 'countries'));
+        $this->set(compact('addressFields', 'regions', 'countries'));
     }
 
     /**

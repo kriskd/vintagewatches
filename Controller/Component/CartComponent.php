@@ -84,6 +84,21 @@ class CartComponent extends Component
                 break;
         }
     }
+
+    /**
+     * Get allowed billing/shipping country based on ship-to country
+     */
+    public function getSecondaryCountry($country) {
+        $countries = array(
+            'US' => 'CA',
+            'CA' => 'US',
+            'OTHER' => 'OTHER'
+        );
+
+        if (!in_array($country, $countries)) return '';
+
+        return $countries[$country];
+    }
     
     public function totalCart($itemsTotal, $shipping, $couponAmount) {
         return $itemsTotal + $shipping - $couponAmount;

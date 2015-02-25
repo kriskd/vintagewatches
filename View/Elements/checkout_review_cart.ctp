@@ -92,13 +92,18 @@
                         <?php echo $tooltip; ?>
                     </h6>
                     <div class="select-country">
-                        <?php echo $this->Form->input('Address.select-country', array('type' => 'radio',
-                                                                                'options' => array('us' => 'U.S.', 'ca' => 'Canada', 'other' => 'Other'),
-                                                                                'legend' => false,
-                                                                                //'hiddenField' => false,
-                                                                                'div' => "radio-inline",
-                                                                                'separator' => '</div><div class="radio-inline">',
-                                                                                   )); ?>
+                        <?php echo $this->Form->input('Address.select-country', array(
+                            'type' => 'radio',
+                            'options' => array(
+                                'us' => 'U.S.',
+                                'ca' => 'Canada', 
+                                'other' => 'Other'
+                            ),
+                            'legend' => false,
+                            //'hiddenField' => false,
+                            'div' => "radio-inline",
+                            'separator' => '</div><div class="radio-inline">',
+                       )); ?>
                     </div>
                 </div>
                 <div class="shipping-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-2 col-xxs-4">

@@ -6662,7 +6662,7 @@ var datepicker = $.datepicker;
           //Check to see if state dropdown has a value and fill in the hidden country field
           $('select.us-ca').each(function(){
               getCountry($(this));
-          })
+          });
           
           //Add required asterisk
           $('.address-forms .required label').append(' <span class="required">*</span>');
@@ -6681,7 +6681,7 @@ var datepicker = $.datepicker;
           var type = data.type;
           $('#Address' + type + 'Country').val(country);
         }
-      })
+      });
     }
     
     /**

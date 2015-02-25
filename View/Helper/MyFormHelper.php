@@ -4,6 +4,16 @@ App::uses('FormHelper', 'View/Helper');
 
 class MyFormHelper extends FormHelper
 {
+    public function __construct(View $view, $settings = array()) {
+        parent::__construct($view, $settings);
+        $data = $view->get('data');
+        if (!empty($data)) {
+            $this->country = isset($data['country']) ? $data['country'] : null;
+            $this->options = isset($data['options']) ? $data['options'] : null;
+            $this->labels = isset($data['labels']) ? $data['labels'] : null;
+            $this->errors = isset($data['errors']) ? $data['errors'] : null;
+        }
+    }
 /**
  * Generates input options array
  * Override to merge label options set per element with inputDefaults instead of overriding
@@ -37,8 +47,12 @@ class MyFormHelper extends FormHelper
     }
     
     protected $nameToOptionsMap;
+    protected $country = '';
+    protected $options = array();
+    protected $labels = array();
+    protected $errors = null;
     
-    protected function setNameToOptionsMap() {
+    protected function setupForm() {
         $this->nameToOptionsMap = array(
             'firstName' => array('label' => 'First Name'),
             'lastName' => array('label' => 'Last Name', 'stripe' => 'name'),
@@ -47,18 +61,7 @@ class MyFormHelper extends FormHelper
             'address2' => array('label' => 'Address 2', 'stripe' =>'address_line2'),
             'city' => array('label' => 'City', 'stripe' => 'address_city'),
         );
-    }
-    
-    /**
-     * @param enum $type 'billing or 'shipping'
-     * @param array $data Form data: country, statesProvinces, errors
-     */
-    public function addressForm($type, $data, $stripe = false, $required = false) {   
-        $country = $data['country']; 
-        $errors = isset($data['errors'][$type]) ? $data['errors'][$type] : null; 
         
-        $this->setNameToOptionsMap();
-        $requiredAttrs = array('firstName', 'lastName', 'address1', 'city', 'state', 'postalCode', 'countryName', 'country');
         $this->inputDefaults(array(
                 'label' => array('class' => 'control-label col-xs-12 col-sm-4 col-md-4 col-lg-4'),
                 'div' => 'form-group row',
@@ -67,78 +70,63 @@ class MyFormHelper extends FormHelper
                 'after' => '</div></div>'
             )
         );
-
-        switch ($country){
-            case 'us':
-                $this->nameToOptionsMap['state'] = array(
-                    'label' => 'State',
-                    'stripe' => 'address_state',
-                    'class' => 'form-control',
-                    'options' => $data['statesProvinces']['states'],
-                    'empty' => 'Choose One',
-                 );
-                $this->nameToOptionsMap['postalCode'] = array(
-                    'label' => 'Zip Code',
-                    'stripe' => 'address_zip',
-                    'class' => 'form-control',
-                    'size' => '5',
-                );
-                $this->nameToOptionsMap['country'] = array(
-                    'type' => 'hidden', 
-                    'stripe' => 'address_country', 
-                    'value' => 'US'
-                );
-                break;
-            case 'ca':
-                $this->nameToOptionsMap['state'] = array(
-                    'label' => 'Province',
-                    'stripe' => 'address_state',
-                    'class' => 'form-control',
-                    'options' => $data['statesProvinces']['provinces'],
-                    'empty' => 'Choose One',
-                 );
-                $this->nameToOptionsMap['postalCode'] = array(
-                    'label' => 'Postal Code',
-                    'stripe' => 'address_zip',
-                    'class' => 'form-control',
-                    'size' => '7',
-                );
-                $this->nameToOptionsMap['country'] = array(
-                    'type' => 'hidden', 
-                    'stripe' => 'address_country', 
-                    'value' => 'CA'
-                );
-                break;
-            case 'us-ca':
-                $options = array('U.S.' => $data['statesProvinces']['states'], 'Canada' => $data['statesProvinces']['provinces']);
-                $this->_getCommonFields($options);
-                break;
-            case 'ca-us':
-                $options = array('Canada' => $data['statesProvinces']['provinces'], 'U.S.' => $data['statesProvinces']['states']);
-                $this->_getCommonFields($options);
-                break;
-            case 'other':
-                $this->nameToOptionsMap['postalCode'] = array(
-                    'label' => 'Postal Code',
-                    'stripe' => 'address_zip',
-                    'class' => 'form-control',
-                    'size' => '7',
-                );
-                if ($stripe == true) {
-                    $tooltip = $this->Html->link('<i class="glyphicon glyphicon-question-sign"></i>', '#', array(
-                            'title' => 'Enter any portion of the country name and select your country from the options that appear.',
-                            'class' => 'launch-tooltip',
-                            'data-toggle' => 'tooltip',
-                            'data-placement' => 'top',
-                            'escape' => false
-                        )
-                    );
-                    $this->nameToOptionsMap['countryName'] = array('label' => 'Country ' . $tooltip, 'placeholder' => 'Full Name, No Abbreviations.');
-                }
-                $this->nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country');
-                break;
+    }
+    
+    /**
+     * @param enum $type 'billing or 'shipping'
+     * @param bool $stripe A field that stripe API is using
+     * @param bool $required Field is required
+     * @param string $class Class for dual state/province field
+     * @return string The form HTML
+     */
+    public function addressForm($type, $stripe = false, $required = false, $class = '') {   
+        $this->setupForm();
+        if (!empty($this->options)) {
+            $classes = array('form-control');
+            if (!empty($class)) {
+                $classes[] = $class;
+            }
+            $this->nameToOptionsMap['state'] = array(
+                'label' => $this->labels[$type]['region'],
+                'stripe' => 'address_state',
+                'options' => $this->options[$type],
+                'empty' => 'Choose One',
+                'class' => implode(' ', $classes), 
+            );
         }
+        $this->nameToOptionsMap['postalCode'] = array(
+            'label' => $this->labels[$type]['postal'],
+            'stripe' => 'address_zip',
+            'class' => 'form-control' 
+        );
         
+        $countryAttributes = array(
+            'type' => 'hidden', 
+            'stripe' => 'address_country',
+        );
+        if (empty($this->request->data['Address'][$type]['country'])) {
+            $countryAttributes['value'] = in_array($this->country, ['US', 'CA']) ? $this->country : '';
+        } 
+        $this->nameToOptionsMap['country'] = $countryAttributes;
+
+        if (strcasecmp($this->country, 'other')==0 && $stripe) {
+            $tooltip = $this->Html->link('<span class="glyphicon glyphicon-question-sign"></span>', '#', array(
+                    'title' => 'Enter any portion of the country name and select your country from the options that appear.',
+                    'class' => 'launch-tooltip',
+                    'data-toggle' => 'tooltip',
+                    'data-placement' => 'top',
+                    'escape' => false
+                )
+            );
+            $this->nameToOptionsMap['countryName'] = array(
+                'label' => 'Country ' . $tooltip, 
+                'placeholder' => 'Full Name, No Abbreviations.'
+            );
+        } 
+
+        // Uses $type, $data, $stripe, $required
+        $requiredAttrs = array('firstName', 'lastName', 'address1', 'city', 'state', 'postalCode', 'countryName', 'country');
+        $errors = isset($this->errors[$type]) ? $this->errors[$type] : null; 
         $form = '';
         foreach($this->nameToOptionsMap as $name => $attrs){
             //Label
@@ -154,7 +142,7 @@ class MyFormHelper extends FormHelper
                 $options['required'] = false;
             }
             //All others
-            $common = array('options', 'empty', 'class', 'size', 'value', 'type', 'placeholder');
+            $common = array('options', 'empty', 'class', 'value', 'type', 'placeholder');
             foreach($common as $item){
                 if(isset($attrs[$item])){
                     $options[$item] = $attrs[$item];
@@ -178,8 +166,7 @@ class MyFormHelper extends FormHelper
     /*
      * Pass in the Order, return a checkbox to delete the shipping address
      */
-    public function shippingDelete($order)
-    {
+    public function shippingDelete($order) {
         $shippingAddress = array_filter($order['Address'], function($item){
             return strcasecmp($item['type'], 'shipping')==0;
         });
@@ -189,8 +176,7 @@ class MyFormHelper extends FormHelper
         return $this->checkbox('delete_shipping_address', array('value' => $id, 'hiddenField' => false));
     }
     
-    public function ccd($payment_type = '')
-    {
+    public function ccd($payment_type = '') {
         $options = array(
                         'name' => false,
                         'data-stripe' => 'number',
@@ -215,28 +201,30 @@ class MyFormHelper extends FormHelper
         return $this->input('Card.number', $options);
     }
     
-    public function cvc($payment_type = '')
-    {
+    public function cvc($payment_type = '') {
         $options = array(
-                        'name' => false,
-                        'data-stripe' => 'cvc',
-                        'autocomplete' => 'off',
-                        'placeHolder' => 'CVC',
-                        'class' => 'card-cvc form-control',
-                        'label' => array('text' => 'CVC <a class="launch-tooltip"
-                                                    data-toggle="tooltip" data-placement="top"
-                                                    title="The CVC is the three-digit number
-                                                    that appears on the reverse side of your
-                                                    credit/debit card.">
-                                                    <span class="glyphicon glyphicon-question-sign"></span>
-                                                    </a>',
-                                         'class' => 'control-label col-xs-11 col-sm-4 col-md-4 col-lg-4'
-                                         ),
-                        'div' => array('class' => 'cvc-div input required'),
-                        'required' => 'required',
-                        'between' => '<div class="col-xs-11 col-sm-7 col-md-7 col-lg-7">',
-                        'after' => '</div>'
-                    );
+            'name' => false,
+            'data-stripe' => 'cvc',
+            'autocomplete' => 'off',
+            'placeHolder' => 'CVC',
+            'class' => 'card-cvc form-control',
+            'label' => array(
+                'text' => 'CVC <a class="launch-tooltip"
+                            data-toggle="tooltip" data-placement="top"
+                            title="The CVC is the three-digit number
+                            that appears on the reverse side of your
+                            credit/debit card.">
+                            <span class="glyphicon glyphicon-question-sign"></span>
+                            </a>',
+                             'class' => 'control-label col-xs-11 col-sm-4 col-md-4 col-lg-4'
+                 ),
+                 'div' => array(
+                     'class' => 'cvc-div input required'
+                 ),
+            'required' => 'required',
+            'between' => '<div class="col-xs-11 col-sm-7 col-md-7 col-lg-7">',
+            'after' => '</div>'
+        );
         
         switch ($payment_type) {
             case 'invoice':
@@ -247,8 +235,7 @@ class MyFormHelper extends FormHelper
         return $this->input('Card.cvc', $options);
     }
     
-    public function expy($payment_type = '')
-    {
+    public function expy($payment_type = '') {
         switch ($payment_type) {
             case 'invoice':
                 $div = 'col-xxs-6 col-xs-6 col-sm-6 col-md-6 col-lg-6';
@@ -286,8 +273,7 @@ class MyFormHelper extends FormHelper
     /**
      * Disable editing line item or shipping if invoice is paid.
      */
-    public function invoiceItem($fieldName, $options = array(), $invoice = array())
-    {
+    public function invoiceItem($fieldName, $options = array(), $invoice = array()) {
         if (isset($invoice['Payment']) && $invoice['Payment']['stripe_paid'] == 1) {
             $options['disabled'] = 'disabled';
         }
@@ -306,26 +292,11 @@ class MyFormHelper extends FormHelper
         return array_combine(range(1,12), $formatted);
     }
     
-    protected function _years()
-    {
+    protected function _years() {
         $year = date('Y'); 
         for($i=date('Y'); $i<=date('Y')+10; $i++){
             $years[$i] = $i;
         }
         return $years;
-    }
-    
-    protected function _getCommonFields($options)
-    {
-        $this->nameToOptionsMap['state'] = array('label' => 'State or Province',
-                                                 'stripe' => 'address_state',
-                                                 'options' => $options,
-                                                 'empty' => 'Choose One',
-                                                 'class' => 'us-ca form-control');
-        $this->nameToOptionsMap['postalCode'] = array('label' => 'Zip/Postal Code',
-                                                      'stripe' => 'address_zip',
-                                                      'class' => 'form-control',
-                                                      );
-        $this->nameToOptionsMap['country'] = array('type' => 'hidden', 'stripe' => 'address_country');
     }
 }

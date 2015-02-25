@@ -35,13 +35,12 @@
                         </legend>
                         <?php echo $this->Form->input('Address.'.$i.'.id', array('type' => 'hidden', 'value' => $address['id'])); ?>
                         <?php foreach ($addressFields as $field): ?>
-                                <?php $options = array('value' => isset($address[$field]) ? $address[$field] : ''); ?>
+                                <?php $options = array(
+                                    'value' => isset($address[$field]) ? $address[$field] : '',
+                                ); ?>
                                 <?php if (strcasecmp($field, 'state')==0 && in_array($address['country'], array('US', 'CA'))): ?>
-                                        <?php if (strcasecmp($address['country'], 'US')==0): ?>
-                                                <?php $options['options'] = $statesUS; ?>
-                                        <?php elseif (strcasecmp($address['country'], 'CA')==0): ?>
-                                                <?php $options['options'] = $statesCA; ?>
-                                        <?php endif; ?>
+                                    <?php $options['options'] = $regions[$address['country']]; ?>
+                                    <?php $options['empty'] = 'Select One'; ?>
                                 <?php elseif (strcasecmp($field, 'state')==0): ?>
                                         <?php continue; ?>
                                 <?php endif; ?>
