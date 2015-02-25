@@ -433,15 +433,17 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->Session->write('Address.data.billing', $this->address);
         $errorMessage = 'Please enter a postal code.';
         $this->Session->write('Address.errors.billing.postalCode', array($errorMessage));
-        $expectedTags = array(
+        $expectedTag = array(
             'tag' => 'input',
             'attributes' => array(
-                'value' => 'Irwin',
+                'value' => '2215 Gateway Road',
+                'id' => 'AddressBillingAddress1',
+                'type' => 'text',
             ),
         );
 
         $result = $this->testAction($url, $options);
-        $this->assertTag($expectedTags, $result);
+        $this->assertTag($expectedTag, $result);
     }
 
     /**
@@ -486,20 +488,31 @@ class OrdersControllerTest extends ControllerTestCase {
 
         unset($this->address['state']); 
         unset($this->address['postalCode']); 
+        $this->address['country'] = 'FR';
         $this->Session->write('Address.data.billing', $this->address);
         $this->Session->write('Address.data.shipping', $this->address);
         $errorMessage = 'Please enter a postal code.';
         $this->Session->write('Address.errors.billing.postalCode', array($errorMessage));
         $this->Session->write('Address.errors.shipping.postalCode', array($errorMessage));
-        $expectedTags = array(
+
+        $result = $this->testAction($url, $options);
+        $expectedTag = array(
             'tag' => 'input',
             'attributes' => array(
                 'value' => 'Irwin',
+                'id' => 'AddressBillingLastName'
             ),
         );
+        $this->assertTag($expectedTag, $result);
 
-        $result = $this->testAction($url, $options);
-        $this->assertTag($expectedTags, $result);
+        $expectedTag = array(
+            'tag' => 'input',
+            'attributes' => array(
+                'value' => 'FR',
+                'id' => 'AddressBillingCountry'
+            ),
+        );
+        $this->assertTag($expectedTag, $result);
 	}
 
     public function testGetOtherShippingAddressErrorsData() {
@@ -537,10 +550,45 @@ class OrdersControllerTest extends ControllerTestCase {
  *
  * @return void
  */
-	public function testGetCountry() {
-		$this->markTestIncomplete('testGetCountry not implemented.');
+	public function testGetCountryUs() {
+        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        $query = array(
+            'data' => array(
+                'Address' => array(
+                    'billing' => array(
+                        'state' => 'WI'
+                    ),
+                ),
+            ),
+        );
+        $options = array(
+            'return' => 'vars'
+        );
+        $url = Router::url(array('controller' => 'orders', 'action' => 'getCountry.json', '?' => $query));
+        $result = $this->testAction($url, $options);
+        $this->assertEquals('US', $result['data']['country']); 
+        $this->assertEquals('Billing', $result['data']['type']);
 	}
 
+	public function testGetCountryCa() {
+        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        $query = array(
+            'data' => array(
+                'Address' => array(
+                    'billing' => array(
+                        'state' => 'AB'
+                    ),
+                ),
+            ),
+        );
+        $options = array(
+            'return' => 'vars'
+        );
+        $url = Router::url(array('controller' => 'orders', 'action' => 'getCountry.json', '?' => $query));
+        $result = $this->testAction($url, $options);
+        $this->assertEquals('CA', $result['data']['country']); 
+        $this->assertEquals('Billing', $result['data']['type']);
+	}
 /**
  * testGetShippingChoice method
  *
