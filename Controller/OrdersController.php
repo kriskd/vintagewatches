@@ -376,7 +376,7 @@ class OrdersController extends AppController
 
             $country = $this->Region->find('first', [
                 'conditions' => [
-                    'abbreviation' => $state,
+                    'Region.abbreviation' => $state,
                 ],
                 'fields' => [
                     'country'
