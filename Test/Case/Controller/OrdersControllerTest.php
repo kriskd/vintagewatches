@@ -545,8 +545,9 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->assertContains('Postal Code', $data['labels']['shipping']);
         $this->assertContains('Postal Code', $data['labels']['billing']);
 	}
+
 /**
- * testGetCountry method
+ * Test getCountry with US state 
  *
  * @return void
  */
@@ -570,6 +571,9 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->assertEquals('Billing', $result['data']['type']);
 	}
 
+    /**
+     * Test getCountry with Canadian province
+     */
 	public function testGetCountryCa() {
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $query = array(
@@ -587,6 +591,29 @@ class OrdersControllerTest extends ControllerTestCase {
         $url = Router::url(array('controller' => 'orders', 'action' => 'getCountry.json', '?' => $query));
         $result = $this->testAction($url, $options);
         $this->assertEquals('CA', $result['data']['country']); 
+        $this->assertEquals('Billing', $result['data']['type']);
+	}
+
+    /**
+     * Test getCountry with invalid state
+     */
+    public function testGetCountryBad() {
+        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        $query = array(
+            'data' => array(
+                'Address' => array(
+                    'billing' => array(
+                        'state' => 'xxx'
+                    ),
+                ),
+            ),
+        );
+        $options = array(
+            'return' => 'vars'
+        );
+        $url = Router::url(array('controller' => 'orders', 'action' => 'getCountry.json', '?' => $query));
+        $result = $this->testAction($url, $options);
+        $this->assertEquals('', $result['data']['country']); 
         $this->assertEquals('Billing', $result['data']['type']);
 	}
 /**
