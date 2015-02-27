@@ -267,16 +267,15 @@ class OrdersController extends AppController
         $this->set(compact('title') + array('watches' => $this->cartWatches));
     }
 
-    public function add($id = null)
-    {   
+    public function add($id = null) {   
         if (!$this->Watch->sellable($id)) {
-            $this->redirect(array('action' => 'checkout'));
+            return $this->redirect(array('controller' => 'watches', 'action' => 'index'));
         }
 
         if($this->Cart->inCart($id)){
             $this->Session->setFlash('That item is already in your cart.',
                 'info', array('class' => 'alert alert-info'));
-            $this->redirect(array('controller' => 'watches', 'action' => 'index'));
+            $this->redirect(array('action' => 'checkout'));
         }
 
         $this->Cart->add($id);
