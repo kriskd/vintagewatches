@@ -79,7 +79,14 @@ class OrdersControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testView() {
-		$this->markTestIncomplete('testView not implemented.');
+        $this->Session->write('Watch.Order.email', 'PeterRHarris@teleworm.us');
+        $this->Session->write('Watch.Address.postalCode', '61602');
+        $this->testAction('/orders/view/1', ['method' => 'get', 'return' => 'vars']);
+        $order = $this->vars['order'];
+        $this->assertEquals($order['Order']['phone'], '260-423-3273');
+        $this->assertEquals($order['Payment']['stripe_amount'], '69100');
+        $this->assertEquals($order['Address'][0]['lastName'], 'Harris');
+        $this->assertEquals($order['Watch'][0]['price'], '695.00');
 	}
 
 /**
@@ -220,8 +227,24 @@ class OrdersControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdd() {
-		$this->markTestIncomplete('testAdd not implemented.');
+        $this->testAction('/orders/add/3', ['method' => 'get', 'return' => 'vars']);
+        $session = $this->Session->read('Cart.items');
+        $this->assertEquals(3, current($session));
+        $this->assertContains('/orders/checkout', $this->headers['Location']); 
 	}
+
+    public function testAddNotSellable() {
+        $this->testAction('/orders/add/1', ['method' => 'get', 'return' => 'vars']);
+        $this->assertContains('/watches', $this->headers['Location']); 
+    }
+
+    public function testAddInCart() {
+        $this->Session->write('Cart.items', [3]);
+        $this->testAction('/orders/add/3', ['method' => 'get', 'return' => 'vars']);
+        $message = $this->Session->read('Message.flash.message');
+        $this->assertEquals('That item is already in your cart.', $message);
+        $this->assertContains('/orders/checkout', $this->headers['Location']); 
+    }
 
 /**
  * testRemove method
