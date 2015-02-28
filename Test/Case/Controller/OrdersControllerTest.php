@@ -221,6 +221,76 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->assertEquals($order['Payment']['stripe_id'], 'ch_5dYcjsXUf5Gzy1');
         $this->assertEquals($order['Watch'][0]['id'], 1);
 	}
+    
+    public function testCheckoutCoupon() {
+        $order = array(
+            'stripeToken' => 'tok_5dC2WijiayVQOK',
+            'Address' => array(
+                'select-country' => 'us',
+                'billing' => $this->address,
+            ),
+            'Coupon' => array(
+                'email' => 'SandraPIrvin@armyspy.com',
+                'code' => 'fixedgood'
+            ),
+            'Shipping' => array(
+                'option' => 'billing'
+            ),
+            'Order' => array(
+                'email' => 'SandraPIrvin@armyspy.com',
+                'phone' => '503-326-9436',
+                'notes' => ''
+            )
+        );
+        $Orders = $this->generate('Orders', array(
+            'components' => array(
+                'Session',
+                'Cart' => array('cartEmpty', 'cartItemCount', 'cartItemIds'),
+                'Stripe.Stripe' => array('charge'),
+                'Session',
+            )
+        ));
+        $Orders->Cart->expects($this->any())
+            ->method('cartEmpty')
+            ->will($this->returnValue(false));
+        $Orders->Cart->expects($this->any())
+            ->method('cartItemCount')
+            ->will($this->returnValue(1));
+        $Orders->Cart->expects($this->any())
+            ->method('cartItemIds')
+            ->will($this->returnValue(array(3)));
+        $Orders->Stripe->expects($this->any())
+            ->method('charge')
+            ->will($this->returnValue(array(
+                'stripe_paid' => 1,
+                'stripe_id' => 'ch_5dBkC3pJMgqjkD',
+                'stripe_last4' => '4242',
+                'stripe_zip_check' => 'pass',
+                'stripe_cvc_check' => 'pass',
+                'stripe_amount' => '15300',
+            )));
+
+        $this->testAction(
+            '/orders/checkout',
+            array(
+                'data' => $order, 
+                'method' => 'post',
+                'return' => 'vars', 
+            )
+        );
+        
+        $order = $this->Order->find('first', array(
+            'order' => array(
+                'Order.created' => 'DESC',
+            )
+        ));
+
+        $this->assertEquals($order['Order']['email'], 'SandraPIrvin@armyspy.com');        
+        $this->assertEquals(30, $order['Coupon']['amount']);
+        $this->assertEquals($order['Address'][0]['country'], 'US');
+        $this->assertEquals('15300', $order['Payment']['stripe_amount']);
+        $this->assertEquals($order['Watch'][0]['id'], 3);
+	}
 /**
  * testAdd method
  *
