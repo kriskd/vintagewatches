@@ -5,3 +5,5 @@ branches:
     except:
         - feature/free-order
         - presenters
+git:
+    submodules: false
