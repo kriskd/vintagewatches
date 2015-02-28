@@ -9,4 +9,4 @@ git:
     submodules: false
 before_script:
     - sh -c "composer global require 'phpunit/phpunit=3.7.33'"
-    - sh -c "ln -s ~/.composer/vendor/phpunit/phpunit/PHPUnit ./vendors/PHPUnit"
+    - sh -c "ln -s ~/.composer/vendor/phpunit/phpunit/PHPUnit ./Vendor/phpunit/phpunit/PHPUnit"
