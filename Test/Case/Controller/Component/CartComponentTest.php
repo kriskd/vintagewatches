@@ -5,6 +5,7 @@ App::uses('CakeRequest', 'Network');
 App::uses('CakeResponse', 'Network');
 App::uses('Component', 'Controller');
 App::uses('CartComponent', 'Controller/Component');
+App::uses('SessionComponent', 'Controller/Component');
 
 // A fake controller to test against
 class FakeControllerTest extends Controller {
@@ -61,6 +62,7 @@ class CartComponentTest extends CakeTestCase {
         $CakeResponse = new CakeResponse();
         $this->Controller = new FakeControllerTest($CakeRequest, $CakeResponse);
         $this->Cart->startup($this->Controller);
+        $this->Controller->Session = new SessionComponent($Collection);
 	}
 
 /**
@@ -134,6 +136,9 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testInCart() {
+        $this->Controller->Session->write('Cart.items', [3,5]);
+        $this->Cart->initialize($this->Controller);
+        $result = $this->Cart->inCart(3);
 		$this->markTestIncomplete('testInCart not implemented.');
 	}
 

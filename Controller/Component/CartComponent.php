@@ -22,10 +22,7 @@ class CartComponent extends Component
     }
     
     public function cartEmpty() {
-        if(!empty($this->items)){
-            return false;
-        }
-        return true;
+        return empty($this->items) ? true : false;
     }
     
     public function cartItemCount() {
@@ -47,7 +44,7 @@ class CartComponent extends Component
      */
     public function add($id) {
         $this->items[] = $id; 
-        $this->Session->write('Cart.items', $this->items);
+        return $this->Session->write('Cart.items', $this->items);
     }
     
     /**
@@ -57,15 +54,13 @@ class CartComponent extends Component
         if(in_array($id, $this->items)){
             $key = array_search($id, $this->items);
             unset($this->items[$key]); 
-            $this->Session->write('Cart.items', $this->items);
+            return $this->Session->write('Cart.items', $this->items);
         }
+        return false;
     }
     
     public function inCart($id = null) {
-        if(is_array($this->items) && in_array($id, $this->items)){
-            return true;
-        }
-        return false;
+        return is_array($this->items) && in_array($id, $this->items);
     }
 
     public function getShippingAmount($country = '') {

@@ -3,6 +3,7 @@ App::uses('WatchesController', 'Controller');
 App::uses('CakeRequest', 'Network');
 App::uses('ComponentCollection', 'Controller');
 App::uses('SessionComponent', 'Controller/Component');
+App::uses('Watch', 'Model');
 
 class WatchesControllerTest extends ControllerTestCase {
     
@@ -25,21 +26,27 @@ class WatchesControllerTest extends ControllerTestCase {
 		//'app.content'
 	);
     
+    public function setUp() {
+        parent::setUp();
+        $this->Watch = ClassRegistry::init('Watch');
+        $this->ComponentCollection = new ComponentCollection();
+        $this->Session = new SessionComponent($this->ComponentCollection);
+    }
+
     public function testIndex() {
+		$this->markTestIncomplete('testIndex not implemented.');
         $result = $this->testAction('/watches/index');
-        debug($result);
     }
 
     public function testOrder() {
-        $this->ComponentCollection = new ComponentCollection();
-        $Session = new SessionComponent($this->ComponentCollection);
+        $this->Session->write('Watch.Order.email', 'PeterRHarris@teleworm.us');
+        $this->Session->write('Watch.Address.postalCode', '61602');
 
-        $Session->write('Order.email', 'PeterRHarris@teleworm.us');
-        $Session->write('Address.postalCode', '61602');
         $results = $this->testAction('/watches/order/1', array(
             'method' => 'GET',
             'return' => 'vars',
         ));
+        
         $this->assertNotEmpty($results['title']);
     }
 }
