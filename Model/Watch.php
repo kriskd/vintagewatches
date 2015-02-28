@@ -331,9 +331,9 @@ class Watch extends AppModel {
         if (is_array($item)) {
             $item = current($item);
             return $this->getValue($item);
-        } else {
-            return $item;
-        }
+        } 
+
+        return $item;
     }
 
 }
