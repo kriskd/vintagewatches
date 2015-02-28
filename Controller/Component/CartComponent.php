@@ -22,10 +22,7 @@ class CartComponent extends Component
     }
     
     public function cartEmpty() {
-        if(!empty($this->items)){
-            return false;
-        }
-        return true;
+        return empty($this->items) ? true : false;
     }
     
     public function cartItemCount() {
