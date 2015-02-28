@@ -216,7 +216,9 @@ $(document).ready(function(){
     }
 
     $('.cart-details').on('change', 'input', function() {
-      computeTotal();
+      if ($('.select-country input:radio').is(':checked')) {
+        computeTotal();
+      }
     });
 
     /**
@@ -234,7 +236,6 @@ $(document).ready(function(){
         if (couponEmail.length > 0) {
           var orderEmail = $(this).val();
           $('#CouponEmail').val(orderEmail);
-          computeTotal();
         }
       });
 
