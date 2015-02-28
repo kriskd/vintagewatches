@@ -318,11 +318,22 @@ class Watch extends AppModel {
             'recursive' => -1,
         ));
 
-        while (is_array($sum)) {
-            $sum = current($sum);
-        }
+        return $this->getValue($sum); 
+    }
 
-        return $sum;
+    /**
+     * Get last value in a nested array
+     *
+     * @param $item array
+     * @return mixed string|int
+     */
+    protected function getValue($item) {
+        if (is_array($item)) {
+            $item = current($item);
+            return $this->getValue($item);
+        } else {
+            return $item;
+        }
     }
 
 }
