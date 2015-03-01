@@ -24,8 +24,8 @@ class OrderTest extends CakeTestCase {
 		'app.address',
 		'app.country',
 		'app.region',
-		'app.detect',
-		'app.detects_order'
+		//'app.detect',
+		//'app.detects_order'
 	);
 
 /**

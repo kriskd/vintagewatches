@@ -22,8 +22,8 @@ class CouponTest extends CakeTestCase {
 		'app.watch',
 		'app.brand',
 		'app.image',
-		'app.detect',
-		'app.detects_order'
+		//'app.detect',
+		//'app.detects_order'
 	);
 
 /**
