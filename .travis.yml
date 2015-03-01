@@ -7,6 +7,12 @@ branches:
         - presenters
 git:
     submodules: false
+install:
+    - composer install --dev --no-interaction
 before_script:
     - sh -c "composer global require 'phpunit/phpunit=3.7.33'"
     - sh -c "ln -s ~/.composer/vendor/phpunit/phpunit/PHPUnit ./Vendor/PHPUnit"
+script:
+    - sh -c "Console/cake test core AllTests --stderr"
+notifications:
+    email: false
