@@ -26,7 +26,6 @@ class OrderFixture extends CakeTestFixture {
 		),
 		'tableParameters' => array('charset' => 'utf8', 'collate' => 'utf8_general_ci', 'engine' => 'InnoDB')
     );
-    //public $import = array('model' => 'Order', 'connection' => 'development');
 
     public $records = array();
 
