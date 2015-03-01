@@ -132,7 +132,7 @@ before_script:
             'password' => '123',
             'client' => null,
             'log' => true,
-        );" > Config.email.php
+        );" > Config/email.php
 script:
     - sh -c "Console/cake test app AllTests --stderr"
 notifications:
