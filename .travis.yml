@@ -10,8 +10,29 @@ git:
 install:
     - composer install --dev --no-interaction
 before_script:
-    - sh -c "composer global require 'phpunit/phpunit=3.7.33'"
-    - sh -c "ln -s ~/.composer/vendor/phpunit/phpunit/PHPUnit ./Vendor/PHPUnit"
+    - phpenv rehash
+    - mysql -e 'DROP DATABASE IF EXISTS `travis_app`; CREATE DATABASE `travis_app`;'
+    - echo "<?php
+      class DATABASE_CONFIG {
+          public \$default = array(
+              'datasource' => 'Database/Mysql',
+              'host' => '0.0.0.0',
+              'persistent' => false,
+              'login' => 'travis',
+              'password' => '',
+              'database' => 'travis_app',
+              'prefix' => '',
+          );
+          public \$test = array(
+              'datasource' => 'Database/Mysql',
+              'host' => '0.0.0.0',
+              'persistent' => false,
+              'login' => 'travis',
+              'password' => '',
+              'database' => 'travis_app',
+              'prefix' => '',
+          );
+      }" > Config/database.php
 script:
     - sh -c "Console/cake test core AllTests --stderr"
 notifications:
