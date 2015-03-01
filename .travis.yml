@@ -122,17 +122,19 @@ before_script:
         require CAKE . 'Config' . DS . 'routes.php';
       " > Config/routes.php
     - echo "<?php
-        public \$smtp = array(
-            'transport' => 'Smtp',
-            'from' => array('foo@bar.com' => 'Foo Bar'),
-            'host' => 'mail.bar.com',
-            'port' => 587,
-            'timeout' => 30,
-            'username' => 'foo@bar.com',
-            'password' => '123',
-            'client' => null,
-            'log' => true,
-        );" > Config/email.php
+        class EmailConfig {
+            public \$smtp = array(
+                'transport' => 'Smtp',
+                'from' => array('foo@bar.com' => 'Foo Bar'),
+                'host' => 'mail.bar.com',
+                'port' => 587,
+                'timeout' => 30,
+                'username' => 'foo@bar.com',
+                'password' => '123',
+                'client' => null,
+                'log' => true,
+            );
+        }" > Config/email.php
 script:
     - sh -c "Console/cake test app AllTests --stderr"
 notifications:
