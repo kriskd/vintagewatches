@@ -91,16 +91,16 @@ before_script:
                 'pass' => array('slug')
             )
         );
-	    Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
+        Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
         Router::connect('/admin', array('controller' => 'orders', 'action' => 'index', 'admin' => true));
-	    CakePlugin::routes();
+        CakePlugin::routes();
         Router::parseExtensions('json', 'html', 'xml');
         Router::redirect('/index/*', array('controller' => 'pages', 'action' => 'display', 'home'), array('status' => 301));
         Router::redirect('/store/*', array('controller' => 'watches', 'action' => 'index'), array('status' => 301));
         Router::redirect('/essentials/*', array('controller' => 'pages', 'action' => 'display', 'essential-information', array('status' => 301)));
         Router::redirect('/buy/*', array('controller' => 'pages', 'action' => 'display', 'sell-trade'), array('status' => 301));
         Router::redirect('/gruenbook/*', array('controller' => 'watches', 'action' => 'index'), array('status' => 301));
-	    require CAKE . 'Config' . DS . 'routes.php';
+        require CAKE . 'Config' . DS . 'routes.php';
       " > Config/routes.php
 script:
     - sh -c "Console/cake test app AllTests --stderr"
