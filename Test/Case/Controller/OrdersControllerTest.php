@@ -27,7 +27,7 @@ class OrdersControllerTest extends ControllerTestCase {
 		//'app.invoice_item',
 		'app.address',
 		'app.detect',
-		'app.detects_order',
+		'app.detectsorder',
 		'app.image',
 		'app.state',
 		'app.province',
