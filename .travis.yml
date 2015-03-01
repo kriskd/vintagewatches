@@ -33,6 +33,29 @@ before_script:
               'prefix' => '',
           );
       }" > Config/database.php
+    - echo "<?php
+        App::import('Vendor', 'autoload');
+        CakePlugin::loadAll(array(
+                array('bootstrap' => false),
+                'Stripe' => array('routes' => false)
+            )
+        );
+        CakePlugin::load(
+            'HtmlPurifier', array('bootstrap' => true)
+        );
+        Configure::write('ordersEmail', 'foo@bar.com');
+        Configure::write('contactFormEmail', 'foo@bar.com');
+        Configure::write('fromEmail', array('foo@bar.com' => 'Foo Bar'));
+      }" > Config/bootstrap.php
+    - echo "<?php
+        Configure::write('debug', 2);
+        Configure::write('Routing.prefixes', array('admin'));
+        Configure::write('Session', array(
+            'defaults' => 'database',
+                    'checkAgent' => false,
+                    'ini', array('session.cookie_secure' => false, 'session.referer_check' => false)
+        ));
+      }" > Config/core.php
 script:
     - sh -c "Console/cake test core AllTests --stderr"
 notifications:
