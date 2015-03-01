@@ -38,6 +38,9 @@ before_script:
         function prod() {
             return false;
         } 
+        function stage() {
+            return false;
+        } 
         App::import('Vendor', 'autoload');
         CakePlugin::loadAll(array(
                 array('bootstrap' => false),
