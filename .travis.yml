@@ -43,7 +43,20 @@ before_script:
                 array('bootstrap' => false),
                 'Stripe' => array('routes' => false)
             )
-        );
+        ); 
+        Configure::write('Stripe.TestSecret', 'sk_test_abcdefghijklmnopqrstuvwx');
+        Configure::write('Stripe.TestPublishable', 'pk_test_abcdefghijklmnopqrstuvwx');
+        Configure::write('Stripe.currency', 'usd');
+        Configure::write('Stripe.mode', 'Test');
+        Configure::write('Stripe.fields', array(
+            'stripe_id' => 'id',
+            'stripe_last4' => array('card' => 'last4'),
+            'stripe_address_check' => array('card' => 'address_line1_check'),
+            'stripe_zip_check' => array('card' => 'address_zip_check'),
+            'stripe_cvc_check' => array('card' => 'cvc_check'),
+            'stripe_paid' => 'paid',
+            'stripe_amount' => 'amount'
+        ));
         CakePlugin::load(
             'HtmlPurifier', array('bootstrap' => true)
         );
