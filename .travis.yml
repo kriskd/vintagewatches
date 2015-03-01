@@ -43,6 +43,10 @@ before_script:
         CakePlugin::load(
             'HtmlPurifier', array('bootstrap' => true)
         );
+        Purifier::config('MyPurifier', array(
+            'HTML.AllowedElements' => 'a,em,blockquote,p,strong,small,pre,code,span,ul,ol,li,img,h1,h2,h3,h4,h5,h6,br,hr'
+        ));
+        Purifier::config('StripAll', array('HTML.AllowedElements' => ''));
         Configure::write('ordersEmail', 'foo@bar.com');
         Configure::write('contactFormEmail', 'foo@bar.com');
         Configure::write('fromEmail', array(
@@ -52,6 +56,7 @@ before_script:
     - echo "<?php
         Configure::write('debug', 2);
         Configure::write('Routing.prefixes', array('admin'));
+	    Configure::write('App.encoding', 'UTF-8');
         Configure::write('Error', array(
             'handler' => 'ErrorHandler::handleError',
             'level' => E_ALL & ~E_DEPRECATED,
