@@ -11,6 +11,7 @@ install:
     - composer install --no-interaction
 before_script:
     - phpenv rehash
+    - chmod -R 777 Vendor/cakephp/cakephp/app/tmp
     - mysql -e 'DROP DATABASE IF EXISTS `travis_app`; CREATE DATABASE `travis_app`;'
     - echo "<?php
       class DATABASE_CONFIG {
