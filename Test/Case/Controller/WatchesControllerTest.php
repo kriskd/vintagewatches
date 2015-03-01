@@ -24,6 +24,7 @@ class WatchesControllerTest extends ControllerTestCase {
 		'app.country',
 		'app.page',
 		//'app.content'
+        'app.cake_session',
 	);
     
     public function setUp() {

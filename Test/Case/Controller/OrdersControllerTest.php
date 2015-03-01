@@ -35,6 +35,7 @@ class OrdersControllerTest extends ControllerTestCase {
 		'app.page',
         //'app.content',
         'app.region',
+        'app.cake_session',
 	);
 
     public $address = array(
