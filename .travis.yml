@@ -45,17 +45,19 @@ before_script:
         );
         Configure::write('ordersEmail', 'foo@bar.com');
         Configure::write('contactFormEmail', 'foo@bar.com');
-        Configure::write('fromEmail', array('foo@bar.com' => 'Foo Bar'));
-      }" > Config/bootstrap.php
+        Configure::write('fromEmail', array(
+                'foo@bar.com' => 'Foo Bar'
+            )
+        );" > Config/bootstrap.php
     - echo "<?php
         Configure::write('debug', 2);
         Configure::write('Routing.prefixes', array('admin'));
         Configure::write('Session', array(
             'defaults' => 'database',
-                    'checkAgent' => false,
-                    'ini', array('session.cookie_secure' => false, 'session.referer_check' => false)
-        ));
-      }" > Config/core.php
+                'checkAgent' => false,
+                'ini', array('session.cookie_secure' => false, 'session.referer_check' => false)
+            )
+        );" > Config/core.php
 script:
     - sh -c "Console/cake test core AllTests --stderr"
 notifications:
