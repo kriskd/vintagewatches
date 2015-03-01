@@ -35,6 +35,9 @@ before_script:
           );
       }" > Config/database.php
     - echo "<?php
+        function prod() {
+            return false;
+        } 
         App::import('Vendor', 'autoload');
         CakePlugin::loadAll(array(
                 array('bootstrap' => false),
