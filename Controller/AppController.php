@@ -49,7 +49,7 @@ class AppController extends Controller {
                                     'logoutRedirect' => array('controller' => 'users', 'action' => 'login', 'admin' => false),
                                     ),
                                'Paginator',
-                               'Navigation', 'Ebay'
+                               'Navigation', 'Ebay', 'Emailer',
                             );
     
     public $uses = array('Page', 'Watch', 'Brand');
