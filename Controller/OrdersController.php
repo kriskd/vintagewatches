@@ -4,7 +4,6 @@ App::uses('Address', 'Model');
 class OrdersController extends AppController
 {
     public $uses = array('Watch', 'Address', 'Order', 'Region', 'Country');
-    public $components = array('Emailer');
 
     public $paginate = array(
         'limit' => 10,
