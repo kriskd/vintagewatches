@@ -28,6 +28,7 @@
                         'controller' => 'watches',
                         'action' => 'order', $watch['id'],
                         'full_base' => true,
+                        'admin' => false,
                     ),
                 )); ?>
             </td>
@@ -36,6 +37,7 @@
                 'controller' => 'watches',
                 'action' => 'order', $watch['id'],
                 'full_base' => true,
+                'admin' => false,
             )); ?></td>
             <td style="text-align: right"><?php echo $this->Number->currency($watch['price'], 'USD'); ?></td>
         </tr>
