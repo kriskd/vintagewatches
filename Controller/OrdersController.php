@@ -4,6 +4,7 @@ App::uses('Address', 'Model');
 class OrdersController extends AppController
 {
     public $uses = array('Watch', 'Address', 'Order', 'Region', 'Country');
+    public $components = array('Emailer');
 
     public $paginate = array(
         'limit' => 10,
@@ -211,7 +212,7 @@ class OrdersController extends AppController
                     $address = current($address);
                     $postalCode = $address['postalCode']; 
                     $this->Session->write('Watch.Address.postalCode', $postalCode);
-                    $this->emailOrder($order);
+                    $this->Emailer->order($order);
                     $title = 'Thank You For Your Order';
                     $this->set(compact('order', 'title'));   
                     $this->Session->setFlash('<span class="glyphicon glyphicon-ok"></span> Thank you for your order.',
@@ -609,7 +610,7 @@ class OrdersController extends AppController
         }
 
         $order = $this->Order->getOrder($id);
-        $this->emailOrder($order);
+        $this->Emailer->order($order);
         $this->Session->setFlash('Order Confirmation Resent', 'success');
         $this->redirect($this->referer());
     }
@@ -633,45 +634,6 @@ class OrdersController extends AppController
         }
         $this->Session->setFlash(__('Order was not deleted'), 'danger');
         $this->redirect(array('action' => 'index'));
-    }
-
-    public function emailOrder($order = null)
-    {
-        $url = $this->referer(null, true);
-        $route = Router::parse($url);
-        $action = $route['action'];
-
-        if (strcasecmp($action, 'checkout')==0) {
-            $Email = new CakeEmail('smtp');
-            $Email->template('order_received', 'default')
-                ->emailFormat('html')
-                ->to(Configure::read('ordersEmail'))
-                ->from(Configure::read('fromEmail'))
-                ->subject('Order No. ' . $order['Order']['id'])
-                ->viewVars(array('order' => $order))
-                ->helpers(array('Html' => array('className' => 'MyHtml'),
-                    'Number' => array('className' => 'MyNumber')))
-                    ->send();
-        }
-
-        if (empty($order['Order']['shipDate'])) {
-            $subject = 'Thank you for your order from Bruce\'s Vintage Watches';
-        } else {
-            $subject = 'Your order from Bruce\'s Vintage Watches was shipped on ' . date('F j, Y', strtotime($order['Order']['shipDate']));
-        }
-
-        $Email = new CakeEmail('smtp');
-        $Email->template('order_received', 'default')
-            ->emailFormat('html')
-            ->to($order['Order']['email'])
-            ->from(Configure::read('fromEmail'))
-            ->subject($subject)
-            ->viewVars(array('order' => $order))
-            ->helpers(array('Html' => array('className' => 'MyHtml'),
-                'Number' => array('className' => 'MyNumber')))
-                ->send();
-
-        return;
     }
 
 }
