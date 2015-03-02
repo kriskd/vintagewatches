@@ -119,17 +119,7 @@ class InvoicesController extends AppController {
 						)
 					);
 					
-					$Email = new CakeEmail('smtp');
-					$Email->template('invoice', 'default')
-						->emailFormat('html')
-						->to($invoice['Invoice']['email'])
-						->bcc(Configure::read('ordersEmail'))
-						->from(Configure::read('fromEmail'))
-						->subject('Receipt from Bruce\'s Vintage Watches for Invoice No. ' . $invoice['Invoice']['id'])
-						->viewVars(compact('invoice'))
-						->helpers(array('Html' => array('className' => 'MyHtml'),
-								'Number' => array('className' => 'MyNumber')))
-						->send();
+                    $this->Emailer->invoice($invoice);
 					
 					$hideFatFooter = false;
 					$this->set(compact('invoice', 'hideFatFooter'));
