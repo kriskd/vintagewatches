@@ -121,6 +121,7 @@ class OrdersControllerTest extends ControllerTestCase {
                 'Cart' => array('cartEmpty', 'cartItemCount', 'cartItemIds'),
                 'Stripe.Stripe' => array('charge'),
                 'Session',
+                'Emailer' => array('order'),
             )
         ));
         $Orders->Cart->expects($this->any())
@@ -142,6 +143,9 @@ class OrdersControllerTest extends ControllerTestCase {
                 'stripe_cvc_check' => 'pass',
                 'stripe_amount' => '18300',
             )));
+        $Orders->Emailer->expects($this->any())
+            ->method('order')
+            ->will($this->returnValue(true));
 
         $this->testAction(
             '/orders/checkout',
@@ -157,7 +161,7 @@ class OrdersControllerTest extends ControllerTestCase {
                 'Order.created' => 'DESC',
             )
         ));
-       
+
         $this->assertEquals($order['Order']['email'], 'SandraPIrvin@armyspy.com');        
         $this->assertEquals($order['Address'][0]['country'], 'US');
         $this->assertEquals($order['Payment']['stripe_id'], 'ch_5dBkC3pJMgqjkD');
@@ -249,6 +253,7 @@ class OrdersControllerTest extends ControllerTestCase {
                 'Cart' => array('cartEmpty', 'cartItemCount', 'cartItemIds'),
                 'Stripe.Stripe' => array('charge'),
                 'Session',
+                'Emailer' => array('order'),
             )
         ));
         $Orders->Cart->expects($this->any())
@@ -270,6 +275,9 @@ class OrdersControllerTest extends ControllerTestCase {
                 'stripe_cvc_check' => 'pass',
                 'stripe_amount' => '15300',
             )));
+        $Orders->Emailer->expects($this->any())
+            ->method('order')
+            ->will($this->returnValue(true));
 
         $this->testAction(
             '/orders/checkout',

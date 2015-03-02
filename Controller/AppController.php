@@ -21,7 +21,6 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 App::uses('Controller', 'Controller');
-App::uses('CakeEmail', 'Network/Email');
 App::uses('String', 'Utility');
 
 /**
@@ -50,7 +49,7 @@ class AppController extends Controller {
                                     'logoutRedirect' => array('controller' => 'users', 'action' => 'login', 'admin' => false),
                                     ),
                                'Paginator',
-                               'Navigation', 'Ebay'
+                               'Navigation', 'Ebay', 'Emailer',
                             );
     
     public $uses = array('Page', 'Watch', 'Brand');
