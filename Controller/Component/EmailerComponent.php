@@ -59,4 +59,16 @@ class EmailerComponent extends Component
                     'Number' => array('className' => 'MyNumber')))
             ->send();
     }
+
+    public function contact($contact) {
+        $Email = new CakeEmail('smtp');
+        $Email->template('contact', 'default')
+              ->emailFormat('html')
+              ->to(Configure::read('contactFormEmail'))
+              ->from(Configure::read('fromEmail'))
+              ->replyTo($contact['Contact']['email'])
+              ->subject('Message From ' . $contact['Contact']['name'])
+              ->viewVars(array('contact' => $contact))
+              ->send();
+    }
 }

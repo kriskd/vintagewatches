@@ -13,7 +13,7 @@ class ContactsController extends AppController {
  *
  * @var array
  */
-	public $components = array('Paginator', 'Captcha');
+	public $components = array('Paginator', 'Captcha', 'Emailer');
 	
 	public $paginate = array(
 		'order' => array(
@@ -36,16 +36,8 @@ class ContactsController extends AppController {
 				$this->Contact->create();
 				if ($this->Contact->save($this->request->data)) {
 					$contact = $this->request->data;
-					$Email = new CakeEmail('smtp');
-					$Email->template('contact', 'default')
-					      ->emailFormat('html')
-					      ->to(Configure::read('contactFormEmail'))
-					      ->from(Configure::read('fromEmail'))
-					      ->replyTo($contact['Contact']['email'])
-					      ->subject('Message From ' . $contact['Contact']['name'])
-					      ->viewVars(array('contact' => $contact))
-					      ->send();
 					$this->Session->setFlash(__('Thank you for contacting us.'), 'success');
+                    $this->Emailer->contact($contact);
 					return $this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));
 				} else {
 					$this->Session->setFlash(__('Message could not be saved. Please, try again.'), 'danger');
