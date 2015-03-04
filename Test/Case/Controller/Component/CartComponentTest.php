@@ -32,6 +32,7 @@ class CartComponentTest extends CakeTestCase {
         'app.detect',
         'app.detectsorder',
         'app.coupon',
+        'app.cake_session',
     );
 
     public $items = array(
@@ -83,7 +84,13 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testEmptyCart() {
-		$this->markTestIncomplete('testEmptyCart not implemented.');
+        $this->Controller->Session->write('Cart.items', [3,5]);
+        $this->Cart->initialize($this->Controller);
+        $this->assertEquals([3,5], $this->Cart->items);
+        $this->assertEquals([3,5], $this->Controller->Session->read('Cart.items'));
+        $this->Cart->emptyCart();
+        $this->assertEmpty($this->Cart->items);
+        $this->assertEmpty($this->Controller->Session->read('Cart'));
 	}
 
 /**
