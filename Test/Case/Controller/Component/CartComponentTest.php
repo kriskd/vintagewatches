@@ -98,8 +98,18 @@ class CartComponentTest extends CakeTestCase {
  *
  * @return void
  */
+	public function testCartNotEmpty() {
+        $this->Controller->Session->write('Cart.items', [3,5]);
+        $this->Cart->initialize($this->Controller);
+        $result = $this->Cart->cartEmpty();
+        $this->assertFalse($result);
+	}
+
 	public function testCartEmpty() {
-		$this->markTestIncomplete('testCartEmpty not implemented.');
+        $this->Controller->Session->write('Cart.items', []);
+        $this->Cart->initialize($this->Controller);
+        $result = $this->Cart->cartEmpty();
+        $this->assertTrue($result);
 	}
 
 /**
