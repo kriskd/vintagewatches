@@ -165,6 +165,12 @@ class CartComponentTest extends CakeTestCase {
         $this->assertEquals([5], $this->Controller->Session->read('Cart.items'));
 	}
 
+    public function testRemoveFail() {
+        $this->Cart->initialize($this->Controller);
+        $this->Cart->remove(3);
+        $this->assertEmpty($this->Controller->Session->read('Cart.items'));
+    }
+
 /**
  * testInCart method
  * ./Console/cake test app Controller/Component/CartComponent --stderr --filter testInCart
@@ -184,7 +190,14 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testGetShippingAmount() {
-		$this->markTestIncomplete('testGetShippingAmount not implemented.');
+	    $result = $this->Cart->getShippingAmount('us');
+        $this->assertEquals(8, $result);    
+	    $result = $this->Cart->getShippingAmount('ca');
+        $this->assertEquals(38, $result);    
+	    $result = $this->Cart->getShippingAmount('');
+        $this->assertEmpty($result);    
+	    $result = $this->Cart->getShippingAmount('other');
+        $this->assertEquals(45, $result);    
 	}
 
 /**
@@ -193,7 +206,8 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testTotalCart() {
-		$this->markTestIncomplete('testTotalCart not implemented.');
+        $result = $this->Cart->totalCart(850, 8, 85);	
+        $this->assertEquals(773, $result);
 	}
 
 /**
