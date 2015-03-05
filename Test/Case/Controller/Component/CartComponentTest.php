@@ -137,7 +137,10 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testCartItemIds() {
-		$this->markTestIncomplete('testCartItemIds not implemented.');
+        $this->Controller->Session->write('Cart.items', [3,5]);
+        $this->Cart->initialize($this->Controller);
+        $result = $this->Cart->cartItemIds();
+        $this->assertEquals([3,5], $result);
 	}
 
 /**
@@ -146,7 +149,8 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testAdd() {
-		$this->markTestIncomplete('testAdd not implemented.');
+	    $this->Cart->add(3);
+        $this->assertEquals([3], $this->Controller->Session->read('Cart.items'));
 	}
 
 /**
@@ -155,7 +159,10 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testRemove() {
-		$this->markTestIncomplete('testRemove not implemented.');
+        $this->Controller->Session->write('Cart.items', [3,5]);
+        $this->Cart->initialize($this->Controller);
+        $this->Cart->remove(3);
+        $this->assertEquals([5], $this->Controller->Session->read('Cart.items'));
 	}
 
 /**
