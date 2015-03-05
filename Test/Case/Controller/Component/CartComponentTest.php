@@ -41,11 +41,17 @@ class CartComponentTest extends CakeTestCase {
                 'price' => 100,
                 'brand_id' => 1,
             ), 
+            'Brand' => array(
+                'name' => 'foo',
+            ),
         ),
         1 => array(
             'Watch' => array(
                 'price' => 125,
                 'brand_id' => 2,
+            ),
+            'Brand' => array(
+                'name' => 'bar',
             ),
         ),
     );
@@ -200,6 +206,17 @@ class CartComponentTest extends CakeTestCase {
         $this->assertEquals(45, $result);    
 	}
 
+    public function testGetSecondaryCountry() {
+        $result = $this->Cart->getSecondaryCountry('US');
+        $this->assertEquals('CA', $result);
+        $result = $this->Cart->getSecondaryCountry('CA');
+        $this->assertEquals('US', $result);
+        $result = $this->Cart->getSecondaryCountry('OTHER');
+        $this->assertEquals('OTHER', $result);
+        $result = $this->Cart->getSecondaryCountry('foo');
+        $this->assertEmpty($result);
+    }
+
 /**
  * testTotalCart method
  *
@@ -313,5 +330,146 @@ class CartComponentTest extends CakeTestCase {
         $shipping = 8;
         $result = $this->Cart->couponAmount($this->items, $shipping, $coupon);
         $this->assertEquals($result, 110);
+    }
+    
+    /**
+     * Test bad coupon type
+     */
+    public function testCouponAmountFixedType() {
+        $coupon = array(
+            'Coupon' => array(
+                'type' => 'foo',
+                'amount' => 10,
+                'brand_id' => null,
+            )
+        );
+        $shipping = 8;
+        $result = $this->Cart->couponAmount($this->items, $shipping, $coupon);
+        $this->assertEmpty($result);
+    }
+
+    public function testStripeDescription() {
+        $result = $this->Cart->stripeDescription($this->items);
+        $this->assertEquals('foo,bar', $result);
+    }
+
+    public function testFormatAddress() {
+        $address = array(
+            'billing' => array(
+                'firstName' => 'Sandra',
+                'lastName' => 'Irwin',
+                'company' => '',
+                'address1' => '2215 Gateway Road',
+                'address2' => '',
+                'city' => 'Portland',
+                'state' => 'OR',
+                'postalCode' => '97205',
+                'country' => 'US'
+            )
+        );
+        $expected = array(
+            array(
+                'firstName' => 'Sandra',
+                'lastName' => 'Irwin',
+                'company' => '',
+                'address1' => '2215 Gateway Road',
+                'address2' => '',
+                'city' => 'Portland',
+                'state' => 'OR',
+                'postalCode' => '97205',
+                'country' => 'US',
+                'type' => 'billing'
+            )
+        );
+        $result = $this->Cart->formatAddresses($address);
+        $this->assertEquals($expected, $result);
+    }
+    
+    public function testFormatAddressShipping() {
+        $address = array(
+            'billing' => array(
+                'firstName' => 'Sandra',
+                'lastName' => 'Irwin',
+                'company' => '',
+                'address1' => '2215 Gateway Road',
+                'address2' => '',
+                'city' => 'Portland',
+                'state' => 'OR',
+                'postalCode' => '97205',
+                'country' => 'US'
+            ),
+            'shipping' => array(
+                'firstName' => 'Sandra',
+                'lastName' => 'Irwin',
+                'company' => '',
+                'address1' => '2215 Gateway Road',
+                'address2' => '',
+                'city' => 'Portland',
+                'state' => 'OR',
+                'postalCode' => '97205',
+                'country' => 'US'
+            )
+        );
+        $expected = array(
+            array(
+                'firstName' => 'Sandra',
+                'lastName' => 'Irwin',
+                'company' => '',
+                'address1' => '2215 Gateway Road',
+                'address2' => '',
+                'city' => 'Portland',
+                'state' => 'OR',
+                'postalCode' => '97205',
+                'country' => 'US',
+                'type' => 'billing'
+            ),
+            array(
+                'firstName' => 'Sandra',
+                'lastName' => 'Irwin',
+                'company' => '',
+                'address1' => '2215 Gateway Road',
+                'address2' => '',
+                'city' => 'Portland',
+                'state' => 'OR',
+                'postalCode' => '97205',
+                'country' => 'US',
+                'type' => 'shipping'
+            )
+        );
+        $result = $this->Cart->formatAddresses($address);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testSetCheckoutData() {
+        $data = array(
+            'Address' => array(
+                'select-country' => 'us',
+                'billing' => array(
+                    'firstName' => 'Sandra',
+                    'lastName' => 'Irwin',
+                    'company' => '',
+                    'address1' => '2215 Gateway Road',
+                    'address2' => '',
+                    'city' => 'Portland',
+                    'state' => 'OR',
+                    'postalCode' => '97205',
+                    'country' => 'US',
+                ),
+            ),
+            'Coupon' => array(
+                'email' => '',
+                'code' => ''
+            ),
+            'Shipping' => array(
+                'option' => 'billing'
+            ),
+            'Order' => array(
+                'email' => 'sandra@mailinator.com',
+                'phone' => '',
+                'notes' => ''
+            )
+        );
+        $this->Cart->setCheckoutData($data);
+        $this->assertEquals($data['Address'], $this->Controller->Session->read('Address.data'));
     }
 }
