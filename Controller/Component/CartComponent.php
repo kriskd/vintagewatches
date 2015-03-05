@@ -51,6 +51,7 @@ class CartComponent extends Component
         if(in_array($id, $this->items)){
             $key = array_search($id, $this->items);
             unset($this->items[$key]); 
+            $this->items = array_values($this->items);
             return $this->Session->write('Cart.items', $this->items);
         }
         return false;
