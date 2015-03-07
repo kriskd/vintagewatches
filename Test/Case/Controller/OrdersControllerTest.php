@@ -92,6 +92,27 @@ class OrdersControllerTest extends ControllerTestCase {
                 'email' => 'PeterRHarris@teleworm.us',
             ],
             'Address' => [
+                'postalCode' => '61602',
+            ],
+        ];
+        $this->testAction('/orders', array(
+            'method' => 'POST',
+            'data' => $data,
+            'return' => 'vars',
+        ));
+        $this->assertEquals('PeterRHarris@teleworm.us', $this->Session->read('Watch.Order.email'));
+        $this->assertEquals('61602', $this->Session->read('Watch.Address.postalCode'));
+        $this->assertEquals('PeterRHarris@teleworm.us', $this->vars['orders'][0]['Order']['email']);
+        $this->assertEquals('notavailable', $this->vars['orders'][0]['Coupon']['code']);
+        $this->assertEquals(69100, $this->vars['orders'][0]['Payment']['stripe_amount']);
+    }
+
+    public function testIndexPostNoPostal() {
+        $data = [
+            'Order' => [
+                'email' => 'PeterRHarris@teleworm.us',
+            ],
+            'Address' => [
                 'postalCode' => '',
             ],
         ];
@@ -102,6 +123,47 @@ class OrdersControllerTest extends ControllerTestCase {
         ));
         // Can't test session because there is no redirect
         $this->assertContains('Email and postal code are required to search for orders.', $this->contents);
+    }
+
+    public function testIndexPostNoOrders() {
+        $data = [
+            'Order' => [
+                'email' => 'foo@foo.com',
+            ],
+            'Address' => [
+                'postalCode' => '12345',
+            ],
+        ];
+        $this->testAction('/orders', array(
+            'method' => 'POST',
+            'data' => $data,
+            'return' => 'contents',
+        ));
+        // Can't test session because there is no redirect
+        $this->assertContains('No orders found for this email and postal code.', $this->contents);
+    }
+
+    public function testIndexPostSessionData() {
+        $this->Session->write('Watch.Order.email', 'foo@foo.com');
+        $this->Session->write('Watch.Address.postalCode', '12345');
+        $data = [
+            'Order' => [
+                'email' => 'PeterRHarris@teleworm.us',
+            ],
+            'Address' => [
+                'postalCode' => '61602',
+            ],
+        ];
+        $this->testAction('/orders', array(
+            'method' => 'POST',
+            'data' => $data,
+            'return' => 'vars',
+        ));
+        $this->assertEquals('PeterRHarris@teleworm.us', $this->Session->read('Watch.Order.email'));
+        $this->assertEquals('61602', $this->Session->read('Watch.Address.postalCode'));
+        $this->assertEquals('PeterRHarris@teleworm.us', $this->vars['orders'][0]['Order']['email']);
+        $this->assertEquals('notavailable', $this->vars['orders'][0]['Coupon']['code']);
+        $this->assertEquals(69100, $this->vars['orders'][0]['Payment']['stripe_amount']);
     }
 
 /**
