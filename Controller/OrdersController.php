@@ -34,49 +34,50 @@ class OrdersController extends AppController
      * orders that match those.
      */
     public function index($reset = false) {
-        if ($reset == true) {
+        if ($reset) {
             $this->Session->delete('Watch.Order');
             $this->Session->delete('Watch.Address');
             $this->redirect(array('action' => 'index'));
         }
 
+        $this->set('title', 'Order History');
         $email = $this->Session->read('Watch.Order.email');
-        $postalCode = $this->Session->read('Watch.Address.postalCode'); 
+        $postalCode = $this->Session->read('Watch.Address.postalCode');
 
-        if($this->request->is('post')){
+        if ($this->request->is('post')) {
             $data = $this->request->data;
             $email = $data['Order']['email'];
             $postalCode = $data['Address']['postalCode'];
 
             if (empty($email) || empty($postalCode)) {
-                $this->Session->setFlash('Email and postal code are required to search for orders.',
+                $this->request->data['Order']['email'] = $email;
+                $this->request->data['Address']['postalCode'] = $postalCode;
+                return $this->Session->setFlash('Email and postal code are required to search for orders.',
                     'danger', array('class' => 'alert alert-error'));
             }
         }
 
-        $options = $this->Order->getCustomerOrderOptions($email, $postalCode); 
-        $this->Paginator->settings = array_merge($this->paginate, $options); 
+        $options = $this->Order->getCustomerOrderOptions($email, $postalCode);
+        $this->Paginator->settings = array_merge($this->paginate, $options);
         $orders = $this->Paginator->paginate('Order');
 
         if (!empty($orders)) {
             $this->set('orders', $orders);
-            if (!$this->Session->check('Watch.Order.email')) {
+            if (!$this->Session->check('Watch.Order.email') || $email != $this->Session->read('Watch.Order.email')) {
                 $this->Session->write('Watch.Order.email', $email);
             }
-            if (!$this->Session->check('Watch.Address.postalCode')) {
+            if (!$this->Session->check('Watch.Address.postalCode') || $postalCode != $this->Session->read('Watch.Address.postalCode')) {
                 $this->Session->write('Watch.Address.postalCode', $postalCode);
             }
         }
 
         //Set flash message if we have an email and postalCode but no orders
         if ((!(empty($email)) && !empty($postalCode)) && empty($orders)) { 
-            $this->Session->setFlash('No orders found for this email and postal code.',
+            return $this->Session->setFlash('No orders found for this email and postal code.',
                 'danger', array('class' => 'alert alert-error'));
         }
 
-        $title = 'Order History';
-
-        $this->set(compact('email', 'title'));
+        $this->set('email', $email);
     }
 
     public function view($id = null) {
@@ -109,7 +110,7 @@ class OrdersController extends AppController
                 $this->Session->setFlash('There was a problem with your cart, please add your items again.', 'warning');
                 $this->redirect(array('controller' => 'watches', 'action' => 'index'));
             }
-            
+
             // Check that watches are still active
             $activeWatches = array_filter($this->cartWatches, function($item) {
                 return $item['Watch']['active'] == 1;
@@ -124,7 +125,7 @@ class OrdersController extends AppController
                 $this->Session->setFlash('One or more of the items in your cart is no longer available.', 'warning');
                 $this->redirect(array('action' => 'checkout'));
             }
-           
+
             $data = $this->request->data;
             unset($data['Shipping']);
 
