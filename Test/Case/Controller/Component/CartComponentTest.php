@@ -9,7 +9,7 @@ App::uses('SessionComponent', 'Controller/Component');
 
 // A fake controller to test against
 class FakeControllerTest extends Controller {
-     public $paginate = null;
+    public $components = array('Session');
 }
 
 /**
@@ -32,6 +32,7 @@ class CartComponentTest extends CakeTestCase {
         'app.detect',
         'app.detectsorder',
         'app.coupon',
+        'app.cake_session',
     );
 
     public $items = array(
@@ -40,11 +41,17 @@ class CartComponentTest extends CakeTestCase {
                 'price' => 100,
                 'brand_id' => 1,
             ), 
+            'Brand' => array(
+                'name' => 'foo',
+            ),
         ),
         1 => array(
             'Watch' => array(
                 'price' => 125,
                 'brand_id' => 2,
+            ),
+            'Brand' => array(
+                'name' => 'bar',
             ),
         ),
     );
@@ -61,8 +68,9 @@ class CartComponentTest extends CakeTestCase {
         $CakeRequest = new CakeRequest();
         $CakeResponse = new CakeResponse();
         $this->Controller = new FakeControllerTest($CakeRequest, $CakeResponse);
+        $this->Controller->Components->init($this->Controller);
         $this->Cart->startup($this->Controller);
-        $this->Controller->Session = new SessionComponent($Collection);
+        //$this->Controller->Session = new SessionComponent($Collection);
 	}
 
 /**
@@ -82,7 +90,13 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testEmptyCart() {
-		$this->markTestIncomplete('testEmptyCart not implemented.');
+        $this->Controller->Session->write('Cart.items', [3,5]);
+        $this->Cart->initialize($this->Controller);
+        $this->assertEquals([3,5], $this->Cart->items);
+        $this->assertEquals([3,5], $this->Controller->Session->read('Cart.items'));
+        $this->Cart->emptyCart();
+        $this->assertEmpty($this->Cart->items);
+        $this->assertEmpty($this->Controller->Session->read('Cart'));
 	}
 
 /**
@@ -90,8 +104,18 @@ class CartComponentTest extends CakeTestCase {
  *
  * @return void
  */
+	public function testCartNotEmpty() {
+        $this->Controller->Session->write('Cart.items', [3,5]);
+        $this->Cart->initialize($this->Controller);
+        $result = $this->Cart->cartEmpty();
+        $this->assertFalse($result);
+	}
+
 	public function testCartEmpty() {
-		$this->markTestIncomplete('testCartEmpty not implemented.');
+        $this->Controller->Session->write('Cart.items', []);
+        $this->Cart->initialize($this->Controller);
+        $result = $this->Cart->cartEmpty();
+        $this->assertTrue($result);
 	}
 
 /**
@@ -100,7 +124,17 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testCartItemCount() {
-		$this->markTestIncomplete('testCartItemCount not implemented.');
+        $this->Controller->Session->write('Cart.items', [3,5]);
+        $this->Cart->initialize($this->Controller);
+        $result = $this->Cart->cartItemCount();
+        $this->assertEquals(2, $result);
+	}
+
+	public function testCartItemCountEmpty() {
+        $this->Controller->Session->write('Cart.items', null);
+        $this->Cart->initialize($this->Controller);
+        $result = $this->Cart->cartItemCount();
+        $this->assertEmpty($result);
 	}
 
 /**
@@ -109,7 +143,10 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testCartItemIds() {
-		$this->markTestIncomplete('testCartItemIds not implemented.');
+        $this->Controller->Session->write('Cart.items', [3,5]);
+        $this->Cart->initialize($this->Controller);
+        $result = $this->Cart->cartItemIds();
+        $this->assertEquals([3,5], $result);
 	}
 
 /**
@@ -118,7 +155,8 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testAdd() {
-		$this->markTestIncomplete('testAdd not implemented.');
+	    $this->Cart->add(3);
+        $this->assertEquals([3], $this->Controller->Session->read('Cart.items'));
 	}
 
 /**
@@ -127,11 +165,21 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testRemove() {
-		$this->markTestIncomplete('testRemove not implemented.');
+        $this->Controller->Session->write('Cart.items', [3,5]);
+        $this->Cart->initialize($this->Controller);
+        $this->Cart->remove(3);
+        $this->assertEquals([5], $this->Controller->Session->read('Cart.items'));
 	}
+
+    public function testRemoveFail() {
+        $this->Cart->initialize($this->Controller);
+        $this->Cart->remove(3);
+        $this->assertEmpty($this->Controller->Session->read('Cart.items'));
+    }
 
 /**
  * testInCart method
+ * ./Console/cake test app Controller/Component/CartComponent --stderr --filter testInCart
  *
  * @return void
  */
@@ -139,7 +187,7 @@ class CartComponentTest extends CakeTestCase {
         $this->Controller->Session->write('Cart.items', [3,5]);
         $this->Cart->initialize($this->Controller);
         $result = $this->Cart->inCart(3);
-		$this->markTestIncomplete('testInCart not implemented.');
+        $this->assertTrue($result);
 	}
 
 /**
@@ -148,8 +196,26 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testGetShippingAmount() {
-		$this->markTestIncomplete('testGetShippingAmount not implemented.');
+	    $result = $this->Cart->getShippingAmount('us');
+        $this->assertEquals(8, $result);    
+	    $result = $this->Cart->getShippingAmount('ca');
+        $this->assertEquals(38, $result);    
+	    $result = $this->Cart->getShippingAmount('');
+        $this->assertEmpty($result);    
+	    $result = $this->Cart->getShippingAmount('other');
+        $this->assertEquals(45, $result);    
 	}
+
+    public function testGetSecondaryCountry() {
+        $result = $this->Cart->getSecondaryCountry('US');
+        $this->assertEquals('CA', $result);
+        $result = $this->Cart->getSecondaryCountry('CA');
+        $this->assertEquals('US', $result);
+        $result = $this->Cart->getSecondaryCountry('OTHER');
+        $this->assertEquals('OTHER', $result);
+        $result = $this->Cart->getSecondaryCountry('foo');
+        $this->assertEmpty($result);
+    }
 
 /**
  * testTotalCart method
@@ -157,7 +223,8 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testTotalCart() {
-		$this->markTestIncomplete('testTotalCart not implemented.');
+        $result = $this->Cart->totalCart(850, 8, 85);	
+        $this->assertEquals(773, $result);
 	}
 
 /**
@@ -263,5 +330,187 @@ class CartComponentTest extends CakeTestCase {
         $shipping = 8;
         $result = $this->Cart->couponAmount($this->items, $shipping, $coupon);
         $this->assertEquals($result, 110);
+    }
+    
+    /**
+     * Test bad coupon type
+     */
+    public function testCouponAmountFixedType() {
+        $coupon = array(
+            'Coupon' => array(
+                'type' => 'foo',
+                'amount' => 10,
+                'brand_id' => null,
+            )
+        );
+        $shipping = 8;
+        $result = $this->Cart->couponAmount($this->items, $shipping, $coupon);
+        $this->assertEmpty($result);
+    }
+
+    public function testStripeDescription() {
+        $result = $this->Cart->stripeDescription($this->items);
+        $this->assertEquals('foo,bar', $result);
+    }
+
+    public function testFormatAddress() {
+        $address = array(
+            'billing' => array(
+                'firstName' => 'Sandra',
+                'lastName' => 'Irwin',
+                'company' => '',
+                'address1' => '2215 Gateway Road',
+                'address2' => '',
+                'city' => 'Portland',
+                'state' => 'OR',
+                'postalCode' => '97205',
+                'country' => 'US'
+            )
+        );
+        $expected = array(
+            array(
+                'firstName' => 'Sandra',
+                'lastName' => 'Irwin',
+                'company' => '',
+                'address1' => '2215 Gateway Road',
+                'address2' => '',
+                'city' => 'Portland',
+                'state' => 'OR',
+                'postalCode' => '97205',
+                'country' => 'US',
+                'type' => 'billing'
+            )
+        );
+        $result = $this->Cart->formatAddresses($address);
+        $this->assertEquals($expected, $result);
+    }
+    
+    public function testFormatAddressShipping() {
+        $address = array(
+            'billing' => array(
+                'firstName' => 'Sandra',
+                'lastName' => 'Irwin',
+                'company' => '',
+                'address1' => '2215 Gateway Road',
+                'address2' => '',
+                'city' => 'Portland',
+                'state' => 'OR',
+                'postalCode' => '97205',
+                'country' => 'US'
+            ),
+            'shipping' => array(
+                'firstName' => 'Sandra',
+                'lastName' => 'Irwin',
+                'company' => '',
+                'address1' => '2215 Gateway Road',
+                'address2' => '',
+                'city' => 'Portland',
+                'state' => 'OR',
+                'postalCode' => '97205',
+                'country' => 'US'
+            )
+        );
+        $expected = array(
+            array(
+                'firstName' => 'Sandra',
+                'lastName' => 'Irwin',
+                'company' => '',
+                'address1' => '2215 Gateway Road',
+                'address2' => '',
+                'city' => 'Portland',
+                'state' => 'OR',
+                'postalCode' => '97205',
+                'country' => 'US',
+                'type' => 'billing'
+            ),
+            array(
+                'firstName' => 'Sandra',
+                'lastName' => 'Irwin',
+                'company' => '',
+                'address1' => '2215 Gateway Road',
+                'address2' => '',
+                'city' => 'Portland',
+                'state' => 'OR',
+                'postalCode' => '97205',
+                'country' => 'US',
+                'type' => 'shipping'
+            )
+        );
+        $result = $this->Cart->formatAddresses($address);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testSetCheckoutData() {
+        $data = array(
+            'Address' => array(
+                'select-country' => 'us',
+                'billing' => array(
+                    'firstName' => 'Sandra',
+                    'lastName' => 'Irwin',
+                    'company' => '',
+                    'address1' => '2215 Gateway Road',
+                    'address2' => '',
+                    'city' => 'Portland',
+                    'state' => 'OR',
+                    'postalCode' => '97205',
+                    'country' => 'US',
+                ),
+            ),
+            'Coupon' => array(
+                'email' => '',
+                'code' => ''
+            ),
+            'Shipping' => array(
+                'option' => 'billing'
+            ),
+            'Order' => array(
+                'email' => 'sandra@mailinator.com',
+                'phone' => '',
+                'notes' => ''
+            )
+        );
+        $this->Cart->setCheckoutData($data);
+        $this->assertEquals($data['Address'], $this->Controller->Session->read('Address.data'));
+        $this->assertEquals($data['Shipping']['option'], $this->Controller->Session->read('Shipping.option'));
+        $this->assertEquals($data['Order'], $this->Controller->Session->read('Order'));
+    }
+
+    public function testSetCheckoutDataErrors() {
+        $data = array(
+            'Address' => array(
+                'select-country' => 'us',
+                'billing' => array(
+                    'firstName' => 'Sandra',
+                    'lastName' => '',
+                    'company' => '',
+                    'address1' => '2215 Gateway Road',
+                    'address2' => '',
+                    'city' => 'Portland',
+                    'state' => 'OR',
+                    'postalCode' => '97205',
+                    'country' => 'US',
+                ),
+            ),
+            'Coupon' => array(
+                'email' => '',
+                'code' => ''
+            ),
+            'Shipping' => array(
+                'option' => 'billing'
+            ),
+            'Order' => array(
+                'email' => 'sandra@mailinator.com',
+                'phone' => '',
+                'notes' => ''
+            )
+        );
+        $errors = array(
+            'billing' => array(
+                'lastName' => 'Please enter your last name.'
+            ),
+        );
+        $this->Cart->setCheckoutData($data, $errors);
+        $this->assertEquals($data['Address'], $this->Controller->Session->read('Address.data'));
+        $this->assertEquals($errors, $this->Controller->Session->read('Address.errors'));
     }
 }
