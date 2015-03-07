@@ -182,6 +182,21 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->assertEquals($order['Watch'][0]['price'], '695.00');
 	}
 
+	public function testViewNoId() {
+        $this->Session->write('Watch.Order.email', 'PeterRHarris@teleworm.us');
+        $this->Session->write('Watch.Address.postalCode', '61602');
+        $this->testAction('/orders/view', ['method' => 'get']);
+        $this->assertContains('/orders', $this->headers['Location']);
+    }
+
+    public function testViewNoOrders() {
+        $this->Session->write('Watch.Order.email', 'foo@foo.com');
+        $this->Session->write('Watch.Address.postalCode', '12345');
+        $this->testAction('/orders/view/1', ['method' => 'get', 'return' => 'vars']);
+        $this->assertEquals('Invalid Order', $this->Session->read('Message.flash.message'));
+        $this->assertContains('/orders', $this->headers['Location']);
+    }
+
 /**
  * testCheckout method
  *
