@@ -471,5 +471,46 @@ class CartComponentTest extends CakeTestCase {
         );
         $this->Cart->setCheckoutData($data);
         $this->assertEquals($data['Address'], $this->Controller->Session->read('Address.data'));
+        $this->assertEquals($data['Shipping']['option'], $this->Controller->Session->read('Shipping.option'));
+        $this->assertEquals($data['Order'], $this->Controller->Session->read('Order'));
+    }
+
+    public function testSetCheckoutDataErrors() {
+        $data = array(
+            'Address' => array(
+                'select-country' => 'us',
+                'billing' => array(
+                    'firstName' => 'Sandra',
+                    'lastName' => '',
+                    'company' => '',
+                    'address1' => '2215 Gateway Road',
+                    'address2' => '',
+                    'city' => 'Portland',
+                    'state' => 'OR',
+                    'postalCode' => '97205',
+                    'country' => 'US',
+                ),
+            ),
+            'Coupon' => array(
+                'email' => '',
+                'code' => ''
+            ),
+            'Shipping' => array(
+                'option' => 'billing'
+            ),
+            'Order' => array(
+                'email' => 'sandra@mailinator.com',
+                'phone' => '',
+                'notes' => ''
+            )
+        );
+        $errors = array(
+            'billing' => array(
+                'lastName' => 'Please enter your last name.'
+            ),
+        );
+        $this->Cart->setCheckoutData($data, $errors);
+        $this->assertEquals($data['Address'], $this->Controller->Session->read('Address.data'));
+        $this->assertEquals($errors, $this->Controller->Session->read('Address.errors'));
     }
 }
