@@ -86,6 +86,24 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->assertEmpty($this->Session->read('Watch.Address.postalCode'));
     }
 
+    public function testIndexPost() {
+        $data = [
+            'Order' => [
+                'email' => 'PeterRHarris@teleworm.us',
+            ],
+            'Address' => [
+                'postalCode' => '',
+            ],
+        ];
+        $this->testAction('/orders', array(
+            'method' => 'POST',
+            'data' => $data,
+            'return' => 'contents',
+        ));
+        // Can't test session because there is no redirect
+        $this->assertContains('Email and postal code are required to search for orders.', $this->contents);
+    }
+
 /**
  * testView method
  *
