@@ -74,6 +74,18 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->assertEquals($results['orders'][0]['Address'][0]['postalCode'], $this->Session->read('Watch.Address.postalCode'));
 	}
 
+    public function testIndexReset() {
+        $this->Session->write('Watch.Order.email', 'PeterRHarris@teleworm.us');
+        $this->Session->write('Watch.Address.postalCode', '61602');
+        $this->testAction('/orders/index/1', array(
+            'method' => 'GET',
+            'return' => 'vars',
+        ));
+        $this->assertContains('/orders', $this->headers['Location']);
+        $this->assertEmpty($this->Session->read('Watch.Order.email'));
+        $this->assertEmpty($this->Session->read('Watch.Address.postalCode'));
+    }
+
 /**
  * testView method
  *
@@ -155,14 +167,14 @@ class OrdersControllerTest extends ControllerTestCase {
                 'return' => 'vars', 
             )
         );
-        
+
         $order = $this->Order->find('first', array(
             'order' => array(
                 'Order.created' => 'DESC',
             )
         ));
 
-        $this->assertEquals($order['Order']['email'], 'SandraPIrvin@armyspy.com');        
+        $this->assertEquals($order['Order']['email'], 'SandraPIrvin@armyspy.com');
         $this->assertEquals($order['Address'][0]['country'], 'US');
         $this->assertEquals($order['Payment']['stripe_id'], 'ch_5dBkC3pJMgqjkD');
         $this->assertEquals($order['Watch'][0]['id'], 3);
@@ -215,18 +227,18 @@ class OrdersControllerTest extends ControllerTestCase {
                 'return' => 'vars', 
             )
         );
-        
+
         $order = $this->Order->find('first', array(
             'order' => array(
                 'Order.created' => 'DESC',
             )
         ));
-       
-        $this->assertEquals($order['Order']['email'], 'PeterRHarris@teleworm.us');        
+
+        $this->assertEquals($order['Order']['email'], 'PeterRHarris@teleworm.us');
         $this->assertEquals($order['Payment']['stripe_id'], 'ch_5dYcjsXUf5Gzy1');
         $this->assertEquals($order['Watch'][0]['id'], 1);
 	}
-    
+
     public function testCheckoutCoupon() {
         $order = array(
             'stripeToken' => 'tok_5dC2WijiayVQOK',
@@ -287,14 +299,14 @@ class OrdersControllerTest extends ControllerTestCase {
                 'return' => 'vars', 
             )
         );
-        
+
         $order = $this->Order->find('first', array(
             'order' => array(
                 'Order.created' => 'DESC',
             )
         ));
 
-        $this->assertEquals($order['Order']['email'], 'SandraPIrvin@armyspy.com');        
+        $this->assertEquals($order['Order']['email'], 'SandraPIrvin@armyspy.com');
         $this->assertEquals(30, $order['Coupon']['amount']);
         $this->assertEquals($order['Address'][0]['country'], 'US');
         $this->assertEquals('15300', $order['Payment']['stripe_amount']);
@@ -309,12 +321,12 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->testAction('/orders/add/3', ['method' => 'get', 'return' => 'vars']);
         $session = $this->Session->read('Cart.items');
         $this->assertEquals(3, current($session));
-        $this->assertContains('/orders/checkout', $this->headers['Location']); 
+        $this->assertContains('/orders/checkout', $this->headers['Location']);
 	}
 
     public function testAddNotSellable() {
         $this->testAction('/orders/add/1', ['method' => 'get', 'return' => 'vars']);
-        $this->assertContains('/watches', $this->headers['Location']); 
+        $this->assertContains('/watches', $this->headers['Location']);
     }
 
     public function testAddInCart() {
@@ -322,7 +334,7 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->testAction('/orders/add/3', ['method' => 'get', 'return' => 'vars']);
         $message = $this->Session->read('Message.flash.message');
         $this->assertEquals('That item is already in your cart.', $message);
-        $this->assertContains('/orders/checkout', $this->headers['Location']); 
+        $this->assertContains('/orders/checkout', $this->headers['Location']);
     }
 
 /**
@@ -331,8 +343,20 @@ class OrdersControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testRemove() {
-		$this->markTestIncomplete('testRemove not implemented.');
+        $this->Session->write('Cart.items', [3,5]);
+        $this->testAction('/orders/remove/3');
+        $this->assertEquals([5], $this->Session->read('Cart.items'));
 	}
+
+/**
+* @expectedException        NotFoundException 
+* @expectedExceptionMessage Invalid watch 
+*/
+    public function testRemoveException() {
+        $this->Session->write('Cart.items', [3,5]);
+        $result = $this->testAction('/orders/remove/11');
+        $this->assertFalse($result);
+    }
 
 /**
  * testTotalCart method
@@ -375,7 +399,7 @@ class OrdersControllerTest extends ControllerTestCase {
 
         $result = $this->testAction($url, $options);
         unset($_SERVER['HTTP_X_REQUESTED_WITH']);
-        $this->assertEquals($result['total'], 348);        
+        $this->assertEquals($result['total'], 348);
 	}
 
 /**
@@ -428,7 +452,7 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->assertContains('State', $data['labels'][$data['shipping']]);
         $this->assertContains('Zip Code', $data['labels'][$data['shipping']]);
 	}
-    
+
 	public function testGetCaAddress() {
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $query = array(
