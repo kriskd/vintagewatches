@@ -55,7 +55,6 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->Order = ClassRegistry::init('Order');
         $this->ComponentCollection = new ComponentCollection();
         $this->Session = new SessionComponent($this->ComponentCollection);
-
     }
 
 /**
@@ -448,6 +447,51 @@ class OrdersControllerTest extends ControllerTestCase {
             )
         );
         $this->assertContains('/watches', $this->headers['Location']);
+    }
+
+	public function testCheckoutInactiveWatch() {
+        $order = array(
+            'stripeToken' => 'tok_5dC2WijiayVQOK',
+            'Address' => array(
+                'select-country' => 'us',
+                'billing' => $this->address,
+            ),
+            'Coupon' => array(
+                'email' => '',
+                'code' => ''
+            ),
+            'Shipping' => array(
+                'option' => 'billing'
+            ),
+            'Order' => array(
+                'email' => 'SandraPIrvin@armyspy.com',
+                'phone' => '503-326-9436',
+                'notes' => ''
+            )
+        );
+        $Orders = $this->generate('Orders', array(
+            'components' => array(
+                'Cart' => array('cartEmpty'),
+                'Stripe.Stripe' => array('charge'),
+            )
+        ));
+        $Orders->Cart->expects($this->any())
+            ->method('cartEmpty')
+            ->will($this->returnValue(false));
+
+        $this->Session->write('Cart.items', [3,4]);
+
+        $result = $this->testAction(
+            '/orders/checkout',
+            array(
+                'data' => $order,
+                'method' => 'post',
+                'return' => 'vars',
+            )
+        );
+        $this->assertEquals('One or more of the items in your cart is no longer available.', $this->Session->read('Message.flash.message'));
+        $this->assertEquals($this->Session->read('Cart.items'), [3]);
+        $this->assertContains('/orders/checkout', $this->headers['Location']);
     }
 
 /**
