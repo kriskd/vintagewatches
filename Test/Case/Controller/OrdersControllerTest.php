@@ -121,7 +121,7 @@ class OrdersControllerTest extends ControllerTestCase {
             'data' => $data,
             'return' => 'contents',
         ));
-        // Can't test session because there is no redirect
+        // Can't test session contents because there is no redirect
         $this->assertContains('Email and postal code are required to search for orders.', $this->contents);
     }
 
@@ -139,7 +139,7 @@ class OrdersControllerTest extends ControllerTestCase {
             'data' => $data,
             'return' => 'contents',
         ));
-        // Can't test session because there is no redirect
+        // Can't test session contents because there is no redirect
         $this->assertContains('No orders found for this email and postal code.', $this->contents);
     }
 
@@ -407,6 +407,49 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->assertEquals('15300', $order['Payment']['stripe_amount']);
         $this->assertEquals($order['Watch'][0]['id'], 3);
 	}
+
+    public function testCheckoutCartEmpty() {
+        $order = array(
+            'stripeToken' => 'tok_5dC2WijiayVQOK',
+            'Address' => array(
+                'select-country' => 'us',
+                'billing' => $this->address,
+            ),
+            'Coupon' => array(
+                'email' => '',
+                'code' => ''
+            ),
+            'Shipping' => array(
+                'option' => 'billing'
+            ),
+            'Order' => array(
+                'email' => 'SandraPIrvin@armyspy.com',
+                'phone' => '503-326-9436',
+                'notes' => ''
+            )
+        );
+        $Orders = $this->generate('Orders', array(
+            'components' => array(
+                'Cart' => array('cartEmpty'),
+            )
+        ));
+        $Orders->Cart->expects($this->once())
+            ->method('cartEmpty')
+            ->will($this->returnValue(true));
+
+        // Return value is always NULL as well as value in session flash
+        // Only able to test the redirect
+        $results = $this->testAction(
+            '/orders/checkout',
+            array(
+                'data' => $order,
+                'method' => 'post',
+                'return' => 'contents',
+            )
+        );
+        $this->assertContains('/watches', $this->headers['Location']);
+    }
+
 /**
  * testAdd method
  *
@@ -522,11 +565,11 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->assertContains('State', $data['labels'][$data['shipping']]);
         $this->assertContains('Zip Code', $data['labels'][$data['shipping']]);
 	}
-    
+
 	public function testGetUsShippingAddress() {
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $query = array(
-            'country' => 'US', 
+            'country' => 'US',
             'shipping' => 'shipping',
         );
         $url = Router::url(array('controller' => 'orders', 'action' => 'getAddress', '?' => $query));
@@ -551,7 +594,7 @@ class OrdersControllerTest extends ControllerTestCase {
 	public function testGetCaAddress() {
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $query = array(
-            'country' => 'CA', 
+            'country' => 'CA',
             'shipping' => 'billing',
         );
         $url = Router::url(array('controller' => 'orders', 'action' => 'getAddress', '?' => $query));
@@ -572,7 +615,7 @@ class OrdersControllerTest extends ControllerTestCase {
 	public function testGetCaShippingAddress() {
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $query = array(
-            'country' => 'CA', 
+            'country' => 'CA',
             'shipping' => 'shipping',
         );
         $url = Router::url(array('controller' => 'orders', 'action' => 'getAddress', '?' => $query));
@@ -593,11 +636,11 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->assertContains('Province', $data['labels'][$data['shipping']]);
         $this->assertContains('Postal Code', $data['labels'][$data['shipping']]);
 	}
-    
+
     public function testGetOtherAddress() {
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $query = array(
-            'country' => 'OTHER', 
+            'country' => 'OTHER',
             'shipping' => 'billing',
         );
         $url = Router::url(array('controller' => 'orders', 'action' => 'getAddress', '?' => $query));
@@ -617,7 +660,7 @@ class OrdersControllerTest extends ControllerTestCase {
     public function testGetOtherShippingAddress() {
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $query = array(
-            'country' => 'OTHER', 
+            'country' => 'OTHER',
             'shipping' => 'shipping',
         );
         $url = Router::url(array('controller' => 'orders', 'action' => 'getAddress', '?' => $query));
@@ -739,13 +782,13 @@ class OrdersControllerTest extends ControllerTestCase {
     public function testGetOtherShippingAddressErrorsData() {
         $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
         $query = array(
-            'country' => 'OTHER', 
+            'country' => 'OTHER',
             'shipping' => 'shipping',
         );
         $url = Router::url(array('controller' => 'orders', 'action' => 'getAddress', '?' => $query));
 
-        unset($this->address['state']); 
-        unset($this->address['postalCode']); 
+        unset($this->address['state']);
+        unset($this->address['postalCode']);
         $this->Session->write('Address.data.billing', $this->address);
         $this->Session->write('Address.data.shipping', $this->address);
         $errorMessage = 'Please enter a postal code.';
@@ -768,7 +811,7 @@ class OrdersControllerTest extends ControllerTestCase {
 	}
 
 /**
- * Test getCountry with US state 
+ * Test getCountry with US state
  *
  * @return void
  */
@@ -891,13 +934,5 @@ class OrdersControllerTest extends ControllerTestCase {
 		$this->markTestIncomplete('testAdminDelete not implemented.');
 	}
 
-/**
- * testEmailOrder method
- *
- * @return void
- */
-	public function testEmailOrder() {
-		$this->markTestIncomplete('testEmailOrder not implemented.');
-	}
 
 }
