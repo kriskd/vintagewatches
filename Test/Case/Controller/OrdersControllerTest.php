@@ -567,6 +567,55 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->assertEquals($order['Order']['email'], 'SandraPIrvin@armyspy.com');
     }
 
+    public function testCheckoutDecline() {
+        $order = array(
+            'stripeToken' => 'tok_5dC2WijiayVQOK',
+            'Address' => array(
+                'select-country' => 'us',
+                'billing' => $this->address,
+            ),
+            'Coupon' => array(
+                'email' => '',
+                'code' => ''
+            ),
+            'Shipping' => array(
+                'option' => 'billing'
+            ),
+            'Order' => array(
+                'email' => 'SandraPIrvin@armyspy.com',
+                'phone' => '503-326-9436',
+                'notes' => ''
+            )
+        );
+        $Orders = $this->generate('Orders', array(
+            'components' => array(
+                'Cart' => array('cartEmpty', 'cartItemCount', 'cartItemIds'),
+                'Stripe.Stripe' => array('charge'),
+            )
+        ));
+        $Orders->Cart->expects($this->any())
+            ->method('cartEmpty')
+            ->will($this->returnValue(false));
+        $Orders->Cart->expects($this->any())
+            ->method('cartItemCount')
+            ->will($this->returnValue(1));
+        $Orders->Cart->expects($this->any())
+            ->method('cartItemIds')
+            ->will($this->returnValue(array(3)));
+        $Orders->Stripe->expects($this->any())
+            ->method('charge')
+            ->will($this->returnValue('Your card was declined.'));
+
+        $this->testAction(
+            '/orders/checkout',
+            array(
+                'data' => $order,
+                'method' => 'post',
+                'return' => 'contents',
+            )
+        );
+        $this->assertContains('Your card was declined.', $this->contents);
+    }
 /**
  * testAdd method
  *
