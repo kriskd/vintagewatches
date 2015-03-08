@@ -3,6 +3,7 @@ App::uses('OrdersController', 'Controller');
 App::uses('CakeRequest', 'Network');
 App::uses('ComponentCollection', 'Controller');
 App::uses('StripeComponent', 'Stripe.Controller/Component');
+App::uses('MobileDetectComponent', 'MobileDetect.Controller/Component');
 App::uses('SessionComponent', 'Controller/Component');
 App::uses('Order', 'Model');
 
@@ -226,7 +227,6 @@ class OrdersControllerTest extends ControllerTestCase {
                 'Session',
                 'Cart' => array('cartEmpty', 'cartItemCount', 'cartItemIds'),
                 'Stripe.Stripe' => array('charge'),
-                'Session',
                 'Emailer' => array('order'),
             )
         ));
@@ -300,7 +300,6 @@ class OrdersControllerTest extends ControllerTestCase {
                 'Session',
                 'Cart' => array('cartEmpty', 'cartItemCount', 'cartItemIds'),
                 'Stripe.Stripe' => array('charge'),
-                'Session',
             )
         ));
         $Orders->Cart->expects($this->any())
@@ -358,7 +357,6 @@ class OrdersControllerTest extends ControllerTestCase {
                 'Session',
                 'Cart' => array('cartEmpty', 'cartItemCount', 'cartItemIds'),
                 'Stripe.Stripe' => array('charge'),
-                'Session',
                 'Emailer' => array('order'),
             )
         ));
@@ -492,6 +490,81 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->assertEquals('One or more of the items in your cart is no longer available.', $this->Session->read('Message.flash.message'));
         $this->assertEquals($this->Session->read('Cart.items'), [3]);
         $this->assertContains('/orders/checkout', $this->headers['Location']);
+    }
+
+    public function testCheckoutMobile() {
+        $order = array(
+            'stripeToken' => 'tok_5dC2WijiayVQOK',
+            'Address' => array(
+                'select-country' => 'us',
+                'billing' => $this->address,
+            ),
+            'Coupon' => array(
+                'email' => '',
+                'code' => ''
+            ),
+            'Shipping' => array(
+                'option' => 'billing'
+            ),
+            'Order' => array(
+                'email' => 'SandraPIrvin@armyspy.com',
+                'phone' => '503-326-9436',
+                'notes' => ''
+            )
+        );
+        $Orders = $this->generate('Orders', array(
+            'components' => array(
+                'MobileDetect.MobileDetect' => array('detect'),
+                'Session',
+                'Cart' => array('cartEmpty', 'cartItemCount', 'cartItemIds'),
+                'Stripe.Stripe' => array('charge'),
+                'Emailer' => array('order'),
+            )
+        ));
+        $Orders->Cart->expects($this->any())
+            ->method('cartEmpty')
+            ->will($this->returnValue(false));
+        $Orders->Cart->expects($this->any())
+            ->method('cartItemCount')
+            ->will($this->returnValue(1));
+        $Orders->Cart->expects($this->any())
+            ->method('cartItemIds')
+            ->will($this->returnValue(array(3)));
+        $Orders->Stripe->expects($this->any())
+            ->method('charge')
+            ->will($this->returnValue(array(
+                'stripe_paid' => 1,
+                'stripe_id' => 'ch_5dBkC3pJMgqjkD',
+                'stripe_last4' => '4242',
+                'stripe_zip_check' => 'pass',
+                'stripe_cvc_check' => 'pass',
+                'stripe_amount' => '18300',
+            )));
+        $Orders->MobileDetect->expects($this->any())
+            ->method('detect')
+            ->will($this->returnCallback(function(){
+                $args = func_get_args();
+                return $args[0] == 'isMobile' ? true : false;
+            }));
+        $Orders->Emailer->expects($this->once())
+            ->method('order')
+            ->will($this->returnValue(true));
+
+        $this->testAction(
+            '/orders/checkout',
+            array(
+                'data' => $order,
+                'method' => 'post',
+            )
+        );
+
+        $order = $this->Order->find('first', array(
+            'order' => array(
+                'Order.created' => 'DESC',
+            )
+        ));
+        $this->assertEquals($order['Detect'][0]['method'], 'isMobile');
+        $this->assertEquals($order['Order']['email'], 'SandraPIrvin@armyspy.com');
     }
 
 /**
