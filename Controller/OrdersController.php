@@ -5,6 +5,8 @@ class OrdersController extends AppController
 {
     public $uses = array('Watch', 'Address', 'Order', 'Region', 'Country');
 
+    public $components = array('MobileDetect' => array('className' => 'MobileDetect.MobileDetect'));
+
     public $paginate = array(
         'limit' => 10,
         'order' => array(
@@ -183,7 +185,6 @@ class OrdersController extends AppController
                     } , $this->cartWatches);
                     $this->Watch->saveMany($purchasedWatches);
 
-                    $this->MobileDetect = $this->Components->load('MobileDetect.MobileDetect');
                     // If mobile or tablet, get device details
                     if ($this->MobileDetect->detect('isMobile') || $this->MobileDetect->detect('isTablet')) {
                         $methods = $this->Order->Detect->find('list', array('fields' => array('Detect.id', 'Detect.method')));
@@ -200,21 +201,21 @@ class OrdersController extends AppController
                                 'id' => $order_id
                             ),
                             'Detect' => $detects
-                        ));  
+                        ));
                     }
 
                     $this->Cart->emptyCart();
-                    $order = $this->Order->getOrder($order_id); 
+                    $order = $this->Order->getOrder($order_id);
                     // Put order email and billing postal into session
                     $email = $order['Order']['email'];
                     $this->Session->write('Watch.Order.email', $email);
                     $address = Hash::extract($order, 'Address.{n}[type=billing]');
                     $address = current($address);
-                    $postalCode = $address['postalCode']; 
+                    $postalCode = $address['postalCode'];
                     $this->Session->write('Watch.Address.postalCode', $postalCode);
                     $this->Emailer->order($order);
                     $title = 'Thank You For Your Order';
-                    $this->set(compact('order', 'title'));   
+                    $this->set(compact('order', 'title'));
                     $this->Session->setFlash('<span class="glyphicon glyphicon-ok"></span> Thank you for your order.',
                         'default', array('class' => 'alert alert-success'));
                     $hideFatFooter = false;
