@@ -924,6 +924,29 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->assertTag($expectedTag, $result);
     }
 
+    public function testGetAddressErrorsCountry() {
+        $_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+        $query = array(
+            'country' => 'OTHER', 
+            'shipping' => 'billing',
+        );
+        $url = Router::url(array('controller' => 'orders', 'action' => 'getAddress', '?' => $query));
+        $options = array(
+            'return' => 'vars',
+        );
+
+        unset($this->address['postalCode']);
+        unset($this->address['country']);
+        $this->Session->write('Address.data.billing', $this->address);
+        $errorMessage = 'Please enter a postal code.';
+        $this->Session->write('Address.errors.billing.postalCode', array($errorMessage));
+        $this->Session->write('Address.errors.billing.country', ['Country must be selected from dropdown options. Type any portion of the country name and choose your country from the options that appear.']);
+
+        $result = $this->testAction($url, $options);
+        //print_r($this->vars); exit;
+        $this->assertEquals('Country must be selected from dropdown options. Type any portion of the country name and choose your country from the options that appear.', $this->vars['data']['errors']['billing']['countryName'][0]);
+    }
+
     /**
      * Test data sent to view has correct values on form error
      */
