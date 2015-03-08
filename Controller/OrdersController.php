@@ -104,6 +104,9 @@ class OrdersController extends AppController
     }
 
     public function checkout() {
+        if($this->Cart->cartEmpty() == true){
+            $this->redirect(array('controller' => 'watches', 'action' => 'index'));
+        }
         //Form submitted
         if($this->request->is('post')) {
             if($this->Cart->cartEmpty()){
@@ -241,14 +244,6 @@ class OrdersController extends AppController
 
                 //Set a variable for the view to display a general error message
                 $this->set(array('errors' => true));
-            }
-        } else {
-            // This previously got the coupon id and coupon email out of session
-            // In order to populate the form if user previously entered those items,
-            // left checkout and returned. Those are no longer stored in session.
-            // Keep or go?
-            if($this->Cart->cartEmpty() == true){
-                $this->redirect(array('controller' => 'watches', 'action' => 'index'));
             }
         }
 
