@@ -430,7 +430,7 @@ class OrdersControllerTest extends ControllerTestCase {
                 'Cart' => array('cartEmpty'),
             )
         ));
-        $Orders->Cart->expects($this->once())
+        $Orders->Cart->expects($this->any())
             ->method('cartEmpty')
             ->will($this->returnValue(true));
 
@@ -616,6 +616,54 @@ class OrdersControllerTest extends ControllerTestCase {
         );
         $this->assertContains('Your card was declined.', $this->contents);
     }
+
+    public function testCheckoutPopulateFromSession() {
+        $order = array(
+            'Address' => array(
+                'select-country' => 'us',
+            ),
+            'Order' => array(
+                'email' => 'SandraPIrvin@armyspy.com',
+                'phone' => '503-326-9436',
+                'notes' => ''
+            )
+        );
+        $Orders = $this->generate('Orders', array(
+            'components' => array(
+                'Cart' => array('cartEmpty', 'cartItemCount', 'cartItemIds'),
+            )
+        ));
+        $Orders->Cart->expects($this->any())
+            ->method('cartEmpty')
+            ->will($this->returnValue(false));
+        $Orders->Cart->expects($this->any())
+            ->method('cartItemCount')
+            ->will($this->returnValue(1));
+        $Orders->Cart->expects($this->any())
+            ->method('cartItemIds')
+            ->will($this->returnValue(array(3)));
+
+        $this->Session->write('Order', $order['Order']);
+        $this->Session->write('Address.select-country', $order['Address']['select-country']);
+
+        $result = $this->testAction(
+            '/orders/checkout',
+            array(
+                'method' => 'get',
+                'return' => 'view',
+            )
+        );
+        $expectedTag = [
+            'tag' => 'input',
+            'attributes' => [
+                'checked' => 'checked',
+                'id' => 'AddressSelect-countryUs',
+                'type' => 'radio',
+            ],
+        ];
+        $this->assertTag($expectedTag, $this->view);
+    }
+
 /**
  * testAdd method
  *
@@ -859,7 +907,7 @@ class OrdersControllerTest extends ControllerTestCase {
             'return' => 'view',
         );
 
-        unset($this->address['postalCode']); 
+        unset($this->address['postalCode']);
         $this->Session->write('Address.data.billing', $this->address);
         $errorMessage = 'Please enter a postal code.';
         $this->Session->write('Address.errors.billing.postalCode', array($errorMessage));
@@ -1100,5 +1148,10 @@ class OrdersControllerTest extends ControllerTestCase {
 		$this->markTestIncomplete('testAdminDelete not implemented.');
 	}
 
-
+    public function tearDown() {
+        parent::tearDown();
+        //$this->Session->destroy();
+        unset($this->Orders);
+        ClassRegistry::flush();
+    }
 }
