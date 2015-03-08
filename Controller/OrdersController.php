@@ -15,7 +15,7 @@ class OrdersController extends AppController
     protected $cartItemIds = array();
     protected $cartWatches = array();
 
-    public function beforeFilter() {	
+    public function beforeFilter() {
         $storeOpen = $this->Watch->storeOpen();
         //Redirect if store is closed and going to a non-admin order page and not index or view
         if ($storeOpen == false && empty($this->request->params['admin']) && !in_array($this->request->params['action'], array('index', 'view'))) {
@@ -123,7 +123,7 @@ class OrdersController extends AppController
                 }
                 $this->Cart->setCheckoutData($this->request->data);
                 $this->Session->setFlash('One or more of the items in your cart is no longer available.', 'warning');
-                $this->redirect(array('action' => 'checkout'));
+                return $this->redirect(array('action' => 'checkout'));
             }
 
             $data = $this->request->data;
@@ -143,14 +143,14 @@ class OrdersController extends AppController
             $couponEmail = isset($data['Coupon']['email']) ? $data['Coupon']['email'] : null;
             unset($data['Coupon']);
 
-            $valid = $this->Order->validateAssociated($data); 
+            $valid = $this->Order->validateAssociated($data);
             if($valid == true){
                 $couponAmount = 0;
                 if (!empty($couponCode) && !empty($couponEmail)) {
                     $coupon = $this->Order->Coupon->valid($couponCode, $couponEmail, $shipping, $this->cartItemIds);
                     $couponAmount = $this->Cart->couponAmount($this->cartWatches, $shipping, $coupon);
                 }
-                
+
                 $subTotal = $this->Cart->getSubTotal($this->cartWatches); 
                 $stripeData = array(
                     'amount' => $this->Cart->totalCart($subTotal, $shipping, $couponAmount),
