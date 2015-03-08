@@ -325,21 +325,23 @@ class OrdersController extends AppController
      */
     public function getAddress() {
         if($this->request->is('ajax')){
-            $query = $this->request->query; 
+            $query = $this->request->query;
             $country = strtoupper($query['country']);
             $shipping = $query['shipping'];
             $secondary = '';
             if ($shipping == 'shipping') {
                 $secondary = $this->Cart->getSecondaryCountry($country); 
             }
-            
+
             $options = $this->Region->options($country, $secondary);
             $labels = $this->Region->labels($country, $secondary);
             $data = compact('shipping', 'country', 'options', 'labels');
 
             //Address data and errors in the session
             if($this->Session->check('Address') == true){
-                $data['errors'] = $this->Session->read('Address.errors');
+                if (!empty($this->Session->read('Address.errors'))) {
+                    $data['errors'] = $this->Session->read('Address.errors');
+                }
                 $this->request->data['Address'] = $this->Session->read('Address.data');
                 $this->Session->delete('Address');
 
