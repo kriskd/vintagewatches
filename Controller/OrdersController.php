@@ -108,7 +108,7 @@ class OrdersController extends AppController
                 //There is no data to checkout with
                 $this->Cart->setCheckoutData($this->request->data);
                 $this->Session->setFlash('There was a problem with your cart, please add your items again.', 'warning');
-                $this->redirect(array('controller' => 'watches', 'action' => 'index'));
+                return $this->redirect(array('controller' => 'watches', 'action' => 'index'));
             }
 
             // Check that watches are still active
@@ -268,7 +268,7 @@ class OrdersController extends AppController
         $this->set(compact('title') + array('watches' => $this->cartWatches));
     }
 
-    public function add($id = null) {   
+    public function add($id = null) {
         if (!$this->Watch->sellable($id)) {
             return $this->redirect(array('controller' => 'watches', 'action' => 'index'));
         }
