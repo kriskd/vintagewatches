@@ -1,36 +1,49 @@
 $(document).ready(function(){
 
     $('.launch-tooltip').tooltip();
-    $('.carousel').carousel({
-        pause: 'hover'    
+    $('#carousel-home').carousel({
+        pause: 'hover'
+    });
+    $('#carousel-watch').carousel({
+      interval: false
     });
     $('.required label').append(' <span class="required">*</span>');
-    
+    var maxHeight = 0;
+    $('.same-height').children().each(function(){
+      var height = $(this).height();
+      if (height > maxHeight) {
+        maxHeight = height;
+      }
+    });
+    $('.same-height').children().each(function(){
+      $(this).height(maxHeight);
+    });
+
     $(document).on('click', '.fake-upload', function(){
         $('.image-upload').click();
     });
 
-    $('#OrderShipDate, #InvoiceShipDate, #InvoiceExpiration').datepicker({dateFormat: 'yy-mm-dd'});
+    $('#OrderShipDate, #InvoiceShipDate, #InvoiceExpiration, #WatchRepairDate').datepicker({dateFormat: 'yy-mm-dd'});
     $('#CouponExpireDate').datepicker({
       dateFormat: 'yy-mm-dd',
       minDate: new Date()
     });
-    
+
     //Disable and enable filter input field based on filter option
     orderAdmin($('.admin-index select').val());
     $(document).on('change', '.admin-index select', function(){
         orderAdmin($(this).val());
     });
-  
+
     // Be careful of this deactiving watch checkboxes if class names change for example
-    function orderAdmin(filterValue) { 
+    function orderAdmin(filterValue) {
         if (filterValue == '') {
             $('.admin-index .input input').val('').prop('disabled', true);
         } else {
             $('.admin-index .input input').prop('disabled', false);
         }
     }
-    
+
     $('.admin-index .active-checkbox input').on('click', function(){
         var value;
         if ($(this).is(':checked')) {
@@ -83,7 +96,7 @@ $(document).ready(function(){
     $(window).on('resize', function(){
         setHomeCarouselImageHeight();
     });
-    
+
     function setHomeCarouselImageHeight () {
         var height = $('#carousel-home .carousel-inner img').height();
         if (height == 0) {
@@ -92,13 +105,13 @@ $(document).ready(function(){
         $('#carousel-home .carousel-indicators').css('top', height-25);
         $('#carousel-home .carousel-control .glyphicon').css('top', height-25);
     }
-    
-    var hideWatchIntroCookie = getCookie('hideWatchIntro'); 
+
+    var hideWatchIntroCookie = getCookie('hideWatchIntro');
     if (hideWatchIntroCookie != null && hideWatchIntroCookie == 1) {
         $('.watch-index-intro').hide();
         $('.watches-header .glyphicon-eye-open').show();
     }
-    
+
     $(document).on('click', '.watch-index-intro .glyphicon-remove', function(){
         $('.watch-index-intro').hide();
         $('.watches-header .glyphicon-eye-open').show();
