@@ -7,6 +7,8 @@ App::uses('AppModel', 'Model');
  */
 class Acquisition extends AppModel {
 
+    public $displayField = 'acquisition';
+
 /**
  * Validation rules
  *
@@ -48,4 +50,12 @@ class Acquisition extends AppModel {
 		)
 	);
 
+    public function afterFind($results = array(), $primary = false) {
+        foreach ($results as &$result) {
+            if (isset($result[$this->name]['acquisition'])) {
+                $result[$this->name]['acquisition'] = ucwords($result[$this->name]['acquisition']);
+            }
+        }
+        return $results;
+    }
 }
