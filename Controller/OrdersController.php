@@ -5,6 +5,8 @@ class OrdersController extends AppController
 {
     public $uses = array('Watch', 'Address', 'Order', 'Region', 'Country');
 
+    public $components = array('MobileDetect' => array('className' => 'MobileDetect.MobileDetect'));
+
     public $paginate = array(
         'limit' => 10,
         'order' => array(
@@ -15,7 +17,7 @@ class OrdersController extends AppController
     protected $cartItemIds = array();
     protected $cartWatches = array();
 
-    public function beforeFilter() {	
+    public function beforeFilter() {
         $storeOpen = $this->Watch->storeOpen();
         //Redirect if store is closed and going to a non-admin order page and not index or view
         if ($storeOpen == false && empty($this->request->params['admin']) && !in_array($this->request->params['action'], array('index', 'view'))) {
@@ -34,49 +36,50 @@ class OrdersController extends AppController
      * orders that match those.
      */
     public function index($reset = false) {
-        if ($reset == true) {
+        if ($reset) {
             $this->Session->delete('Watch.Order');
             $this->Session->delete('Watch.Address');
             $this->redirect(array('action' => 'index'));
         }
 
+        $this->set('title', 'Order History');
         $email = $this->Session->read('Watch.Order.email');
-        $postalCode = $this->Session->read('Watch.Address.postalCode'); 
+        $postalCode = $this->Session->read('Watch.Address.postalCode');
 
-        if($this->request->is('post')){
+        if ($this->request->is('post')) {
             $data = $this->request->data;
             $email = $data['Order']['email'];
             $postalCode = $data['Address']['postalCode'];
 
             if (empty($email) || empty($postalCode)) {
-                $this->Session->setFlash('Email and postal code are required to search for orders.',
+                $this->request->data['Order']['email'] = $email;
+                $this->request->data['Address']['postalCode'] = $postalCode;
+                return $this->Session->setFlash('Email and postal code are required to search for orders.',
                     'danger', array('class' => 'alert alert-error'));
             }
         }
 
-        $options = $this->Order->getCustomerOrderOptions($email, $postalCode); 
-        $this->Paginator->settings = array_merge($this->paginate, $options); 
+        $options = $this->Order->getCustomerOrderOptions($email, $postalCode);
+        $this->Paginator->settings = array_merge($this->paginate, $options);
         $orders = $this->Paginator->paginate('Order');
 
         if (!empty($orders)) {
             $this->set('orders', $orders);
-            if (!$this->Session->check('Watch.Order.email')) {
+            if (!$this->Session->check('Watch.Order.email') || $email != $this->Session->read('Watch.Order.email')) {
                 $this->Session->write('Watch.Order.email', $email);
             }
-            if (!$this->Session->check('Watch.Address.postalCode')) {
+            if (!$this->Session->check('Watch.Address.postalCode') || $postalCode != $this->Session->read('Watch.Address.postalCode')) {
                 $this->Session->write('Watch.Address.postalCode', $postalCode);
             }
         }
 
         //Set flash message if we have an email and postalCode but no orders
         if ((!(empty($email)) && !empty($postalCode)) && empty($orders)) { 
-            $this->Session->setFlash('No orders found for this email and postal code.',
+            return $this->Session->setFlash('No orders found for this email and postal code.',
                 'danger', array('class' => 'alert alert-error'));
         }
 
-        $title = 'Order History';
-
-        $this->set(compact('email', 'title'));
+        $this->set('email', $email);
     }
 
     public function view($id = null) {
@@ -101,15 +104,18 @@ class OrdersController extends AppController
     }
 
     public function checkout() {
+        if($this->Cart->cartEmpty() == true){
+            $this->redirect(array('controller' => 'watches', 'action' => 'index'));
+        }
         //Form submitted
         if($this->request->is('post')) {
             if($this->Cart->cartEmpty()){
                 //There is no data to checkout with
                 $this->Cart->setCheckoutData($this->request->data);
                 $this->Session->setFlash('There was a problem with your cart, please add your items again.', 'warning');
-                $this->redirect(array('controller' => 'watches', 'action' => 'index'));
+                return $this->redirect(array('controller' => 'watches', 'action' => 'index'));
             }
-            
+
             // Check that watches are still active
             $activeWatches = array_filter($this->cartWatches, function($item) {
                 return $item['Watch']['active'] == 1;
@@ -122,9 +128,9 @@ class OrdersController extends AppController
                 }
                 $this->Cart->setCheckoutData($this->request->data);
                 $this->Session->setFlash('One or more of the items in your cart is no longer available.', 'warning');
-                $this->redirect(array('action' => 'checkout'));
+                return $this->redirect(array('action' => 'checkout'));
             }
-           
+
             $data = $this->request->data;
             unset($data['Shipping']);
 
@@ -142,14 +148,14 @@ class OrdersController extends AppController
             $couponEmail = isset($data['Coupon']['email']) ? $data['Coupon']['email'] : null;
             unset($data['Coupon']);
 
-            $valid = $this->Order->validateAssociated($data); 
+            $valid = $this->Order->validateAssociated($data);
             if($valid == true){
                 $couponAmount = 0;
                 if (!empty($couponCode) && !empty($couponEmail)) {
                     $coupon = $this->Order->Coupon->valid($couponCode, $couponEmail, $shipping, $this->cartItemIds);
                     $couponAmount = $this->Cart->couponAmount($this->cartWatches, $shipping, $coupon);
                 }
-                
+
                 $subTotal = $this->Cart->getSubTotal($this->cartWatches); 
                 $stripeData = array(
                     'amount' => $this->Cart->totalCart($subTotal, $shipping, $couponAmount),
@@ -182,7 +188,6 @@ class OrdersController extends AppController
                     } , $this->cartWatches);
                     $this->Watch->saveMany($purchasedWatches);
 
-                    $this->MobileDetect = $this->Components->load('MobileDetect.MobileDetect');
                     // If mobile or tablet, get device details
                     if ($this->MobileDetect->detect('isMobile') || $this->MobileDetect->detect('isTablet')) {
                         $methods = $this->Order->Detect->find('list', array('fields' => array('Detect.id', 'Detect.method')));
@@ -199,21 +204,21 @@ class OrdersController extends AppController
                                 'id' => $order_id
                             ),
                             'Detect' => $detects
-                        ));  
+                        ));
                     }
 
                     $this->Cart->emptyCart();
-                    $order = $this->Order->getOrder($order_id); 
+                    $order = $this->Order->getOrder($order_id);
                     // Put order email and billing postal into session
                     $email = $order['Order']['email'];
                     $this->Session->write('Watch.Order.email', $email);
                     $address = Hash::extract($order, 'Address.{n}[type=billing]');
                     $address = current($address);
-                    $postalCode = $address['postalCode']; 
+                    $postalCode = $address['postalCode'];
                     $this->Session->write('Watch.Address.postalCode', $postalCode);
                     $this->Emailer->order($order);
                     $title = 'Thank You For Your Order';
-                    $this->set(compact('order', 'title'));   
+                    $this->set(compact('order', 'title'));
                     $this->Session->setFlash('<span class="glyphicon glyphicon-ok"></span> Thank you for your order.',
                         'default', array('class' => 'alert alert-success'));
                     $hideFatFooter = false;
@@ -240,14 +245,6 @@ class OrdersController extends AppController
                 //Set a variable for the view to display a general error message
                 $this->set(array('errors' => true));
             }
-        } else {
-            // This previously got the coupon id and coupon email out of session
-            // In order to populate the form if user previously entered those items,
-            // left checkout and returned. Those are no longer stored in session.
-            // Keep or go?
-            if($this->Cart->cartEmpty() == true){
-                $this->redirect(array('controller' => 'watches', 'action' => 'index'));
-            }
         }
 
         // Check if any coupons are available. This needs to live outside of `if`, needed by both.
@@ -267,7 +264,7 @@ class OrdersController extends AppController
         $this->set(compact('title') + array('watches' => $this->cartWatches));
     }
 
-    public function add($id = null) {   
+    public function add($id = null) {
         if (!$this->Watch->sellable($id)) {
             return $this->redirect(array('controller' => 'watches', 'action' => 'index'));
         }
@@ -328,21 +325,23 @@ class OrdersController extends AppController
      */
     public function getAddress() {
         if($this->request->is('ajax')){
-            $query = $this->request->query; 
+            $query = $this->request->query;
             $country = strtoupper($query['country']);
             $shipping = $query['shipping'];
             $secondary = '';
             if ($shipping == 'shipping') {
                 $secondary = $this->Cart->getSecondaryCountry($country); 
             }
-            
+
             $options = $this->Region->options($country, $secondary);
             $labels = $this->Region->labels($country, $secondary);
             $data = compact('shipping', 'country', 'options', 'labels');
 
             //Address data and errors in the session
             if($this->Session->check('Address') == true){
-                $data['errors'] = $this->Session->read('Address.errors');
+                if (!empty($this->Session->read('Address.errors'))) {
+                    $data['errors'] = $this->Session->read('Address.errors');
+                }
                 $this->request->data['Address'] = $this->Session->read('Address.data');
                 $this->Session->delete('Address');
 
