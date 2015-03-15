@@ -39,8 +39,8 @@
                 </div>
                 <div class="row">
                     <p class="text-center bottom">
+                        <?php echo $this->Html->link('Edit Watch', array('action' => 'edit', $watch['Watch']['id']), array('class' => 'btn btn-primary', 'admin' => true)); ?>
                         <?php if ($watch['Watch']['order_id'] == null): ?>
-                            <?php echo $this->Html->link('Edit Watch', array('action' => 'edit', $watch['Watch']['id']), array('class' => 'btn btn-primary', 'admin' => true)); ?>
                             <?php echo $this->Html->link('Delete Watch', '#delete-watch',
                                         array(
                                             'class' => 'btn btn-danger',

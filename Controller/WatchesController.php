@@ -263,36 +263,33 @@ class WatchesController extends AppController {
 		if (!$this->Watch->exists($id)) {
 			throw new NotFoundException(__('Invalid watch'));
 		}
-        if ($this->Watch->hasOrder($id)) {
-            $this->Session->setFlash('This watch can not be edited because there is an associated order.', 'warning');
-            $this->redirect(array('action' => 'view', $id, 'admin' => true));
-        }
+        $this->brandList();
+        $options = array(
+            'conditions' => array(
+                'Watch.' . $this->Watch->primaryKey => $id,
+            ),
+            'contain' => array(
+                'Image',
+                'Brand' => array(
+                    'fields' => array(
+                    'id', 'name'
+                    )
+                ),
+            )
+        );
+        $watch = $this->Watch->find('first', $options);
 		if ($this->request->is('post') || $this->request->is('put')) {
 			$this->request->data['Watch']['id'] = $id; 
 			if ($this->Watch->save($this->request->data)) {
 				$this->Session->setFlash(__('The watch has been saved'), 'success');
-				$this->redirect(array('action' => 'edit', $id));
+			    return $this->redirect(array('action' => 'edit', $id));
 			} else {
-				$this->Session->setFlash(__('The watch could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The watch could not be saved. Please, try again.'), 'danger');
 			}
 		} else {
-			$this->brandList();
-			$options = array(
-				'conditions' => array(
-                    'Watch.' . $this->Watch->primaryKey => $id,
-				),
-				'contain' => array(
-					'Image',
-					'Brand' => array(
-					    'fields' => array(
-						'id', 'name'
-					    )
-                    ),
-				)
-			);
-			$this->request->data = $this->Watch->find('first', $options);
-			$this->set('watch', $this->Watch->find('first', $options));
-		}
+            $this->request->data = $watch;
+        }
+        $this->set('watch', $watch);
 	}
 
 /**
@@ -315,14 +312,14 @@ class WatchesController extends AppController {
 		$this->Session->setFlash(__('Watch was not deleted'), 'danger');
 		$this->redirect(array('action' => 'index'));
 	}
-	
+
 	public function admin_close()
 	{
 		$this->Watch->updateAll(array('active' => 0));
 		$this->Session->setFlash(__('The store is closed.'), 'success');
 		$this->redirect(array('action' => 'index', 'admin' => true));
 	}
-	
+
 	public function admin_open()
 	{
 		$this->Watch->updateAll(array('active' => 1),
@@ -330,13 +327,13 @@ class WatchesController extends AppController {
 		$this->Session->setFlash(__('The store is open.'), 'success');
 		$this->redirect(array('action' => 'index', 'admin' => true));
 	}
-    
+
 	public function brandList()
 	{
 	    $brands = array('' => 'Select One') + $this->Watch->Brand->find('list', array('order' => 'Brand.name'));
 	    $this->set(compact('brands'));
 	}
-	
+
 	public function admin_active() {
 		if($this->request->is('ajax')){
 			$data = $this->request->data;
