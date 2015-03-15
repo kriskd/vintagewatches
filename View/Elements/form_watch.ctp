@@ -1,40 +1,42 @@
 <?php echo $this->Form->create('Watch', array('class' => 'form-horizontal', 'autocomplete' => 'off')); ?>
 	<fieldset>
 		<legend><?php echo $action; ?> <?php echo __('Watch'); ?></legend>
-    <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <?php
-                echo $this->Form->input('name', array('label' => array('class' => 'control-label'),
-                                     'class' => 'form-control',
-                                 ));
-            ?>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <?php
-                echo $this->Form->input('stockId', array('label' => array('class' => 'control-label'),
-                                     'class' => 'form-control',
-                                     'type' => 'text',
-                                 ));
-            ?>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <?php 
-            echo $this->Form->input('brand_id', array('class' => 'form-control',
-                                    'label' => 'Brand',
-                                    'options' => $brands));
-            ?>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <?php
-                echo $this->Form->input('price', array('label' => array('class' => 'control-label'),
-                                     'class' => 'form-control',
-                                     'min' => 0,
-                                 ));
-            ?>
-        </div>
-    </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <?php
+                        echo $this->Form->input('name', array('label' => array('class' => 'control-label'),
+                                             'class' => 'form-control',
+                                         ));
+                    ?>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <?php
+                        echo $this->Form->input('stockId', array('label' => array('class' => 'control-label'),
+                                             'class' => 'form-control',
+                                             'type' => 'text',
+                                         ));
+                    ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <?php
+                    echo $this->Form->input('brand_id', array('class' => 'form-control',
+                                            'label' => 'Brand',
+                                            'options' => $brands,
+                                            'empty' => 'Select One', 
+                                        ));
+                    ?>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <?php
+                        echo $this->Form->input('price', array('label' => array('class' => 'control-label'),
+                                             'class' => 'form-control',
+                                             'min' => 0,
+                                         ));
+                    ?>
+                </div>
+            </div>
     <?php
 		echo $this->Form->input('description', array('label' => array('class' => 'control-label'),
 							 'class' => 'form-control'));
@@ -43,6 +45,60 @@
 		echo $this->Watch->active($watch);
 	?>
 	</fieldset>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <?php echo $this->Form->input('acquisition_id', array(
+                'label' => array(
+                    'class' => 'control-label',
+                    'text' => 'Acquisition Type',
+                ),
+                'options' => $acquisitions,
+                'class' => 'form-control',
+                'empty' => 'Select One',
+            )); ?>
+            <?php echo $this->Form->input('source_id', array(
+                'label' => array(
+                    'class' => 'control-label',
+                ),
+                'options' => $sources,
+                'class' => 'form-control',
+                'empty' => 'Select One',
+            )); ?>
+            <?php echo $this->Form->input('cost', array(
+                'label' => array(
+                    'class' => 'control-label',
+                ),
+                'class' => 'form-control',
+            )); ?>
+            <?php echo $this->Form->input('notes', array(
+                'label' => array(
+                    'class' => 'control-label',
+                ),
+                'class' => 'form-control',
+            )); ?>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <?php echo $this->Form->input('repair_date', array(
+                'label' => array(
+                    'class' => 'control-label',
+                ),
+                'class' => 'form-control',
+                'type' => 'text',
+            )); ?>
+            <?php echo $this->Form->input('repair_cost', array(
+                'label' => array(
+                    'class' => 'control-label',
+                ),
+                'class' => 'form-control',
+            )); ?>
+            <?php echo $this->Form->input('repair_notes', array(
+                'label' => array(
+                    'class' => 'control-label',
+                ),
+                'class' => 'form-control',
+            )); ?>
+        </div>
+    </div>
 <?php echo $this->Form->end(array('label' => __('Save Watch Text'), 'class' => 'btn btn-primary')); ?>
 
 <?php $this->append('css'); ?>

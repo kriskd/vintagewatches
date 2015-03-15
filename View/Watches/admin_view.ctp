@@ -1,5 +1,33 @@
-<div class="watches view">
+<div class="watches admin view">
     <h2><?php  echo h($watch['Watch']['name']); ?></h2>
+    <div class="row same-height">
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 well">
+            <h4 class="text-center">General</h4>
+            <dl>
+                <dt>Acquisition Type</dt>
+                <dd><?php echo ucwords($watch['Acquisition']['acquisition']); ?></dd>
+                <dt>Source</dt>
+                <dd><?php echo $watch['Source']['name']; ?></dd>
+                <dt>Cost</dt>
+                <dd><?php echo $this->Number->currency($watch['Watch']['cost'], 'USD'); ?>
+                <dt>Returned Date</dt>
+                <dd><?php echo $this->Watch->date($watch['Watch']['returned_date']); ?>
+                <dt class="no-float">Notes</dt>
+                <dd><?php echo $watch['Watch']['notes']; ?></dd>
+            </dl>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 well">
+            <h4 class="text-center">Repair</h4>
+            <dl>
+                <dt>Date</dt>
+                <dd><?php echo $this->Watch->date($watch['Watch']['repair_date']); ?>
+                <dt>Cost</dt>
+                <dd><?php echo $watch['Watch']['repair_cost']; ?></dd>
+                <dt class="no-float">Notes</dt>
+                <dd><?php echo $watch['Watch']['repair_notes']; ?></dd>
+            </dl>
+        </div>
+    </div>
     <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 carousel">
             <?php echo $this->Element('carousel', compact('watch')); ?>
@@ -17,11 +45,11 @@
                     </dd>
                     <dt><?php echo __('Created'); ?></dt>
                     <dd>
-                    <?php echo h($watch['Watch']['created']); ?>
+                    <?php echo $this->Watch->date($watch['Watch']['created']); ?>
                     </dd>
                     <dt><?php echo __('Modified'); ?></dt>
                     <dd>
-                    <?php echo h($watch['Watch']['modified']); ?>
+                    <?php echo $this->Watch->date($watch['Watch']['modified']); ?>
                     </dd>
                     <?php if(isset($watch['Order']['id'])):  ?>
                         <dt>Sold <?php echo date('Y-m-d', strtotime($watch['Order']['created'])); ?></dt>

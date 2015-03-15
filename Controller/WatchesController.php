@@ -6,7 +6,7 @@ App::uses('AppController', 'Controller');
  * @property Watch $Watch
  */
 class WatchesController extends AppController {
-	
+
 	public $paginate = array(
 				'limit' => 10,
 				'order' => array(
@@ -21,11 +21,8 @@ class WatchesController extends AppController {
 					)
 				)
 			);
-    
-	public $uses = array('Watch', 'Image');
-	
-	public function beforeFilter()
-	{
+
+	public function beforeFilter() {
 		$storeOpen = $this->Watch->storeOpen(); 
 		//Redirect if store is closed and going to a non-watch order page
 		if ($storeOpen == false && empty($this->request->params['admin'])) {
@@ -216,7 +213,7 @@ class WatchesController extends AppController {
 		if (!$this->Watch->exists($id)) {
 			throw new NotFoundException(__('Invalid watch'));
 		}
-		
+
 		$options = array(
 			'conditions' => array(
 				'Watch.' . $this->Watch->primaryKey => $id
@@ -225,9 +222,10 @@ class WatchesController extends AppController {
 				'Image',
 				'Brand' => array(
 				    'fields' => array(
-					'id', 'name'
+                        'id', 'name'
 				    )
-				)
+                ),
+                'Source', 'Acquisition'
 			)
 		);
 
@@ -249,7 +247,11 @@ class WatchesController extends AppController {
 				$this->Session->setFlash(__('The watch could not be saved. Please, try again.'), 'danger');
 			}
 		}
-        $this->brandList();
+        $this->set([
+            'brands' => $this->Watch->Brand->brandList(false), 
+            'acquisitions' => $this->Watch->Acquisition->find('list'),
+            'sources' => $this->Watch->Source->find('list'),
+        ]);
 	}
 
 /**
@@ -263,7 +265,11 @@ class WatchesController extends AppController {
 		if (!$this->Watch->exists($id)) {
 			throw new NotFoundException(__('Invalid watch'));
 		}
-        $this->brandList();
+        $this->set([
+            'brands' => $this->Watch->Brand->brandList(false), 
+            'acquisitions' => $this->Watch->Acquisition->find('list'),
+            'sources' => $this->Watch->Source->find('list'),
+        ]);
         $options = array(
             'conditions' => array(
                 'Watch.' . $this->Watch->primaryKey => $id,
@@ -272,7 +278,7 @@ class WatchesController extends AppController {
                 'Image',
                 'Brand' => array(
                     'fields' => array(
-                    'id', 'name'
+                        'id', 'name'
                     )
                 ),
             )
@@ -326,12 +332,6 @@ class WatchesController extends AppController {
 					array('order_id' => null));
 		$this->Session->setFlash(__('The store is open.'), 'success');
 		$this->redirect(array('action' => 'index', 'admin' => true));
-	}
-
-	public function brandList()
-	{
-	    $brands = array('' => 'Select One') + $this->Watch->Brand->find('list', array('order' => 'Brand.name'));
-	    $this->set(compact('brands'));
 	}
 
 	public function admin_active() {
