@@ -7285,8 +7285,35 @@ body.hide-fat-footer .container .content {
   text-align: right;
   padding-right: 10px;
 }
+.container .content dl dt.no-float {
+  float: none;
+  text-align: left;
+}
+.container .content dl dt.no-float + dd {
+  margin-left: 0px;
+}
 .container .content dl dd {
   margin-left: 170px;
+}
+.container .content dl dd:before,
+.container .content dl dd:after {
+  content: " ";
+  display: table;
+}
+.container .content dl dd:after {
+  clear: both;
+}
+.container .content dl dd:before,
+.container .content dl dd:after {
+  content: " ";
+  display: table;
+}
+.container .content dl dd:after {
+  clear: both;
+}
+.container .content dl dd.no-float {
+  float: none;
+  text-align: left;
 }
 .container .content .pagination .disabled {
   display: none;
@@ -7591,9 +7618,6 @@ body.hide-fat-footer .container .content {
 }
 .container .content .watches.form .image-upload {
   display: none;
-}
-.container .content .watches.form .jumbotron {
-  width: 50%;
 }
 .container .content .watches.form .watch-images {
   margin-bottom: 20px;

@@ -373,31 +373,31 @@ body.hide-fat-footer {
         .label-warning {
             background-color: @gold;
         }
-        
+
         .glyphicon-question-sign {
             color: @red;
         }
         .launch-tooltip, .launch-tooltip:hover {
             text-decoration: none;
         }
-        
+
         .form-group {
             margin-bottom: 0;
         }
-        
+
         input:focus:invalid {
             border-color: #ee6f6b;
             color: #b94a48;
         }
-        
+
         input[type=submit] {
             margin-top: 20px;
         }
-        
+
         h1, h2, h3, h4, h5, h6 {
             font-weight: bold;
         }
-        
+
         //Make the checkbox match the label
         .checkbox-inline {
             input {
@@ -468,7 +468,7 @@ body.hide-fat-footer {
             font-size: 90%;
             margin-top: 10px;
         }
-        
+
         dl {
             .clearfix();
             dt {
@@ -476,9 +476,21 @@ body.hide-fat-footer {
                 width: 160px;
                 text-align: right;
                 padding-right: 10px;
+                &.no-float {
+                    float: none;
+                    text-align: left;
+                    + dd {
+                        margin-left: 0px;
+                    }
+                }
             }
             dd {
                 margin-left: 170px; 
+                .clearfix();
+                &.no-float {
+                    float: none;
+                    text-align: left;
+                }
             }
         }
         .pagination {
@@ -718,7 +730,7 @@ body.hide-fat-footer {
                     }
                 }
                 .watch-details {
-                    
+
                 }
             }
         }
@@ -754,9 +766,6 @@ body.hide-fat-footer {
             }
             .image-upload {
                 display: none;
-            }
-            .jumbotron {
-                width: 50%;
             }
             .watch-images {
                 margin-bottom: 20px;
