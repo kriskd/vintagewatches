@@ -55,4 +55,11 @@ class Source extends AppModel {
 		)
 	);
 
+    public function beforeFind($query = array()) {
+        parent::beforeFind($query);
+        if (empty(current($query['order']))) {
+            $query['order'] = 'name';
+        }
+        return $query; 
+    }
 }
