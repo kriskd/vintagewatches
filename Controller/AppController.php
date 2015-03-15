@@ -105,18 +105,18 @@ class AppController extends Controller {
         $this->route = Router::parse($this->request->here); 
         $here = Router::url($this->request->here, true);
         $this->scheme = parse_url($here, PHP_URL_SCHEME);
-        
+
         //Logged in
         $loggedIn = false;
         if($this->Auth->user()){
             $loggedIn = true;
-              
+
             if ($this->Ebay->checkToken($this->Auth->user())) {
                 $encodedToken = $this->Auth->user('ebayToken'); 
                 $this->token = $this->Ebay->decodeToken($encodedToken);
             }
         }
-        
+
         //Set var to determine if we show fat footer, set it here so it can be manually changed in controllers.
         $hideFatFooter = false;
         if (strcasecmp($this->route['controller'], 'orders')==0 && strcasecmp($this->route['action'], 'checkout')==0 ||
@@ -124,45 +124,45 @@ class AppController extends Controller {
             !empty($this->request->params['admin'])) {
             $hideFatFooter = true;
         }
-        
+
         $hideAnalytics = false;
         if (prod() == false || $loggedIn == true ||
             strcasecmp($this->route['controller'], 'invoices')==0 && strcasecmp($this->route['action'], 'pay')==0 ||
             !empty($this->request->params['admin'])) {
             $hideAnalytics = true;
         }
-        
+
         $this->set(compact('hideFatFooter', 'hideAnalytics', 'loggedIn'));
-        
+
         $this->Cookie->domain = env('HTTP_BASE');
-        
+
         if (empty($this->params['prefix'])) {
             //Not an admin page
             $this->Auth->allow($this->action);
         }
-                
+
         //Brands with watches
-        $this->brandsWithWatches = $this->Brand->getBrandsWithWatches();
+        $this->brandsWithWatches = $this->Brand->brandList();
     }
-    
+
     public function isAuthorized($user)
-    {    
+    {
         if(empty($this->request->params['admin'])) return true;
-        
+
         if($user) return true;
-        
+
         if(in_array($this->action, array('login'))){
             $this->Auth->authError = 'You are already logged in.';
             return false;
         }
-        
+
         return false;
     }
-    
+
     public function array_merge_recursive_distinct(array &$array1, array &$array2)
     {
         $merged = $array1;
-      
+
         foreach ($array2 as $key => &$value) {
             if (is_array ($value) && isset($merged[$key]) && is_array($merged[$key])) {
                 $merged[$key] = $this->array_merge_recursive_distinct($merged[$key], $value);

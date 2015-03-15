@@ -59,7 +59,7 @@ class Brand extends AppModel {
             'dependent' => false,
         ),
 	);
-        
+
         public function checkDelete($check)
         {   
             if (!empty($check['name'])) {
@@ -76,30 +76,34 @@ class Brand extends AppModel {
             if ($count == 0) { 
                 $this->delete($id); 
                 return '';
-            } 
+            }
             return false;
         }
-        
+
         /**
-         * Get brands that have active watches
+         * Return a brand list
+         * @param $activeWatches Include only brands with active watches
+         *
+         * @return array 
          */
-        public function getBrandsWithWatches()
-        {
-            $options['joins'] = array(
-                        array(
-                            'table' => 'watches',
-                            'alias' => 'Watch',
-                            'type' => 'INNER',
-                            'conditions' => array(
-                                'Watch.brand_id = Brand.id',
-                                'Watch.active' => 1,
-                                'Watch.order_id' => null
+        public function brandList($activeWatches = true) {
+            if ($activeWatches) {
+                $options['joins'] = array(
+                            array(
+                                'table' => 'watches',
+                                'alias' => 'Watch',
+                                'type' => 'INNER',
+                                'conditions' => array(
+                                    'Watch.brand_id = Brand.id',
+                                    'Watch.active' => 1,
+                                    'Watch.order_id' => null
+                            )
                         )
-                    )
-                );
-            $options['group'] = array('Brand.id');
+                    );
+                $options['group'] = array('Brand.id');
+            }
             $options['order'] = array('Brand.name');
-            
+
             return $this->find('list', $options);
         }
 }
