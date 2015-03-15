@@ -148,8 +148,8 @@ class MyFormHelper extends FormHelper
                     $options[$item] = $attrs[$item];
                 }
             }
-            
-            if(isset($errors[$name])){
+
+            if(isset($errors[$name]) && is_array($errors[$name])){
                 foreach($errors[$name] as $error){
                     //Add errors manually since form is loaded via ajax
                     $errorClass = '<div class="error-message">' . $error . '</div>';
@@ -157,12 +157,12 @@ class MyFormHelper extends FormHelper
                     $options['after'] = '</div></div>' . $errorClass;
                 }
             }
-            $form .= $this->input('Address.' . $type . '.' . $name, $options); 
+            $form .= $this->input('Address.' . $type . '.' . $name, $options);
         }
- 
+
         return $form;
     }
-    
+
     /*
      * Pass in the Order, return a checkbox to delete the shipping address
      */
@@ -175,7 +175,7 @@ class MyFormHelper extends FormHelper
         $id = $current['id'];
         return $this->checkbox('delete_shipping_address', array('value' => $id, 'hiddenField' => false));
     }
-    
+
     public function ccd($payment_type = '') {
         $options = array(
                         'name' => false,
