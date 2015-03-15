@@ -109,7 +109,15 @@ class Watch extends AppModel {
         'Brand' => array(
             'className' => 'Brand',
             'foreignKey' => 'brand_id'
-        )
+        ),
+        'Acquisition' => array(
+            'className' => 'Brand',
+            'foreignKey' => 'acquisition_id'
+        ),
+        'Source' => array(
+            'className' => 'Brand',
+            'foreignKey' => 'source_id'
+        ),
     );
 
     public $hasMany = array(
