@@ -111,11 +111,11 @@ class Watch extends AppModel {
             'foreignKey' => 'brand_id'
         ),
         'Acquisition' => array(
-            'className' => 'Brand',
+            'className' => 'Acquisition',
             'foreignKey' => 'acquisition_id'
         ),
         'Source' => array(
-            'className' => 'Brand',
+            'className' => 'Source',
             'foreignKey' => 'source_id'
         ),
     );
