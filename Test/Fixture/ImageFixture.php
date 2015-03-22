@@ -120,6 +120,24 @@ class ImageFixture extends CakeTestFixture {
 			'filenameMedium' => '/files/10/omega5427insideback-md.jpg',
 			'filenameThumb' => '/files/10/omega5427insideback-thumb.jpg'
 		),
+		array(
+			'id' => '11',
+			'watch_id' => '9998',
+			'primary' => 0,
+			'filename' => '/files/9998/omega5427insideback.jpg',
+			'filenameLarge' => '/files/9998/omega5427insideback-lg.jpg',
+			'filenameMedium' => '/files/9998/omega5427insideback-md.jpg',
+			'filenameThumb' => '/files/9998/omega5427insideback-thumb.jpg'
+		),
+		array(
+			'id' => '12',
+			'watch_id' => '9999',
+			'primary' => 0,
+			'filename' => '/files/9999/omega5427insideback.jpg',
+			'filenameLarge' => '/files/9999/omega5427insideback-lg.jpg',
+			'filenameMedium' => '/files/9999/omega5427insideback-md.jpg',
+			'filenameThumb' => '/files/9999/omega5427insideback-thumb.jpg'
+		),
 	);
 
 }

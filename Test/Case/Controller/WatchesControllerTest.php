@@ -4,6 +4,8 @@ App::uses('CakeRequest', 'Network');
 App::uses('ComponentCollection', 'Controller');
 App::uses('SessionComponent', 'Controller/Component');
 App::uses('Watch', 'Model');
+App::uses('Folder', 'Utility');
+App::uses('File', 'Utility');
 
 class WatchesControllerTest extends ControllerTestCase {
 
@@ -119,7 +121,7 @@ class WatchesControllerTest extends ControllerTestCase {
         );
         $url = Router::url(array('controller' => 'watches', 'action' => 'index', 'admin' => true, '?' => $query));
         $this->testAction($url, ['method' => 'get', 'return' => 'vars']);
-        $this->assertCount(7, $this->vars['watches']);
+        $this->assertCount(8, $this->vars['watches']);
         $ids = Hash::extract($this->vars['watches'], '{n}.Watch.id');
         $this->assertContains(3, $ids);
         $this->assertContains(5, $ids);
@@ -128,6 +130,7 @@ class WatchesControllerTest extends ControllerTestCase {
         $this->assertContains(8, $ids);
         $this->assertContains(9, $ids);
         $this->assertContains(10, $ids);
+        $this->assertContains(9999, $ids);
     }
 
     public function testAdminEdit() {
@@ -172,5 +175,74 @@ class WatchesControllerTest extends ControllerTestCase {
         ]);
         $this->assertEquals(395, $watch['Watch']['price']);
         $this->assertEquals(date('Y-m-d'), $watch['Watch']['repair_date']);
+    }
+
+    public function testAdminDelete() {
+        $id = 9999;
+        $watch = $this->Watch->find('first', [
+            'conditions' => [
+                'id' => $id,
+            ],
+            'contain' => 'Image',
+        ]);
+        $folder = new Folder(WWW_ROOT.'files/'.$id);
+        $original = new File(WWW_ROOT.$watch['Image'][0]['filename'], true, 0644);
+        $large = new File(WWW_ROOT.$watch['Image'][0]['filenameLarge'], true, 0644);
+        $medium = new File(WWW_ROOT.$watch['Image'][0]['filenameMedium'], true, 0644);
+        $thumb = new File(WWW_ROOT.$watch['Image'][0]['filenameThumb'], true, 0644);
+        $this->assertTrue($original->exists());
+        $this->assertTrue($large->exists());
+        $this->assertTrue($medium->exists());
+        $this->assertTrue($thumb->exists());
+        $this->testAction('/admin/watches/delete/'.$id, ['method' => 'post']);
+        $watch = $this->Watch->find('first', [
+            'conditions' => [
+                'id' => $id,
+            ],
+            'recursive' => -1
+        ]);
+        $this->assertEmpty($watch);
+        $this->assertFalse($original->exists());
+        $this->assertFalse($large->exists());
+        $this->assertFalse($medium->exists());
+        $this->assertFalse($thumb->exists());
+        $this->assertEmpty($folder->path);
+    }
+
+    public function testAdminDeleteSold() {
+        $id = 9998;
+        $watch = $this->Watch->find('first', [
+            'conditions' => [
+                'id' => $id,
+            ],
+            'contain' => 'Image',
+        ]);
+        $folder = new Folder(WWW_ROOT.'files/'.$id);
+        $original = new File(WWW_ROOT.$watch['Image'][0]['filename'], true, 0644);
+        $large = new File(WWW_ROOT.$watch['Image'][0]['filenameLarge'], true, 0644);
+        $medium = new File(WWW_ROOT.$watch['Image'][0]['filenameMedium'], true, 0644);
+        $thumb = new File(WWW_ROOT.$watch['Image'][0]['filenameThumb'], true, 0644);
+        $this->assertTrue($original->exists());
+        $this->assertTrue($large->exists());
+        $this->assertTrue($medium->exists());
+        $this->assertTrue($thumb->exists());
+        $this->testAction('/admin/watches/delete/'.$id, ['method' => 'post']);
+        $watch = $this->Watch->find('first', [
+            'conditions' => [
+                'id' => $id,
+            ],
+            'recursive' => -1
+        ]);
+        $this->testAction('/admin/watches/delete/'.$id, ['method' => 'post']);
+        $this->assertNotEmpty($watch); 
+        $this->assertNotEmpty($folder->path);
+        $this->assertTrue($original->exists());
+        $this->assertTrue($large->exists());
+        $this->assertTrue($medium->exists());
+        $this->assertTrue($thumb->exists());
+        $original->delete();
+        $large->delete();
+        $medium->delete();
+        $thumb->delete();
     }
 }
