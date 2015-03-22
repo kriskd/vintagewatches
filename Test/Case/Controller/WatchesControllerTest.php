@@ -34,14 +34,14 @@ class WatchesControllerTest extends ControllerTestCase {
         $this->Watch = ClassRegistry::init('Watch');
         $this->ComponentCollection = new ComponentCollection();
         $this->Session = new SessionComponent($this->ComponentCollection);
-        $this->Watches = $this->generate('Watches', array(
+        /*$this->Watches = $this->generate('Watches', array(
             'components' => array(
                 'Auth' => array('user')
             )
         ));
         $this->Watches->Auth->staticExpects($this->any())
             ->method('user')
-            ->will($this->returnValue(true));
+            ->will($this->returnValue(true));*/
 
     }
 
@@ -78,7 +78,7 @@ class WatchesControllerTest extends ControllerTestCase {
 
     public function testAdminIndexBrand() {
         $query = array(
-            'brand_id' => '3', 
+            'brand_id' => '3',
         );
         $url = Router::url(array('controller' => 'watches', 'action' => 'index', 'admin' => true, '?' => $query));
         $this->testAction($url, ['method' => 'get', 'return' => 'vars']);
@@ -86,5 +86,91 @@ class WatchesControllerTest extends ControllerTestCase {
         $ids = Hash::extract($this->vars['watches'], '{n}.Watch.id');
         $this->assertContains(5, $ids);
         $this->assertContains(9, $ids);
+    }
+
+    public function testAdminIndexBrandAcquisition() {
+        $query = array(
+            'brand_id' => '3',
+            'acquisition_id' => '2',
+        );
+        $url = Router::url(array('controller' => 'watches', 'action' => 'index', 'admin' => true, '?' => $query));
+        $this->testAction($url, ['method' => 'get', 'return' => 'vars']);
+        $this->assertCount(2, $this->vars['watches']);
+        $ids = Hash::extract($this->vars['watches'], '{n}.Watch.id');
+        $this->assertContains(5, $ids);
+        $this->assertContains(9, $ids);
+    }
+
+    public function testAdminIndexSourceAcquisition() {
+        $query = array(
+            'source_id' => '1',
+            'acquisition_id' => '2',
+        );
+        $url = Router::url(array('controller' => 'watches', 'action' => 'index', 'admin' => true, '?' => $query));
+        $this->testAction($url, ['method' => 'get', 'return' => 'vars']);
+        $this->assertCount(1, $this->vars['watches']);
+        $ids = Hash::extract($this->vars['watches'], '{n}.Watch.id');
+        $this->assertContains(5, $ids);
+    }
+
+    public function testAdminIndexUnsold() {
+        $query = array(
+            'sold' => '00',
+        );
+        $url = Router::url(array('controller' => 'watches', 'action' => 'index', 'admin' => true, '?' => $query));
+        $this->testAction($url, ['method' => 'get', 'return' => 'vars']);
+        $this->assertCount(7, $this->vars['watches']);
+        $ids = Hash::extract($this->vars['watches'], '{n}.Watch.id');
+        $this->assertContains(3, $ids);
+        $this->assertContains(5, $ids);
+        $this->assertContains(6, $ids);
+        $this->assertContains(7, $ids);
+        $this->assertContains(8, $ids);
+        $this->assertContains(9, $ids);
+        $this->assertContains(10, $ids);
+    }
+
+    public function testAdminEdit() {
+        $data = [
+            'Watch' => [
+                'id' => '7',
+                'price' => '500',
+                'repair_date' => date('Y-m-d'),
+            ],
+        ];
+        $this->testAction('/admin/watches/edit/7', ['method' => 'post', 'data' => $data, 'return' => 'vars']);
+        $this->assertContains('/admin/watches/view/7', $this->headers['Location']);
+        $watch = $this->Watch->find('first', [
+            'conditions' => [
+                'id' => 7,
+            ],
+            'recursive' => -1
+        ]);
+        $this->assertEquals(500, $watch['Watch']['price']);
+        $this->assertEquals(date('Y-m-d'), $watch['Watch']['repair_date']);
+    }
+
+    /**
+     * Test admin edit of a sold watch
+     * Changing price not allowed, repair_date can be changed
+     */
+    public function testAdminEditSold() {
+        $data = [
+            'Watch' => [
+                'id' => '4',
+                'price' => '500',
+                'repair_date' => date('Y-m-d'),
+            ],
+        ];
+        $this->testAction('/admin/watches/edit/4', ['method' => 'post', 'data' => $data, 'return' => 'vars']);
+        $this->assertContains('/admin/watches/view/4', $this->headers['Location']);
+        $watch = $this->Watch->find('first', [
+            'conditions' => [
+                'id' => 4,
+            ],
+            'recursive' => -1
+        ]);
+        $this->assertEquals(395, $watch['Watch']['price']);
+        $this->assertEquals(date('Y-m-d'), $watch['Watch']['repair_date']);
     }
 }
