@@ -63,7 +63,7 @@
 <?php if (isset($watch['Watch']['id'])): ?>
     <?php $action = ['action' => 'view', $watch['Watch']['id']]; ?>
 <?php endif; ?>
-<?php echo $this->Html->link(__('Cancel'), $action, ['class' => 'btn btn-success']); ?>
+<?php echo $this->Html->link(__('Cancel'), $action, ['class' => 'btn btn-warning']); ?>
 
 <?php if (!isset($sold) || !$sold): ?>
     <?php $this->append('css'); ?>
