@@ -1,5 +1,7 @@
 <?php
 App::uses('AppModel', 'Model');
+App::uses('Folder', 'Utility');
+
 /**
  * Watch Model
  *
@@ -134,6 +136,26 @@ class Watch extends AppModel {
             'dependent' => true, //Delete associated images
         ),
     );
+
+    public function beforeDelete($cascade = true) {
+        $watch = $this->find('first', [
+            'conditions' => [
+                $this->alias.'.id' => $this->id
+            ],
+            'recursive' => -1,
+        ]);
+
+        if (empty($watch['Watch']['order_id'])) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function afterDelete() {
+        $folder = new Folder(WWW_ROOT.'files/'.$this->id);
+        $folder->delete();
+    }
 
     /**
      * Get watch for display.  Will return watch if active and no order
