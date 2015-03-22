@@ -22,84 +22,31 @@ class SourcesController extends AppController {
  * @return void
  */
 	public function admin_index() {
-		$this->Source->recursive = 0;
-		$this->set('sources', $this->Paginator->paginate());
-	}
-
-/**
- * admin_view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function admin_view($id = null) {
-		if (!$this->Source->exists($id)) {
-			throw new NotFoundException(__('Invalid source'));
-		}
-		$options = array('conditions' => array('Source.' . $this->Source->primaryKey => $id));
-		$this->set('source', $this->Source->find('first', $options));
-	}
-
-/**
- * admin_add method
- *
- * @return void
- */
-	public function admin_add() {
 		if ($this->request->is('post')) {
-			$this->Source->create();
-			if ($this->Source->save($this->request->data)) {
-				$this->Session->setFlash(__('The source has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The source could not be saved. Please, try again.'));
+			$data = $this->request->data;
+			$newSource['Source']['name'] = array_pop($data['Source']);
+			if (!empty($newSource['Source']['name'])) {
+				$this->Source->create();
+				if ($this->Source->save($newSource)) {
+					$this->Session->setFlash(__('The source has been saved.'), 'success');
+				} else {
+					$this->Session->setFlash(__('The source could not be saved. Please, try again.'), 'danger');
+				}
 			}
-		}
-	}
 
-/**
- * admin_edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function admin_edit($id = null) {
-		if (!$this->Source->exists($id)) {
-			throw new NotFoundException(__('Invalid source'));
-		}
-		if ($this->request->is(array('post', 'put'))) {
-			if ($this->Source->save($this->request->data)) {
-				$this->Session->setFlash(__('The source has been saved.'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The source could not be saved. Please, try again.'));
-			}
-		} else {
-			$options = array('conditions' => array('Source.' . $this->Source->primaryKey => $id));
-			$this->request->data = $this->Source->find('first', $options);
-		}
-	}
+            if (!empty($data['Source'])) {
+                foreach($data['Source'] as $id => $item ) {
+                    $saveMany[$id] = array('id' => $id, 'name' => $item['name']);
+                }
 
-/**
- * admin_delete method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function admin_delete($id = null) {
-		$this->Source->id = $id;
-		if (!$this->Source->exists()) {
-			throw new NotFoundException(__('Invalid source'));
+                $this->Source->saveMany($saveMany);
+            }
 		}
-		$this->request->allowMethod('post', 'delete');
-		if ($this->Source->delete()) {
-			$this->Session->setFlash(__('The source has been deleted.'));
-		} else {
-			$this->Session->setFlash(__('The source could not be deleted. Please, try again.'));
-		}
-		return $this->redirect(array('action' => 'index'));
+        $sources = $this->Source->find('list', array(
+                            'recursive' => -1,
+                            'order' => 'name'
+                        )
+                    );
+		$this->set('sources', $sources);
 	}
 }
