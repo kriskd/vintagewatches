@@ -6761,6 +6761,20 @@ button.close {
 .navbar-inverse .navbar-link:hover {
   color: #ffffff;
 }
+fieldset {
+  border: 1px solid #ddd !important;
+  padding: 0 1.4em 1.4em 1.4em !important;
+  margin: 0 0 1.5em 0 !important;
+  box-shadow: 0px 0px 0px 0px #000;
+}
+fieldset legend {
+  font-size: 1.2em !important;
+  font-weight: bold !important;
+  text-align: left !important;
+  width: auto;
+  padding: 0 10px;
+  border-bottom: none;
+}
 .ui-autocomplete-loading,
 .ajax-loading {
   background: url('/css/images/ui-anim_basic_16x16.gif') no-repeat right center;
@@ -7315,6 +7329,10 @@ body.hide-fat-footer .container .content {
   float: none;
   text-align: left;
 }
+.container .content dl.prices dd {
+  text-align: right;
+  margin-right: 100px;
+}
 .container .content .pagination .disabled {
   display: none;
 }
@@ -7594,21 +7612,15 @@ body.hide-fat-footer .container .content {
 .container .content .watches.admin-index .header .btn-primary {
   margin-right: 10px;
 }
-.container .content .watches.admin-index .btn-group {
+.container .content .watches.admin-index .btn-group-justified {
   margin-top: 10px;
   text-align: center;
 }
-.container .content .watches.admin-index .btn-group > .btn {
+.container .content .watches.admin-index .btn-group-justified > .btn {
   float: none;
 }
-.container .content .watches.admin-index .btn-group .btn + .btn {
+.container .content .watches.admin-index .btn-group-justified .btn + .btn {
   margin-left: -5px;
-}
-@media (min-width: 992px) {
-  .container .content .watches.admin-index .btn-group {
-    margin-top: 0px;
-    text-align: right;
-  }
 }
 .container .content .watches.form #WatchAdminEditForm {
   margin-bottom: 20px;

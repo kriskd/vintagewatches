@@ -1,50 +1,7 @@
 <?php echo $this->Form->create('Watch', array('class' => 'form-horizontal', 'autocomplete' => 'off')); ?>
-	<fieldset>
-		<legend><?php echo $action; ?> <?php echo __('Watch'); ?></legend>
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <?php
-                        echo $this->Form->input('name', array('label' => array('class' => 'control-label'),
-                                             'class' => 'form-control',
-                                         ));
-                    ?>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <?php
-                        echo $this->Form->input('stockId', array('label' => array('class' => 'control-label'),
-                                             'class' => 'form-control',
-                                             'type' => 'text',
-                                         ));
-                    ?>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <?php
-                    echo $this->Form->input('brand_id', array('class' => 'form-control',
-                                            'label' => 'Brand',
-                                            'options' => $brands,
-                                            'empty' => 'Select One', 
-                                        ));
-                    ?>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                    <?php
-                        echo $this->Form->input('price', array('label' => array('class' => 'control-label'),
-                                             'class' => 'form-control',
-                                             'min' => 0,
-                                         ));
-                    ?>
-                </div>
-            </div>
-    <?php
-		echo $this->Form->input('description', array('label' => array('class' => 'control-label'),
-							 'class' => 'form-control'));
-		//$watch isn't defined on add action, so give it a null value to avoid notices
-		$watch = empty($watch) ? null : $watch;
-		echo $this->Watch->active($watch);
-	?>
-	</fieldset>
+<?php echo $this->Element('watch_attributes'); ?>
+<fieldset>
+    <legend>Information</legend>
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
             <?php echo $this->Form->input('acquisition_id', array(
@@ -59,6 +16,7 @@
             <?php echo $this->Form->input('source_id', array(
                 'label' => array(
                     'class' => 'control-label',
+                    'text' => 'Source/Owner',
                 ),
                 'options' => $sources,
                 'class' => 'form-control',
@@ -99,14 +57,15 @@
             )); ?>
         </div>
     </div>
-<?php echo $this->Form->end(array('label' => __('Save Watch Text'), 'class' => 'btn btn-primary')); ?>
+</fieldset>
+<?php echo $this->Form->end(array('label' => __('Save Watch'), 'class' => 'btn btn-primary')); ?>
 
 <?php $this->append('css'); ?>
     <?php echo $this->Html->css('/css/tinyeditor.css'); ?>
 <?php $this->end(); ?>
 
 <?php $this->append('script'); ?>
-    <?php echo $this->Html->script('/js/src/tiny.editor.packed.js'); ?> 
+    <?php echo $this->Html->script('/js/src/tiny.editor.packed.js'); ?>
     <script type="text/javascript">
         $(document).ready(function(){
             var myInstance = new TINY.editor.edit('editor',{
@@ -131,7 +90,7 @@
                 footerclass:'tinyeditor-footer', // (optional) CSS class of the footer
                 toggle:{text:'source',activetext:'wysiwyg',cssclass:'toggle'}, // (optional) toggle to markup view options
                 resize:{cssclass:'resize'} // (optional) display options for the editor resize
-            }); 
+            });
             $(document).on('submit', '#WatchAdminEditForm, #WatchAdminAddForm', function(){
                 myInstance.post();
             });

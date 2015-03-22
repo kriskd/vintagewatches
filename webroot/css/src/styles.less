@@ -18,6 +18,21 @@
 @gold:                  #b29600;
 @goldDark:              #665600;
 
+fieldset {
+    border: 1px solid #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    box-shadow:  0px 0px 0px 0px #000;
+    legend {
+        font-size: 1.2em !important;
+        font-weight: bold !important;
+        text-align: left !important;
+        width:auto;
+        padding:0 10px;
+        border-bottom:none;
+    }
+}
+
 .rounded-corners (@radius: 5px) {
   border-radius: @radius;
 }
@@ -485,11 +500,17 @@ body.hide-fat-footer {
                 }
             }
             dd {
-                margin-left: 170px; 
+                margin-left: 170px;
                 .clearfix();
                 &.no-float {
                     float: none;
                     text-align: left;
+                }
+            }
+            &.prices {
+                dd {
+                    text-align: right;
+                    margin-right: 100px;
                 }
             }
         }
@@ -742,7 +763,7 @@ body.hide-fat-footer {
                     margin-right: 10px;
                 }
             }
-            .btn-group {
+            .btn-group-justified {
                 > .btn {
                     float: none;
                 }
@@ -751,10 +772,6 @@ body.hide-fat-footer {
                 }
                 margin-top: 10px;
                 text-align: center;
-                @media (min-width: @screen-md-min) {
-                    margin-top: 0px;
-                    text-align: right;
-                }
             }
         }
         .watches.form {
