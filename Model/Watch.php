@@ -52,13 +52,6 @@ class Watch extends AppModel {
                 'message' => 'Please choose an acquisition type.'
             ),
         ),
-        'source_id' => array(
-            'notempty' => array(
-                'rule' => array('notempty'),
-                'allowEmpty' => false,
-                'message' => 'Please choose a source or owner.'
-            ),
-        ),
         'price' => array(
             'money' => array(
                 'rule' => array('money'),
