@@ -6,9 +6,11 @@ App::uses('SessionComponent', 'Controller/Component');
 App::uses('Watch', 'Model');
 
 class WatchesControllerTest extends ControllerTestCase {
-    
+
 	public $fixtures = array(
 		'app.watch',
+        'app.acquisition',
+        'app.source',
 		'app.order',
 		'app.coupon',
 		'app.brand',
@@ -26,12 +28,21 @@ class WatchesControllerTest extends ControllerTestCase {
 		//'app.content'
         'app.cake_session',
 	);
-    
+
     public function setUp() {
         parent::setUp();
         $this->Watch = ClassRegistry::init('Watch');
         $this->ComponentCollection = new ComponentCollection();
         $this->Session = new SessionComponent($this->ComponentCollection);
+        $this->Watches = $this->generate('Watches', array(
+            'components' => array(
+                'Auth' => array('user')
+            )
+        ));
+        $this->Watches->Auth->staticExpects($this->any())
+            ->method('user')
+            ->will($this->returnValue(true));
+
     }
 
     public function testIndex() {
@@ -47,7 +58,33 @@ class WatchesControllerTest extends ControllerTestCase {
             'method' => 'GET',
             'return' => 'vars',
         ));
-        
+
         $this->assertNotEmpty($results['title']);
+    }
+
+/**
+ * testAdminIndex method
+ *
+ * @return void
+ */
+	public function testAdminIndex() {
+        $this->testAction('/admin/watches', array(
+            'method' => 'GET',
+            'return' => 'vars',
+        ));
+
+        $this->assertCount(10, $this->vars['watches']);
+	}
+
+    public function testAdminIndexBrand() {
+        $query = array(
+            'brand_id' => '3', 
+        );
+        $url = Router::url(array('controller' => 'watches', 'action' => 'index', 'admin' => true, '?' => $query));
+        $this->testAction($url, ['method' => 'get', 'return' => 'vars']);
+        $this->assertCount(2, $this->vars['watches']);
+        $ids = Hash::extract($this->vars['watches'], '{n}.Watch.id');
+        $this->assertContains(5, $ids);
+        $this->assertContains(9, $ids);
     }
 }
