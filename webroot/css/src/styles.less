@@ -1,6 +1,6 @@
 @import "bower_components/bootstrap/less/bootstrap.less";
 @grid-float-breakpoint:     @screen-md-min;
-@icon-font-path: "../fonts/"; 
+@icon-font-path: "../fonts/";
 @import "navbar.less";
 
 
@@ -37,15 +37,15 @@ fieldset {
   border-radius: @radius;
 }
 
-.ui-autocomplete-loading, .ajax-loading { 
-    background:url('/css/images/ui-anim_basic_16x16.gif') no-repeat right center 
+.ui-autocomplete-loading, .ajax-loading {
+    background:url('/css/images/ui-anim_basic_16x16.gif') no-repeat right center
 }
 .ajax-loading {
     display: none;
     height: 16px;
     width: 100%;
     background-position: center center;
-    clear: both; 
+    clear: both;
 }
 
 // Buttons
@@ -778,6 +778,13 @@ body.hide-fat-footer {
             #WatchAdminEditForm {
                 margin-bottom: 20px;
             }
+            .submit {
+                float: left;
+                margin-right: 5px;
+                input {
+                    margin-top: 0px;
+                }
+            }
             .fake-upload {
                 display: block;
             }
@@ -851,12 +858,12 @@ body.hide-fat-footer {
             }
             &.admin {
                 .info-inner {
-                    border: 5px solid @gray;
+                    border: 5px solid @gold;
                     padding: 10px;
                     margin-bottom: 10px;
                     h4 {
                         text-align: center;
-                        background: @gray;
+                        background: @gold;
                         color: white;
                         margin: -10px -10px 10px -10px;
                         padding-bottom: 5px;
@@ -1122,14 +1129,13 @@ body.hide-fat-footer {
         }
         .pages.admin-edit {
             .input {
-                
             }
             textarea {
                 height: 300px;
                 margin-bottom: 20px;
             }
         }
-        .brands {
+        .brands, .sources {
             .input {
                 margin-bottom: 10px;
             }

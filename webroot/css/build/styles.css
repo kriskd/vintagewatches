@@ -7625,6 +7625,13 @@ body.hide-fat-footer .container .content {
 .container .content .watches.form #WatchAdminEditForm {
   margin-bottom: 20px;
 }
+.container .content .watches.form .submit {
+  float: left;
+  margin-right: 5px;
+}
+.container .content .watches.form .submit input {
+  margin-top: 0px;
+}
 .container .content .watches.form .fake-upload {
   display: block;
 }
@@ -7710,13 +7717,13 @@ body.hide-fat-footer .container .content {
   }
 }
 .container .content .watches.view.admin .info-inner {
-  border: 5px solid #555555;
+  border: 5px solid #b29600;
   padding: 10px;
   margin-bottom: 10px;
 }
 .container .content .watches.view.admin .info-inner h4 {
   text-align: center;
-  background: #555555;
+  background: #b29600;
   color: white;
   margin: -10px -10px 10px -10px;
   padding-bottom: 5px;
@@ -8028,7 +8035,8 @@ body.hide-fat-footer .container .content {
   height: 300px;
   margin-bottom: 20px;
 }
-.container .content .brands .input {
+.container .content .brands .input,
+.container .content .sources .input {
   margin-bottom: 10px;
 }
 .container .content .orders.admin-index .row {
