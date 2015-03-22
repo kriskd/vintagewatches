@@ -833,8 +833,8 @@ body.hide-fat-footer {
                     .description {
                         margin-bottom: 45px;
                     }
-                    //min-height and push add to cart to bottom for lg only
-                    @media (min-width: @screen-lg-min) {
+                    //min-height and push add to cart to bottom for min md
+                    @media (min-width: @screen-md-min) {
                         position: relative;
                         min-height: 525px;
                         .bottom {
@@ -846,6 +846,29 @@ body.hide-fat-footer {
                                 margin: auto;
                             }
                         }
+                    }
+                }
+            }
+            &.admin {
+                .info-inner {
+                    border: 5px solid @gray;
+                    padding: 10px;
+                    margin-bottom: 10px;
+                    h4 {
+                        text-align: center;
+                        background: @gray;
+                        color: white;
+                        margin: -10px -10px 10px -10px;
+                        padding-bottom: 5px;
+                    }
+                }
+                .admin-btns {
+                    @media (min-width: @screen-sm-min) {
+                        text-align: right;
+                    }
+                    @media (max-width: @screen-sm-min) {
+                        margin-top: 0px;
+                        margin-bottom: 10px;
                     }
                 }
             }

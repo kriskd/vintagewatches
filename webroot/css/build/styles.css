@@ -7694,7 +7694,7 @@ body.hide-fat-footer .container .content {
 .container .content .watches.view .info .info-inner .description {
   margin-bottom: 45px;
 }
-@media (min-width: 1200px) {
+@media (min-width: 992px) {
   .container .content .watches.view .info .info-inner {
     position: relative;
     min-height: 525px;
@@ -7707,6 +7707,29 @@ body.hide-fat-footer .container .content {
   }
   .container .content .watches.view .info .info-inner .bottom a {
     margin: auto;
+  }
+}
+.container .content .watches.view.admin .info-inner {
+  border: 5px solid #555555;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.container .content .watches.view.admin .info-inner h4 {
+  text-align: center;
+  background: #555555;
+  color: white;
+  margin: -10px -10px 10px -10px;
+  padding-bottom: 5px;
+}
+@media (min-width: 768px) {
+  .container .content .watches.view.admin .admin-btns {
+    text-align: right;
+  }
+}
+@media (max-width: 768px) {
+  .container .content .watches.view.admin .admin-btns {
+    margin-top: 0px;
+    margin-bottom: 10px;
   }
 }
 .container .content .watches.view .carousel-control .glyphicon-chevron-left,
