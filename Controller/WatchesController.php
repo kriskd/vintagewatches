@@ -295,18 +295,23 @@ class WatchesController extends AppController {
             )
         );
         $watch = $this->Watch->find('first', $options);
+        $sold = !empty($watch['Watch']['order_id']);
+        $fieldList = ['acquisition_id', 'source_id', 'cost', 'notes', 'repair_date', 'repair_cost', 'repair_notes'];
+        if (!$sold) {
+            $fieldList = array_merge($fieldList, ['name', 'stockId', 'brand_id', 'price', 'description', 'active']);
+        }
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$this->request->data['Watch']['id'] = $id; 
-			if ($this->Watch->save($this->request->data)) {
+			$this->request->data['Watch']['id'] = $id;
+			if ($this->Watch->save($this->request->data, ['fieldList' => $fieldList])) {
 				$this->Session->setFlash(__('The watch has been saved'), 'success');
-			    return $this->redirect(array('action' => 'edit', $id));
+			    return $this->redirect(array('action' => 'view', $id));
 			} else {
 				$this->Session->setFlash(__('The watch could not be saved. Please, try again.'), 'danger');
 			}
 		} else {
             $this->request->data = $watch;
         }
-        $this->set('watch', $watch);
+        $this->set(compact('watch', 'sold'));
 	}
 
 /**
