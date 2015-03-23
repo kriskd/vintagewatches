@@ -233,8 +233,8 @@ class WatchesController extends AppController {
                         'id', 'name'
 				    )
                 ),
-                'Source', 'Acquisition'
-			)
+                'Source', 'Acquisition', 
+            ),
 		);
 
         $watch = $this->Watch->find('first', $options);
@@ -259,7 +259,7 @@ class WatchesController extends AppController {
 			}
 		}
         $this->set([
-            'brands' => $this->Watch->Brand->brandList(false), 
+            'brands' => $this->Watch->Brand->brandList(false),
             'acquisitions' => $this->Watch->Acquisition->find('list'),
             'sources' => $this->Watch->Source->find('list'),
         ]);
@@ -274,10 +274,11 @@ class WatchesController extends AppController {
  */
 	public function admin_edit($id = null) {
 		if (!$this->Watch->exists($id)) {
-			throw new NotFoundException(__('Invalid watch'));
+            $this->Session->setFlash('Invalid Watch', 'danger');
+            return $this->redirect(['action' => 'index']);
 		}
         $this->set([
-            'brands' => $this->Watch->Brand->brandList(false), 
+            'brands' => $this->Watch->Brand->brandList(false),
             'acquisitions' => $this->Watch->Acquisition->find('list'),
             'sources' => $this->Watch->Source->find('list'),
         ]);
@@ -287,11 +288,6 @@ class WatchesController extends AppController {
             ),
             'contain' => array(
                 'Image',
-                'Brand' => array(
-                    'fields' => array(
-                        'id', 'name'
-                    )
-                ),
             )
         );
         $watch = $this->Watch->find('first', $options);
