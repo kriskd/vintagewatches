@@ -185,7 +185,7 @@ class WatchesControllerTest extends ControllerTestCase {
             ],
             'contain' => 'Image',
         ]);
-        $folder = new Folder(WWW_ROOT.'files/'.$id);
+        $folder = new Folder(WWW_ROOT.'files/'.$id, true);
         $original = new File(WWW_ROOT.$watch['Image'][0]['filename'], true, 0644);
         $large = new File(WWW_ROOT.$watch['Image'][0]['filenameLarge'], true, 0644);
         $medium = new File(WWW_ROOT.$watch['Image'][0]['filenameMedium'], true, 0644);
@@ -206,7 +206,7 @@ class WatchesControllerTest extends ControllerTestCase {
         $this->assertFalse($large->exists());
         $this->assertFalse($medium->exists());
         $this->assertFalse($thumb->exists());
-        $this->assertEmpty($folder->path);
+        $this->assertFalse(file_exists(WWW_ROOT.'files/'.$id));
     }
 
     public function testAdminDeleteSold() {
@@ -217,7 +217,7 @@ class WatchesControllerTest extends ControllerTestCase {
             ],
             'contain' => 'Image',
         ]);
-        $folder = new Folder(WWW_ROOT.'files/'.$id);
+        $folder = new Folder(WWW_ROOT.'files/'.$id, true);
         $original = new File(WWW_ROOT.$watch['Image'][0]['filename'], true, 0644);
         $large = new File(WWW_ROOT.$watch['Image'][0]['filenameLarge'], true, 0644);
         $medium = new File(WWW_ROOT.$watch['Image'][0]['filenameMedium'], true, 0644);
@@ -235,7 +235,7 @@ class WatchesControllerTest extends ControllerTestCase {
         ]);
         $this->testAction('/admin/watches/delete/'.$id, ['method' => 'post']);
         $this->assertNotEmpty($watch); 
-        $this->assertNotEmpty($folder->path);
+        $this->assertTrue(file_exists(WWW_ROOT.'files/'.$id));
         $this->assertTrue($original->exists());
         $this->assertTrue($large->exists());
         $this->assertTrue($medium->exists());
