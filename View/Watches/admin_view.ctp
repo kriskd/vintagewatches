@@ -42,6 +42,19 @@
                     </dd>
                     <dd>
                 </dl>
+                <?php if(isset($watch['Watch']['order_id'])):  ?>
+                    <div class="text-center">
+                        <?php echo $this->Html->link('Go To Order', array(
+                                'controller' => 'orders', 
+                                'action' => 'view', $watch['Watch']['order_id'],
+                                'admin' => true,
+                            ),
+                            array(
+                                'class' => 'btn btn-primary'
+                            ));
+                        ?>
+                    </div>
+                <?php endif; ?>
             </div>
             <?php if (!empty($watch['Watch']['repair_date']) || !empty($watch['Watch']['repair_notes'])): ?>
                 <div class="info-inner">
@@ -63,23 +76,14 @@
                 <?php echo $watch['Watch']['notes']; ?>
             </div>
             <div class="info-inner">
-                <h4>Description</h4>
+                <h4>Info and Description</h4>
                 <div class="row body">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 description">
+                        <h5>
+                            <?php echo $watch['Brand']['name']; ?>
+                            <?php echo h($watch['Watch']['stockId']); ?>
+                        </h5>
                         <?php echo $watch['Watch']['description']; ?>
-                        <dl>
-                            <?php if(isset($watch['Order']['id'])):  ?>
-                                <dt>Sold <?php echo date('Y-m-d', strtotime($watch['Order']['created'])); ?></dt>
-                                <dd>
-                                    <?php echo $this->Html->link('Go To Order',
-                                             array('controller' => 'orders', 'action' => 'view',
-                                               $watch['Order']['id'],
-                                               'admin' => true),
-                                             array('class' => 'btn btn-primary'));
-                                    ?>
-                                </dd>
-                            <?php endif; ?>
-                        </dl>
                     </div>
                 </div>
             </div>
