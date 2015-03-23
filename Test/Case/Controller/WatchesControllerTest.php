@@ -133,6 +133,16 @@ class WatchesControllerTest extends ControllerTestCase {
         $this->assertContains(9999, $ids);
     }
 
+    public function testAdminIndexNotFound() {
+        $query = array(
+            'brand_id' => '3',
+            'page' => '2',
+        );
+        $url = Router::url(array('controller' => 'watches', 'action' => 'index', 'admin' => true, '?' => $query));
+        $this->testAction($url, ['method' => 'get', 'return' => 'vars']);
+        $this->assertContains('watches?brand_id=3&page=1', $this->headers['Location']);
+    }
+
     public function testAdminEdit() {
         $this->testAction('/admin/watches/edit/7', ['method' => 'get', 'return' => 'vars']);
         $this->assertFalse($this->vars['sold']);
