@@ -186,6 +186,8 @@ class Watch extends AppModel {
             'contain' => $contain
         ));
 
+        if (!$watch) return false;
+
         if ($watch['Watch']['active'] == 1 && !$watch['Watch']['order_id']) return $watch;
 
         if (isset($watch['Order']['email']) && $watch['Order']['email'] == $email && isset($watch['Order']['Address']) && $watch['Order']['Address'][0]['postalCode'] == $postalCode) return $watch;
