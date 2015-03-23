@@ -134,6 +134,13 @@ class WatchesControllerTest extends ControllerTestCase {
     }
 
     public function testAdminEdit() {
+        $this->testAction('/admin/watches/edit/7', ['method' => 'get', 'return' => 'vars']);
+        $this->assertFalse($this->vars['sold']);
+        $this->assertEquals(295, $this->vars['watch']['Watch']['price']);
+        $this->assertEquals('/files/7/longines5428side2.jpg', $this->vars['watch']['Image'][0]['filename']);
+    }
+
+    public function testAdminEditWatch() {
         $data = [
             'Watch' => [
                 'id' => '7',
@@ -175,6 +182,11 @@ class WatchesControllerTest extends ControllerTestCase {
         ]);
         $this->assertEquals(395, $watch['Watch']['price']);
         $this->assertEquals(date('Y-m-d'), $watch['Watch']['repair_date']);
+    }
+
+    public function testAdminEditInvalid() {
+        $this->testAction('/admin/watches/edit/9997', ['method' => 'post']);
+        $this->assertContains('/admin/watches', $this->headers['Location']);
     }
 
     public function testAdminDelete() {
