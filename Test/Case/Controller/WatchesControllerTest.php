@@ -64,6 +64,35 @@ class WatchesControllerTest extends ControllerTestCase {
         $this->assertNotEmpty($results['title']);
     }
 
+    public function testOrderNoId() {
+        $this->testAction('/watches/order', array(
+            'method' => 'GET',
+            'return' => 'vars',
+        ));
+        $this->assertContains('/pages/home', $this->headers['Location']);
+    }
+
+    public function testOrderNoEmailZip() {
+        $results = $this->testAction('/watches/order/1', array(
+            'method' => 'GET',
+            'return' => 'vars',
+        ));
+
+        $this->assertContains('/orders', $this->headers['Location']);
+    }
+
+    public function testOrderBadId() {
+        $this->Session->write('Watch.Order.email', 'PeterRHarris@teleworm.us');
+        $this->Session->write('Watch.Address.postalCode', '61602');
+
+        $results = $this->testAction('/watches/order/99', array(
+            'method' => 'GET',
+            'return' => 'vars',
+        ));
+
+        $this->assertContains('/orders', $this->headers['Location']);
+    }
+
 /**
  * testAdminIndex method
  *
