@@ -227,7 +227,7 @@ class WatchesController extends AppController {
 				'Watch.' . $this->Watch->primaryKey => $id
 			),
 			'contain' => array(
-				'Image',
+				'Image', 'Order',
 				'Brand' => array(
 				    'fields' => array(
                         'id', 'name'
