@@ -5,17 +5,6 @@
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <?php
-                    echo $this->Form->input('name', array(
-                        'label' => array(
-                            'class' => 'control-label'
-                        ),
-                        'class' => 'form-control',
-                        'disabled' => isset($sold) && $sold ? 'disabled' : '',
-                     ));
-                ?>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <?php
                     echo $this->Form->input('stockId', array(
                         'label' => array(
                             'class' => 'control-label'
@@ -26,8 +15,6 @@
                     ));
                 ?>
             </div>
-        </div>
-        <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <?php
                     echo $this->Form->input('brand_id', array(
@@ -36,6 +23,19 @@
                         'empty' => 'Select One',
                         'disabled' => isset($sold) && $sold ? 'disabled' : '',
                     ));
+                ?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <?php
+                    echo $this->Form->input('name', array(
+                        'label' => array(
+                            'class' => 'control-label'
+                        ),
+                        'class' => 'form-control',
+                        'disabled' => isset($sold) && $sold ? 'disabled' : '',
+                     ));
                 ?>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">

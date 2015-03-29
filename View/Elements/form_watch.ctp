@@ -22,12 +22,13 @@
                 'class' => 'form-control',
                 'empty' => 'Select One',
             )); ?>
-            <?php echo $this->Form->input('cost', array(
+            <?php /*echo $this->Form->input('consignor_paid', array(
                 'label' => array(
                     'class' => 'control-label',
                 ),
                 'class' => 'form-control',
-            )); ?>
+                'type' => 'text',
+            ));*/ ?>
             <?php echo $this->Form->input('notes', array(
                 'label' => array(
                     'class' => 'control-label',
@@ -36,6 +37,12 @@
             )); ?>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <?php echo $this->Form->input('cost', array(
+                'label' => array(
+                    'class' => 'control-label',
+                ),
+                'class' => 'form-control',
+            )); ?>
             <?php echo $this->Form->input('repair_date', array(
                 'label' => array(
                     'class' => 'control-label',
