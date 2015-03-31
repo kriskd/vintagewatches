@@ -11,7 +11,7 @@ class WatchesControllerTest extends ControllerTestCase {
 
 	public $fixtures = array(
 		'app.watch',
-        'app.acquisition',
+        'app.owner',
         'app.source',
 		'app.order',
 		'app.coupon',
