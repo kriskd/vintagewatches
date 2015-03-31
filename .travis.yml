@@ -12,7 +12,7 @@ install:
 before_script:
     - phpenv rehash
     - chmod -R 777 Vendor/cakephp/cakephp/app/tmp
-    - chmod -R 777 tmp/
+    - chmod -R 777 tmp
     - mysql -e 'DROP DATABASE IF EXISTS `travis_app`; CREATE DATABASE `travis_app`;'
     - echo "<?php
       class DATABASE_CONFIG {
