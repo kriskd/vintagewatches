@@ -27,24 +27,24 @@
                                                     ); ?>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <?php echo $this->Form->input('Source.source_id', array(
+                    <?php echo $this->Form->input('Acquisition.acquisition_id', array(
+                                                                'options' => $acquisitions,
+                                                                'class' => 'form-control',
+                                                                'label' => false,
+                                                                //'selected' => $acquisition_id,
+                                                                'empty' => 'By Acquisition',
+                                                            )
+                                                    ); ?>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <?php /*echo $this->Form->input('Source.source_id', array(
                                                                 'options' => $sources,
                                                                 'class' => 'form-control',
                                                                 'label' => false,
                                                                 'selected' => $source_id,
                                                                 'empty' => 'By Source',
                                                             )
-                                                    ); ?>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <?php echo $this->Form->input('Acquisition.acquisition_id', array(
-                                                                'options' => $acquisitions,
-                                                                'class' => 'form-control',
-                                                                'label' => false,
-                                                                'selected' => $acquisition_id,
-                                                                'empty' => 'By Acquisition',
-                                                            )
-                                                    ); ?>
+                                                        );*/ ?>
                 </div>
             <?php echo $this->Form->end(); ?>
         </div>

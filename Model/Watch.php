@@ -47,11 +47,11 @@ class Watch extends AppModel {
                 'message' => 'Please choose a brand.'
             ),
         ),
-        'acquisition_id' => array(
+        'foreign_id' => array(
             'notempty' => array(
                 'rule' => array('notempty'),
                 'allowEmpty' => false,
-                'message' => 'Please choose an acquisition type.'
+                'message' => 'Please choose an option.'
             ),
         ),
         'price' => array(
@@ -119,14 +119,20 @@ class Watch extends AppModel {
             'className' => 'Brand',
             'foreignKey' => 'brand_id'
         ),
-        'Acquisition' => array(
-            'className' => 'Acquisition',
-            'foreignKey' => 'acquisition_id'
-        ),
         'Source' => array(
             'className' => 'Source',
-            'foreignKey' => 'source_id'
+            'foreignKey' => 'foreign_id',
+			'conditions' => array('Watch.class' => 'Source'),
+			'fields' => '',
+			'order' => ''
         ),
+        'Owner' => array(
+			'className' => 'Owner',
+			'foreignKey' => 'foreign_id',
+			'conditions' => array('Watch.class' => 'Owner'),
+			'fields' => '',
+			'order' => ''
+        )
     );
 
     public $hasMany = array(
@@ -136,6 +142,16 @@ class Watch extends AppModel {
             'dependent' => true, //Delete associated images
         ),
     );
+
+    /*public function beforeValidate($options = array()) {
+        if (isset($this->data['Owner'])) {
+            $this->data['Watch']['class'] = 'Owner';
+        }
+        if (isset($this->data['Source'])) {
+            $this->data['Watch']['class'] = 'Source';
+        }
+        return true;
+    }*/
 
     public function beforeDelete($cascade = true) {
         $watch = $this->find('first', [

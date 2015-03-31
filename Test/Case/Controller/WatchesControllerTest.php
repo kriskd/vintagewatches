@@ -56,12 +56,12 @@ class WatchesControllerTest extends ControllerTestCase {
         $this->Session->write('Watch.Order.email', 'PeterRHarris@teleworm.us');
         $this->Session->write('Watch.Address.postalCode', '61602');
 
-        $results = $this->testAction('/watches/order/1', array(
+        $this->testAction('/watches/order/1', array(
             'method' => 'GET',
             'return' => 'vars',
         ));
 
-        $this->assertNotEmpty($results['title']);
+        $this->assertNotEmpty($this->vars['title']);
     }
 
     public function testOrderNoId() {
@@ -122,7 +122,7 @@ class WatchesControllerTest extends ControllerTestCase {
     public function testAdminIndexBrandAcquisition() {
         $query = array(
             'brand_id' => '3',
-            'acquisition_id' => '2',
+            'class' => 'Source',
         );
         $url = Router::url(array('controller' => 'watches', 'action' => 'index', 'admin' => true, '?' => $query));
         $this->testAction($url, ['method' => 'get', 'return' => 'vars']);
@@ -134,12 +134,12 @@ class WatchesControllerTest extends ControllerTestCase {
 
     public function testAdminIndexSourceAcquisition() {
         $query = array(
-            'source_id' => '1',
-            'acquisition_id' => '2',
+            'class' => 'Source',
+            'foreign_id' => '1',
         );
         $url = Router::url(array('controller' => 'watches', 'action' => 'index', 'admin' => true, '?' => $query));
         $this->testAction($url, ['method' => 'get', 'return' => 'vars']);
-        $this->assertCount(1, $this->vars['watches']);
+        $this->assertCount(3, $this->vars['watches']);
         $ids = Hash::extract($this->vars['watches'], '{n}.Watch.id');
         $this->assertContains(5, $ids);
     }
@@ -184,6 +184,7 @@ class WatchesControllerTest extends ControllerTestCase {
             'Watch' => [
                 'id' => '7',
                 'price' => '500',
+                'foreign_id' => '2',
                 'repair_date' => date('Y-m-d'),
             ],
         ];
@@ -196,6 +197,7 @@ class WatchesControllerTest extends ControllerTestCase {
             'recursive' => -1
         ]);
         $this->assertEquals(500, $watch['Watch']['price']);
+        $this->assertEquals(2, $watch['Watch']['foreign_id']);
         $this->assertEquals(date('Y-m-d'), $watch['Watch']['repair_date']);
     }
 

@@ -66,10 +66,8 @@
             <div class="info-inner">
                 <h4>Acquisition/Source</h4>
                 <dl>
-                    <dt>Acquisition Type</dt>
-                    <dd><?php echo ucwords($watch['Acquisition']['acquisition']); ?></dd>
-                    <dt>Source</dt>
-                    <dd><?php echo $watch['Source']['name']; ?></dd>
+                    <dt><?php echo ucwords($watch['Watch']['class']); ?></dt>
+                    <dd><?php echo $watch[$watch['Watch']['class']]['name']; ?></dd>
                     <dt>Returned <?php echo $watch['Source']['name']; ?></dt>
                     <dd><?php echo $this->Watch->date($watch['Watch']['returned_date']); ?>
                 </dl>

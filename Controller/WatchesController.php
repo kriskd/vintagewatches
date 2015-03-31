@@ -28,6 +28,11 @@ class WatchesController extends AppController {
 		if ($storeOpen == false && empty($this->request->params['admin'])) {
 			$this->redirect(array('controller' => 'pages', 'action' => 'home', 'admin' => false));
 		}
+        $acquisitions = array(
+            'Owner' => 'Consignment',
+            'Source' => 'Self',
+        );
+        $this->set('acquisitions', $acquisitions);
 		parent::beforeFilter();
 	}
 
@@ -169,16 +174,16 @@ class WatchesController extends AppController {
 		$sold = isset($this->params->query['sold']) ? (int)$this->params->query['sold'] : null;
 
 		$brand_id = empty($this->params->query['brand_id']) ? '' : $this->params->query['brand_id'];
-		$source_id = empty($this->params->query['source_id']) ? '' : $this->params->query['source_id'];
-		$acquisition_id = empty($this->params->query['acquisition_id']) ? '' : $this->params->query['acquisition_id'];
+		$class = empty($this->params->query['class']) ? '' : $this->params->query['class'];
+		$foreign_id = empty($this->params->query['foreign_id']) ? '' : $this->params->query['foreign_id'];
         if ($brand_id) {
             $this->paginate['conditions']['brand_id'] = $brand_id;
         }
-        if ($source_id) {
-            $this->paginate['conditions']['source_id'] = $source_id;
+        if ($class) {
+            $this->paginate['conditions']['class'] = $class;
         }
-        if ($acquisition_id) {
-            $this->paginate['conditions']['acquisition_id'] = $acquisition_id;
+        if ($foreign_id) {
+            $this->paginate['conditions']['foreign_id'] = $foreign_id;
         }
 
 		$this->paginate['conditions'][] = $this->Watch->getWatchesConditions($active, $sold);
@@ -187,7 +192,6 @@ class WatchesController extends AppController {
 		$this->Paginator->settings = $this->paginate;
 
 		$brands = $this->Watch->Brand->find('list', array('order' => 'name'));
-        $acquisitions = $this->Watch->Acquisition->find('list');
         $sources = $this->Watch->Source->find('list');
 
 		$buttons = array(
@@ -233,7 +237,7 @@ class WatchesController extends AppController {
                         'id', 'name'
 				    )
                 ),
-                'Source', 'Acquisition', 
+                'Source', 'Owner',
             ),
 		);
 
@@ -260,8 +264,6 @@ class WatchesController extends AppController {
 		}
         $this->set([
             'brands' => $this->Watch->Brand->brandList(false),
-            'acquisitions' => $this->Watch->Acquisition->find('list'),
-            'sources' => $this->Watch->Source->find('list'),
         ]);
 	}
 
@@ -279,8 +281,6 @@ class WatchesController extends AppController {
 		}
         $this->set([
             'brands' => $this->Watch->Brand->brandList(false),
-            'acquisitions' => $this->Watch->Acquisition->find('list'),
-            'sources' => $this->Watch->Source->find('list'),
         ]);
         $options = array(
             'conditions' => array(
@@ -291,8 +291,11 @@ class WatchesController extends AppController {
             )
         );
         $watch = $this->Watch->find('first', $options);
+        $class = $watch['Watch']['class'];
+        $options = $this->Watch->{$class}->find('list');
+        $this->set('options', $options);
         $sold = !empty($watch['Watch']['order_id']);
-        $fieldList = ['acquisition_id', 'source_id', 'cost', 'notes', 'repair_date', 'repair_cost', 'repair_notes'];
+        $fieldList = ['class', 'foreign_id', 'cost', 'notes', 'repair_date', 'repair_cost', 'repair_notes'];
         if (!$sold) {
             $fieldList = array_merge($fieldList, ['name', 'stockId', 'brand_id', 'price', 'description', 'active']);
         }

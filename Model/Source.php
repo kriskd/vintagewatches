@@ -42,9 +42,9 @@ class Source extends AppModel {
 	public $hasMany = array(
 		'Watch' => array(
 			'className' => 'Watch',
-			'foreignKey' => 'source_id',
+			'foreignKey' => 'foreign_id',
 			'dependent' => false,
-			'conditions' => '',
+			'conditions' => array('Watch.class' => 'Source'),
 			'fields' => '',
 			'order' => '',
 			'limit' => '',

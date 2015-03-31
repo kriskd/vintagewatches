@@ -4,7 +4,7 @@
     <legend>Information</legend>
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <?php echo $this->Form->input('acquisition_id', array(
+            <?php echo $this->Form->input('class', array(
                 'label' => array(
                     'class' => 'control-label',
                     'text' => 'Acquisition Type',
@@ -13,15 +13,17 @@
                 'class' => 'form-control',
                 'empty' => 'Select One',
             )); ?>
-            <?php echo $this->Form->input('source_id', array(
-                'label' => array(
-                    'class' => 'control-label',
-                    'text' => 'Source/Owner',
-                ),
-                'options' => $sources,
-                'class' => 'form-control',
-                'empty' => 'Select One',
-            )); ?>
+            <?php if ($watch['Watch']['class']): ?>
+                <?php echo $this->Form->input('Watch.foreign_id', array(
+                    'label' => array(
+                        'class' => 'control-label',
+                        'text' => $watch['Watch']['class'],
+                    ),
+                    'options' => $options,
+                    'class' => 'form-control',
+                    'empty' => 'Select One',
+                )); ?>
+            <?php endif; ?>
             <?php /*echo $this->Form->input('consignor_paid', array(
                 'label' => array(
                     'class' => 'control-label',
