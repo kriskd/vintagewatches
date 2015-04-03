@@ -14,6 +14,7 @@
                 'div' => 'input radio consignment-purchase',
             )); ?>
             <div class="purchase hidden">
+                <?php echo $this->Form->input('Purchase.id', ['type' => 'hidden']); ?>
                 <?php echo $this->Form->input('Purchase.source_id', array(
                     'label' => array(
                         'class' => 'control-label',
@@ -24,6 +25,7 @@
                 )); ?>
             </div>
             <div class="consignment hidden">
+                <?php echo $this->Form->input('Consignment.id', ['type' => 'hidden']); ?>
                 <?php echo $this->Form->input('Consignment.owner_id', array(
                     'label' => array(
                         'class' => 'control-label',
