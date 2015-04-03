@@ -29,10 +29,13 @@ class WatchesController extends AppController {
 			$this->redirect(array('controller' => 'pages', 'action' => 'home', 'admin' => false));
 		}
         $acquisitions = array(
-            'Owner' => 'Consignment',
-            'Source' => 'Self',
+            '' => 'Clear',
+            'consignment' => 'Consignment',
+            'purchase' => 'Self',
         );
-        $this->set('acquisitions', $acquisitions);
+        $owners = $this->Watch->Consignment->Owner->find('list');
+        $sources = $this->Watch->Purchase->Source->find('list');
+        $this->set(compact('acquisitions', 'owners', 'sources'));
 		parent::beforeFilter();
 	}
 
@@ -237,7 +240,8 @@ class WatchesController extends AppController {
                         'id', 'name'
 				    )
                 ),
-                'Source', 'Owner',
+                'Consignment' => ['Owner'],
+                'Purchase' => ['Source'], 
             ),
 		);
 
@@ -255,7 +259,7 @@ class WatchesController extends AppController {
 	public function admin_add() {
 		if ($this->request->is('post')) {
 			$this->Watch->create();
-			if ($this->Watch->save($this->request->data)) {
+			if ($this->Watch->saveAssociated($this->request->data)) {
 				$this->Session->setFlash('Watch ' . $this->Watch->getInsertID() . ' has been created', 'success');
 				$this->redirect(array('action' => 'edit', $this->Watch->getInsertID(), 'admin' => true));
 			} else {
@@ -288,20 +292,36 @@ class WatchesController extends AppController {
             ),
             'contain' => array(
                 'Image',
+                'Consignment' => ['Owner'],
+                'Purchase' => ['Source'],
             )
         );
         $watch = $this->Watch->find('first', $options);
-        $class = $watch['Watch']['class'];
-        $options = $this->Watch->{$class}->find('list');
-        $this->set('options', $options);
+        //debug($watch);
         $sold = !empty($watch['Watch']['order_id']);
-        $fieldList = ['class', 'foreign_id', 'cost', 'notes', 'repair_date', 'repair_cost', 'repair_notes'];
+        $fieldList = [
+            'Watch' => [
+                'cost', 'notes', 'repair_date', 'repair_cost', 'repair_notes',
+            ],
+            'Consignment' => [
+                'watch_id', 'owner_id', 'paid', 'returned',
+            ],
+            'Purchase' => [
+                'source_id'
+            ]
+        ];
         if (!$sold) {
-            $fieldList = array_merge($fieldList, ['name', 'stockId', 'brand_id', 'price', 'description', 'active']);
+            $fieldList = array_merge($fieldList, ['Watch' => ['name', 'stockId', 'brand_id', 'price', 'description', 'active']]);
         }
 		if ($this->request->is('post') || $this->request->is('put')) {
 			$this->request->data['Watch']['id'] = $id;
-			if ($this->Watch->save($this->request->data, ['fieldList' => $fieldList])) {
+            if (isset($watch['Consignment']['id'])) {
+                $this->request->data['Consignment']['id'] = $watch['Consignment']['id'];
+            }
+            if (isset($watch['Purchase']['id'])) {
+                $this->request->data['Purchase']['id'] = $watch['Purchase']['id'];
+            }
+			if ($this->Watch->saveAssociated($this->request->data, ['fieldList' => $fieldList])) {
 				$this->Session->setFlash(__('The watch has been saved'), 'success');
 			    return $this->redirect(array('action' => 'view', $id));
 			} else {

@@ -1,42 +1,52 @@
 <?php echo $this->Form->create('Watch', array('class' => 'form-horizontal', 'autocomplete' => 'off')); ?>
-<?php echo $this->Element('watch_attributes'); ?>
 <fieldset>
     <legend>Information</legend>
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <?php echo $this->Form->input('class', array(
+            <?php echo $this->Form->input('Watch.type', array(
                 'label' => array(
                     'class' => 'control-label',
                     'text' => 'Acquisition Type',
                 ),
                 'options' => $acquisitions,
                 'class' => 'form-control',
-                'empty' => 'Select One',
+                'type' => 'radio',
+                'div' => 'input radio consignment-purchase',
             )); ?>
-            <?php if ($watch['Watch']['class']): ?>
-                <?php echo $this->Form->input('Watch.foreign_id', array(
+            <div class="purchase hidden">
+                <?php echo $this->Form->input('Purchase.source_id', array(
                     'label' => array(
                         'class' => 'control-label',
-                        'text' => $watch['Watch']['class'],
                     ),
-                    'options' => $options,
+                    'options' => $sources,
                     'class' => 'form-control',
-                    'empty' => 'Select One',
+                    'empty' => 'Choose One',
                 )); ?>
-            <?php endif; ?>
-            <?php /*echo $this->Form->input('consignor_paid', array(
-                'label' => array(
-                    'class' => 'control-label',
-                ),
-                'class' => 'form-control',
-                'type' => 'text',
-            ));*/ ?>
-            <?php echo $this->Form->input('notes', array(
-                'label' => array(
-                    'class' => 'control-label',
-                ),
-                'class' => 'form-control',
-            )); ?>
+            </div>
+            <div class="consignment hidden">
+                <?php echo $this->Form->input('Consignment.owner_id', array(
+                    'label' => array(
+                        'class' => 'control-label',
+                    ),
+                    'options' => $owners,
+                    'class' => 'form-control',
+                    'empty' => 'Choose One',
+                )); ?>
+                <?php echo $this->Form->input('Consignment.paid', array(
+                    'label' => array(
+                        'class' => 'control-label',
+                    ),
+                    'class' => 'form-control date-picker',
+                    'type' => 'text',
+                )); ?>
+                <?php echo $this->Form->input('Consignment.returned', array(
+                    'label' => array(
+                        'class' => 'control-label',
+                    ),
+                    'class' => 'form-control date-picker',
+                    'type' => 'text',
+                )); ?>
+            </div>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
             <?php echo $this->Form->input('cost', array(
@@ -64,9 +74,16 @@
                 ),
                 'class' => 'form-control',
             )); ?>
+            <?php echo $this->Form->input('notes', array(
+                'label' => array(
+                    'class' => 'control-label',
+                ),
+                'class' => 'form-control',
+            )); ?>
         </div>
     </div>
 </fieldset>
+<?php echo $this->Element('watch_attributes'); ?>
 <?php echo $this->Form->end(array('label' => __('Save Watch'), 'class' => 'btn btn-primary')); ?>
 <?php $action = ['action' => 'index']; ?>
 <?php if (isset($watch['Watch']['id'])): ?>

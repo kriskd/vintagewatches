@@ -47,13 +47,6 @@ class Watch extends AppModel {
                 'message' => 'Please choose a brand.'
             ),
         ),
-        'foreign_id' => array(
-            'notempty' => array(
-                'rule' => array('notempty'),
-                'allowEmpty' => false,
-                'message' => 'Please choose an option.'
-            ),
-        ),
         'price' => array(
             'money' => array(
                 'rule' => array('money'),
@@ -143,15 +136,60 @@ class Watch extends AppModel {
         ),
     );
 
-    /*public function beforeValidate($options = array()) {
-        if (isset($this->data['Owner'])) {
-            $this->data['Watch']['class'] = 'Owner';
-        }
-        if (isset($this->data['Source'])) {
-            $this->data['Watch']['class'] = 'Source';
+	public $hasOne = array(
+        'Consignment' => array(
+            'className' => 'Consignment',
+            'foreignKey' => 'watch_id',
+            'dependent' => true //Delete associated consignment
+        ),
+        'Purchase' => array(
+            'className' => 'Purchase',
+            'foreignKey' => 'watch_id',
+            'dependent' => true //Delete associated purchase
+        ),
+    );
+
+    public function beforeSave($options = array()) {
+        if (isset($this->data[$this->alias]['type'])) {
+            $type = $this->data[$this->alias]['type'];
+            if (in_array($type, ['', 'purchase'])) {
+                unset($this->data['Consignment']);
+            }
+            if (in_array($type, ['', 'consignment'])) {
+                unset($this->data['Purchase']);
+            }
         }
         return true;
-    }*/
+    }
+
+    /**
+     * Delete associated consignment or purchase based on if watch is consignment, purchase or none.
+     */
+    public function afterSave($created, $options = array()) {
+        if (isset($this->data[$this->alias]['type'])) {
+            $type = $this->data[$this->alias]['type'];
+            if (in_array($type, ['', 'purchase'])) {
+                $this->Consignment->deleteAll(['watch_id' => $this->data[$this->alias]['id']]);
+            }
+            if (in_array($type, ['', 'consignment'])) {
+                $this->Purchase->deleteAll(['watch_id' => $this->data[$this->alias]['id']]);
+            }
+        }
+    }
+
+    public function afterFind($results, $primary = false) {
+        foreach ($results as $key => $result) {
+            if (isset($result[$this->alias])) {
+                if (!empty($result['Consignment']) && empty($result['Purchase'])) {
+                    $results[$key][$this->alias]['type'] = 'consignment';
+                }
+                if (!empty($result['Purchase']) && empty($result['Consignment'])) {
+                    $results[$key][$this->alias]['type'] = 'purchase';
+                }
+            }
+        }
+        return $results;
+    }
 
     public function beforeDelete($cascade = true) {
         $watch = $this->find('first', [
