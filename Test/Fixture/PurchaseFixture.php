@@ -14,7 +14,6 @@ class PurchaseFixture extends CakeTestFixture {
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => true, 'key' => 'primary'),
 		'watch_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'unsigned' => true),
 		'source_id' => array('type' => 'integer', 'null' => true, 'default' => null, 'length' => 10, 'unsigned' => true),
-		'cost' => array('type' => 'decimal', 'null' => true, 'default' => null, 'length' => '6,2', 'unsigned' => false),
 		'indexes' => array(
 			'PRIMARY' => array('column' => 'id', 'unique' => 1)
 		),
@@ -31,7 +30,6 @@ class PurchaseFixture extends CakeTestFixture {
 			'id' => 1,
 			'watch_id' => 1,
 			'source_id' => 1,
-			'cost' => ''
 		),
 	);
 
