@@ -7625,6 +7625,15 @@ body.hide-fat-footer .container .content {
 .container .content .watches.form #WatchAdminEditForm {
   margin-bottom: 20px;
 }
+.container .content .watches.form .radio input {
+  margin-left: 0px;
+  box-shadow: none;
+}
+.container .content .watches.form .radio label {
+  display: block;
+  text-align: left;
+  margin: 4px 0 0 2px;
+}
 .container .content .watches.form .submit {
   float: left;
   margin-right: 5px;
