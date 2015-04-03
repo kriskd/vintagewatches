@@ -23,11 +23,34 @@ $(document).ready(function(){
         $('.image-upload').click();
     });
 
-    $('#OrderShipDate, #InvoiceShipDate, #InvoiceExpiration, #WatchRepairDate').datepicker({dateFormat: 'yy-mm-dd'});
+    $('#OrderShipDate, #InvoiceShipDate, #InvoiceExpiration, .date-picker').datepicker({dateFormat: 'yy-mm-dd'});
     $('#CouponExpireDate').datepicker({
       dateFormat: 'yy-mm-dd',
       minDate: new Date()
     });
+
+    if ($('.consignment-purchase input:radio').is(':checked')) {
+        var id = $('.consignment-purchase input:radio:checked').prop('id');
+        selectType(id);
+    }
+
+    $(document).on('change', '.consignment-purchase input', function(){
+      $('.purchase').addClass('hidden');
+      $('.consignment').addClass('hidden');
+      var id = $(this).prop('id');
+      selectType(id);
+    });
+
+    function selectType(id) {
+      if (id == 'WatchTypeConsignment') {
+        $('.purchase').addClass('hidden');
+        $('.consignment').removeClass('hidden');
+      }
+      if (id == 'WatchTypePurchase') {
+        $('.purchase').removeClass('hidden');
+        $('.consignment').addClass('hidden');
+      }
+    }
 
     //Disable and enable filter input field based on filter option
     orderAdmin($('.admin-index select').val());
@@ -122,11 +145,11 @@ $(document).ready(function(){
         $('.watches-header .glyphicon-eye-open').hide();
         setCookie('hideWatchIntro', 0, 90);
     });
-    
+
     $(document).on('change', '#WatchAdminIndexForm', function(){
         $(this).submit(); 
     });
-    
+
     $('.announcement-list-signup .unsub').on('click', function(){
       $('#PageUnsub').prop('value', 'unsub');
     });
