@@ -13,6 +13,8 @@ class WatchesControllerTest extends ControllerTestCase {
 		'app.watch',
         'app.owner',
         'app.source',
+        'app.consignment',
+        'app.purchase',
 		'app.order',
 		'app.coupon',
 		'app.brand',
