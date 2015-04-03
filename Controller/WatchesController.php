@@ -297,7 +297,6 @@ class WatchesController extends AppController {
             )
         );
         $watch = $this->Watch->find('first', $options);
-        //debug($watch);
         $sold = !empty($watch['Watch']['order_id']);
         $fieldList = [
             'Watch' => [
@@ -315,15 +314,9 @@ class WatchesController extends AppController {
         }
 		if ($this->request->is('post') || $this->request->is('put')) {
 			$this->request->data['Watch']['id'] = $id;
-            if (isset($watch['Consignment']['id'])) {
-                $this->request->data['Consignment']['id'] = $watch['Consignment']['id'];
-            }
-            if (isset($watch['Purchase']['id'])) {
-                $this->request->data['Purchase']['id'] = $watch['Purchase']['id'];
-            }
-			if ($this->Watch->saveAssociated($this->request->data, ['fieldList' => $fieldList])) {
+            if ($this->Watch->saveAssociated($this->request->data, ['fieldList' => $fieldList])) {
 				$this->Session->setFlash(__('The watch has been saved'), 'success');
-			    return $this->redirect(array('action' => 'view', $id));
+        	    return $this->redirect(array('action' => 'view', $id));
 			} else {
 				$this->Session->setFlash(__('The watch could not be saved. Please, try again.'), 'danger');
 			}
