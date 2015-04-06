@@ -56,6 +56,27 @@
                     </div>
                 <?php endif; ?>
             </div>
+            <div class="info-inner">
+                <?php if ($watch['Watch']['type'] == 'consignment'): ?>
+                <h4>Consignment</h4>
+                    <dl>
+                        <dt>Owner</dt>
+                        <dd><?php echo $watch['Consignment']['Owner']['name']; ?></dd>
+                        <dt>Paid</dt>
+                        <dd><?php echo $this->Watch->date($watch['Consignment']['paid']); ?>
+                        <dt>Returned</dt>
+                        <dd><?php echo $this->Watch->date($watch['Consignment']['returned']); ?>
+                    </dl>
+                <?php endif; ?>
+                <?php if ($watch['Watch']['type'] == 'purchase'): ?>
+                <h4>Self</h4>
+                    <dl>
+                        <dt>Source</dt>
+                        <dd><?php echo $watch['Purchase']['Source']['name']; ?></dd>
+                    </dl>
+                <?php endif; ?>
+                <?php echo $watch['Watch']['notes']; ?>
+            </div>
             <?php if (!empty($watch['Watch']['repair_date']) || !empty($watch['Watch']['repair_notes'])): ?>
                 <div class="info-inner">
                     <h4>Repair Notes</h4>
@@ -63,16 +84,6 @@
                     <p><?php echo $watch['Watch']['repair_notes']; ?></p>
                 </div>
             <?php endif; ?>
-            <div class="info-inner">
-                <h4>Acquisition/Source</h4>
-                <dl>
-                    <dt><?php echo ucwords($watch['Watch']['class']); ?></dt>
-                    <dd><?php echo $watch[$watch['Watch']['class']]['name']; ?></dd>
-                    <dt>Returned <?php echo $watch['Source']['name']; ?></dt>
-                    <dd><?php echo $this->Watch->date($watch['Watch']['returned_date']); ?>
-                </dl>
-                <?php echo $watch['Watch']['notes']; ?>
-            </div>
             <div class="info-inner">
                 <h4>Info and Description</h4>
                 <div class="row body">
