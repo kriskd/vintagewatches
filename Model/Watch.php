@@ -149,7 +149,7 @@ class Watch extends AppModel {
         ),
     );
 
-    public function beforeSave($options = array()) {
+    public function beforeValidate($options = array()) {
         if (isset($this->data[$this->alias]['type'])) {
             $type = $this->data[$this->alias]['type'];
             if (in_array($type, ['', 'purchase'])) {
@@ -177,6 +177,9 @@ class Watch extends AppModel {
         }
     }
 
+    /**
+     * Add watch type to data to select radio on watch form
+     */
     public function afterFind($results, $primary = false) {
         foreach ($results as $key => $result) {
             if (isset($result[$this->alias])) {
