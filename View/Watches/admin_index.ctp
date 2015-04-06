@@ -27,7 +27,7 @@
                                                     ); ?>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <?php echo $this->Form->input('Acquisition.acquisition_id', array(
+                    <?php echo $this->Form->input('type', array(
                                                                 'options' => $acquisitions,
                                                                 'class' => 'form-control',
                                                                 'label' => false,
@@ -37,14 +37,22 @@
                                                     ); ?>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <?php /*echo $this->Form->input('Source.source_id', array(
+                    <?php echo $this->Form->input('Purchase.source_id', array(
                                                                 'options' => $sources,
                                                                 'class' => 'form-control',
                                                                 'label' => false,
                                                                 'selected' => $source_id,
                                                                 'empty' => 'By Source',
                                                             )
-                                                        );*/ ?>
+                                                        ); ?>
+                    <?php echo $this->Form->input('Consignment.owner_id', array(
+                                                                'options' => $owners,
+                                                                'class' => 'form-control',
+                                                                'label' => false,
+                                                                'selected' => $owner_id,
+                                                                'empty' => 'By Owner',
+                                                            )
+                                                        ); ?>
                 </div>
             <?php echo $this->Form->end(); ?>
         </div>
