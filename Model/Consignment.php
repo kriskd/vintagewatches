@@ -9,13 +9,6 @@ App::uses('AppModel', 'Model');
 class Consignment extends AppModel {
 
 /**
- * Use database config
- *
- * @var string
- */
-	public $useDbConfig = 'development';
-
-/**
  * Validation rules
  *
  * @var array
