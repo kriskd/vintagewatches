@@ -4818,10 +4818,10 @@ var datepicker = $.datepicker;
 
 
 }));;/* ========================================================================
- * Bootstrap: transition.js v3.3.1
+ * Bootstrap: transition.js v3.3.4
  * http://getbootstrap.com/javascript/#transitions
  * ========================================================================
- * Copyright 2011-2014 Twitter, Inc.
+ * Copyright 2011-2015 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * ======================================================================== */
 
@@ -4877,10 +4877,10 @@ var datepicker = $.datepicker;
 
 }(jQuery);
 ;/* ========================================================================
- * Bootstrap: carousel.js v3.3.1
+ * Bootstrap: carousel.js v3.3.4
  * http://getbootstrap.com/javascript/#carousel
  * ========================================================================
- * Copyright 2011-2014 Twitter, Inc.
+ * Copyright 2011-2015 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * ======================================================================== */
 
@@ -4895,10 +4895,10 @@ var datepicker = $.datepicker;
     this.$element    = $(element)
     this.$indicators = this.$element.find('.carousel-indicators')
     this.options     = options
-    this.paused      =
-    this.sliding     =
-    this.interval    =
-    this.$active     =
+    this.paused      = null
+    this.sliding     = null
+    this.interval    = null
+    this.$active     = null
     this.$items      = null
 
     this.options.keyboard && this.$element.on('keydown.bs.carousel', $.proxy(this.keydown, this))
@@ -4908,7 +4908,7 @@ var datepicker = $.datepicker;
       .on('mouseleave.bs.carousel', $.proxy(this.cycle, this))
   }
 
-  Carousel.VERSION  = '3.3.1'
+  Carousel.VERSION  = '3.3.4'
 
   Carousel.TRANSITION_DURATION = 600
 
@@ -4948,8 +4948,11 @@ var datepicker = $.datepicker;
   }
 
   Carousel.prototype.getItemForDirection = function (direction, active) {
-    var delta = direction == 'prev' ? -1 : 1
     var activeIndex = this.getItemIndex(active)
+    var willWrap = (direction == 'prev' && activeIndex === 0)
+                || (direction == 'next' && activeIndex == (this.$items.length - 1))
+    if (willWrap && !this.options.wrap) return active
+    var delta = direction == 'prev' ? -1 : 1
     var itemIndex = (activeIndex + delta) % this.$items.length
     return this.$items.eq(itemIndex)
   }
@@ -4994,13 +4997,7 @@ var datepicker = $.datepicker;
     var $next     = next || this.getItemForDirection(type, $active)
     var isCycling = this.interval
     var direction = type == 'next' ? 'left' : 'right'
-    var fallback  = type == 'next' ? 'first' : 'last'
     var that      = this
-
-    if (!$next.length) {
-      if (!this.options.wrap) return
-      $next = this.$element.find('.item')[fallback]()
-    }
 
     if ($next.hasClass('active')) return (this.sliding = false)
 
@@ -5117,10 +5114,10 @@ var datepicker = $.datepicker;
 
 }(jQuery);
 ;/* ========================================================================
- * Bootstrap: dropdown.js v3.3.1
+ * Bootstrap: dropdown.js v3.3.4
  * http://getbootstrap.com/javascript/#dropdowns
  * ========================================================================
- * Copyright 2011-2014 Twitter, Inc.
+ * Copyright 2011-2015 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * ======================================================================== */
 
@@ -5137,7 +5134,7 @@ var datepicker = $.datepicker;
     $(element).on('click.bs.dropdown', this.toggle)
   }
 
-  Dropdown.VERSION = '3.3.1'
+  Dropdown.VERSION = '3.3.4'
 
   Dropdown.prototype.toggle = function (e) {
     var $this = $(this)
@@ -5190,7 +5187,7 @@ var datepicker = $.datepicker;
       return $this.trigger('click')
     }
 
-    var desc = ' li:not(.divider):visible a'
+    var desc = ' li:not(.disabled):visible a'
     var $items = $parent.find('[role="menu"]' + desc + ', [role="listbox"]' + desc)
 
     if (!$items.length) return
@@ -5278,10 +5275,10 @@ var datepicker = $.datepicker;
 
 }(jQuery);
 ;/* ========================================================================
- * Bootstrap: modal.js v3.3.1
+ * Bootstrap: modal.js v3.3.4
  * http://getbootstrap.com/javascript/#modals
  * ========================================================================
- * Copyright 2011-2014 Twitter, Inc.
+ * Copyright 2011-2015 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * ======================================================================== */
 
@@ -5293,12 +5290,15 @@ var datepicker = $.datepicker;
   // ======================
 
   var Modal = function (element, options) {
-    this.options        = options
-    this.$body          = $(document.body)
-    this.$element       = $(element)
-    this.$backdrop      =
-    this.isShown        = null
-    this.scrollbarWidth = 0
+    this.options             = options
+    this.$body               = $(document.body)
+    this.$element            = $(element)
+    this.$dialog             = this.$element.find('.modal-dialog')
+    this.$backdrop           = null
+    this.isShown             = null
+    this.originalBodyPad     = null
+    this.scrollbarWidth      = 0
+    this.ignoreBackdropClick = false
 
     if (this.options.remote) {
       this.$element
@@ -5309,7 +5309,7 @@ var datepicker = $.datepicker;
     }
   }
 
-  Modal.VERSION  = '3.3.1'
+  Modal.VERSION  = '3.3.4'
 
   Modal.TRANSITION_DURATION = 300
   Modal.BACKDROP_TRANSITION_DURATION = 150
@@ -5343,6 +5343,12 @@ var datepicker = $.datepicker;
 
     this.$element.on('click.dismiss.bs.modal', '[data-dismiss="modal"]', $.proxy(this.hide, this))
 
+    this.$dialog.on('mousedown.dismiss.bs.modal', function () {
+      that.$element.one('mouseup.dismiss.bs.modal', function (e) {
+        if ($(e.target).is(that.$element)) that.ignoreBackdropClick = true
+      })
+    })
+
     this.backdrop(function () {
       var transition = $.support.transition && that.$element.hasClass('fade')
 
@@ -5354,7 +5360,6 @@ var datepicker = $.datepicker;
         .show()
         .scrollTop(0)
 
-      if (that.options.backdrop) that.adjustBackdrop()
       that.adjustDialog()
 
       if (transition) {
@@ -5370,7 +5375,7 @@ var datepicker = $.datepicker;
       var e = $.Event('shown.bs.modal', { relatedTarget: _relatedTarget })
 
       transition ?
-        that.$element.find('.modal-dialog') // wait for modal to slide in
+        that.$dialog // wait for modal to slide in
           .one('bsTransitionEnd', function () {
             that.$element.trigger('focus').trigger(e)
           })
@@ -5399,6 +5404,9 @@ var datepicker = $.datepicker;
       .removeClass('in')
       .attr('aria-hidden', true)
       .off('click.dismiss.bs.modal')
+      .off('mouseup.dismiss.bs.modal')
+
+    this.$dialog.off('mousedown.dismiss.bs.modal')
 
     $.support.transition && this.$element.hasClass('fade') ?
       this.$element
@@ -5459,13 +5467,18 @@ var datepicker = $.datepicker;
       var doAnimate = $.support.transition && animate
 
       this.$backdrop = $('<div class="modal-backdrop ' + animate + '" />')
-        .prependTo(this.$element)
-        .on('click.dismiss.bs.modal', $.proxy(function (e) {
-          if (e.target !== e.currentTarget) return
-          this.options.backdrop == 'static'
-            ? this.$element[0].focus.call(this.$element[0])
-            : this.hide.call(this)
-        }, this))
+        .appendTo(this.$body)
+
+      this.$element.on('click.dismiss.bs.modal', $.proxy(function (e) {
+        if (this.ignoreBackdropClick) {
+          this.ignoreBackdropClick = false
+          return
+        }
+        if (e.target !== e.currentTarget) return
+        this.options.backdrop == 'static'
+          ? this.$element[0].focus()
+          : this.hide()
+      }, this))
 
       if (doAnimate) this.$backdrop[0].offsetWidth // force reflow
 
@@ -5500,14 +5513,7 @@ var datepicker = $.datepicker;
   // these following methods are used to handle overflowing modals
 
   Modal.prototype.handleUpdate = function () {
-    if (this.options.backdrop) this.adjustBackdrop()
     this.adjustDialog()
-  }
-
-  Modal.prototype.adjustBackdrop = function () {
-    this.$backdrop
-      .css('height', 0)
-      .css('height', this.$element[0].scrollHeight)
   }
 
   Modal.prototype.adjustDialog = function () {
@@ -5527,17 +5533,23 @@ var datepicker = $.datepicker;
   }
 
   Modal.prototype.checkScrollbar = function () {
-    this.bodyIsOverflowing = document.body.scrollHeight > document.documentElement.clientHeight
+    var fullWindowWidth = window.innerWidth
+    if (!fullWindowWidth) { // workaround for missing window.innerWidth in IE8
+      var documentElementRect = document.documentElement.getBoundingClientRect()
+      fullWindowWidth = documentElementRect.right - Math.abs(documentElementRect.left)
+    }
+    this.bodyIsOverflowing = document.body.clientWidth < fullWindowWidth
     this.scrollbarWidth = this.measureScrollbar()
   }
 
   Modal.prototype.setScrollbar = function () {
     var bodyPad = parseInt((this.$body.css('padding-right') || 0), 10)
+    this.originalBodyPad = document.body.style.paddingRight || ''
     if (this.bodyIsOverflowing) this.$body.css('padding-right', bodyPad + this.scrollbarWidth)
   }
 
   Modal.prototype.resetScrollbar = function () {
-    this.$body.css('padding-right', '')
+    this.$body.css('padding-right', this.originalBodyPad)
   }
 
   Modal.prototype.measureScrollbar = function () { // thx walsh
@@ -5602,11 +5614,11 @@ var datepicker = $.datepicker;
 
 }(jQuery);
 ;/* ========================================================================
- * Bootstrap: tooltip.js v3.3.1
+ * Bootstrap: tooltip.js v3.3.4
  * http://getbootstrap.com/javascript/#tooltip
  * Inspired by the original jQuery.tipsy by Jason Frame
  * ========================================================================
- * Copyright 2011-2014 Twitter, Inc.
+ * Copyright 2011-2015 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * ======================================================================== */
 
@@ -5618,17 +5630,17 @@ var datepicker = $.datepicker;
   // ===============================
 
   var Tooltip = function (element, options) {
-    this.type       =
-    this.options    =
-    this.enabled    =
-    this.timeout    =
-    this.hoverState =
+    this.type       = null
+    this.options    = null
+    this.enabled    = null
+    this.timeout    = null
+    this.hoverState = null
     this.$element   = null
 
     this.init('tooltip', element, options)
   }
 
-  Tooltip.VERSION  = '3.3.1'
+  Tooltip.VERSION  = '3.3.4'
 
   Tooltip.TRANSITION_DURATION = 150
 
@@ -5654,6 +5666,10 @@ var datepicker = $.datepicker;
     this.$element  = $(element)
     this.options   = this.getOptions(options)
     this.$viewport = this.options.viewport && $(this.options.viewport.selector || this.options.viewport)
+
+    if (this.$element[0] instanceof document.constructor && !this.options.selector) {
+      throw new Error('`selector` option must be specified when initializing ' + this.type + ' on the window.document object!')
+    }
 
     var triggers = this.options.trigger.split(' ')
 
@@ -5875,10 +5891,10 @@ var datepicker = $.datepicker;
     this.replaceArrow(arrowDelta, $tip[0][arrowOffsetPosition], isVertical)
   }
 
-  Tooltip.prototype.replaceArrow = function (delta, dimension, isHorizontal) {
+  Tooltip.prototype.replaceArrow = function (delta, dimension, isVertical) {
     this.arrow()
-      .css(isHorizontal ? 'left' : 'top', 50 * (1 - delta / dimension) + '%')
-      .css(isHorizontal ? 'top' : 'left', '')
+      .css(isVertical ? 'left' : 'top', 50 * (1 - delta / dimension) + '%')
+      .css(isVertical ? 'top' : 'left', '')
   }
 
   Tooltip.prototype.setContent = function () {
@@ -5891,7 +5907,7 @@ var datepicker = $.datepicker;
 
   Tooltip.prototype.hide = function (callback) {
     var that = this
-    var $tip = this.tip()
+    var $tip = $(this.$tip)
     var e    = $.Event('hide.bs.' + this.type)
 
     function complete() {
@@ -5908,7 +5924,7 @@ var datepicker = $.datepicker;
 
     $tip.removeClass('in')
 
-    $.support.transition && this.$tip.hasClass('fade') ?
+    $.support.transition && $tip.hasClass('fade') ?
       $tip
         .one('bsTransitionEnd', complete)
         .emulateTransitionEnd(Tooltip.TRANSITION_DURATION) :
@@ -5949,10 +5965,10 @@ var datepicker = $.datepicker;
   }
 
   Tooltip.prototype.getCalculatedOffset = function (placement, pos, actualWidth, actualHeight) {
-    return placement == 'bottom' ? { top: pos.top + pos.height,   left: pos.left + pos.width / 2 - actualWidth / 2  } :
-           placement == 'top'    ? { top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2  } :
+    return placement == 'bottom' ? { top: pos.top + pos.height,   left: pos.left + pos.width / 2 - actualWidth / 2 } :
+           placement == 'top'    ? { top: pos.top - actualHeight, left: pos.left + pos.width / 2 - actualWidth / 2 } :
            placement == 'left'   ? { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth } :
-        /* placement == 'right' */ { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width   }
+        /* placement == 'right' */ { top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width }
 
   }
 
@@ -6048,18 +6064,12 @@ var datepicker = $.datepicker;
 
   function Plugin(option) {
     return this.each(function () {
-      var $this    = $(this)
-      var data     = $this.data('bs.tooltip')
-      var options  = typeof option == 'object' && option
-      var selector = options && options.selector
+      var $this   = $(this)
+      var data    = $this.data('bs.tooltip')
+      var options = typeof option == 'object' && option
 
-      if (!data && option == 'destroy') return
-      if (selector) {
-        if (!data) $this.data('bs.tooltip', (data = {}))
-        if (!data[selector]) data[selector] = new Tooltip(this, options)
-      } else {
-        if (!data) $this.data('bs.tooltip', (data = new Tooltip(this, options)))
-      }
+      if (!data && /destroy|hide/.test(option)) return
+      if (!data) $this.data('bs.tooltip', (data = new Tooltip(this, options)))
       if (typeof option == 'string') data[option]()
     })
   }
@@ -6080,10 +6090,10 @@ var datepicker = $.datepicker;
 
 }(jQuery);
 ;/* ========================================================================
- * Bootstrap: collapse.js v3.3.1
+ * Bootstrap: collapse.js v3.3.4
  * http://getbootstrap.com/javascript/#collapse
  * ========================================================================
- * Copyright 2011-2014 Twitter, Inc.
+ * Copyright 2011-2015 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  * ======================================================================== */
 
@@ -6097,7 +6107,8 @@ var datepicker = $.datepicker;
   var Collapse = function (element, options) {
     this.$element      = $(element)
     this.options       = $.extend({}, Collapse.DEFAULTS, options)
-    this.$trigger      = $(this.options.trigger).filter('[href="#' + element.id + '"], [data-target="#' + element.id + '"]')
+    this.$trigger      = $('[data-toggle="collapse"][href="#' + element.id + '"],' +
+                           '[data-toggle="collapse"][data-target="#' + element.id + '"]')
     this.transitioning = null
 
     if (this.options.parent) {
@@ -6109,13 +6120,12 @@ var datepicker = $.datepicker;
     if (this.options.toggle) this.toggle()
   }
 
-  Collapse.VERSION  = '3.3.1'
+  Collapse.VERSION  = '3.3.4'
 
   Collapse.TRANSITION_DURATION = 350
 
   Collapse.DEFAULTS = {
-    toggle: true,
-    trigger: '[data-toggle="collapse"]'
+    toggle: true
   }
 
   Collapse.prototype.dimension = function () {
@@ -6127,7 +6137,7 @@ var datepicker = $.datepicker;
     if (this.transitioning || this.$element.hasClass('in')) return
 
     var activesData
-    var actives = this.$parent && this.$parent.find('> .panel').children('.in, .collapsing')
+    var actives = this.$parent && this.$parent.children('.panel').children('.in, .collapsing')
 
     if (actives && actives.length) {
       activesData = actives.data('bs.collapse')
@@ -6253,7 +6263,7 @@ var datepicker = $.datepicker;
       var data    = $this.data('bs.collapse')
       var options = $.extend({}, Collapse.DEFAULTS, $this.data(), typeof option == 'object' && option)
 
-      if (!data && options.toggle && option == 'show') options.toggle = false
+      if (!data && options.toggle && /show|hide/.test(option)) options.toggle = false
       if (!data) $this.data('bs.collapse', (data = new Collapse(this, options)))
       if (typeof option == 'string') data[option]()
     })
@@ -6284,7 +6294,7 @@ var datepicker = $.datepicker;
 
     var $target = getTargetFromTrigger($this)
     var data    = $target.data('bs.collapse')
-    var option  = data ? 'toggle' : $.extend({}, $this.data(), { trigger: this })
+    var option  = data ? 'toggle' : $this.data()
 
     Plugin.call($target, option)
   })
