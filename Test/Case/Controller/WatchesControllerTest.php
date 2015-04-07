@@ -121,31 +121,28 @@ class WatchesControllerTest extends ControllerTestCase {
         $this->assertContains(9, $ids);
     }
 
-    public function testAdminIndexBrandAcquisition() {
-		$this->markTestIncomplete('testIndex not implemented.');
+    public function testAdminIndexBrandType() {
         $query = array(
-            'brand_id' => '3',
-            'class' => 'Source',
+            'brand_id' => '16',
+            'type' => 'consignment',
         );
         $url = Router::url(array('controller' => 'watches', 'action' => 'index', 'admin' => true, '?' => $query));
         $this->testAction($url, ['method' => 'get', 'return' => 'vars']);
-        $this->assertCount(2, $this->vars['watches']);
+        $this->assertCount(1, $this->vars['watches']);
         $ids = Hash::extract($this->vars['watches'], '{n}.Watch.id');
-        $this->assertContains(5, $ids);
-        $this->assertContains(9, $ids);
+        $this->assertContains(1, $ids);
     }
 
-    public function testAdminIndexSourceAcquisition() {
-		$this->markTestIncomplete('testIndex not implemented.');
+    public function testAdminIndexSourceType() {
         $query = array(
-            'class' => 'Source',
-            'foreign_id' => '1',
+            'type' => 'purchase',
+            'source_id' => '1',
         );
         $url = Router::url(array('controller' => 'watches', 'action' => 'index', 'admin' => true, '?' => $query));
         $this->testAction($url, ['method' => 'get', 'return' => 'vars']);
-        $this->assertCount(3, $this->vars['watches']);
+        $this->assertCount(1, $this->vars['watches']);
         $ids = Hash::extract($this->vars['watches'], '{n}.Watch.id');
-        $this->assertContains(5, $ids);
+        $this->assertContains(2, $ids);
     }
 
     public function testAdminIndexUnsold() {
@@ -201,7 +198,7 @@ class WatchesControllerTest extends ControllerTestCase {
         ]);
         $this->assertEquals(500, $watch['Watch']['price']);
         // Why is this breaking?
-        //$this->assertEquals(date('Y-m-d'), $watch['Watch']['repair_date']);
+        $this->assertEquals(date('Y-m-d'), $watch['Watch']['repair_date']);
     }
 
     /**
