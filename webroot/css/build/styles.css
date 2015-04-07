@@ -8045,7 +8045,8 @@ body.hide-fat-footer .container .content {
   margin-bottom: 20px;
 }
 .container .content .brands .input,
-.container .content .sources .input {
+.container .content .sources .input,
+.container .content .owners .input {
   margin-bottom: 10px;
 }
 .container .content .orders.admin-index .row {
