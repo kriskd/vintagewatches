@@ -324,7 +324,7 @@ class WatchesController extends AppController {
             ]
         ];
         if (!$sold) {
-            $fieldList = array_merge($fieldList, ['Watch' => ['name', 'stockId', 'brand_id', 'price', 'description', 'active']]);
+            $fieldList = array_merge_recursive($fieldList, ['Watch' => ['name', 'stockId', 'brand_id', 'price', 'description', 'active']]);
         }
 		if ($this->request->is('post') || $this->request->is('put')) {
 			$this->request->data['Watch']['id'] = $id;
