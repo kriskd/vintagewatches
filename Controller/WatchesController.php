@@ -177,30 +177,20 @@ class WatchesController extends AppController {
 		$sold = isset($this->params->query['sold']) ? (int)$this->params->query['sold'] : null;
 
 		$brand_id = empty($this->params->query['brand_id']) ? '' : $this->params->query['brand_id'];
+		$type = empty($this->params->query['type']) ? '' : $this->params->query['type'];
 		$owner_id = empty($this->params->query['owner_id']) ? '' : $this->params->query['owner_id'];
 		$source_id = empty($this->params->query['source_id']) ? '' : $this->params->query['source_id'];
         if ($brand_id) {
             $this->paginate['conditions']['brand_id'] = $brand_id;
         }
+        if ($type && in_array($type, ['consignment', 'purchase']) && empty($owner_id) && empty($source_id)) {
+            $watchIds = $this->Watch->{ucfirst($type)}->getWatchIds();
+        }
         if ($owner_id) {
-            $watchIds = $this->Watch->Consignment->find('list', [
-                'fields' => [
-                    'id', 'watch_id',
-                ],
-                'conditions' => [
-                    'owner_id' => $owner_id,
-                ],
-            ]);
+            $watchIds = $this->Watch->Consignment->getWatchIds('owner_id', $owner_id);
         }
         if ($source_id) {
-            $watchIds = $this->Watch->Purchase->find('list', [
-                'fields' => [
-                    'id', 'watch_id',
-                ],
-                'conditions' => [
-                    'source_id' => $source_id,
-                ],
-            ]);
+            $watchIds = $this->Watch->Purchase->getWatchIds('source_id', $source_id);
         }
 
         if (isset($watchIds) && is_array($watchIds)) {
@@ -232,7 +222,7 @@ class WatchesController extends AppController {
 			return $this->redirect(array_merge(Router::parse($this->request->here), array('?' => $query)));
 		}
 
-		$this->set(compact('watches', 'buttons', 'brands', 'brand_id', 'acquisitions', 'acquisition_id', 'sources', 'source_id', 'owner_id'));
+		$this->set(compact('watches', 'buttons', 'brands', 'brand_id', 'acquisitions', 'type', 'sources', 'source_id', 'owner_id'));
 	}
 
 /**

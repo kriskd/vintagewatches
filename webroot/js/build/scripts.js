@@ -6321,6 +6321,25 @@ var datepicker = $.datepicker;
       minDate: new Date()
     });
 
+    var watchType = $('#WatchType').val();
+    typeFilter(watchType);
+
+    $('#WatchType').on('change', function(){
+      var val = $(this).val();
+      typeFilter(val);
+    });
+
+    function typeFilter(val) {
+     if (val == 'consignment') {
+        $('#PurchseSourceId').addClass('hidden');
+        $('#ConsignmentOwnerId').removeClass('hidden');
+      }
+      if (val == 'purchase') {
+        $('#ConsignmentOwnerId').addClass('hidden');
+        $('#PurchaseSourceId').removeClass('hidden');
+      }
+    }
+
     if ($('.consignment-purchase input:radio').is(':checked')) {
         var id = $('.consignment-purchase input:radio:checked').prop('id');
         selectType(id);
@@ -6439,7 +6458,7 @@ var datepicker = $.datepicker;
     });
 
     $(document).on('change', '#WatchAdminIndexForm', function(){
-        $(this).submit(); 
+        $(this).submit();
     });
 
     $('.announcement-list-signup .unsub').on('click', function(){

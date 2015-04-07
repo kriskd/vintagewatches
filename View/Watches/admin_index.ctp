@@ -31,7 +31,7 @@
                                                                 'options' => $acquisitions,
                                                                 'class' => 'form-control',
                                                                 'label' => false,
-                                                                //'selected' => $acquisition_id,
+                                                                'selected' => $type,
                                                                 'empty' => 'By Acquisition',
                                                             )
                                                     ); ?>
@@ -39,7 +39,7 @@
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <?php echo $this->Form->input('Purchase.source_id', array(
                                                                 'options' => $sources,
-                                                                'class' => 'form-control',
+                                                                'class' => 'form-control hidden',
                                                                 'label' => false,
                                                                 'selected' => $source_id,
                                                                 'empty' => 'By Source',
@@ -47,7 +47,7 @@
                                                         ); ?>
                     <?php echo $this->Form->input('Consignment.owner_id', array(
                                                                 'options' => $owners,
-                                                                'class' => 'form-control',
+                                                                'class' => 'form-control hidden',
                                                                 'label' => false,
                                                                 'selected' => $owner_id,
                                                                 'empty' => 'By Owner',
