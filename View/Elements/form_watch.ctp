@@ -61,7 +61,7 @@
                 'label' => array(
                     'class' => 'control-label',
                 ),
-                'class' => 'form-control',
+                'class' => 'form-control date-picker',
                 'type' => 'text',
             )); ?>
             <?php echo $this->Form->input('repair_cost', array(
