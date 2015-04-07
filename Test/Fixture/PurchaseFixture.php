@@ -28,7 +28,7 @@ class PurchaseFixture extends CakeTestFixture {
 	public $records = array(
 		array(
 			'id' => 1,
-			'watch_id' => 1,
+			'watch_id' => 2,
 			'source_id' => 1,
 		),
 	);
