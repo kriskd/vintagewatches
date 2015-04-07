@@ -197,8 +197,7 @@ class WatchesControllerTest extends ControllerTestCase {
             'recursive' => -1
         ]);
         $this->assertEquals(500, $watch['Watch']['price']);
-        // Why is this breaking?
-        //$this->assertEquals(date('Y-m-d'), $watch['Watch']['repair_date']);
+        $this->assertEquals(date('Y-m-d'), $watch['Watch']['repair_date']);
     }
 
     /**
