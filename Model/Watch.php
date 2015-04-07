@@ -183,10 +183,10 @@ class Watch extends AppModel {
     public function afterFind($results, $primary = false) {
         foreach ($results as $key => $result) {
             if (isset($result[$this->alias])) {
-                if (!empty($result['Consignment']) && empty($result['Purchase'])) {
+                if (!empty($result['Consignment']['Owner']) && empty($result['Purchase']['Source'])) {
                     $results[$key][$this->alias]['type'] = 'consignment';
                 }
-                if (!empty($result['Purchase']) && empty($result['Consignment'])) {
+                if (!empty($result['Purchase']['Source']) && empty($result['Consignment']['Owner'])) {
                     $results[$key][$this->alias]['type'] = 'purchase';
                 }
             }

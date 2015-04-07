@@ -177,11 +177,17 @@ class WatchesController extends AppController {
 		$sold = isset($this->params->query['sold']) ? (int)$this->params->query['sold'] : null;
 
 		$brand_id = empty($this->params->query['brand_id']) ? '' : $this->params->query['brand_id'];
-		$type = empty($this->params->query['type']) ? '' : $this->params->query['type'];
-		$owner_id = empty($this->params->query['owner_id']) ? '' : $this->params->query['owner_id'];
-		$source_id = empty($this->params->query['source_id']) ? '' : $this->params->query['source_id'];
+        $source_id = '';
+        $owner_id = '';
         if ($brand_id) {
             $this->paginate['conditions']['brand_id'] = $brand_id;
+        }
+		$type = empty($this->params->query['type']) ? '' : $this->params->query['type'];
+        if ($type == 'purchase' && !empty($this->params->query['source_id'])) {
+		    $source_id = $this->params->query['source_id'];
+        }
+        if ($type == 'consignment' && !empty($this->params->query['owner_id'])) {
+            $owner_id = $this->params->query['owner_id'];
         }
         if ($type && in_array($type, ['consignment', 'purchase']) && empty($owner_id) && empty($source_id)) {
             $watchIds = $this->Watch->{ucfirst($type)}->getWatchIds();

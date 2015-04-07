@@ -56,25 +56,30 @@
                     </div>
                 <?php endif; ?>
             </div>
+            <?php if (!empty($watch['Watch']['type']) && in_array($watch['Watch']['type'], ['consignment', 'purchase'])): ?>
+                <div class="info-inner">
+                    <?php if (!empty($watch['Watch']['type']) && $watch['Watch']['type'] == 'consignment'): ?>
+                        <h4>Consignment</h4>
+                        <dl>
+                            <dt>Owner</dt>
+                            <dd><?php echo $watch['Consignment']['Owner']['name']; ?></dd>
+                            <dt>Paid</dt>
+                            <dd><?php echo $this->Watch->date($watch['Consignment']['paid']); ?>
+                            <dt>Returned</dt>
+                            <dd><?php echo $this->Watch->date($watch['Consignment']['returned']); ?>
+                        </dl>
+                    <?php endif; ?>
+                    <?php if (!empty($watch['Watch']['type']) && $watch['Watch']['type'] == 'purchase'): ?>
+                        <h4>Self</h4>
+                        <dl>
+                            <dt>Source</dt>
+                            <dd><?php echo $watch['Purchase']['Source']['name']; ?></dd>
+                        </dl>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
             <div class="info-inner">
-                <?php if ($watch['Watch']['type'] == 'consignment'): ?>
-                <h4>Consignment</h4>
-                    <dl>
-                        <dt>Owner</dt>
-                        <dd><?php echo $watch['Consignment']['Owner']['name']; ?></dd>
-                        <dt>Paid</dt>
-                        <dd><?php echo $this->Watch->date($watch['Consignment']['paid']); ?>
-                        <dt>Returned</dt>
-                        <dd><?php echo $this->Watch->date($watch['Consignment']['returned']); ?>
-                    </dl>
-                <?php endif; ?>
-                <?php if ($watch['Watch']['type'] == 'purchase'): ?>
-                <h4>Self</h4>
-                    <dl>
-                        <dt>Source</dt>
-                        <dd><?php echo $watch['Purchase']['Source']['name']; ?></dd>
-                    </dl>
-                <?php endif; ?>
+                <h4>Notes</h4>
                 <?php echo $watch['Watch']['notes']; ?>
             </div>
             <?php if (!empty($watch['Watch']['repair_date']) || !empty($watch['Watch']['repair_notes'])): ?>
