@@ -229,6 +229,39 @@ class WatchesControllerTest extends ControllerTestCase {
         $this->assertContains('/admin/watches', $this->headers['Location']);
     }
 
+    public function testAdminEditChangeType() {
+        /*$data = [
+            'Watch' => [
+                'id' => 2,
+                'type' => 'consignment',
+            ],
+            'Consignment' => [
+                'watch_id' => 2,
+                'owner_id' => 1,
+            ],
+        ];*/
+        //$watch = $this->Watch->findById(2);
+        $watch = $this->Watch->find('first', [
+            'conditions' => [
+                'Watch.id' => 2
+            ],
+            'contain' => [
+                'Purchase', 'Consignment',
+            ],
+        ]);
+        //var_dump($watch); exit;
+        $watch['Consignment'] = [
+            'owner_id' => 1,
+        ];
+        $watch['Watch'] = [
+            'type' => 'consignment',
+        ];
+        $this->testAction('/admin/watches/edit/2', ['method' => 'post', 'data' => $watch]);
+        $watch = $this->Watch->findById(2);
+        $this->assertEmpty($watch['Purchase']['source_id']);
+        $this->assertEquals(1, $watch['Consignment']['owner_id']);
+    }
+
     public function testAdminDelete() {
         $id = 9999;
         $watch = $this->Watch->find('first', [
