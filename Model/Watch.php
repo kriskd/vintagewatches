@@ -112,20 +112,6 @@ class Watch extends AppModel {
             'className' => 'Brand',
             'foreignKey' => 'brand_id'
         ),
-        'Source' => array(
-            'className' => 'Source',
-            'foreignKey' => 'foreign_id',
-			'conditions' => array('Watch.class' => 'Source'),
-			'fields' => '',
-			'order' => ''
-        ),
-        'Owner' => array(
-			'className' => 'Owner',
-			'foreignKey' => 'foreign_id',
-			'conditions' => array('Watch.class' => 'Owner'),
-			'fields' => '',
-			'order' => ''
-        )
     );
 
     public $hasMany = array(
@@ -179,14 +165,15 @@ class Watch extends AppModel {
 
     /**
      * Add watch type to data to select radio on watch form
+     * Probably need validation on Consignment and Purchase requiring owner_id or source_id
      */
     public function afterFind($results, $primary = false) {
         foreach ($results as $key => $result) {
             if (isset($result[$this->alias])) {
-                if (!empty($result['Consignment']['Owner']) && empty($result['Purchase']['Source'])) {
+                if (!empty($result['Consignment']['owner_id']) && empty($result['Purchase']['source_id'])) {
                     $results[$key][$this->alias]['type'] = 'consignment';
                 }
-                if (!empty($result['Purchase']['Source']) && empty($result['Consignment']['Owner'])) {
+                if (!empty($result['Purchase']['source_id']) && empty($result['Consignment']['owner_id'])) {
                     $results[$key][$this->alias]['type'] = 'purchase';
                 }
             }
