@@ -40,11 +40,11 @@ class Source extends AppModel {
  * @var array
  */
 	public $hasMany = array(
-		'Watch' => array(
-			'className' => 'Watch',
-			'foreignKey' => 'foreign_id',
+		'Purchase' => array(
+			'className' => 'Purchase',
+			'foreignKey' => 'source_id',
 			'dependent' => false,
-			'conditions' => array('Watch.class' => 'Source'),
+			'conditions' => '',
 			'fields' => '',
 			'order' => '',
 			'limit' => '',

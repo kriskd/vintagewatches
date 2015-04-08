@@ -3,7 +3,7 @@ App::uses('AppModel', 'Model');
 /**
  * Owner Model
  *
- * @property Watch $Watch
+ * @property Consignment $Consignment
  */
 class Owner extends AppModel {
 
@@ -40,11 +40,19 @@ class Owner extends AppModel {
  * @var array
  */
 	public $hasMany = array(
-        'Watch'	=> array(
-            'className' => 'Watch',
-            'foreignKey' => 'foreign_id',
+		'Consignment' => array(
+			'className' => 'Consignment',
+			'foreignKey' => 'owner_id',
 			'dependent' => false,
-			'conditions' => array('Watch.class' => 'Owner'),
-        )
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
 	);
+
 }
