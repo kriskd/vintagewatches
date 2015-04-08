@@ -173,6 +173,21 @@ class WatchesControllerTest extends ControllerTestCase {
         $this->assertContains('watches?brand_id=3&page=1', $this->headers['Location']);
     }
 
+    public function testAdminView() {
+        $this->testAction('/admin/watches/edit/3', ['method' => 'get', 'return' => 'vars']);
+        $this->assertArrayNotHasKey('type', $this->vars['watch']['Watch']);
+    }
+
+    public function testAdminViewConsignment() {
+        $this->testAction('/admin/watches/edit/1', ['method' => 'get', 'return' => 'vars']);
+        $this->assertEquals('consignment', $this->vars['watch']['Watch']['type']);
+    }
+
+    public function testAdminViewPurchase() {
+        $this->testAction('/admin/watches/edit/2', ['method' => 'get', 'return' => 'vars']);
+        $this->assertEquals('purchase', $this->vars['watch']['Watch']['type']);
+    }
+
     public function testAdminEdit() {
         $this->testAction('/admin/watches/edit/7', ['method' => 'get', 'return' => 'vars']);
         $this->assertFalse($this->vars['sold']);
@@ -230,17 +245,6 @@ class WatchesControllerTest extends ControllerTestCase {
     }
 
     public function testAdminEditChangeType() {
-        /*$data = [
-            'Watch' => [
-                'id' => 2,
-                'type' => 'consignment',
-            ],
-            'Consignment' => [
-                'watch_id' => 2,
-                'owner_id' => 1,
-            ],
-        ];*/
-        //$watch = $this->Watch->findById(2);
         $watch = $this->Watch->find('first', [
             'conditions' => [
                 'Watch.id' => 2
@@ -249,7 +253,6 @@ class WatchesControllerTest extends ControllerTestCase {
                 'Purchase', 'Consignment',
             ],
         ]);
-        //var_dump($watch); exit;
         $watch['Consignment'] = [
             'owner_id' => 1,
         ];
