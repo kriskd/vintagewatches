@@ -65,7 +65,7 @@ class WatchesController extends AppController {
 		$this->paginate['fields'] = array('id', 'stockId', 'price', 'name', 'description');
 		try {
             $this->Paginator->settings = $this->paginate;
-			$this->paginate();
+			$this->set(['watches' => $this->paginate()]);
 		} catch (NotFoundException $e) {
 			//Redirect to previous page
 			$query = $this->request->query;
@@ -76,8 +76,6 @@ class WatchesController extends AppController {
 		}
 		$title = empty($brand) ? 'Store' : $brand . ' Watches';
 		$this->set('title', $title);
-
-		$this->set('watches', $this->Paginator->paginate('Watch'));
 	}
 
 /**
