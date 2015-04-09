@@ -214,6 +214,10 @@ class Watch extends AppModel {
             'Image',
             'Brand',
         ];
+        $fields = [
+            'Watch.id', 'order_id', 'brand_id', 'stockId', 'price', 'Watch.name', 'description', 'active',
+            'Brand.name',
+        ];
         if (!empty($email) && !empty($postalCode)) {
             $contain['Order'] = [
                 'Address' => [
@@ -222,12 +226,14 @@ class Watch extends AppModel {
                     ]
                 ]
             ];
+            $fields[] = 'Order.email'; 
         }
         $watch = $this->find('first', array(
             'conditions' => [
 				'Watch.id' => $id,
             ],
-            'contain' => $contain
+            'contain' => $contain,
+            'fields' => $fields,
         ));
 
         if (!$watch) return false;

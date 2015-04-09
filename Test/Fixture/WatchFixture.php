@@ -220,7 +220,7 @@ class WatchFixture extends CakeTestFixture {
                 'repair_cost' => '',
                 'repair_notes' => '',
                 'notes' => '',
-                'active' => 1,
+                'active' => 0,
                 'tweeted_at' => '0000-00-00 00:00:00',
                 'created' => date('Y-m-d H:i:s', strtotime('-10 day')),
                 'modified' => date('Y-m-d H:i:s', strtotime('-10 day')),

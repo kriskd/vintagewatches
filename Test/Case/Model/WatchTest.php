@@ -55,8 +55,26 @@ class WatchTest extends CakeTestCase {
  * @return void
  */
 	public function testGetWatch() {
-		$this->markTestIncomplete('testGetWatch not implemented.');
+        $watch = $this->Watch->getWatch(3);
+        $this->assertEquals(3, $watch['Watch']['id']);
 	}
+
+	public function testGetWatchInactive() {
+        $watch = $this->Watch->getWatch(10);
+        $this->assertFalse($watch);
+	}
+
+	public function testGetWatchOrder() {
+        $watch = $this->Watch->getWatch(1, 'PeterRHarris@teleworm.us', '61602');
+        $this->assertEquals(1, $watch['Watch']['id']);
+        $this->assertEquals('PeterRHarris@teleworm.us', $watch['Order']['email']);
+        $this->assertEquals('61602', $watch['Order']['Address'][0]['postalCode']);
+	}
+
+	public function testGetWatchBadOrder() {
+        $watch = $this->Watch->getWatch(1, 'foo@bar.com', '12345');
+        $this->assertFalse($watch);
+    }
 
 /**
  * testGetCartWatches method
