@@ -21,13 +21,13 @@ class Owner extends AppModel {
  */
 	public $validate = array(
 		'name' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
-				//'message' => 'Your custom message here',
+			'check_delete' => array(
+				'rule' => array('checkDelete'),
+				'message' => 'This owner has watches associated with it and can\'t be deleted.',
 				//'allowEmpty' => false,
 				//'required' => false,
 				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				'on' => 'update', // Limit validation to 'create' or 'update' operations
 			),
 		),
 	);
@@ -55,4 +55,21 @@ class Owner extends AppModel {
 		)
 	);
 
+    public function checkDelete($check) {
+        if (!empty($check['name'])) {
+            return true;
+        }
+        $data = $this->data;
+        $id = $data[$this->alias]['id'];
+        $count = $this->Consignment->Watch->find('count', array(
+            'conditions' => array(
+                'owner_id' => $id
+            )
+        ));
+        if ($count == 0) {
+            $this->delete($id);
+            return '';
+        }
+        return false;
+    }
 }
