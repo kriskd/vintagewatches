@@ -1,4 +1,4 @@
-<?php echo $this->Form->create('Watch', array('class' => 'form-horizontal', 'autocomplete' => 'off')); ?>
+<?php echo $this->Form->create('Watch', array('class' => 'form-horizontal', 'autocomplete' => 'off', 'novalidate' => true)); ?>
 <fieldset>
     <legend>Information</legend>
     <div class="row">
