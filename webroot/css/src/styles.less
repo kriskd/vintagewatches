@@ -1,6 +1,6 @@
 @import "bower_components/bootstrap/less/bootstrap.less";
 @grid-float-breakpoint:     @screen-md-min;
-@icon-font-path: "../fonts/"; 
+@icon-font-path: "../fonts/";
 @import "navbar.less";
 
 
@@ -18,19 +18,34 @@
 @gold:                  #b29600;
 @goldDark:              #665600;
 
+fieldset {
+    border: 1px solid #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    box-shadow:  0px 0px 0px 0px #000;
+    legend {
+        font-size: 1.2em !important;
+        font-weight: bold !important;
+        text-align: left !important;
+        width:auto;
+        padding:0 10px;
+        border-bottom:none;
+    }
+}
+
 .rounded-corners (@radius: 5px) {
   border-radius: @radius;
 }
 
-.ui-autocomplete-loading, .ajax-loading { 
-    background:url('/css/images/ui-anim_basic_16x16.gif') no-repeat right center 
+.ui-autocomplete-loading, .ajax-loading {
+    background:url('/css/images/ui-anim_basic_16x16.gif') no-repeat right center
 }
 .ajax-loading {
     display: none;
     height: 16px;
     width: 100%;
     background-position: center center;
-    clear: both; 
+    clear: both;
 }
 
 // Buttons
@@ -373,31 +388,31 @@ body.hide-fat-footer {
         .label-warning {
             background-color: @gold;
         }
-        
+
         .glyphicon-question-sign {
             color: @red;
         }
         .launch-tooltip, .launch-tooltip:hover {
             text-decoration: none;
         }
-        
+
         .form-group {
             margin-bottom: 0;
         }
-        
+
         input:focus:invalid {
             border-color: #ee6f6b;
             color: #b94a48;
         }
-        
+
         input[type=submit] {
             margin-top: 20px;
         }
-        
+
         h1, h2, h3, h4, h5, h6 {
             font-weight: bold;
         }
-        
+
         //Make the checkbox match the label
         .checkbox-inline {
             input {
@@ -468,7 +483,7 @@ body.hide-fat-footer {
             font-size: 90%;
             margin-top: 10px;
         }
-        
+
         dl {
             .clearfix();
             dt {
@@ -476,9 +491,27 @@ body.hide-fat-footer {
                 width: 160px;
                 text-align: right;
                 padding-right: 10px;
+                &.no-float {
+                    float: none;
+                    text-align: left;
+                    + dd {
+                        margin-left: 0px;
+                    }
+                }
             }
             dd {
-                margin-left: 170px; 
+                margin-left: 170px;
+                .clearfix();
+                &.no-float {
+                    float: none;
+                    text-align: left;
+                }
+            }
+            &.prices {
+                dd {
+                    text-align: right;
+                    margin-right: 100px;
+                }
             }
         }
         .pagination {
@@ -718,7 +751,7 @@ body.hide-fat-footer {
                     }
                 }
                 .watch-details {
-                    
+
                 }
             }
         }
@@ -730,7 +763,7 @@ body.hide-fat-footer {
                     margin-right: 10px;
                 }
             }
-            .btn-group {
+            .btn-group-justified {
                 > .btn {
                     float: none;
                 }
@@ -739,24 +772,35 @@ body.hide-fat-footer {
                 }
                 margin-top: 10px;
                 text-align: center;
-                @media (min-width: @screen-md-min) {
-                    margin-top: 0px;
-                    text-align: right;
-                }
             }
         }
         .watches.form {
             #WatchAdminEditForm {
                 margin-bottom: 20px;
             }
+            .radio {
+                input {
+                    margin-left: 0px;
+                    box-shadow: none;
+                }
+                label {
+                    display: block;
+                    text-align: left;
+                    margin: 4px 0 0 2px;
+                }
+            }
+            .submit {
+                float: left;
+                margin-right: 5px;
+                input {
+                    margin-top: 0px;
+                }
+            }
             .fake-upload {
                 display: block;
             }
             .image-upload {
                 display: none;
-            }
-            .jumbotron {
-                width: 50%;
             }
             .watch-images {
                 margin-bottom: 20px;
@@ -807,8 +851,8 @@ body.hide-fat-footer {
                     .description {
                         margin-bottom: 45px;
                     }
-                    //min-height and push add to cart to bottom for lg only
-                    @media (min-width: @screen-lg-min) {
+                    //min-height and push add to cart to bottom for min md
+                    @media (min-width: @screen-md-min) {
                         position: relative;
                         min-height: 525px;
                         .bottom {
@@ -820,6 +864,29 @@ body.hide-fat-footer {
                                 margin: auto;
                             }
                         }
+                    }
+                }
+            }
+            &.admin {
+                .info-inner {
+                    border: 5px solid @gold;
+                    padding: 10px;
+                    margin-bottom: 10px;
+                    h4 {
+                        text-align: center;
+                        background: @gold;
+                        color: white;
+                        margin: -10px -10px 10px -10px;
+                        padding-bottom: 5px;
+                    }
+                }
+                .admin-btns {
+                    @media (min-width: @screen-sm-min) {
+                        text-align: right;
+                    }
+                    @media (max-width: @screen-sm-min) {
+                        margin-top: 0px;
+                        margin-bottom: 10px;
                     }
                 }
             }
@@ -1073,14 +1140,13 @@ body.hide-fat-footer {
         }
         .pages.admin-edit {
             .input {
-                
             }
             textarea {
                 height: 300px;
                 margin-bottom: 20px;
             }
         }
-        .brands {
+        .brands, .sources, .owners {
             .input {
                 margin-bottom: 10px;
             }

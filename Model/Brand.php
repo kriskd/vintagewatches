@@ -19,18 +19,18 @@ class Brand extends AppModel {
  *
  * @var array
  */
-	public $validate = array(
-		'name' => array(
-                    'check_delete' => array(
-                        'rule' => array('checkDelete'),
-                        'message' => 'This brand has watches associated with it and can\'t be deleted.',
-                        //'allowEmpty' => false,
-                        //'required' => true,
-                        //'last' => false, // Stop validation after this rule
-                        'on' => 'update', // Limit validation to 'create' or 'update' operations
-                    )
-		),
-	);
+    public $validate = array(
+        'name' => array(
+            'check_delete' => array(
+                'rule' => array('checkDelete'),
+                'message' => 'This brand has watches associated with it and can\'t be deleted.',
+                //'allowEmpty' => false,
+                //'required' => true,
+                //'last' => false, // Stop validation after this rule
+                'on' => 'update', // Limit validation to 'create' or 'update' operations
+            )
+        ),
+    );
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
@@ -59,47 +59,50 @@ class Brand extends AppModel {
             'dependent' => false,
         ),
 	);
-        
-        public function checkDelete($check)
-        {   
+
+    public function checkDelete($check) {
             if (!empty($check['name'])) {
                 return true;
             }
-            $data = $this->data; 
-            $id = $data['Brand']['id'];
+            $data = $this->data;
+            $id = $data[$this->alias]['id'];
             $count = $this->Watch->find('count', array(
-                                                    'conditions' => array(
-                                                                        'brand_id' => $id
-                                                                        )
-                                                    )
-                                        ); 
-            if ($count == 0) { 
-                $this->delete($id); 
-                return '';
-            } 
-            return false;
+                'conditions' => array(
+                    'brand_id' => $id
+                )
+            )
+        );
+        if ($count == 0) {
+            $this->delete($id);
+            return '';
         }
-        
+        return false;
+    }
+
         /**
-         * Get brands that have active watches
+         * Return a brand list
+         * @param $activeWatches Include only brands with active watches
+         *
+         * @return array 
          */
-        public function getBrandsWithWatches()
-        {
-            $options['joins'] = array(
-                        array(
-                            'table' => 'watches',
-                            'alias' => 'Watch',
-                            'type' => 'INNER',
-                            'conditions' => array(
-                                'Watch.brand_id = Brand.id',
-                                'Watch.active' => 1,
-                                'Watch.order_id' => null
+        public function brandList($activeWatches = true) {
+            if ($activeWatches) {
+                $options['joins'] = array(
+                            array(
+                                'table' => 'watches',
+                                'alias' => 'Watch',
+                                'type' => 'INNER',
+                                'conditions' => array(
+                                    'Watch.brand_id = Brand.id',
+                                    'Watch.active' => 1,
+                                    'Watch.order_id' => null
+                            )
                         )
-                    )
-                );
-            $options['group'] = array('Brand.id');
+                    );
+                $options['group'] = array('Brand.id');
+            }
             $options['order'] = array('Brand.name');
-            
+
             return $this->find('list', $options);
         }
 }

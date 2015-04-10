@@ -32,16 +32,35 @@ App::uses('Model', 'Model');
  * @package       app.Model
  */
 class AppModel extends Model {
-    
+
     public $actsAs = array(
                         'Containable',
                     );
-    
-    
+
     /**
      * For State, Province and Country
      */
     public function getList($fields = ['abbreviation', 'name']) {
         return $this->find('list', compact('fields'));
+    }
+
+    /**
+     * Watch IDs for Consignment or Purchase
+     */
+    public function getWatchIds($field = null, $id = null) {
+        $conditions = [];
+        if ($field && $id) {
+            $conditions = [
+                $this->alias.'.'.$field => $id
+            ];
+        }
+
+        return $this->find('list', [
+            'fields' => [
+                'id', 'watch_id',
+            ],
+            'recursive' => -1,
+            'conditions' => $conditions
+        ]);
     }
 }

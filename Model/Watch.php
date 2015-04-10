@@ -1,5 +1,7 @@
 <?php
 App::uses('AppModel', 'Model');
+App::uses('Folder', 'Utility');
+
 /**
  * Watch Model
  *
@@ -109,7 +111,7 @@ class Watch extends AppModel {
         'Brand' => array(
             'className' => 'Brand',
             'foreignKey' => 'brand_id'
-        )
+        ),
     );
 
     public $hasMany = array(
@@ -119,6 +121,85 @@ class Watch extends AppModel {
             'dependent' => true, //Delete associated images
         ),
     );
+
+	public $hasOne = array(
+        'Consignment' => array(
+            'className' => 'Consignment',
+            'foreignKey' => 'watch_id',
+            'dependent' => true //Delete associated consignment
+        ),
+        'Purchase' => array(
+            'className' => 'Purchase',
+            'foreignKey' => 'watch_id',
+            'dependent' => true //Delete associated purchase
+        ),
+    );
+
+    public function beforeValidate($options = array()) {
+        if (isset($this->data[$this->alias]['type'])) {
+            $type = $this->data[$this->alias]['type'];
+            if (in_array($type, ['', 'purchase'])) {
+                unset($this->data['Consignment']);
+            }
+            if (in_array($type, ['', 'consignment'])) {
+                unset($this->data['Purchase']);
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Delete associated consignment or purchase based on if watch is consignment, purchase or none.
+     */
+    public function afterSave($created, $options = array()) {
+        if (isset($this->data[$this->alias]['type'])) {
+            $type = $this->data[$this->alias]['type'];
+            if (in_array($type, ['', 'purchase'])) {
+                $this->Consignment->deleteAll(['watch_id' => $this->data[$this->alias]['id']]);
+            }
+            if (in_array($type, ['', 'consignment'])) {
+                $this->Purchase->deleteAll(['watch_id' => $this->data[$this->alias]['id']]);
+            }
+        }
+    }
+
+    /**
+     * Add watch type to data to select radio on watch form
+     * Probably need validation on Consignment and Purchase requiring owner_id or source_id
+     */
+    public function afterFind($results, $primary = false) {
+        foreach ($results as $key => $result) {
+            if (isset($result[$this->alias])) {
+                if (!empty($result['Consignment']['owner_id']) && empty($result['Purchase']['source_id'])) {
+                    $results[$key][$this->alias]['type'] = 'consignment';
+                }
+                if (!empty($result['Purchase']['source_id']) && empty($result['Consignment']['owner_id'])) {
+                    $results[$key][$this->alias]['type'] = 'purchase';
+                }
+            }
+        }
+        return $results;
+    }
+
+    public function beforeDelete($cascade = true) {
+        $watch = $this->find('first', [
+            'conditions' => [
+                $this->alias.'.id' => $this->id
+            ],
+            'recursive' => -1,
+        ]);
+
+        if (empty($watch['Watch']['order_id'])) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function afterDelete() {
+        $folder = new Folder(WWW_ROOT.'files/'.$this->id);
+        $folder->delete();
+    }
 
     /**
      * Get watch for display.  Will return watch if active and no order
@@ -133,6 +214,10 @@ class Watch extends AppModel {
             'Image',
             'Brand',
         ];
+        $fields = [
+            'Watch.id', 'order_id', 'brand_id', 'stockId', 'price', 'Watch.name', 'description', 'active',
+            'Brand.name',
+        ];
         if (!empty($email) && !empty($postalCode)) {
             $contain['Order'] = [
                 'Address' => [
@@ -141,13 +226,17 @@ class Watch extends AppModel {
                     ]
                 ]
             ];
+            $fields[] = 'Order.email'; 
         }
         $watch = $this->find('first', array(
             'conditions' => [
 				'Watch.id' => $id,
             ],
-            'contain' => $contain
+            'contain' => $contain,
+            'fields' => $fields,
         ));
+
+        if (!$watch) return false;
 
         if ($watch['Watch']['active'] == 1 && !$watch['Watch']['order_id']) return $watch;
 

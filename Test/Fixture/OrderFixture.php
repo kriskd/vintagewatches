@@ -35,8 +35,20 @@ class OrderFixture extends CakeTestFixture {
 
     public function init() {
         $this->records = array(
-                array(
+            array(
                 'id' => 1,
+                'email' => 'PeterRHarris@teleworm.us',
+                'phone' => '260-423-3273',
+                'shippingAmount' => '8.00',
+                'shipDate' => date('Y-m-d', strtotime('-3 day')),
+                'notes' => 'Lorem ipsum',
+                'orderNotes' => 'Loreum ipsum',
+                'coupon_id' => 3,
+                'created' => date('Y-m-d H:i:s', strtotime('-4 day')),
+                'modified' => date('Y-m-d H:i:s', strtotime('-4 day')),
+            ),
+            array(
+                'id' => 2,
                 'email' => 'PeterRHarris@teleworm.us',
                 'phone' => '260-423-3273',
                 'shippingAmount' => '8.00',

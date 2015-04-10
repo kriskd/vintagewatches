@@ -7,7 +7,7 @@ App::uses('AppModel', 'Model');
  * @property Watch $Watch
  */
 class Order extends AppModel {
-    
+
     public $validate = array(
         'email' => array(
             'notempty' => array(
@@ -27,9 +27,9 @@ class Order extends AppModel {
             )
 	    )
     );
-    
+
     public $actsAs = array(
-        'HtmlPurifier.HtmlPurifier' => array( 
+        'HtmlPurifier.HtmlPurifier' => array(
             'config' => 'StripAll',
             'fields' => array(
             'email', 'phone', 'notes', 'orderNotes',
@@ -40,24 +40,32 @@ class Order extends AppModel {
     /**
      * Remove the order_id on the watch after order is deleted
      */
-    public function afterDelete()
-    {
+    public function afterDelete() {
         $order_id = $this->id;
         $this->Watch->updateAll(
             array('Watch.order_id' => null),
             array('Watch.order_id' => $order_id)
         );
     }
-    
+
     /**
-     * Remove any empty results
+     * Filter empty items in results from null to empty string so Orders table renders correctly on admin/coupons/view
      */
     public function afterFind($results, $primary = false) {
-        return Hash::filter($results);
+        foreach ($results as $i => $result) {
+            if (isset($result[$this->alias]) && is_array($result[$this->alias])) {
+                foreach ($result[$this->alias] as $key => $value) {
+                    if (is_null($value)) {
+                        $results[$i][$this->alias][$key] = '';
+                    }
+                }
+            }
+        }
+
+        return $results;
     }
-    
-    public function beforeValidate($options = array())
-    {	
+
+    public function beforeValidate($options = array()) {
         if (isset($this->data['Address'])) {
             $addresses = $this->data['Address'];
             $this->data['Address'] = array_map(function($item) {
@@ -111,13 +119,13 @@ class Order extends AppModel {
             'foreign_key' => 'coupon_id',
         )
     );
-	
+
 	public $hasOne = array(
         'Payment' => array(
-                'className' => 'Payment',
-                'foreignKey' => 'foreign_id',
-                'conditions' => array('Payment.class' => 'Order'),
-                'dependent' => true //Delete associated payment
+            'className' => 'Payment',
+            'foreignKey' => 'foreign_id',
+            'conditions' => array('Payment.class' => 'Order'),
+            'dependent' => true //Delete associated payment
         )
     );
 
@@ -141,11 +149,11 @@ class Order extends AppModel {
 			'finderQuery' => '',
 		)
 	);
-        
+
     public function getOrder($id)
     {
         $options = array('conditions' => array('Order.' . $this->primaryKey => $id));
-        
+
         $options['contain'] = array(
             'Address',
             'Watch' => array(
@@ -163,13 +171,13 @@ class Order extends AppModel {
         );
         return $this->find('first', $options);
     }
-    
+
     /**
      * Retrieve orders for a given $email and $postalCode
      * Optional $id to get specific order for the matching email & postalCode
      */
     public function getCustomerOrderOptions($email, $postalCode, $id = null)
-    {	
+    {
         $conditionsSubQuery = array(
             'Address.postalCode' => $postalCode,
             'Address.type' => 'billing'
@@ -188,7 +196,7 @@ class Order extends AppModel {
         $subQueryExpression = $db->expression($subQuery);
         $conditions[] = $subQueryExpression;
         $conditions['email'] = urldecode($email);
-        
+
         if (!empty($id)) {
             $conditions['Order.id'] = $id;
         }
@@ -217,5 +225,5 @@ class Order extends AppModel {
             )
         );
     }
-    
+
 }

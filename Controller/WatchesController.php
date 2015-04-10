@@ -6,31 +6,36 @@ App::uses('AppController', 'Controller');
  * @property Watch $Watch
  */
 class WatchesController extends AppController {
-	
+
 	public $paginate = array(
 				'limit' => 10,
 				'order' => array(
 					'Watch.id' => 'desc'
 				),
-				'contain' => array(
+                'contain' => array(
 					'Image',
 					'Brand' => array(
 					    'fields' => array(
-						'id', 'name'
-					    )
-					)
-				)
+                            'id', 'name'
+					    ),
+                    ),
+                )
 			);
-    
-	public $uses = array('Watch', 'Image');
-	
-	public function beforeFilter()
-	{
-		$storeOpen = $this->Watch->storeOpen(); 
+
+	public function beforeFilter() {
+		$storeOpen = $this->Watch->storeOpen();
 		//Redirect if store is closed and going to a non-watch order page
 		if ($storeOpen == false && empty($this->request->params['admin'])) {
 			$this->redirect(array('controller' => 'pages', 'action' => 'home', 'admin' => false));
 		}
+        $acquisitions = array(
+            //'' => 'Clear',
+            'consignment' => 'Consignment',
+            'purchase' => 'Self',
+        );
+        $owners = $this->Watch->Consignment->Owner->find('list');
+        $sources = $this->Watch->Purchase->Source->find('list');
+        $this->set(compact('acquisitions', 'owners', 'sources'));
 		parent::beforeFilter();
 	}
 
@@ -39,8 +44,8 @@ class WatchesController extends AppController {
  *
  * @return void
  */
-	public function index($brand_slug = null) { 
-		$this->paginate['paramType'] = 'querystring'; 
+	public function index($brand_slug = null) {
+		$this->paginate['paramType'] = 'querystring';
 
 		//Get only active and unsold watches
 		$this->paginate['conditions'] = $this->Watch->getWatchesConditions(1, 0);
@@ -49,7 +54,7 @@ class WatchesController extends AppController {
 				return strcasecmp(Inflector::slug($item, '-'), $brand_slug)==0;
 			});
 			if (is_array($brand)) {
-				$brand_id = key($brand); 
+				$brand_id = key($brand);
 				$brand = current($brand);
 				if ($brand_id = $this->Brand->field('id', array('name' => $brand))) {
 					$this->paginate['conditions']['brand_id'] = $brand_id;
@@ -60,19 +65,17 @@ class WatchesController extends AppController {
 		$this->paginate['fields'] = array('id', 'stockId', 'price', 'name', 'description');
 		try {
             $this->Paginator->settings = $this->paginate;
-			$this->paginate();
+			$this->set(['watches' => $this->paginate()]);
 		} catch (NotFoundException $e) {
 			//Redirect to previous page
 			$query = $this->request->query;
 			$query['page']--;
-            extract(Router::parse($this->request->here)); 
-            $pass = empty($pass) ? '' : $pass[0]; 
-            $this->redirect(array_merge(array('action' => $action, $pass), array('?' => $query))); 
+            extract(Router::parse($this->request->here));
+            $pass = empty($pass) ? '' : $pass[0];
+            $this->redirect(array_merge(array('action' => $action, $pass), array('?' => $query)));
 		}
 		$title = empty($brand) ? 'Store' : $brand . ' Watches';
 		$this->set('title', $title);
-		
-		$this->set('watches', $this->Paginator->paginate('Watch'));
 	}
 
 /**
@@ -101,25 +104,25 @@ class WatchesController extends AppController {
     /**
      * Get a watch on customer's order
      * @param $id int Id of the watch to get
-     */ 
-    public function order($id) {
+     */
+    public function order($id = null) {
         if (empty($id)) {
-			$this->redirect(array('controller' => 'pages', 'action' => 'home', 'display'));
+			return $this->redirect(array('controller' => 'pages', 'action' => 'home', 'display'));
         }
 
         $email = $this->Session->check('Watch.Order.email') ? $this->Session->read('Watch.Order.email') : '';
-        $postalCode = $this->Session->check('Watch.Address.postalCode') ? $this->Session->read('Watch.Address.postalCode') : ''; 
+        $postalCode = $this->Session->check('Watch.Address.postalCode') ? $this->Session->read('Watch.Address.postalCode') : '';
 
         if (empty($email) || empty($postalCode)) {
             $this->Session->setFlash('Please enter your email and billing postal code to view your orders.', 'info');
-			$this->redirect(array('controller' => 'orders'));
+			return $this->redirect(array('controller' => 'orders'));
         }
 
         $watch = $this->Watch->getWatch($id, $email, $postalCode);
 
         if (!$watch) {
             $this->Session->setFlash('This watch was not found on any of your orders.', 'info');
-			$this->redirect(array('controller' => 'orders'));
+			return $this->redirect(array('controller' => 'orders'));
         }
 
 		$this->set('watch', $watch);
@@ -130,8 +133,8 @@ class WatchesController extends AppController {
     public function xml()
     {
         App::import('Vendor', 'zeroasterisk/CakePHP-ArrayToXml-Lib/libs/array_to_xml');
-        $watches = $this->Watch->getWatches(); 
-        
+        $watches = $this->Watch->getWatches();
+
         foreach($watches as $i => $watch) {
             $xmlArray[$i] = array(
                             'watch' => array(
@@ -149,8 +152,8 @@ class WatchesController extends AppController {
             }
         }
 
-        $xmlString = ArrayToXml::simplexml($xmlArray, 'watches'); 
-        
+        $xmlString = ArrayToXml::simplexml($xmlArray, 'watches');
+
         $this->set('xml', $xmlString);
         $this->layout = 'xml';
     }
@@ -160,31 +163,52 @@ class WatchesController extends AppController {
  *
  * @return void
  */
-	public function admin_index()
-	{   	
-		$this->paginate['paramType'] = 'querystring'; 
-		
+	public function admin_index() {
+		$this->paginate['paramType'] = 'querystring';
+
 		//Send to the view as they are received for comparison against buttons array to set class to active
 		$this->set(array('active' => $this->params->query('active'), 'sold' => $this->params->query('sold')));
-		
+
 		//Cast '00' into integer 0
 		//Cake make the query param 0 into nothing so use '00' to get a valid param that gets passed
 		$active = isset($this->params->query['active']) ? (int)$this->params->query['active'] : null;
 		$sold = isset($this->params->query['sold']) ? (int)$this->params->query['sold'] : null;
-		
-		$brand_id = '';
-		if (!empty($this->params->query['id'])) { 
-		    $brand_id = $this->params->query['id'];
-		    $this->paginate['conditions']['brand_id'] = $brand_id;
-		}
-		
+
+		$brand_id = empty($this->params->query['brand_id']) ? '' : $this->params->query['brand_id'];
+        $source_id = '';
+        $owner_id = '';
+        if ($brand_id) {
+            $this->paginate['conditions']['brand_id'] = $brand_id;
+        }
+		$type = empty($this->params->query['type']) ? '' : $this->params->query['type'];
+        if ($type == 'purchase' && !empty($this->params->query['source_id'])) {
+		    $source_id = $this->params->query['source_id'];
+        }
+        if ($type == 'consignment' && !empty($this->params->query['owner_id'])) {
+            $owner_id = $this->params->query['owner_id'];
+        }
+        if ($type && in_array($type, ['consignment', 'purchase']) && empty($owner_id) && empty($source_id)) {
+            $watchIds = $this->Watch->{ucfirst($type)}->getWatchIds();
+        }
+        if ($owner_id) {
+            $watchIds = $this->Watch->Consignment->getWatchIds('owner_id', $owner_id);
+        }
+        if ($source_id) {
+            $watchIds = $this->Watch->Purchase->getWatchIds('source_id', $source_id);
+        }
+
+        if (isset($watchIds) && is_array($watchIds)) {
+            $this->paginate['conditions'][] = [
+                'Watch.id' => $watchIds,
+            ];
+        }
 		$this->paginate['conditions'][] = $this->Watch->getWatchesConditions($active, $sold);
 		$this->paginate['fields'] = array('id', 'order_id', 'stockId', 'price', 'name', 'active', 'created', 'modified');
-        
+
 		$this->Paginator->settings = $this->paginate;
-        
-		$brands = array('' => 'Show All') + $this->Watch->Brand->find('list', array('order' => 'name')); 
-		
+
+		$brands = $this->Watch->Brand->find('list', array('order' => 'name'));
+
 		$buttons = array(
 			'All Watches' => array('active' => null, 'sold' => null),
 			'Sold Watches' => array('active' => null, 'sold' => 1),
@@ -192,17 +216,17 @@ class WatchesController extends AppController {
 			'Active Watches' => array('active' => 1, 'sold' => null),
 			'Inactive Watches' => array('active' => '00', 'sold' => null)
 		);
-		
+
 		try {
 			$watches = $this->paginate();
 		} catch (NotFoundException $e) {
 			//Redirect to previous page
 			$query = $this->request->query;
 			$query['page']--;
-			$this->redirect(array_merge(Router::parse($this->here), array('?' => $query))); 
+			return $this->redirect(array_merge(Router::parse($this->request->here), array('?' => $query)));
 		}
-        	
-		$this->set(compact('watches', 'buttons', 'brands', 'brand_id')); 
+
+		$this->set(compact('watches', 'buttons', 'brands', 'brand_id', 'acquisitions', 'type', 'sources', 'source_id', 'owner_id'));
 	}
 
 /**
@@ -216,22 +240,27 @@ class WatchesController extends AppController {
 		if (!$this->Watch->exists($id)) {
 			throw new NotFoundException(__('Invalid watch'));
 		}
-		
+
 		$options = array(
 			'conditions' => array(
 				'Watch.' . $this->Watch->primaryKey => $id
 			),
 			'contain' => array(
-				'Image',
+				'Image', 'Order',
 				'Brand' => array(
 				    'fields' => array(
-					'id', 'name'
+                        'id', 'name'
 				    )
-				)
-			)
+                ),
+                'Consignment' => ['Owner'],
+                'Purchase' => ['Source'], 
+            ),
 		);
 
-		$this->set('watch', $this->Watch->find('first', $options));
+        $watch = $this->Watch->find('first', $options);
+        $sold = !empty($watch['Watch']['order_id']);
+        $status = $sold ? 'Sold' : ($watch['Watch']['active'] ? 'For Sale' : 'Inactive');
+		$this->set(compact('watch', 'sold', 'status'));
 	}
 
 /**
@@ -242,14 +271,16 @@ class WatchesController extends AppController {
 	public function admin_add() {
 		if ($this->request->is('post')) {
 			$this->Watch->create();
-			if ($this->Watch->save($this->request->data)) {
+			if ($this->Watch->saveAssociated($this->request->data)) {
 				$this->Session->setFlash('Watch ' . $this->Watch->getInsertID() . ' has been created', 'success');
 				$this->redirect(array('action' => 'edit', $this->Watch->getInsertID(), 'admin' => true));
 			} else {
 				$this->Session->setFlash(__('The watch could not be saved. Please, try again.'), 'danger');
 			}
 		}
-        $this->brandList();
+        $this->set([
+            'brands' => $this->Watch->Brand->brandList(false),
+        ]);
 	}
 
 /**
@@ -261,38 +292,50 @@ class WatchesController extends AppController {
  */
 	public function admin_edit($id = null) {
 		if (!$this->Watch->exists($id)) {
-			throw new NotFoundException(__('Invalid watch'));
+            $this->Session->setFlash('Invalid Watch', 'danger');
+            return $this->redirect(['action' => 'index']);
 		}
-        if ($this->Watch->hasOrder($id)) {
-            $this->Session->setFlash('This watch can not be edited because there is an associated order.', 'warning');
-            $this->redirect(array('action' => 'view', $id, 'admin' => true));
+        $this->set([
+            'brands' => $this->Watch->Brand->brandList(false),
+        ]);
+        $options = array(
+            'conditions' => array(
+                'Watch.' . $this->Watch->primaryKey => $id,
+            ),
+            'contain' => array(
+                'Image',
+                'Consignment' => ['Owner'],
+                'Purchase' => ['Source'],
+            )
+        );
+        $watch = $this->Watch->find('first', $options);
+        $sold = !empty($watch['Watch']['order_id']);
+        $fieldList = [
+            'Watch' => [
+                'cost', 'notes', 'repair_date', 'repair_cost', 'repair_notes',
+            ],
+            'Consignment' => [
+                'watch_id', 'owner_id', 'paid', 'returned',
+            ],
+            'Purchase' => [
+                'source_id'
+            ]
+        ];
+        if (!$sold) {
+            $fieldList = array_merge_recursive($fieldList, ['Watch' => ['name', 'stockId', 'brand_id', 'price', 'description', 'active']]);
         }
 		if ($this->request->is('post') || $this->request->is('put')) {
-			$this->request->data['Watch']['id'] = $id; 
-			if ($this->Watch->save($this->request->data)) {
+			$this->request->data['Watch']['id'] = $id;
+            if ($this->Watch->saveAssociated($this->request->data, ['fieldList' => $fieldList])) {
 				$this->Session->setFlash(__('The watch has been saved'), 'success');
-				$this->redirect(array('action' => 'edit', $id));
+        	    return $this->redirect(array('action' => 'view', $id));
 			} else {
-				$this->Session->setFlash(__('The watch could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The watch could not be saved. Please, try again.'), 'danger');
 			}
 		} else {
-			$this->brandList();
-			$options = array(
-				'conditions' => array(
-                    'Watch.' . $this->Watch->primaryKey => $id,
-				),
-				'contain' => array(
-					'Image',
-					'Brand' => array(
-					    'fields' => array(
-						'id', 'name'
-					    )
-                    ),
-				)
-			);
-			$this->request->data = $this->Watch->find('first', $options);
-			$this->set('watch', $this->Watch->find('first', $options));
-		}
+            $this->request->data = $watch;
+        }
+        $this->set(compact('watch', 'sold'));
 	}
 
 /**
@@ -315,14 +358,14 @@ class WatchesController extends AppController {
 		$this->Session->setFlash(__('Watch was not deleted'), 'danger');
 		$this->redirect(array('action' => 'index'));
 	}
-	
+
 	public function admin_close()
 	{
 		$this->Watch->updateAll(array('active' => 0));
 		$this->Session->setFlash(__('The store is closed.'), 'success');
 		$this->redirect(array('action' => 'index', 'admin' => true));
 	}
-	
+
 	public function admin_open()
 	{
 		$this->Watch->updateAll(array('active' => 1),
@@ -330,13 +373,7 @@ class WatchesController extends AppController {
 		$this->Session->setFlash(__('The store is open.'), 'success');
 		$this->redirect(array('action' => 'index', 'admin' => true));
 	}
-    
-	public function brandList()
-	{
-	    $brands = array('' => 'Select One') + $this->Watch->Brand->find('list', array('order' => 'Brand.name'));
-	    $this->set(compact('brands'));
-	}
-	
+
 	public function admin_active() {
 		if($this->request->is('ajax')){
 			$data = $this->request->data;

@@ -1,32 +1,63 @@
 <div class="watches admin-index">
     <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-4">
             <h2><?php echo __('Watches'); ?></h2>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 admin-btns text-right">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-8 admin-btns text-right">
             <?php echo $this->Html->link('Add Watch', array('action' => 'add'), array('class' => 'btn btn-primary add-watch')); ?>
             <?php echo $this->Watch->closeOpenStore($storeOpen); ?>
         </div>
     </div>
     <section class="header">
         <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                <?php echo $this->Form->create('Watch', array('type' => 'get')); ?>
+            <?php echo $this->Form->create('Watch', array('type' => 'get')); ?>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <?php foreach($this->params->query as $key => $value): ?>
                         <?php if (strcasecmp($key, 'page')!=0): ?>
-                            <?php echo $this->Form->input('Watch.'.$key, array('type' => 'hidden', 'value' => $value)); ?>
+                            <?php //echo $this->Form->input('Watch.'.$key, array('type' => 'hidden', 'value' => $value)); ?>
                         <?php endif; ?>
                     <?php endforeach; ?>
-                    <?php echo $this->Form->input('Brand.id', array(
+                    <?php echo $this->Form->input('Brand.brand_id', array(
                                                                 'options' => $brands,
                                                                 'class' => 'form-control',
                                                                 'label' => false,
-                                                                'selected' => $brand_id
+                                                                'selected' => $brand_id,
+                                                                'empty' => 'By Brand',
                                                             )
-                                                  ); ?>
-                <?php echo $this->Form->end(); ?>
-            </div>
-            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 btn-group">
+                                                    ); ?>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <?php echo $this->Form->input('type', array(
+                                                                'options' => $acquisitions,
+                                                                'class' => 'form-control',
+                                                                'label' => false,
+                                                                'selected' => $type,
+                                                                'empty' => 'By Acquisition',
+                                                            )
+                                                    ); ?>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <?php echo $this->Form->input('Purchase.source_id', array(
+                                                                'options' => $sources,
+                                                                'class' => 'form-control hidden',
+                                                                'label' => false,
+                                                                'selected' => $source_id,
+                                                                'empty' => 'By Source',
+                                                            )
+                                                        ); ?>
+                    <?php echo $this->Form->input('Consignment.owner_id', array(
+                                                                'options' => $owners,
+                                                                'class' => 'form-control hidden',
+                                                                'label' => false,
+                                                                'selected' => $owner_id,
+                                                                'empty' => 'By Owner',
+                                                            )
+                                                        ); ?>
+                </div>
+            <?php echo $this->Form->end(); ?>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-group btn-group-justified">
                 <?php foreach ($buttons as $button => $attrs): ?>
                     <?php $class = array('btn', 'btn-default'); ?>
                     <?php if ($sold == $attrs['sold'] && $active == $attrs['active']): ?>
@@ -76,6 +107,6 @@
     </div>
     <?php echo $this->Form->end(); ?>
 <?php $this->Paginator->options(array('url' => $this->params->query,
-    'convertKeys' => array('id', 'sold', 'active'))); ?>
+    'convertKeys' => array('brand_id', 'sold', 'active'))); ?>
     <?php echo $this->Element('paginator'); ?>
 </div>
