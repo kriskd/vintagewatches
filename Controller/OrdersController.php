@@ -330,7 +330,7 @@ class OrdersController extends AppController
             $shipping = $query['shipping'];
             $secondary = '';
             if ($shipping == 'shipping') {
-                $secondary = $this->Cart->getSecondaryCountry($country); 
+                $secondary = $this->Cart->getSecondaryCountry($country);
             }
 
             $options = $this->Region->options($country, $secondary);
@@ -339,8 +339,9 @@ class OrdersController extends AppController
 
             //Address data and errors in the session
             if($this->Session->check('Address') == true){
-                if (!empty($this->Session->read('Address.errors'))) {
-                    $data['errors'] = $this->Session->read('Address.errors');
+                $errors = $this->Session->read('Address.errors');
+                if (!empty($errors)) {
+                    $data['errors'] =  $errors;
                 }
                 $this->request->data['Address'] = $this->Session->read('Address.data');
                 $this->Session->delete('Address');
@@ -356,7 +357,7 @@ class OrdersController extends AppController
                     }
                     $data['errors'] = $newErrors;
                 }
-            } 
+            }
             $this->set(compact('data'));
             $this->layout = 'ajax';
         }
