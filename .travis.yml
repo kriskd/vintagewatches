@@ -139,3 +139,5 @@ script:
     - sh -c "Console/cake test app AllTests --stderr"
 notifications:
     email: false
+after_success:
+      - coveralls
