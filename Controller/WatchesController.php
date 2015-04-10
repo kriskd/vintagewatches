@@ -29,7 +29,7 @@ class WatchesController extends AppController {
 			$this->redirect(array('controller' => 'pages', 'action' => 'home', 'admin' => false));
 		}
         $acquisitions = array(
-            '' => 'Clear',
+            //'' => 'Clear',
             'consignment' => 'Consignment',
             'purchase' => 'Self',
         );
