@@ -50,8 +50,11 @@ class WatchesControllerTest extends ControllerTestCase {
     }
 
     public function testIndex() {
-		$this->markTestIncomplete('testIndex not implemented.');
-        $result = $this->testAction('/watches/index');
+        $this->testAction('/watches/index/longines');
+        $this->assertCount(2, $this->vars['watches']);
+        $ids = Hash::extract($this->vars['watches'], '{n}.Watch.id');
+        $this->assertContains(7, $ids);
+        $this->assertContains(9999, $ids);
     }
 
     public function testOrder() {
