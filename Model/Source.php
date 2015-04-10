@@ -55,13 +55,15 @@ class Source extends AppModel {
 		)
 	);
 
-    public function beforeFind($query = array()) {
+    // This threw an error on production
+    // Can't use function return value in write context
+    /*public function beforeFind($query = array()) {
         parent::beforeFind($query);
         if (empty(current($query['order']))) {
             $query['order'] = 'name';
         }
         return $query;
-    }
+    }*/
 
     public function checkDelete($check) {
             if (!empty($check['name'])) {
@@ -69,7 +71,7 @@ class Source extends AppModel {
             }
             $data = $this->data;
             $id = $data[$this->alias]['id'];
-            $count = $this->Watch->find('count', array(
+            $count = $this->Source->Watch->find('count', array(
                 'conditions' => array(
                     'source_id' => $id
                 )
