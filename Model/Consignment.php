@@ -14,6 +14,13 @@ class Consignment extends AppModel {
  * @var array
  */
 	public $validate = array(
+        'owner_id' => array(
+            'notempty' => array(
+                'rule' => array('notempty'),
+                'allowEmpty' => false,
+                'message' => 'Please choose an owner.'
+            ),
+        ),
 		'paid' => array(
 			'date' => array(
 				'rule' => array('date'),

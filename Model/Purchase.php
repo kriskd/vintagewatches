@@ -14,6 +14,13 @@ class Purchase extends AppModel {
  * @var array
  */
 	public $validate = array(
+        'source_id' => array(
+            'notempty' => array(
+                'rule' => array('notempty'),
+                'allowEmpty' => false,
+                'message' => 'Please choose a source.'
+            ),
+        ),
 		'cost' => array(
 			'decimal' => array(
 				'rule' => array('decimal'),
