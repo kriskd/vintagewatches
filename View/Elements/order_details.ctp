@@ -2,16 +2,16 @@
     <h1>Order Summary</h1>
     <h2>Purchases</h2>
     <div class="row head">
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-            
+        <div class="col-lg-4 col-md-4 col-sm-4 hidden-xs">
+
         </div>
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <div class="col-lg-2 col-md-2 col-sm-2 hidden-xs">
             Stock ID
         </div>
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <div class="col-lg-4 col-md-4 col-sm-4 hidden-xs">
             Name
         </div>
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <div class="col-lg-2 col-md-2 col-sm-2 hidden-xs">
             Price
         </div>
     </div>
@@ -25,43 +25,44 @@
                                                                         'action' => 'order', $watch['id'])
                                                                     )); ?>
             </div>
-            <div class="text-center col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                <?php echo h($watch['stockId']); ?>
+            <div class="text-center col-lg-2 col-md-2 col-sm-2 hidden-xs">
+				<?php echo h($watch['stockId']); ?>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                <?php echo $this->Html->link($watch['name'], array(
-                    'controller' => 'watches',
-                    'action' => 'order', $watch['id'],
-                )); ?>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
+				<?php echo $this->Html->link($watch['name'], array(
+					'controller' => 'watches',
+					'action' => 'order', $watch['id'],
+				)); ?>
+				<span class="hidden-lg hidden-md hidden-sm"><br />Stock <?php echo h($watch['stockId']); ?></span>
             </div>
-            <div class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                <?php echo h($this->Number->currency($watch['price'], 'USD')); ?>
+            <div class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-3">
+				<?php echo h($this->Number->currency($watch['price'], 'USD')); ?>
             </div>
         </div>
     <?php endforeach; ?>
     <div class="row choose-ship">
-        <div class="text-right col-lg-10 col-md-10 col-sm-10 col-xs-10">
+        <div class="text-right col-lg-10 col-md-10 col-sm-10 col-xs-9">
             Shipping
         </div>
-        <div class="shipping-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <div class="shipping-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-3">
             <?php echo $this->Number->currency($order['Order']['shippingAmount'], 'USD'); ?>
         </div>
     </div>
     <?php if (isset($order['Coupon'])): ?>
         <div class="row">
-            <div class="text-right col-lg-10 col-md-10 col-sm-10 col-xs-10">
-                Coupon code <?php echo strtoupper($order['Coupon']['code']); ?> 
+            <div class="text-right col-lg-10 col-md-10 col-sm-10 col-xs-9">
+                Coupon code <?php echo strtoupper($order['Coupon']['code']); ?>
             </div>
-            <div class="shipping-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
+            <div class="shipping-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-3">
                 <?php echo $this->Number->couponValue($order); ?>
             </div>
         </div>
     <?php endif; ?>
     <div class="row">
-        <div class="text-right col-lg-10 col-md-10 col-sm-10 col-xs-10">
+        <div class="text-right col-lg-10 col-md-10 col-sm-10 col-xs-9">
             Total
         </div>
-        <div class="total-formatted-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <div class="total-formatted-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-3">
             <?php echo $this->Number->stripe($order['Payment']['stripe_amount']); ?>
         </div>
     </div>
