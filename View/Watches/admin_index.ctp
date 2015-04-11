@@ -107,6 +107,6 @@
     </div>
     <?php echo $this->Form->end(); ?>
 <?php $this->Paginator->options(array('url' => $this->params->query,
-    'convertKeys' => array('brand_id', 'sold', 'active'))); ?>
+    'convertKeys' => array('type', 'brand_id', 'owner_id', 'source_id', 'sold', 'active'))); ?>
     <?php echo $this->Element('paginator'); ?>
 </div>
