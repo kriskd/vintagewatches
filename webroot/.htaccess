@@ -10,6 +10,7 @@
 
     # block referer spam
     RewriteCond %{HTTP_REFERER} buttons\-for\-website\.com [NC,OR]
+    RewriteCond %{HTTP_REFERER} social\-buttons\.com [NC,OR]
     RewriteCond %{HTTP_REFERER} semalt\.com [NC,OR]
     RewriteCond %{HTTP_REFERER} 7makemoneyonline\.com
     RewriteRule ^.* - [F,L]
