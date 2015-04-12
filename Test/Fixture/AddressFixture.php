@@ -46,7 +46,37 @@ class AddressFixture extends MyTestFixture {
             'state' => 'IL',
             'postalCode' => '61602',
             'country' => 'US',
-        )
+        ),
+        array(
+            'id' => 2,
+            'class' => 'Order',
+            'foreign_id' => 2,
+            'type' =>'billing',
+            'firstName' => 'Peter',
+            'lastName' => 'Harris',
+            'company' => '',
+            'address1' => '2042 Matthews Street',
+            'address2' => '',
+            'city' => 'Peoria',
+            'state' => 'IL',
+            'postalCode' => '61602',
+            'country' => 'US',
+        ),
+        array(
+            'id' => 3,
+            'class' => 'Order',
+            'foreign_id' => 6,
+            'type' =>'billing',
+            'firstName' => 'Kristi',
+            'lastName' => 'Dooley',
+            'company' => '',
+            'address1' => '2663 Bassell Avenue',
+            'address2' => '',
+            'city' => 'Little Rock',
+            'state' => 'AR',
+            'postalCode' => '72211',
+            'country' => 'US',
+        ),
     );
 
 }

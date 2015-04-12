@@ -50,6 +50,32 @@ class PaymentFixture extends CakeTestFixture {
                 'stripe_amount' => 69100,
                 'created' => date('Y-m-d H:i:s', strtotime('-4 day')),
             ),
+            array(
+                'id' => 2,
+                'class' => 'Order',
+                'foreign_id' => 2,
+                'stripe_id' => 'ch_5dYcjsXUf5Gzy1',
+                'stripe_last4' => '4242',
+                'stripe_address_check' => 'pass ',
+                'stripe_zip_check' => 'pass',
+                'stripe_cvc_check' => 'pass',
+                'stripe_paid' => '1',
+                'stripe_amount' => 23300,
+                'created' => date('Y-m-d H:i:s', strtotime('-4 day')),
+            ),
+            array(
+                'id' => 3,
+                'class' => 'Order',
+                'foreign_id' => 6,
+                'stripe_id' => 'ch_5dYcjsXUf5Gzy1',
+                'stripe_last4' => '4242',
+                'stripe_address_check' => 'pass ',
+                'stripe_zip_check' => 'pass',
+                'stripe_cvc_check' => 'pass',
+                'stripe_paid' => '1',
+                'stripe_amount' => 23300,
+                'created' => date('Y-m-d H:i:s', strtotime('-4 day')),
+            ),
         );
         parent::init();
     }

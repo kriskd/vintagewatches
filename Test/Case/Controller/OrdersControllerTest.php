@@ -1141,7 +1141,20 @@ class OrdersControllerTest extends ControllerTestCase {
  * @return void
  */
 	public function testAdminView() {
-		$this->markTestIncomplete('testAdminView not implemented.');
+        $this->testAction('/admin/orders/view/2', ['method' => 'get', 'return' => 'vars']);
+		$this->assertEquals('notavailable', $this->vars['order']['Coupon']['code']);
+	}
+
+	/**
+	 * Make sure empty Coupon was removed
+	 */
+	public function testAdminViewNoCoupon() {
+        $this->testAction('/admin/orders/view/6', ['method' => 'get', 'return' => 'vars']);
+		$this->assertArrayNotHasKey('Coupon', $this->vars['order']);
+		$this->assertArrayHasKey('Order', $this->vars['order']);
+		$this->assertArrayHasKey('Payment', $this->vars['order']);
+		$this->assertArrayHasKey('Address', $this->vars['order']);
+		$this->assertArrayHasKey('Watch', $this->vars['order']);
 	}
 
 /**

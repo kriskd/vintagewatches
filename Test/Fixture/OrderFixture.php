@@ -52,14 +52,26 @@ class OrderFixture extends CakeTestFixture {
                 'email' => 'PeterRHarris@teleworm.us',
                 'phone' => '260-423-3273',
                 'shippingAmount' => '8.00',
-                'shipDate' => date('Y-m-d', strtotime('-3 day')),
+                'shipDate' => null,
                 'notes' => 'Lorem ipsum',
                 'orderNotes' => 'Loreum ipsum',
                 'coupon_id' => 3,
                 'created' => date('Y-m-d H:i:s', strtotime('-4 day')),
                 'modified' => date('Y-m-d H:i:s', strtotime('-4 day')),
             ),
-        ); 
+            array(
+                'id' => 6,
+                'email' => 'KristiFDooley@armyspy.com',
+                'phone' => '501-688-4389',
+                'shippingAmount' => '8.00',
+                'shipDate' => null,
+                'notes' => 'Lorem ipsum',
+                'orderNotes' => 'Loreum ipsum',
+                'coupon_id' => null,
+                'created' => date('Y-m-d H:i:s', strtotime('-4 day')),
+                'modified' => date('Y-m-d H:i:s', strtotime('-4 day')),
+            ),
+        );
         parent::init();
     }
 
