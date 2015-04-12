@@ -50,9 +50,13 @@ class Order extends AppModel {
 
     /**
      * Filter empty items in results from null to empty string so Orders table renders correctly on admin/coupons/view
+	 * Remove coupon key if empty so coupon line item doesn't render
      */
     public function afterFind($results, $primary = false) {
         foreach ($results as $i => $result) {
+			if (empty($result[$this->alias]['coupon_id'])) {
+				unset($results[$i]['Coupon']);
+			}
             if (isset($result[$this->alias]) && is_array($result[$this->alias])) {
                 foreach ($result[$this->alias] as $key => $value) {
                     if (is_null($value)) {
@@ -63,7 +67,7 @@ class Order extends AppModel {
         }
 
         return $results;
-    }
+	}
 
     public function beforeValidate($options = array()) {
         if (isset($this->data['Address'])) {
@@ -203,8 +207,8 @@ class Order extends AppModel {
 
         return array('conditions' => $conditions,
             'fields' => array(
-                'id', 'email', 'phone', 'shippingAmount', 
-                'notes', 'created', 'shipDate', 
+                'id', 'email', 'phone', 'shippingAmount',
+                'notes', 'created', 'shipDate', 'coupon_id',
                 'Coupon.code', 'Coupon.type', 'Coupon.amount',
                 ),
             'contain' => array(
