@@ -71,7 +71,7 @@ class Source extends AppModel {
             }
             $data = $this->data;
             $id = $data[$this->alias]['id'];
-            $count = $this->Source->Watch->find('count', array(
+            $count = $this->Purchase->find('count', array(
                 'conditions' => array(
                     'source_id' => $id
                 )

@@ -61,7 +61,7 @@ class Owner extends AppModel {
         }
         $data = $this->data;
         $id = $data[$this->alias]['id'];
-        $count = $this->Consignment->Watch->find('count', array(
+        $count = $this->Consignment->find('count', array(
             'conditions' => array(
                 'owner_id' => $id
             )
