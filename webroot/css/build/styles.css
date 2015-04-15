@@ -7730,6 +7730,9 @@ body.hide-fat-footer .container .content {
 .container .content .recent-watches hr {
   border-top-color: #665600;
 }
+.container .content .watches.index .form-inline {
+  margin-top: 25px;
+}
 .container .content .watches.index .row {
   margin-left: 0;
   margin-right: 0;

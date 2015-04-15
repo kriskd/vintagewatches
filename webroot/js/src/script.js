@@ -165,7 +165,7 @@ $(document).ready(function(){
         setCookie('hideWatchIntro', 0, 90);
     });
 
-    $(document).on('change', '#WatchAdminIndexForm', function(){
+    $(document).on('change', '#WatchAdminIndexForm, #WatchIndexForm', function(){
         $(this).submit();
     });
 
