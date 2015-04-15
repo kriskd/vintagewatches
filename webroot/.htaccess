@@ -13,6 +13,9 @@
     RewriteCond %{HTTP_REFERER} buttons\-for\-your\-website\.com [NC,OR]
     RewriteCond %{HTTP_REFERER} social\-buttons\.com [NC,OR]
     RewriteCond %{HTTP_REFERER} semalt\.com [NC,OR]
+    RewriteCond %{HTTP_REFERER} best\-seo\-offer\.com [NC,OR]
+    RewriteCond %{HTTP_REFERER} best\-seo\-solution\.com [NC,OR]
+    RewriteCond %{HTTP_REFERER} theguardlan\.com [NC,OR]
     RewriteCond %{HTTP_REFERER} 7makemoneyonline\.com
     RewriteRule ^.* - [F,L]
 </IfModule>
