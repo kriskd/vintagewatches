@@ -5,7 +5,7 @@
             <?php echo $this->Html->link('View all watch brands', array('action' => 'index')); ?>.</p>
         <?php endif; ?>
 		<div class="row">
-			<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+			<div class="col-lg-8 col-md-8 col-sm-8 col-sm-8 col-xs-10">
 				<h2>
 					<?php echo __('Bruce\'s Vintage Watches'); ?>
 					<?php if (isset($brand)): ?>
@@ -13,24 +13,7 @@
 					<?php endif; ?>
 				</h2>
 			</div>
-			<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-				<?php echo $this->Form->create('Watch', [
-					'type' => 'get',
-					'class' => 'form-inline',
-				]); ?>
-				<?php echo $this->Form->input('sortby', [
-					'options' => [
-						'created-desc' => 'Most Recent',
-						'Brand.name-asc' => 'Brand',
-						'price-asc' => 'Price Low to High',
-						'price-desc' => 'Price High to Low',
-					],
-					'class' => 'form-control',
-					'label' => 'Sort by&nbsp;',
-				]); ?>
-				<?php echo $this->Form->end(); ?>
-			</div>
-			<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 show-text">
+			<div class="col-lg-1 col-lg-push-3 col-md-1 col-md-push-3 col-sm-1 col-sm-push-3 col-xs-2 show-text">
 				<?php echo $this->Html->link($this->Html->tag('span', '', array(
 																'class' => 'glyphicon glyphicon-eye-open'
 																)
@@ -44,6 +27,26 @@
 												   'escape' => false
 												)
 								 ); ?>
+			</div>
+			<div class="col-lg-3 col-lg-pull-1 col-md-3 col-md-pull-1 col-sm-3 col-sm-pull-1 col-xs-12">
+				<?php echo $this->Form->create('Watch', [
+					'type' => 'get',
+					'class' => 'form-inline',
+				]); ?>
+				<?php echo $this->Form->input('sortby', [
+					'options' => [
+						'created-desc' => 'Most Recent',
+						'Brand.name-asc' => 'Brand',
+						'price-asc' => 'Price Low to High',
+						'price-desc' => 'Price High to Low',
+					],
+					'class' => 'form-control',
+					'label' => [
+						'text' => 'Sort by&nbsp;',
+						'class' => 'hidden-sm hidden-xs',
+					],
+				]); ?>
+				<?php echo $this->Form->end(); ?>
 			</div>
 		</div>
     </div>

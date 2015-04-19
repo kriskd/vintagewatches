@@ -682,13 +682,20 @@ body.hide-fat-footer {
                     }
                 }
                 .show-text {
-                    position: absolute;
-                    bottom: 0;
-                    right: 0;
+					margin-top: 35px;
                 }
                 .glyphicon-eye-open {
                     display: none;
                 }
+				@media (max-width: @screen-xs-max) {
+					.form-inline {
+						margin-top: 0px;
+						margin-bottom: 25px;
+					}
+					h2 {
+						font-size: 20px;
+					}
+				}
             }
             .watch-index-intro {
                 border: 1px solid @goldDark;
