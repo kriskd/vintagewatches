@@ -9,9 +9,7 @@ class WatchesController extends AppController {
 
 	public $paginate = array(
 				'limit' => 10,
-				'order' => array(
-					'Watch.id' => 'desc'
-				),
+				'order' => 'Watch.created desc',
                 'contain' => array(
 					'Image',
 					'Brand' => array(
@@ -19,7 +17,8 @@ class WatchesController extends AppController {
                             'id', 'name'
 					    ),
                     ),
-                )
+                ),
+				'paramType' => 'querystring',
 			);
 
 	public function beforeFilter() {
@@ -45,8 +44,6 @@ class WatchesController extends AppController {
  * @return void
  */
 	public function index($brand_slug = null) {
-		$this->paginate['paramType'] = 'querystring';
-
 		//Get only active and unsold watches
 		$this->paginate['conditions'] = $this->Watch->getWatchesConditions(1, 0);
 		if (!empty($brand_slug)) {
@@ -63,6 +60,11 @@ class WatchesController extends AppController {
 			}
 		}
 		$this->paginate['fields'] = array('id', 'stockId', 'price', 'name', 'description');
+		if (!empty($this->request->query['sortby'])) {
+			$this->request->data['Watch']['sortby'] = $this->request->query['sortby'];
+			list($field, $direction) = explode('-', $this->request->query['sortby']);
+			$this->paginate['order'] = $field .' ' . $direction;
+		}
 		try {
             $this->Paginator->settings = $this->paginate;
 			$this->set(['watches' => $this->paginate()]);
@@ -164,8 +166,6 @@ class WatchesController extends AppController {
  * @return void
  */
 	public function admin_index() {
-		$this->paginate['paramType'] = 'querystring';
-
 		//Send to the view as they are received for comparison against buttons array to set class to active
 		$this->set(array('active' => $this->params->query('active'), 'sold' => $this->params->query('sold')));
 

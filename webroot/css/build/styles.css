@@ -7730,6 +7730,9 @@ body.hide-fat-footer .container .content {
 .container .content .recent-watches hr {
   border-top-color: #665600;
 }
+.container .content .watches.index .form-inline {
+  margin-top: 25px;
+}
 .container .content .watches.index .row {
   margin-left: 0;
   margin-right: 0;
@@ -7774,12 +7777,19 @@ body.hide-fat-footer .container .content {
   text-decoration: none;
 }
 .container .content .watches.index .watches-header .show-text {
-  position: absolute;
-  bottom: 0;
-  right: 0;
+  margin-top: 35px;
 }
 .container .content .watches.index .watches-header .glyphicon-eye-open {
   display: none;
+}
+@media (max-width: 767px) {
+  .container .content .watches.index .watches-header .form-inline {
+    margin-top: 0px;
+    margin-bottom: 25px;
+  }
+  .container .content .watches.index .watches-header h2 {
+    font-size: 20px;
+  }
 }
 .container .content .watches.index .watch-index-intro {
   border: 1px solid #665600;
