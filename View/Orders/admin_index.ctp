@@ -16,8 +16,8 @@
         <div class="table-row">
             <span class="table-head"><?php echo $this->Paginator->sort('id'); ?></span>
             <span class="table-head"><?php echo $this->Paginator->sort('email'); ?></span>
-            <span class="table-head"><?php echo $this->Paginator->sort('stripe_id'); ?></span>
-            <span class="table-head"><?php echo $this->Paginator->sort('stripe_amount'); ?></span>
+            <span class="table-head"><?php echo $this->Paginator->sort('Payment.stripe_id', 'Stripe'); ?></span>
+            <span class="table-head"><?php echo $this->Paginator->sort('Payment.stripe_amount', 'Stripe Amount'); ?></span>
             <span class="table-head"><?php echo $this->Paginator->sort('shipDate', 'Ship Date'); ?></span>
             <span class="table-head"><?php echo $this->Paginator->sort('created'); ?></span>
             <span class="table-head"><?php echo $this->Paginator->sort('modified'); ?></span>

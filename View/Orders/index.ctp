@@ -22,7 +22,7 @@
                         <?php echo $this->Paginator->sort('id', 'Order No.'); ?>
                     </span>
                     <span class="table-head col-lg-2">
-                        <?php echo $this->Paginator->sort('stripe_amount', 'Total Paid'); ?>
+                        <?php echo $this->Paginator->sort('Payment.stripe_amount', 'Total Paid'); ?>
                     </span>
                     <span class="table-head col-lg-4">
                         <?php echo $this->Paginator->sort('shipDate', 'Ship Date'); ?>
