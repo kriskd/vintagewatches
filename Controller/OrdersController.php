@@ -11,7 +11,8 @@ class OrdersController extends AppController
         'limit' => 10,
         'order' => array(
             'Order.id' => 'desc'
-        )
+        ),
+        'paramType' => 'querystring',
     );
 
     protected $cartItemIds = array();
@@ -294,13 +295,13 @@ class OrdersController extends AppController
     /**
      * Get shipping and total
      */
-    public function totalCart() {	
+    public function totalCart() {
         if($this->request->is('ajax')){
-            $query = $this->request->query; 
+            $query = $this->request->query;
             $country = $query['data']['Address']['select-country'];
             $shipping = $this->Cart->getShippingAmount($country);
-            $subTotal = $this->Cart->getSubTotal($this->cartWatches); 
-            if ($subTotal <= 0) return; 
+            $subTotal = $this->Cart->getSubTotal($this->cartWatches);
+            if ($subTotal <= 0) return;
             $couponAmount = 0;
             $couponEmail = $query['data']['Coupon']['email'];
             $couponCode = $query['data']['Coupon']['code'];
@@ -404,10 +405,7 @@ class OrdersController extends AppController
         }
     }
 
-    public function admin_index()
-    {
-        $this->paginate['paramType'] = 'querystring';
-
+    public function admin_index() {
         $filter = '';
         $value = '';
         $options = array();
@@ -490,18 +488,17 @@ class OrdersController extends AppController
                     break;
                 }
             }
-        } 
+        }
 
         $this->paginate['fields'] = array('id', 'email', 'Payment.stripe_id', 'Payment.stripe_amount', 'shipDate', 'created', 'modified');
-        $this->Paginator->settings = array_merge($this->paginate, $options); 
+        $this->Paginator->settings = array_merge($this->paginate, $options);
         $this->set(array(
             'orders' => $this->Paginator->paginate('Order')
         ) + compact('filters', 'filter', 'value')
     );
     }
 
-    public function admin_view($id = null)
-    {	
+    public function admin_view($id = null) {
         $id = empty($id)  ? $this->request->query('orderId') : $id;
 
         if (!$this->Order->exists($id)) {
