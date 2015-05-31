@@ -523,7 +523,7 @@ class CartComponentTest extends CakeTestCase {
         $this->Cart->initialize($this->Controller);
         $this->Watch = ClassRegistry::init('Watch');
 		$watches = $this->Watch->getCartWatches([3,5]);
-		$result = $this->Cart->checkActive($watches, [3,5]);
+		$result = $this->Cart->checkActive($watches);
 		$this->assertTrue($result);
 	}
 
@@ -532,7 +532,7 @@ class CartComponentTest extends CakeTestCase {
         $this->Cart->initialize($this->Controller);
         $this->Watch = ClassRegistry::init('Watch');
 		$watches = $this->Watch->getCartWatches([3,4]);
-		$result = $this->Cart->checkActive($watches, [3,4]);
+		$result = $this->Cart->checkActive($watches);
 		$this->assertFalse($result);
 	}
 }

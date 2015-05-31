@@ -118,7 +118,7 @@ class OrdersController extends AppController
             }
 
             // Check that watches are still active
-			if (!$this->Cart->checkActive($this->cartWatches, $this->cartItemIds)) {
+			if (!$this->Cart->checkActive($this->cartWatches)) {
                 $this->Session->setFlash('One or more of the items in your cart is no longer available.', 'warning');
                 return $this->redirect(array('action' => 'checkout'));
             }
@@ -148,7 +148,7 @@ class OrdersController extends AppController
                     $couponAmount = $this->Cart->couponAmount($this->cartWatches, $shipping, $coupon);
                 }
 
-                $subTotal = $this->Cart->getSubTotal($this->cartWatches); 
+                $subTotal = $this->Cart->getSubTotal($this->cartWatches);
                 $stripeData = array(
                     'amount' => $this->Cart->totalCart($subTotal, $shipping, $couponAmount),
                     'stripeToken' => $this->request->data['stripeToken'],
@@ -166,7 +166,7 @@ class OrdersController extends AppController
 
                     //Add the results of stripe to the data array
                     $data['Payment'] = $result;
-                    $this->Order->saveAssociated($data); 
+                    $this->Order->saveAssociated($data);
 
                     //Get the order_id
                     $order_id = $this->Order->id;
@@ -222,9 +222,9 @@ class OrdersController extends AppController
                     $this->Session->setFlash('<span class="glyphicon glyphicon-warning-sign"></span> ' . $result,
                         'default', array('class' => 'alert alert-danger'));
                 }
-            } else { 
+            } else {
                 //Get Address errors if any
-                $errors = $this->Address->validationErrors; 
+                $errors = $this->Address->validationErrors;
 
                 //Error sets have numeric keys, change to billing or shipping
                 foreach(array('billing', 'shipping') as $key => $value){

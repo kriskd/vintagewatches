@@ -67,13 +67,13 @@ class CartComponent extends Component
                 return '';
                 break;
             case 'us':
-                return '8';
+                return Configure::read('Shipping.us');
                 break;
             case 'ca':
-                return '38';
+                return Configure::read('Shipping.ca');
                 break;
             default:
-                return '45';
+                return Configure::read('Shipping.other');
                 break;
         }
     }
@@ -190,15 +190,15 @@ class CartComponent extends Component
 	/**
 	 * Check that watches in the cart are still active
 	 * @param $cartWatches array of watches in cart
-	 * @param $cartIds array IDs of watches in cart
 	 * @return bool
 	 */
-	public function checkActive($cartWatches, $cartItemIds) {
+	public function checkActive($cartWatches) {
 		$activeWatches = array_filter($cartWatches, function($item) {
 			return $item['Watch']['active'] == 1;
 		});
 		if (count($activeWatches) != $this->cartItemCount()) {
 			$activeIds = Hash::extract($activeWatches, '{n}.Watch.id');
+		    $cartItemIds = Hash::extract($cartWatches, '{n}.Watch.id');
 			$remove = array_diff($cartItemIds, $activeIds);
 			foreach ($remove as $id) {
 				$this->remove($id);
