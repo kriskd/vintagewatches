@@ -4,15 +4,15 @@ App::uses('Component', 'Controller');
 class CartComponent extends Component
 {
     public $components = array('Session');
-    
+
     protected $items = array();
-    
+
     public function initialize(Controller $controller) {
         if($this->Session->check('Cart.items') == true){
-            $this->items = $this->Session->read('Cart.items');  
+            $this->items = $this->Session->read('Cart.items');
         }
     }
-    
+
     /**
      * Clear the Cart session, reset $items array
      */
@@ -20,43 +20,43 @@ class CartComponent extends Component
         $this->items = array();
         $this->Session->delete('Cart');
     }
-    
+
     public function cartEmpty() {
         return empty($this->items) ? true : false;
     }
-    
+
     public function cartItemCount() {
         return empty($this->items) ? null : count($this->items);
     }
-    
+
     /**
      * Returns an array of Watch IDs in the cart
      */
     public function cartItemIds() {
         return $this->items;
     }
-    
+
     /**
      * Add an item to the cart
      */
     public function add($id) {
-        $this->items[] = $id; 
+        $this->items[] = $id;
         return $this->Session->write('Cart.items', $this->items);
     }
-    
+
     /**
      * Remove an item from the cart
      */
     public function remove($id) {
         if(in_array($id, $this->items)){
             $key = array_search($id, $this->items);
-            unset($this->items[$key]); 
+            unset($this->items[$key]);
             $this->items = array_values($this->items);
             return $this->Session->write('Cart.items', $this->items);
         }
         return false;
     }
-    
+
     public function inCart($id = null) {
         return is_array($this->items) && in_array($id, $this->items);
     }
@@ -92,7 +92,7 @@ class CartComponent extends Component
 
         return $countries[$country];
     }
-    
+
     public function totalCart($itemsTotal, $shipping, $couponAmount) {
         return $itemsTotal + $shipping - $couponAmount;
     }
@@ -103,7 +103,7 @@ class CartComponent extends Component
      */
     public function getSubTotal($items, $brand_id = null) {
         if(!empty($items)){
-            return  array_reduce($items, function($return, $item) use ($brand_id) { 
+            return  array_reduce($items, function($return, $item) use ($brand_id) {
                 if(isset($item['Watch']['price'])){
                     if (empty($brand_id) || $brand_id == $item['Watch']['brand_id']) {
                         $return += $item['Watch']['price'];
@@ -186,4 +186,25 @@ class CartComponent extends Component
         $this->Session->write('Shipping.option',  $data['Shipping']['option']);
         $this->Session->write('Order', $data['Order']);
     }
+
+	/**
+	 * Check that watches in the cart are still active
+	 * @param $cartWatches array of watches in cart
+	 * @param $cartIds array IDs of watches in cart
+	 * @return bool
+	 */
+	public function checkActive($cartWatches, $cartItemIds) {
+		$activeWatches = array_filter($cartWatches, function($item) {
+			return $item['Watch']['active'] == 1;
+		});
+		if (count($activeWatches) != $this->cartItemCount()) {
+			$activeIds = Hash::extract($activeWatches, '{n}.Watch.id');
+			$remove = array_diff($cartItemIds, $activeIds);
+			foreach ($remove as $id) {
+				$this->remove($id);
+			}
+			return false;
+		}
+		return true;
+	}
 }

@@ -118,16 +118,7 @@ class OrdersController extends AppController
             }
 
             // Check that watches are still active
-            $activeWatches = array_filter($this->cartWatches, function($item) {
-                return $item['Watch']['active'] == 1;
-            });
-            if (count($activeWatches) != $this->Cart->cartItemCount()) {
-                $activeIds = Hash::extract($activeWatches, '{n}.Watch.id');
-                $remove = array_diff($this->cartItemIds, $activeIds);
-                foreach ($remove as $id) {
-                    $this->Cart->remove($id);
-                }
-                $this->Cart->setCheckoutData($this->request->data);
+			if (!$this->Cart->checkActive($this->cartWatches, $this->cartItemIds)) {
                 $this->Session->setFlash('One or more of the items in your cart is no longer available.', 'warning');
                 return $this->redirect(array('action' => 'checkout'));
             }
@@ -314,7 +305,7 @@ class OrdersController extends AppController
                 ));
             }
             $this->set(array(
-                'shipping' => $this->Cart->getShippingAmount($country),
+                'shipping' => $shipping,
                 'total' => $this->Cart->totalCart($subTotal, $shipping, $couponAmount),
             ));
         }
