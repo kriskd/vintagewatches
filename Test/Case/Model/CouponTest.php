@@ -34,6 +34,7 @@ class CouponTest extends CakeTestCase {
 	public function setUp() {
 		parent::setUp();
 		$this->Coupon = ClassRegistry::init('Coupon');
+		$this->Watch = ClassRegistry::init('Watch');
 	}
 
 /**
@@ -48,12 +49,14 @@ class CouponTest extends CakeTestCase {
 	}
 
     public function testValidFixed() {
-        $result = $this->Coupon->valid('fixedgood', 'ClarenceAMartinez@teleworm.us', 8, array(3,5));
+		$watches = $this->Watch->getCartWatches([3,5]);
+        $result = $this->Coupon->valid('fixedgood', 'ClarenceAMartinez@teleworm.us', 8, $watches);
         $this->assertArrayHasKey('Coupon', $result);
     }
     
     public function testValidPercentage() {
-        $result = $this->Coupon->valid('percentagegood', 'ClarenceAMartinez@teleworm.us', 8, array(3,5));
+		$watches = $this->Watch->getCartWatches([3,5]);
+        $result = $this->Coupon->valid('percentagegood', 'ClarenceAMartinez@teleworm.us', 8, $watches);
         $this->assertArrayHasKey('Coupon', $result);
     }
 
@@ -93,22 +96,26 @@ class CouponTest extends CakeTestCase {
     }
     
     public function testValidBrand() {
-        $result = $this->Coupon->valid('brand', 'ClarenceAMartinez@teleworm.us', 8, array(3,5));
+		$watches = $this->Watch->getCartWatches([3,5]);
+        $result = $this->Coupon->valid('brand', 'ClarenceAMartinez@teleworm.us', 8, $watches);
         $this->assertContains('Order must include at least one', $result['message']);
     }
 
     public function testValidBrandMinimum() {
-        $result = $this->Coupon->valid('brandfixed', 'ClarenceAMartinez@teleworm.us', 8, array(6));
+		$watches = $this->Watch->getCartWatches([6]);
+        $result = $this->Coupon->valid('brandfixed', 'ClarenceAMartinez@teleworm.us', 8, $watches);
         $this->assertContains('watch(es) must be at least', $result['message']);
     }
 
     public function testValidMinimum() {
-        $result = $this->Coupon->valid('minimum', 'ClarenceAMartinez@teleworm.us', 8, array(6));
+		$watches = $this->Watch->getCartWatches([6]);
+        $result = $this->Coupon->valid('minimum', 'ClarenceAMartinez@teleworm.us', 8, $watches);
         $this->assertContains('You have not met the minimum order of', $result['message']);
     }
     
     public function testValidBigFixed() {
-        $result = $this->Coupon->valid('bigfixed', 'ClarenceAMartinez@teleworm.us', 8, array(6));
+		$watches = $this->Watch->getCartWatches([6]);
+        $result = $this->Coupon->valid('bigfixed', 'ClarenceAMartinez@teleworm.us', 8, $watches);
         $this->assertContains('Order total must be at least', $result['message']);
     }
 }

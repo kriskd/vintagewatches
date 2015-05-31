@@ -145,7 +145,8 @@ class WatchTest extends CakeTestCase {
  * @return void
  */
 	public function testSumWatchPrices() {
-        $result = $this->Watch->sumWatchPrices([3,5]);	
+		$watches = $this->Watch->getCartWatches([3,5]);
+        $result = $this->Watch->sumWatchPrices($watches);
         $this->assertEquals(970, $result);
 	}
 

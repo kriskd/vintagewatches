@@ -15,7 +15,6 @@ class OrdersController extends AppController
         'paramType' => 'querystring',
     );
 
-    protected $cartItemIds = array();
     protected $cartWatches = array();
 
     public function beforeFilter() {
@@ -25,8 +24,8 @@ class OrdersController extends AppController
             $this->redirect(array('controller' => 'pages', 'action' => 'home', 'admin' => false));
         }
 
-        $this->cartItemIds = $this->Cart->cartItemIds();
-        $this->cartWatches = $this->Watch->getCartWatches($this->cartItemIds);
+        $cartItemIds = $this->Cart->cartItemIds();
+        $this->cartWatches = $this->Watch->getCartWatches($cartItemIds);
         $this->Order->Coupon->removeRequiredCode();
 
         parent::beforeFilter();
@@ -144,7 +143,7 @@ class OrdersController extends AppController
             if($valid == true){
                 $couponAmount = 0;
                 if (!empty($couponCode) && !empty($couponEmail)) {
-                    $coupon = $this->Order->Coupon->valid($couponCode, $couponEmail, $shipping, $this->cartItemIds);
+                    $coupon = $this->Order->Coupon->valid($couponCode, $couponEmail, $shipping, $this->cartWatches);
                     $couponAmount = $this->Cart->couponAmount($this->cartWatches, $shipping, $coupon);
                 }
 
@@ -297,7 +296,7 @@ class OrdersController extends AppController
             $couponEmail = $query['data']['Coupon']['email'];
             $couponCode = $query['data']['Coupon']['code'];
             if (!empty($couponEmail) && !empty($couponCode)) {
-                $coupon = $this->Order->Coupon->valid($couponCode, $couponEmail, $shipping, $this->cartItemIds);
+                $coupon = $this->Order->Coupon->valid($couponCode, $couponEmail, $shipping, $this->cartWatches);
                 $couponAmount = $this->Cart->couponAmount($this->cartWatches, $shipping, $coupon);
                 $this->set(array(
                     'couponAmount' => $couponAmount,

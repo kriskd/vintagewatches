@@ -214,7 +214,7 @@ class Coupon extends AppModel {
             ),
             'recursive' => -1,
         ));
-        
+
         return (bool) $count;
     }
 
@@ -222,7 +222,7 @@ class Coupon extends AppModel {
      * Is coupon valid for the user
      * @return bool
      */
-    public function valid($code, $email, $shipping, $cartItemIds) {
+    public function valid($code, $email, $shipping, $cart) {
         if (empty($code) || empty($email)) return false;
 
         $coupon = $this->find('first', array(
@@ -248,7 +248,7 @@ class Coupon extends AppModel {
         ) {
             return array(
                 'alert' => 'danger',
-                'message' => 'This coupon is not valid.' 
+                'message' => 'This coupon is not valid.'
             );
         }
 
@@ -259,9 +259,9 @@ class Coupon extends AppModel {
                 'message' => 'This coupon is expired.'
             );
         }
-       
-        $subTotal = $this->Order->Watch->sumWatchPrices($cartItemIds, $coupon['Coupon']['brand_id']);
-        
+
+        $subTotal = $this->Order->Watch->sumWatchPrices($cart, $coupon['Coupon']['brand_id']);
+
         // Coupon not for right brand
         if (!empty($coupon['Coupon']['brand_id'])) {
             $this->Brand->id = $coupon['Coupon']['brand_id'];
@@ -272,7 +272,7 @@ class Coupon extends AppModel {
                     'message' => 'Order must include at least one '.$brandName.' watch.',
                 );
             }
-            
+
             if (strcasecmp($coupon['Coupon']['type'], 'fixed')==0 && $coupon['Coupon']['amount'] >= $subTotal) {
                 return array(
                     'alert' => 'info',
@@ -288,7 +288,7 @@ class Coupon extends AppModel {
                 'message' => 'You have not met the minimum order of $'.number_format($coupon['Coupon']['minimum_order'],2,'.',',').'.',
             );
         }
-        
+
         // Coupon more than total order amount
         if (strcasecmp($coupon['Coupon']['type'], 'fixed')==0 && $coupon['Coupon']['amount'] >= $subTotal + $shipping) {
             return array(
@@ -296,7 +296,7 @@ class Coupon extends AppModel {
                 'message' => 'Order total must be at least $'.number_format($coupon['Coupon']['amount'],2,'.',',').' in order to use this coupon.',
             );
         }
-            
+
         return $coupon;
     }
 
@@ -376,7 +376,7 @@ class Coupon extends AppModel {
             ),
             'recursive' => -1,
         ));
-        
+
         if ($coupons > 0) {
             return true;
         }
