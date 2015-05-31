@@ -6,6 +6,7 @@ App::uses('CakeResponse', 'Network');
 App::uses('Component', 'Controller');
 App::uses('CartComponent', 'Controller/Component');
 App::uses('SessionComponent', 'Controller/Component');
+App::uses('Watch', 'Model');
 
 // A fake controller to test against
 class FakeControllerTest extends Controller {
@@ -32,6 +33,8 @@ class CartComponentTest extends CakeTestCase {
         'app.detect',
         'app.detectsorder',
         'app.coupon',
+		'app.consignment',
+		'app.purchase',
         'app.cake_session',
     );
 
@@ -40,7 +43,7 @@ class CartComponentTest extends CakeTestCase {
             'Watch' => array(
                 'price' => 100,
                 'brand_id' => 1,
-            ), 
+            ),
             'Brand' => array(
                 'name' => 'foo',
             ),
@@ -197,13 +200,13 @@ class CartComponentTest extends CakeTestCase {
  */
 	public function testGetShippingAmount() {
 	    $result = $this->Cart->getShippingAmount('us');
-        $this->assertEquals(8, $result);    
+        $this->assertEquals(8, $result);
 	    $result = $this->Cart->getShippingAmount('ca');
-        $this->assertEquals(38, $result);    
+        $this->assertEquals(38, $result);
 	    $result = $this->Cart->getShippingAmount('');
-        $this->assertEmpty($result);    
+        $this->assertEmpty($result);
 	    $result = $this->Cart->getShippingAmount('other');
-        $this->assertEquals(45, $result);    
+        $this->assertEquals(45, $result);
 	}
 
     public function testGetSecondaryCountry() {
@@ -223,7 +226,7 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testTotalCart() {
-        $result = $this->Cart->totalCart(850, 8, 85);	
+        $result = $this->Cart->totalCart(850, 8, 85);
         $this->assertEquals(773, $result);
 	}
 
@@ -236,7 +239,7 @@ class CartComponentTest extends CakeTestCase {
         $result = $this->Cart->getSubTotal($this->items);
         $this->assertEqual($result, 225);
 	}
-    
+
     public function testGetSubTotalBrand() {
         $result = $this->Cart->getSubTotal($this->items, 1);
         $expected = 100;
@@ -279,7 +282,7 @@ class CartComponentTest extends CakeTestCase {
         $result = $this->Cart->couponAmount($this->items, $shipping, $coupon);
         $this->assertEquals($result, 233);
     }
-    
+
     public function testCouponAmountPercentage() {
         $coupon = array(
             'Coupon' => array(
@@ -513,4 +516,22 @@ class CartComponentTest extends CakeTestCase {
         $this->assertEquals($data['Address'], $this->Controller->Session->read('Address.data'));
         $this->assertEquals($errors, $this->Controller->Session->read('Address.errors'));
     }
+
+	public function testCheckActive() {
+        $this->Controller->Session->write('Cart.items', [3,5]);
+        $this->Cart->initialize($this->Controller);
+        $this->Watch = ClassRegistry::init('Watch');
+		$watches = $this->Watch->getCartWatches([3,5]);
+		$result = $this->Cart->checkActive($watches, [3,5]);
+		$this->assertTrue($result);
+	}
+
+	public function testCheckActiveFail() {
+        $this->Controller->Session->write('Cart.items', [3,4]);
+        $this->Cart->initialize($this->Controller);
+        $this->Watch = ClassRegistry::init('Watch');
+		$watches = $this->Watch->getCartWatches([3,4]);
+		$result = $this->Cart->checkActive($watches, [3,4]);
+		$this->assertFalse($result);
+	}
 }
