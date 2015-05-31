@@ -22,7 +22,7 @@ class Coupon extends AppModel {
                         where Coupon.id=c.id
                         group by c.id' 
     );
-    
+
 /**
  * Validation rules
  *
@@ -260,7 +260,7 @@ class Coupon extends AppModel {
             );
         }
 
-        $subTotal = $this->Order->Watch->sumWatchPrices($cart, $coupon['Coupon']['brand_id']);
+        $subTotal = $this->sumWatchPrices($cart, $coupon['Coupon']['brand_id']);
 
         // Coupon not for right brand
         if (!empty($coupon['Coupon']['brand_id'])) {
@@ -301,6 +301,22 @@ class Coupon extends AppModel {
     }
 
     /**
+     * Return the total price of active watches
+     * Optionally send in a brand_id to sum just watches of that brand
+     * @param array $cart The watch objects in the cart
+     * @param int $brand_id
+     */
+    public function sumWatchPrices($cart, $brand_id = null) {
+		if (!empty($brand_id)) {
+			$prices = Hash::extract($cart, '{n}.Watch[brand_id='.$brand_id.'].price');
+		} else {
+			$prices = Hash::extract($cart, '{n}.Watch.price');
+		}
+
+		return array_sum($prices);
+    }
+
+    /**
      * Make sure coupon code is unique among non-archived coupons
      * return bool
      */
@@ -321,12 +337,12 @@ class Coupon extends AppModel {
             'conditions' => $conditions,
             'recursive' => -1
         ));
-        
+
         return !(bool) $codes;
     }
 
     public function futureDate($date) {
-        $date = current($date); 
+        $date = current($date);
         return strtotime($date) > strtotime('now') ? true : false;
     }
 

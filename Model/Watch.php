@@ -385,20 +385,4 @@ class Watch extends AppModel {
         return null;
     }
 
-    /**
-     * Return the total price of active watches
-     * Optionally send in a brand_id to sum just watches of that brand
-     * @param array $watchIds
-     * @param int $brand_id
-     */ 
-    public function sumWatchPrices($cart, $brand_id = null) {
-		if (!empty($brand_id)) {
-			$prices = Hash::extract($cart, '{n}.Watch[brand_id='.$brand_id.'].price');
-		} else {
-			$prices = Hash::extract($cart, '{n}.Watch.price');
-		}
-
-		return array_sum($prices);
-    }
-
 }

@@ -112,10 +112,22 @@ class CouponTest extends CakeTestCase {
         $result = $this->Coupon->valid('minimum', 'ClarenceAMartinez@teleworm.us', 8, $watches);
         $this->assertContains('You have not met the minimum order of', $result['message']);
     }
-    
+
     public function testValidBigFixed() {
 		$watches = $this->Watch->getCartWatches([6]);
         $result = $this->Coupon->valid('bigfixed', 'ClarenceAMartinez@teleworm.us', 8, $watches);
         $this->assertContains('Order total must be at least', $result['message']);
     }
+
+/**
+ * testSumWatchPrices method
+ *
+ * @return void
+ */
+	public function testSumWatchPrices() {
+		$watches = $this->Watch->getCartWatches([3,5]);
+        $result = $this->Coupon->sumWatchPrices($watches);
+        $this->assertEquals(970, $result);
+	}
+
 }
