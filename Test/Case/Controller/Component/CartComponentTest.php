@@ -35,6 +35,7 @@ class CartComponentTest extends CakeTestCase {
         'app.coupon',
 		'app.consignment',
 		'app.purchase',
+		'app.brand',
         'app.cake_session',
     );
 
