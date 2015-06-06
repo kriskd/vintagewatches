@@ -252,7 +252,7 @@ class Watch extends AppModel {
     {
         return $this->find('all', array(
             'conditions' => array('Watch.id' => $ids),
-            'fields' => array('id', 'stockId', 'price', 'name', 'active'),
+            'fields' => array('id', 'brand_id', 'stockId', 'price', 'name', 'active'),
             'contain' => array(
                 'Brand' => array('fields' => 'name'),
                 'Image'
@@ -383,46 +383,6 @@ class Watch extends AppModel {
             return Router::url($image['filename'], true);
         }
         return null;
-    }
-
-    /**
-     * Return the total price of active watches
-     * Optionally send in a brand_id to sum just watches of that brand
-     * @param array $watchIds
-     * @param int $brand_id
-     */ 
-    public function sumWatchPrices($watchIds, $brand_id = null) {
-        $conditions = array(
-            'Watch.active' => 1,
-            'Watch.id' => $watchIds,
-        );
-        if (!empty($brand_id)) {
-            $conditions['Watch.brand_id'] = $brand_id;
-        }
-        $sum = $this->find('all', array(
-            'conditions' => $conditions,
-            'fields' => array(
-                'sum(Watch.price)'
-            ),
-            'recursive' => -1,
-        ));
-
-        return $this->getValue($sum); 
-    }
-
-    /**
-     * Get last value in a nested array
-     *
-     * @param $item array
-     * @return mixed string|int
-     */
-    protected function getValue($item) {
-        if (is_array($item)) {
-            $item = current($item);
-            return $this->getValue($item);
-        } 
-
-        return $item;
     }
 
 }

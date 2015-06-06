@@ -15,7 +15,6 @@ class OrdersController extends AppController
         'paramType' => 'querystring',
     );
 
-    protected $cartItemIds = array();
     protected $cartWatches = array();
 
     public function beforeFilter() {
@@ -25,8 +24,8 @@ class OrdersController extends AppController
             $this->redirect(array('controller' => 'pages', 'action' => 'home', 'admin' => false));
         }
 
-        $this->cartItemIds = $this->Cart->cartItemIds();
-        $this->cartWatches = $this->Watch->getCartWatches($this->cartItemIds);
+        $cartItemIds = $this->Cart->cartItemIds();
+        $this->cartWatches = $this->Watch->getCartWatches($cartItemIds);
         $this->Order->Coupon->removeRequiredCode();
 
         parent::beforeFilter();
@@ -118,16 +117,7 @@ class OrdersController extends AppController
             }
 
             // Check that watches are still active
-            $activeWatches = array_filter($this->cartWatches, function($item) {
-                return $item['Watch']['active'] == 1;
-            });
-            if (count($activeWatches) != $this->Cart->cartItemCount()) {
-                $activeIds = Hash::extract($activeWatches, '{n}.Watch.id');
-                $remove = array_diff($this->cartItemIds, $activeIds);
-                foreach ($remove as $id) {
-                    $this->Cart->remove($id);
-                }
-                $this->Cart->setCheckoutData($this->request->data);
+			if (!$this->Cart->checkActive($this->cartWatches)) {
                 $this->Session->setFlash('One or more of the items in your cart is no longer available.', 'warning');
                 return $this->redirect(array('action' => 'checkout'));
             }
@@ -153,11 +143,11 @@ class OrdersController extends AppController
             if($valid == true){
                 $couponAmount = 0;
                 if (!empty($couponCode) && !empty($couponEmail)) {
-                    $coupon = $this->Order->Coupon->valid($couponCode, $couponEmail, $shipping, $this->cartItemIds);
+                    $coupon = $this->Order->Coupon->valid($couponCode, $couponEmail, $shipping, $this->cartWatches);
                     $couponAmount = $this->Cart->couponAmount($this->cartWatches, $shipping, $coupon);
                 }
 
-                $subTotal = $this->Cart->getSubTotal($this->cartWatches); 
+                $subTotal = $this->Cart->getSubTotal($this->cartWatches);
                 $stripeData = array(
                     'amount' => $this->Cart->totalCart($subTotal, $shipping, $couponAmount),
                     'stripeToken' => $this->request->data['stripeToken'],
@@ -175,7 +165,7 @@ class OrdersController extends AppController
 
                     //Add the results of stripe to the data array
                     $data['Payment'] = $result;
-                    $this->Order->saveAssociated($data); 
+                    $this->Order->saveAssociated($data);
 
                     //Get the order_id
                     $order_id = $this->Order->id;
@@ -231,9 +221,9 @@ class OrdersController extends AppController
                     $this->Session->setFlash('<span class="glyphicon glyphicon-warning-sign"></span> ' . $result,
                         'default', array('class' => 'alert alert-danger'));
                 }
-            } else { 
+            } else {
                 //Get Address errors if any
-                $errors = $this->Address->validationErrors; 
+                $errors = $this->Address->validationErrors;
 
                 //Error sets have numeric keys, change to billing or shipping
                 foreach(array('billing', 'shipping') as $key => $value){
@@ -306,7 +296,7 @@ class OrdersController extends AppController
             $couponEmail = $query['data']['Coupon']['email'];
             $couponCode = $query['data']['Coupon']['code'];
             if (!empty($couponEmail) && !empty($couponCode)) {
-                $coupon = $this->Order->Coupon->valid($couponCode, $couponEmail, $shipping, $this->cartItemIds);
+                $coupon = $this->Order->Coupon->valid($couponCode, $couponEmail, $shipping, $this->cartWatches);
                 $couponAmount = $this->Cart->couponAmount($this->cartWatches, $shipping, $coupon);
                 $this->set(array(
                     'couponAmount' => $couponAmount,
@@ -314,7 +304,7 @@ class OrdersController extends AppController
                 ));
             }
             $this->set(array(
-                'shipping' => $this->Cart->getShippingAmount($country),
+                'shipping' => $shipping,
                 'total' => $this->Cart->totalCart($subTotal, $shipping, $couponAmount),
             ));
         }

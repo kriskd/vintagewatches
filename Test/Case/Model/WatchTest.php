@@ -139,14 +139,4 @@ class WatchTest extends CakeTestCase {
 		$this->markTestIncomplete('testImagePrimaryUrl not implemented.');
 	}
 
-/**
- * testSumWatchPrices method
- *
- * @return void
- */
-	public function testSumWatchPrices() {
-        $result = $this->Watch->sumWatchPrices([3,5]);	
-        $this->assertEquals(970, $result);
-	}
-
 }

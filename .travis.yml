@@ -60,6 +60,12 @@ before_script:
             'stripe_paid' => 'paid',
             'stripe_amount' => 'amount'
         ));
+        Configure::write('Shipping', array(
+            'us' => 8,
+            'ca' => 38,
+            'other' => 45,
+        ));
+
         CakePlugin::load(
             'HtmlPurifier', array('bootstrap' => true)
         );
