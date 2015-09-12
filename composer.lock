@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f3a6cfe182a35fcf12e6e3ab92c4ceac",
+    "hash": "f595d6b3de96be79c59169a635127939",
     "packages": [
         {
             "name": "Datasources",
@@ -605,6 +605,17 @@
                 "stripe"
             ],
             "time": "2014-06-18 00:21:25"
+        },
+        {
+            "name": "zeroasterisk/CakePHP-ArrayToXml-Lib",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zeroasterisk/CakePHP-ArrayToXml-Lib",
+                "reference": "origin/master"
+            },
+            "type": "library",
+            "time": "2011-11-04 20:47:02"
         }
     ],
     "packages-dev": [
@@ -1118,6 +1129,7 @@
     "stability-flags": {
         "composer/installers": 20,
         "datasources": 20,
+        "zeroasterisk/cakephp-arraytoxml-lib": 20,
         "burriko/cake-faker": 20
     },
     "prefer-stable": false,
