@@ -49,6 +49,7 @@
         "Datasources": "dev-master",
         "chronon/mobile_detect": "1.1.0",
         "zeroasterisk/CakePHP-ArrayToXml-Lib": "dev-master",
+		"loadsys/cakephp_sitemap": "~1.0",
         "burzum/cakephp-html-purifier": "1.1.0"
     },
     "require-dev": {
