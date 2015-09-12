@@ -27,6 +27,7 @@ class BvwSitemapsController extends SitemapsController {
 			)
 		));
 
+		$pages[] = 'watches';
 		$pages[] = 'orders';
 		$pages[] = 'contact-us';
 
