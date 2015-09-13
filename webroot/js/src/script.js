@@ -180,12 +180,14 @@ $(document).ready(function(){
     $(document).on('click', '.announcement-list-signup button', function(e){
         e.preventDefault();
         var email = $('#PageEmail').val();
+        var url = $(this).parents('form').prop('action');
+        var data = $(this).parents('form').serialize();
         if (email=='') {
             $('.announcement-list-signup .announce-error').show();
         } else {
           $.ajax({
-            url: $(this).parents('#PageDisplayForm').prop('action'),
-            data: $('#PageDisplayForm').serialize(), 
+            url: url,
+            data: data,
             dataType: 'html',
             beforeSend: function() {
               $('.announcement-list-signup .buttons button').hide();
@@ -201,7 +203,7 @@ $(document).ready(function(){
           });
         }
     });
-    
+
     /**
      * Add and remove state field based on country
      */
