@@ -33,13 +33,13 @@ App::uses('String', 'Utility');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
-    
+
     public $helpers = array('Session', 'Text',
                             'Html' => array('className' => 'MyHtml'),
                             'Form' => array('className' => 'MyForm'),
                             'Number' => array('className' => 'MyNumber'),
                             'Watch');
-    
+
     public $components = array('Stripe' => array('className' => 'Stripe.Stripe'),
                                'DebugKit.Toolbar', 'Session', 'Cart', 'RequestHandler',
                                'Cookie',
@@ -51,58 +51,55 @@ class AppController extends Controller {
                                'Paginator',
                                'Navigation', 'Ebay', 'Emailer',
                             );
-    
+
     public $uses = array('Page', 'Watch', 'Brand');
-    
+
     public $brandsWithWatches;
-    
+
     public $route;
-    
+
     public $token;
 
     public $scheme;
-    
+
     /**
      * Send the Controller object to the View so Helpers can initialize a Component with it
      */
-    public function beforeRender() {   
+    public function beforeRender() {
         //Page navigation
         $navigation = $this->Page->getNavigation();
-        
+
         //Bool for store opened or closed
         $storeOpen = $this->Watch->storeOpen();
-        
+
         //Bool for cart empty
         $cartEmpty = $this->Cart->cartEmpty();
-        
+
         //Cart count
         $cartCount = $this->Cart->cartItemCount();
-        
+
         //Watch IDs in cart
         $cartItemIds = $this->Cart->cartItemIds();
-        
+
         //All brands for meta keywords
         $allBrands = $this->Brand->find('list');
         $allBrands = implode(',', $allBrands);
-        
-        //Current Url
-        $currentUrl = 'http://' . env('SERVER_NAME') . $this->here;
-        
+
         //Recent watches
         $recentWatches = $this->Watch->getWatches(3);
-        
+
         $vars = compact('loggedIn', 'navigation', 'storeOpen', 'cartEmpty', 'cartCount', 'cartItemIds',
-                        'currentUrl', 'allBrands', 'recentWatches');
-        
+                        'allBrands', 'recentWatches');
+
         $this->set(array('name' => $this->name, 'brandsWithWatches' => $this->brandsWithWatches) + $vars);
         parent::beforeRender();
     }
-    
+
     public function beforeFilter() {
         // All pages are now secure
         $this->secure();
 
-        $this->route = Router::parse($this->request->here); 
+        $this->route = Router::parse($this->request->here);
         $here = Router::url($this->request->here, true);
         $this->scheme = parse_url($here, PHP_URL_SCHEME);
 
@@ -112,7 +109,7 @@ class AppController extends Controller {
             $loggedIn = true;
 
             if ($this->Ebay->checkToken($this->Auth->user())) {
-                $encodedToken = $this->Auth->user('ebayToken'); 
+                $encodedToken = $this->Auth->user('ebayToken');
                 $this->token = $this->Ebay->decodeToken($encodedToken);
             }
         }
