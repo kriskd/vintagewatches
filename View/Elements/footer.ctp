@@ -74,10 +74,6 @@
                                 'role' => 'form',
                                 'url' => '/mailinglist',
                             )); ?>
-                            <?php $this->Form->input('currentUrl', array(
-                                'type' => 'hidden',
-                                'value' => $currentUrl,
-                            )); ?>
                             <?php echo $this->Form->input('email', array(
                                 'class' => 'form-control input-sm',
                             )); ?>
