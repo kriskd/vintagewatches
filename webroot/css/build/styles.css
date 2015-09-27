@@ -8469,3 +8469,39 @@ body.hide-fat-footer .container .content {
 .container .content .coupons.form input[type=checkbox] {
   margin-left: 0px;
 }
+.container .vacations.form label {
+  width: 80px;
+}
+.container .vacations.form .datetime {
+  margin-bottom: 15px;
+}
+@media (min-width: 768px) {
+  .container .vacations.form .datetime select {
+    width: 28%;
+  }
+  .container .vacations.form .datetime select#VacationStartHour,
+  .container .vacations.form .datetime select#VacationEndHour {
+    margin-left: 80px;
+  }
+}
+@media (min-width: 992px) {
+  .container .vacations.form .datetime select {
+    width: 29%;
+  }
+  .container .vacations.form .datetime select#VacationStartHour,
+  .container .vacations.form .datetime select#VacationEndHour {
+    margin-left: 80px;
+  }
+}
+@media (min-width: 1200px) {
+  .container .vacations.form .datetime select {
+    width: 15%;
+  }
+  .container .vacations.form .datetime select#VacationStartHour,
+  .container .vacations.form .datetime select#VacationEndHour {
+    margin-left: 0px;
+  }
+}
+.container .vacations.form textarea {
+  width: 100%;
+}

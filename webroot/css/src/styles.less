@@ -1313,5 +1313,42 @@ body.hide-fat-footer {
             }
         }
     }
+	.vacations {
+		&.form {
+			label {
+				width: 80px;
+			}
+			.datetime {
+				margin-bottom: 15px;
+				@media (min-width: @screen-sm-min) {
+					select {
+						width: 28%;
+						&#VacationStartHour, &#VacationEndHour {
+							margin-left: 80px;
+						}
+					}
+				}
+				@media (min-width: @screen-md-min) {
+					select {
+						width: 29%;
+						&#VacationStartHour, &#VacationEndHour {
+							margin-left: 80px;
+						}
+					}
+				}
+				@media (min-width: @screen-lg-min) {
+					select {
+						width: 15%;
+						&#VacationStartHour, &#VacationEndHour {
+							margin-left: 0px;
+						}
+					}
+				}
+			}
+			textarea {
+				width: 100%;
+			}
+		}
+	}
 }
 
