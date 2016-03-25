@@ -3,19 +3,6 @@
         {
             "type": "package",
             "package": {
-                "name": "Stripe",
-                "type": "cakephp-plugin",
-                "version": "2.0.3",
-                "source": {
-                    "url": "https://github.com/chronon/CakePHP-StripeComponent-Plugin",
-                    "type": "git",
-                    "reference": "origin/master"
-                }
-            }
-        },
-        {
-            "type": "package",
-            "package": {
                 "name": "Datasources",
                 "type": "cakephp-plugin",
                 "version": "dev-master",
@@ -44,9 +31,8 @@
         "cakephp/cakephp": "2.5.*",
         "cakephp/debug_kit": "2.2.*",
         "mjohnson/uploader": "4.*",
-        "Stripe": "2.0.3",
-        "stripe/stripe-php": "1.16.*",
         "Datasources": "dev-master",
+        "chronon/stripe": "dev-master",
         "chronon/mobile_detect": "1.1.0",
         "zeroasterisk/CakePHP-ArrayToXml-Lib": "dev-master",
 		"loadsys/cakephp_sitemap": "~1.0",

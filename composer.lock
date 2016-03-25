@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f595d6b3de96be79c59169a635127939",
+    "hash": "5375e3678857b84df8e8b836f23a3356",
+    "content-hash": "d190cac4959b13cb294ab3696c54392e",
     "packages": [
         {
             "name": "Datasources",
@@ -16,16 +17,6 @@
             },
             "type": "cakephp-plugin",
             "time": "2014-02-19 14:14:38"
-        },
-        {
-            "name": "Stripe",
-            "version": "2.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/chronon/CakePHP-StripeComponent-Plugin",
-                "reference": "origin/master"
-            },
-            "type": "cakephp-plugin"
         },
         {
             "name": "burzum/cakephp-html-purifier",
@@ -117,16 +108,16 @@
         },
         {
             "name": "cakephp/debug_kit",
-            "version": "2.2.5",
+            "version": "2.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/debug_kit.git",
-                "reference": "c91103061d9b7ec3141e642913f88090a292b2bf"
+                "reference": "6c318a779b63bd567fd17811aecc7654a74bbec5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/c91103061d9b7ec3141e642913f88090a292b2bf",
-                "reference": "c91103061d9b7ec3141e642913f88090a292b2bf",
+                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/6c318a779b63bd567fd17811aecc7654a74bbec5",
+                "reference": "6c318a779b63bd567fd17811aecc7654a74bbec5",
                 "shasum": ""
             },
             "require": {
@@ -162,7 +153,7 @@
                 "debug",
                 "kit"
             ],
-            "time": "2014-11-22 17:58:32"
+            "time": "2015-09-13 20:07:55"
         },
         {
             "name": "chronon/mobile_detect",
@@ -208,18 +199,65 @@
             "time": "2013-04-21 23:04:35"
         },
         {
+            "name": "chronon/stripe",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/chronon/CakePHP-StripeComponent-Plugin.git",
+                "reference": "d8ff4ba48654d3844bd96d87927ad2e415faf508"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/chronon/CakePHP-StripeComponent-Plugin/zipball/d8ff4ba48654d3844bd96d87927ad2e415faf508",
+                "reference": "d8ff4ba48654d3844bd96d87927ad2e415faf508",
+                "shasum": ""
+            },
+            "require": {
+                "composer/installers": "*",
+                "ext-curl": "*",
+                "php": ">=5.3.0",
+                "stripe/stripe-php": "1.18.*"
+            },
+            "type": "cakephp-plugin",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gregory Gaskill",
+                    "email": "one@chronon.com",
+                    "homepage": "http://technokracy.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A CakePHP 2.x Stripe Payment Processing Component.",
+            "homepage": "https://github.com/chronon/CakePHP-StripeComponent-Plugin",
+            "keywords": [
+                "cakephp",
+                "component",
+                "payments",
+                "plugin",
+                "stripe"
+            ],
+            "time": "2016-01-20 22:14:22"
+        },
+        {
             "name": "composer/installers",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "e420b539e8d7b38b7c6f3f99dccc0386bd3dfe41"
+                "reference": "6aac6a0a931ad06780fa7c574f27178d48109ec7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/e420b539e8d7b38b7c6f3f99dccc0386bd3dfe41",
-                "reference": "e420b539e8d7b38b7c6f3f99dccc0386bd3dfe41",
+                "url": "https://api.github.com/repos/composer/installers/zipball/6aac6a0a931ad06780fa7c574f27178d48109ec7",
+                "reference": "6aac6a0a931ad06780fa7c574f27178d48109ec7",
                 "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0"
             },
             "replace": {
                 "roundcube/plugin-installer": "*",
@@ -229,9 +267,9 @@
                 "composer/composer": "1.0.*@dev",
                 "phpunit/phpunit": "4.1.*"
             },
-            "type": "composer-installer",
+            "type": "composer-plugin",
             "extra": {
-                "class": "Composer\\Installers\\Installer",
+                "class": "Composer\\Installers\\Plugin",
                 "branch-alias": {
                     "dev-master": "1.0-dev"
                 }
@@ -253,12 +291,13 @@
                 }
             ],
             "description": "A multi-framework Composer library installer",
-            "homepage": "http://composer.github.com/installers/",
+            "homepage": "https://composer.github.io/installers/",
             "keywords": [
                 "Craft",
                 "Dolibarr",
                 "Hurad",
                 "MODX Evo",
+                "Mautic",
                 "OXID",
                 "SMF",
                 "Thelia",
@@ -300,7 +339,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2015-06-13 15:30:38"
+            "time": "2016-03-23 16:25:33"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -560,16 +599,16 @@
         },
         {
             "name": "stripe/stripe-php",
-            "version": "v1.16.0",
+            "version": "v1.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/stripe/stripe-php.git",
-                "reference": "9401a361fa0323935002aa96f46983f9ecd880bb"
+                "reference": "022c3f21ec1e4141b46738bd5e7ab730d04f78cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/9401a361fa0323935002aa96f46983f9ecd880bb",
-                "reference": "9401a361fa0323935002aa96f46983f9ecd880bb",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/022c3f21ec1e4141b46738bd5e7ab730d04f78cc",
+                "reference": "022c3f21ec1e4141b46738bd5e7ab730d04f78cc",
                 "shasum": ""
             },
             "require": {
@@ -604,7 +643,7 @@
                 "payment processing",
                 "stripe"
             ],
-            "time": "2014-06-18 00:21:25"
+            "time": "2015-01-22 05:01:46"
         },
         {
             "name": "zeroasterisk/CakePHP-ArrayToXml-Lib",
@@ -1076,34 +1115,34 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.7.4",
+            "version": "v2.8.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Yaml.git",
-                "reference": "2dc7b06c065df96cc686c66da2705e5e18aef661"
+                "url": "https://github.com/symfony/yaml.git",
+                "reference": "2a4ee40acb880c56f29fb1b8886e7ffe94f3b995"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/2dc7b06c065df96cc686c66da2705e5e18aef661",
-                "reference": "2dc7b06c065df96cc686c66da2705e5e18aef661",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/2a4ee40acb880c56f29fb1b8886e7ffe94f3b995",
+                "reference": "2a4ee40acb880c56f29fb1b8886e7ffe94f3b995",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.9"
             },
-            "require-dev": {
-                "symfony/phpunit-bridge": "~2.7"
-            },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.7-dev"
+                    "dev-master": "2.8-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
                     "Symfony\\Component\\Yaml\\": ""
-                }
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1121,7 +1160,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2015-08-24 07:13:45"
+            "time": "2016-02-23 07:41:20"
         }
     ],
     "aliases": [],
@@ -1129,6 +1168,7 @@
     "stability-flags": {
         "composer/installers": 20,
         "datasources": 20,
+        "chronon/stripe": 20,
         "zeroasterisk/cakephp-arraytoxml-lib": 20,
         "burriko/cake-faker": 20
     },
