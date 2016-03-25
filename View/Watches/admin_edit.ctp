@@ -55,15 +55,17 @@
             </div>
             <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
                 <div class="jumbotron">
-                    <?php echo $this->Form->create('Image', array('type' => 'file', 'url' => array('action' => 'upload', $watch['Watch']['id']))); ?>
-                    <?php echo $this->Form->label('Add Images'); ?>
-                    <?php echo $this->Form->button('Choose Files', array('type' => 'button',
-                                                                'class' => 'btn btn-default fake-upload',
-                                                                )
-                                                            ); ?>
-                    <?php echo $this->Form->input('filename.', array('type' => 'file', 'multiple', 'label' => false, 'class' => 'image-upload')); ?>
-                    <?php echo $this->Form->input('watch_id', array('type' => 'hidden', 'value' => $watch['Watch']['id'])); ?>
-                    <?php echo $this->Form->end(array('label' => 'Upload Image', 'class' => 'btn btn-primary')); ?>
+                    <div class="container">
+                        <?php echo $this->Form->create('Image', array('type' => 'file', 'url' => array('action' => 'upload', $watch['Watch']['id']))); ?>
+                        <?php echo $this->Form->label('Add Images'); ?>
+                        <?php echo $this->Form->button('Choose Files', array('type' => 'button',
+                                                                    'class' => 'btn btn-default fake-upload',
+                                                                    )
+                                                                ); ?>
+                        <?php echo $this->Form->input('filename.', array('type' => 'file', 'multiple', 'label' => false, 'class' => 'image-upload')); ?>
+                        <?php echo $this->Form->input('watch_id', array('type' => 'hidden', 'value' => $watch['Watch']['id'])); ?>
+                        <?php echo $this->Form->end(array('label' => 'Upload Image', 'class' => 'btn btn-primary')); ?>
+                    </div>
                 </div>
             </div>
         </div>
