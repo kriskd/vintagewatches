@@ -44,10 +44,5 @@
     },
     "config": {
         "vendor-dir": "Vendor"
-    },
-    "extra": {
-        "installer-paths": {
-            "Plugin/Stripe/Vendor/Stripe": ["stripe/stripe-php"]
-        }
     }
 }
