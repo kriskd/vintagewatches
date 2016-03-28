@@ -214,4 +214,10 @@ class PagesController extends AppController {
         }
         $this->layout = 'ajax';
     }
+    
+    public function admin_clear() {
+        Cache::clear();
+        $this->Session->setFlash('Cache cleared.', 'success');
+        $this->redirect($this->referer());
+    }
 }

@@ -8721,3 +8721,16 @@ body.hide-fat-footer .container .content {
 .container .content .coupons.form input[type=checkbox] {
   margin-left: 0px;
 }
+.container .blogs.view h2 {
+  color: #b29600;
+}
+.container .blogs.view h5 {
+  text-transform: uppercase;
+}
+.container .blogs.view h6 {
+  margin-left: 5px;
+  font-weight: normal;
+}
+.container .blogs .img-responsive {
+  margin: 0 auto;
+}
