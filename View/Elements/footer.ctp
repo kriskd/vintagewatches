@@ -29,7 +29,7 @@
                                     <?php endif; ?>
                                     <h4>Auctions</h4>
                                     <?php echo $this->Html->image('rsz_1ebay.png', array(
-                                                                    'url' => 'http://cgi6.ebay.com/ws/ebayISAPI.dll?ViewListedItemsLinkButtons&userid=brtime',
+                                                                    'url' => 'http://www.ebay.com/sch/brtime/m.html',
                                                                     'alt' => 'My items on eBay',
                                                                     'width' => 88,
                                                                     'height' => 38,
