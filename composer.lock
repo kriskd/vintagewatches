@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9c7905541556cc1ae0e49d180550f8d6",
-    "content-hash": "33347db4953fef0d726f22a0232f4aa2",
+    "hash": "365f9f2a3e8413334bead67a73c08436",
+    "content-hash": "ba4ac2dbad552b4801111ee2cd8d0715",
     "packages": [
         {
             "name": "Datasources",
@@ -65,24 +65,24 @@
         },
         {
             "name": "cakephp/cakephp",
-            "version": "2.5.9",
+            "version": "2.8.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "838ab7329d56108ad08423b723536a83ef1cf911"
+                "reference": "64e7c8d9914c845efa8d1865fe0472fd6b6706b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/838ab7329d56108ad08423b723536a83ef1cf911",
-                "reference": "838ab7329d56108ad08423b723536a83ef1cf911",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/64e7c8d9914c845efa8d1865fe0472fd6b6706b6",
+                "reference": "64e7c8d9914c845efa8d1865fe0472fd6b6706b6",
                 "shasum": ""
             },
             "require": {
                 "ext-mcrypt": "*",
-                "php": ">=5.2.8"
+                "php": ">=5.3.0"
             },
             "require-dev": {
-                "cakephp/debug_kit": "2.2.*",
+                "cakephp/cakephp-codesniffer": "^1.0.0",
                 "phpunit/phpunit": "3.7.*"
             },
             "bin": [
@@ -104,7 +104,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2015-08-07 01:33:44"
+            "time": "2016-06-13 02:15:08"
         },
         {
             "name": "cakephp/debug_kit",
@@ -248,12 +248,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "6aac6a0a931ad06780fa7c574f27178d48109ec7"
+                "reference": "3c90d491bafa3d0a1bd57a7d001da839a08d2f88"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/6aac6a0a931ad06780fa7c574f27178d48109ec7",
-                "reference": "6aac6a0a931ad06780fa7c574f27178d48109ec7",
+                "url": "https://api.github.com/repos/composer/installers/zipball/3c90d491bafa3d0a1bd57a7d001da839a08d2f88",
+                "reference": "3c90d491bafa3d0a1bd57a7d001da839a08d2f88",
                 "shasum": ""
             },
             "require": {
@@ -275,8 +275,8 @@
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Composer\\Installers\\": "src/"
+                "psr-4": {
+                    "Composer\\Installers\\": "src/Composer/Installers"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -296,9 +296,11 @@
                 "Craft",
                 "Dolibarr",
                 "Hurad",
+                "ImageCMS",
                 "MODX Evo",
                 "Mautic",
                 "OXID",
+                "RadPHP",
                 "SMF",
                 "Thelia",
                 "WolfCMS",
@@ -314,6 +316,7 @@
                 "dokuwiki",
                 "drupal",
                 "elgg",
+                "expressionengine",
                 "fuelphp",
                 "grav",
                 "installer",
@@ -339,7 +342,7 @@
                 "zend",
                 "zikula"
             ],
-            "time": "2016-03-23 16:25:33"
+            "time": "2016-06-24 07:03:15"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -902,20 +905,23 @@
         },
         {
             "name": "phpunit/php-timer",
-            "version": "1.0.7",
+            "version": "1.0.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-timer.git",
-                "reference": "3e82f4e9fc92665fafd9157568e4dcb01d014e5b"
+                "reference": "38e9124049cf1a164f1e4537caf19c99bf1eb260"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/3e82f4e9fc92665fafd9157568e4dcb01d014e5b",
-                "reference": "3e82f4e9fc92665fafd9157568e4dcb01d014e5b",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-timer/zipball/38e9124049cf1a164f1e4537caf19c99bf1eb260",
+                "reference": "38e9124049cf1a164f1e4537caf19c99bf1eb260",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4|~5"
             },
             "type": "library",
             "autoload": {
@@ -939,7 +945,7 @@
             "keywords": [
                 "timer"
             ],
-            "time": "2015-06-21 08:01:12"
+            "time": "2016-05-12 18:03:57"
         },
         {
             "name": "phpunit/php-token-stream",
@@ -1115,16 +1121,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.8.3",
+            "version": "v2.8.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "2a4ee40acb880c56f29fb1b8886e7ffe94f3b995"
+                "reference": "dba4bb5846798cd12f32e2d8f3f35d77045773c8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/2a4ee40acb880c56f29fb1b8886e7ffe94f3b995",
-                "reference": "2a4ee40acb880c56f29fb1b8886e7ffe94f3b995",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/dba4bb5846798cd12f32e2d8f3f35d77045773c8",
+                "reference": "dba4bb5846798cd12f32e2d8f3f35d77045773c8",
                 "shasum": ""
             },
             "require": {
@@ -1160,7 +1166,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-02-23 07:41:20"
+            "time": "2016-06-29 05:29:29"
         }
     ],
     "aliases": [],
