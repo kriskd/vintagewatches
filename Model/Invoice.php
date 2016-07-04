@@ -14,8 +14,8 @@ class Invoice extends AppModel {
      */
     public $validate = array(
         'email' => array(
-            'notempty' => array(
-                'rule' => array('notempty'),
+            'notBlank' => array(
+                'rule' => array('notBlank'),
                 'message' => 'Please enter your email.'),
             'email' => array(
                 'rule' => array('email'),
@@ -54,8 +54,8 @@ class Invoice extends AppModel {
                 'rule' => array('date'),
                 'message' => 'Please enter a valid date in the form yyyy-mm-dd',
             ),
-            'notempty' => array(
-                'rule' => array('notempty'),
+            'notBlank' => array(
+                'rule' => array('notBlank'),
                 'message' => 'Please enter a date.'
             ),
         ),
@@ -160,6 +160,6 @@ class Invoice extends AppModel {
 
     public function removeRequiredEmail()
     {
-        $this->validator()->remove('email', 'notempty');
+        $this->validator()->remove('email', 'notBlank');
     }
 }
