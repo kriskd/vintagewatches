@@ -76,10 +76,10 @@ class AppController extends Controller {
         $cartEmpty = $this->Cart->cartEmpty();
 
         //Cart count
-        $cartCount = $this->Cart->cartItemCount();
+        $cartCount = $this->Cart->cartCount();
 
         //Watch IDs in cart
-        $cartItemIds = $this->Cart->cartItemIds();
+        $cartWatchIds = $this->Cart->cartWatchIds();
 
         //All brands for meta keywords
         $allBrands = $this->Brand->find('list');
@@ -88,7 +88,7 @@ class AppController extends Controller {
         //Recent watches
         $recentWatches = $this->Watch->getWatches(3);
 
-        $vars = compact('loggedIn', 'navigation', 'storeOpen', 'cartEmpty', 'cartCount', 'cartItemIds',
+        $vars = compact('loggedIn', 'navigation', 'storeOpen', 'cartEmpty', 'cartCount', 'cartWatchIds',
                         'allBrands', 'recentWatches');
 
         $this->set(array('name' => $this->name, 'brandsWithWatches' => $this->brandsWithWatches) + $vars);

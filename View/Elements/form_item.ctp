@@ -7,7 +7,9 @@
 		<legend><?= $action ?> <?php echo __('Item'); ?></legend>
 	<?php
 		echo $this->Form->input('description');
+        echo $this->Form->input('active', ['class' => 'checkbox-inline']);
 		echo $this->Form->input('quantity');
+		echo $this->Form->input('price');
 		echo $this->Form->input('Shipping');
 	?>
 	</fieldset>

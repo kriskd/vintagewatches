@@ -1,9 +1,9 @@
 <?php
 App::uses('AppController', 'Controller');
 App::uses('Address', 'Model');
-class OrdersController extends AppController
-{
-    public $uses = array('Watch', 'Address', 'Order', 'Region', 'Country');
+
+class OrdersController extends AppController {
+    public $uses = array('Watch', 'Address', 'Order', 'Region', 'Country', 'Item');
 
     public $components = array('MobileDetect' => array('className' => 'MobileDetect.MobileDetect'));
 
@@ -21,11 +21,13 @@ class OrdersController extends AppController
         $storeOpen = $this->Watch->storeOpen();
         //Redirect if store is closed and going to a non-admin order page and not index or view
         if ($storeOpen == false && empty($this->request->params['admin']) && !in_array($this->request->params['action'], array('index', 'view'))) {
-            $this->redirect(array('controller' => 'pages', 'action' => 'home', 'admin' => false));
+            return $this->redirect(array('controller' => 'pages', 'action' => 'home', 'admin' => false));
         }
 
+        $cartWatchIds = $this->Cart->cartWatchIds();
+        $this->cartWatches = $this->Watch->getCartWatches($cartWatchIds);
         $cartItemIds = $this->Cart->cartItemIds();
-        $this->cartWatches = $this->Watch->getCartWatches($cartItemIds);
+        $this->cartItems = $this->Item->getCartItems($cartItemIds);
         $this->Order->Coupon->removeRequiredCode();
 
         parent::beforeFilter();
@@ -103,13 +105,19 @@ class OrdersController extends AppController
         $this->set(compact('order', 'title'));
     }
 
+    /**
+     * Display and process checkout.
+     *
+     * @return void
+     */
     public function checkout() {
-        if($this->Cart->cartEmpty() == true){
+        if ($this->Cart->cartEmpty() == true){
             $this->redirect(array('controller' => 'watches', 'action' => 'index'));
         }
+
         //Form submitted
-        if($this->request->is('post')) {
-            if($this->Cart->cartEmpty()){
+        if ($this->request->is('post')) {
+            if ($this->Cart->cartEmpty()){
                 //There is no data to checkout with
                 $this->Cart->setCheckoutData($this->request->data);
                 $this->Session->setFlash('There was a problem with your cart, please add your items again.', 'warning');
@@ -140,7 +148,7 @@ class OrdersController extends AppController
             unset($data['Coupon']);
 
             $valid = $this->Order->validateAssociated($data);
-            if($valid == true){
+            if ($valid == true){
                 $couponAmount = 0;
                 if (!empty($couponCode) && !empty($couponEmail)) {
                     $coupon = $this->Order->Coupon->valid($couponCode, $couponEmail, $shipping, $this->cartWatches);
@@ -252,8 +260,27 @@ class OrdersController extends AppController
         }
 
         $title = 'Checkout';
-        $this->set(compact('title') + array('watches' => $this->cartWatches));
+        $this->set(compact('title') + array(
+            'watches' => $this->cartWatches,
+            'items' => $this->cartItems,
+            'itemCount' => $this->Cart->cartItemCount(),
+        ));
     }
+
+    /**
+     * Create an Order for an Item.
+     *
+     * @param int $id The ID of the Item.
+     * @return void
+     */
+    /*public function item($id = null) {
+		if (!$this->Item->exists($id)) {
+			throw new NotFoundException(__('Invalid item'));
+		}
+
+		$options = array('conditions' => array('Item.' . $this->Item->primaryKey => $id));
+		$this->set('item', $this->Item->find('first', $options));
+    }*/
 
     public function add($id = null) {
         if (!$this->Watch->sellable($id)) {
@@ -271,26 +298,17 @@ class OrdersController extends AppController
         $this->redirect(array('action' => 'checkout'));
     }
 
-    public function remove($id = null)
-    {
-        if (!$this->Watch->exists($id)) {
-            throw new NotFoundException(__('Invalid watch'));
-        }
-
-        $this->Cart->remove($id);
-
-        $this->redirect(array('action' => 'checkout'));
-    }
-
     /**
      * Get shipping and total
      */
     public function totalCart() {
-        if($this->request->is('ajax')){
+        if ($this->request->is('ajax')){
             $query = $this->request->query;
             $country = $query['data']['Address']['select-country'];
-            $shipping = $this->Cart->getShippingAmount($country);
-            $subTotal = $this->Cart->getSubTotal($this->cartWatches);
+            $shipping = $this->Cart->getShippingAmount($country, $this->cartItems);
+            $watchesSubTotal = $this->Cart->getSubTotal($this->cartWatches);
+            $itemsSubTotal = $this->Cart->getItemsSubTotal($this->cartItems);
+            $subTotal = $watchesSubTotal + $itemsSubTotal;
             if ($subTotal <= 0) return;
             $couponAmount = 0;
             $couponEmail = $query['data']['Coupon']['email'];
@@ -303,11 +321,33 @@ class OrdersController extends AppController
                     'coupon' => $coupon, // Contains error message if any
                 ));
             }
+
             $this->set(array(
                 'shipping' => $shipping,
                 'total' => $this->Cart->totalCart($subTotal, $shipping, $couponAmount),
             ));
         }
+        $this->layout = 'ajax';
+    }
+
+    /**
+     * Total Items plus Shipping
+     *
+     * @return void
+     */
+    public function totalItems() {
+        if ($this->request->is('ajax')){
+            $query = $this->request->query;
+            $country = $query['data']['Address']['select-country'];
+            $shipping = $this->Cart->getShippingAmount($country);
+            $subTotal = $this->Cart->getSubTotal($this->cartWatches);
+            if ($subTotal <= 0) return;
+            $this->set(array(
+                'shipping' => $shipping,
+                'total' => $this->Cart->totalCart($subTotal, $shipping, $couponAmount),
+            ));
+        }
+
         $this->layout = 'ajax';
     }
 

@@ -1,68 +1,117 @@
 <?php
 App::uses('Component', 'Controller');
 
-class CartComponent extends Component
-{
+class CartComponent extends Component {
     public $components = array('Session');
+
+    protected $watches = array();
 
     protected $items = array();
 
     public function initialize(Controller $controller) {
-        if($this->Session->check('Cart.items') == true){
+        if ($this->Session->check('Cart.watches') == true){
+            $this->watches = $this->Session->read('Cart.watches');
+        }
+
+        if ($this->Session->check('Cart.items') == true){
             $this->items = $this->Session->read('Cart.items');
         }
     }
 
     /**
-     * Clear the Cart session, reset $items array
+     * Clear the Cart session, reset $watches array
      */
     public function emptyCart() {
+        $this->watches = array();
         $this->items = array();
         $this->Session->delete('Cart');
     }
 
     public function cartEmpty() {
-        return empty($this->items) ? true : false;
+        return empty($this->watches) && empty($this->items) ? true : false;
+    }
+
+    public function cartCount() {
+        return $this->cartWatchCount() + $this->cartItemCount();
     }
 
     public function cartItemCount() {
-        return empty($this->items) ? null : count($this->items);
+        return count($this->items);
+    }
+
+    public function cartWatchCount() {
+        return count($this->watches);
     }
 
     /**
-     * Returns an array of Watch IDs in the cart
+     * Returns an array of Watch IDs in the cart.
+     *
+     * @return array
+     */
+    public function cartWatchIds() {
+        return $this->watches;
+    }
+
+    /**
+     * Returns an array of Item IDs in the cart.
      */
     public function cartItemIds() {
         return $this->items;
     }
 
     /**
-     * Add an item to the cart
+     * Add a watch to the cart
      */
     public function add($id) {
+        $this->watches[] = $id;
+        return $this->Session->write('Cart.watches', $this->watches);
+    }
+
+    /**
+     * Add an item to the cart.
+     *
+     * @param int $id The Id of the Item.
+     */
+    public function addItem($id) {
         $this->items[] = $id;
         return $this->Session->write('Cart.items', $this->items);
     }
 
     /**
-     * Remove an item from the cart
+     * Remove a watch or item from the cart
+     *
+     * @param string $model Either Watch or Item.
+     * @param int $id The Id of the Watch or Item.
+     * @return bool
      */
-    public function remove($id) {
-        if(in_array($id, $this->items)){
-            $key = array_search($id, $this->items);
-            unset($this->items[$key]);
-            $this->items = array_values($this->items);
-            return $this->Session->write('Cart.items', $this->items);
+    public function remove($model, $id) {
+        $type = Inflector::pluralize(strtolower($model));
+        if (in_array($id, $this->{$type})){
+            $key = array_search($id, $this->{$type});
+            unset($this->{$type}[$key]);
+            $this->{$type} = array_values($this->{$type});
+            return $this->Session->write('Cart.' . $type, $this->{$type});
         }
+
         return false;
     }
 
     public function inCart($id = null) {
-        return is_array($this->items) && in_array($id, $this->items);
+        return is_array($this->watches) && in_array($id, $this->watches);
     }
 
-    public function getShippingAmount($country = '') {
-        switch($country){
+    /**
+     * Compute the shipping on the Order for Watches and Items
+     *
+     * @param string $country The shipping Country the user has selected.
+     * @return float
+     */
+    public function getShippingAmount($country = '', $items = array()) {
+        if (empty($this->watches)) {
+
+        }
+
+        switch($country) {
             case '':
                 return '';
                 break;
@@ -98,12 +147,12 @@ class CartComponent extends Component
     }
 
     /**
-     * $items array Array of Watch objects
+     * $watches array Array of Watch objects
      * $brand_id int Optional brand_id
      */
-    public function getSubTotal($items, $brand_id = null) {
-        if(!empty($items)){
-            return  array_reduce($items, function($return, $item) use ($brand_id) {
+    public function getSubTotal($watches = array(), $brand_id = null) {
+        if(!empty($watches)){
+            return  array_reduce($watches, function($return, $item) use ($brand_id) {
                 if(isset($item['Watch']['price'])){
                     if (empty($brand_id) || $brand_id == $item['Watch']['brand_id']) {
                         $return += $item['Watch']['price'];
@@ -116,16 +165,26 @@ class CartComponent extends Component
     }
 
     /**
-     * $items array Array of Watch objects
+     * Sum of all the Items in the cart.
+     *
+     * @param array $items Array of items in the cart with computed `ordered` and `subtotal` fields.
+     * @return float
+     */
+    public function getItemsSubTotal($items = array()) {
+        return array_sum(Hash::extract($items, '{n}.Item.subtotal'));
+    }
+
+    /**
+     * $watches array Array of Watch objects
      * $shipping int Shipping amount
      * $coupon object
      */
-    public function couponAmount($items, $shipping, $coupon = array()) {
+    public function couponAmount($watches, $shipping, $coupon = array()) {
         if (empty($coupon['Coupon'])) {
             return 0;
         }
         // Total eligible for coupon
-        $couponSubTotal = $this->getSubTotal($items, $coupon['Coupon']['brand_id']);
+        $couponSubTotal = $this->getSubTotal($watches, $coupon['Coupon']['brand_id']);
         switch ($coupon['Coupon']['type']) {
             case 'fixed':
                 $couponAmount = $couponSubTotal + $shipping > $coupon['Coupon']['amount'] ? $coupon['Coupon']['amount'] : $couponSubTotal + $shipping;

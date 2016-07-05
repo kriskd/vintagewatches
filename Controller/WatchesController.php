@@ -7,6 +7,10 @@ App::uses('AppController', 'Controller');
  */
 class WatchesController extends AppController {
 
+    public $components = [
+        'Cart',
+    ];
+
 	public $paginate = array(
 				'limit' => 10,
 				'order' => 'Watch.created desc',
@@ -384,4 +388,23 @@ class WatchesController extends AppController {
 		}
 		$this->autoRender = false;
 	}
+
+    /**
+     * Remove a Watch from the Cart.
+     *
+     * @param int $id The Id of the Watch
+     * @return array
+     */
+    public function remove($id = null) {
+        if (!$this->Watch->exists($id)) {
+            throw new NotFoundException(__('Invalid watch'));
+        }
+
+        $this->Cart->remove('Watch', $id);
+
+        return $this->redirect(array(
+            'controller' => 'orders',
+            'action' => 'checkout',
+        ));
+    }
 }

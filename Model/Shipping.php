@@ -8,25 +8,22 @@ App::uses('AppModel', 'Model');
  */
 class Shipping extends AppModel {
 
-/**
- * Use database config
- *
- * @var string
- */
-	public $useDbConfig = 'development';
+    public $virtualFields = [
+        'option' => 'CONCAT(Shipping.description, " - ", Shipping.amount)',
+    ];
 
-/**
- * Display field
- *
- * @var string
- */
+    /**
+     * Display field
+     *
+     * @var string
+     */
 	public $displayField = 'description';
 
-/**
- * Validation rules
- *
- * @var array
- */
+    /**
+     * Validation rules
+     *
+     * @var array
+     */
 	public $validate = array(
 		'description' => array(
 			'notBlank' => array(

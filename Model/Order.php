@@ -114,7 +114,20 @@ class Order extends AppModel {
 			'exclusive' => '',
 			'finderQuery' => '',
 			'counterQuery' => ''
-		)
+		),
+		'OrderExtra' => array(
+			'className' => 'OrderExtra',
+			'foreignKey' => 'order_id',
+			'dependent' => true, //Delete associated order_extra
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
 	);
 
     public $belongsTo = array(

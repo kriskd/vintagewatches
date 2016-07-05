@@ -14,20 +14,14 @@ class ItemsController extends AppController {
      *
      * @var array
      */
-	public $components = array('Paginator', 'Session');
+	public $components = array('Paginator', 'Session', 'Cart');
 
     /**
-     * Public view of an item.
-     *
-     * @param int $id The ID of the item.
-     * @return void
+     * Add an Item to the cart
      */
-    public function view($id = null) {
-		if (!$this->Item->exists($id)) {
-			throw new NotFoundException(__('Invalid item'));
-		}
-		$options = array('conditions' => array('Item.' . $this->Item->primaryKey => $id));
-		$this->set('item', $this->Item->find('first', $options));
+    public function add($id = null) {
+        $this->Cart->addItem($id);
+        return $this->redirect($this->referer());
     }
 
     /**
@@ -87,7 +81,7 @@ class ItemsController extends AppController {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Item->save($this->request->data)) {
-				$this->Session->setFlash(__('The item has been saved.'));
+				$this->Session->setFlash(__('The item has been saved.'), 'success');
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The item could not be saved. Please, try again.'));
@@ -120,4 +114,23 @@ class ItemsController extends AppController {
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
+
+    /**
+     * Remove a Item from the Cart.
+     *
+     * @param int $id The Id of the Watch
+     * @return array
+     */
+    public function remove($id = null) {
+        if (!$this->Item->exists($id)) {
+            throw new NotFoundException(__('Invalid item'));
+        }
+
+        $this->Cart->remove('Item', $id);
+
+        return $this->redirect(array(
+            'controller' => 'orders',
+            'action' => 'checkout',
+        ));
+    }
 }

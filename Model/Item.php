@@ -59,6 +59,27 @@ class Item extends AppModel {
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
+    /**
+     * hasMany associations
+     *
+     * @var array
+     */
+	public $hasMany = array(
+		'OrderExtra' => array(
+			'className' => 'OrderExtra',
+			'foreignKey' => 'order_id',
+			'dependent' => false, // Don't Delete associated order_extra
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
+	);
+
 /**
  * hasAndBelongsToMany associations
  *
@@ -80,4 +101,19 @@ class Item extends AppModel {
 		)
 	);
 
+    /**
+     * Get an array of Items in the Cart with `quantity` of each item.
+     *
+     * @return array
+     */
+    public function getCartItems($cartItemIds) {
+        $items = $this->findAllById($cartItemIds);
+        $counts = array_count_values($cartItemIds);
+        foreach ($items as $key => $item) {
+            $items[$key]['Item']['ordered'] = $counts[$item['Item']['id']];
+            $items[$key]['Item']['subtotal'] = $counts[$item['Item']['id']] * $item['Item']['price'];
+        }
+
+        return $items;
+    }
 }

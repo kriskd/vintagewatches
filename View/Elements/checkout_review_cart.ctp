@@ -11,7 +11,7 @@
         <div class="cart-details">
             <div class="row head hidden-xxs">
                 <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                    
+
                 </div>
                 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
                     Stock ID
@@ -34,18 +34,22 @@
                         </strong>
                     </div>
                     <div class="hidden-xs visible-xxs col-xxs-4">
-                        
+
                     </div>
                 </div>
                 <div class="row watch">
                     <div class="text-center col-lg-1 col-md-1 col-sm-1 col-xs-1 col-xxs-1">
                         <?php echo $this->Html->link('<i class="glyphicon glyphicon-trash"></i>',
-                                                                             array('action' => 'remove', $watch['Watch']['id']),
-                                                                             array('escape' => false, 'class' => 'launch-tooltip',
-                                                                                   'data-toggle' => 'tooltip',
-                                                                                   'data-placement' => 'top',
-                                                                                   'title' => 'Remove from Cart')
-                                                                             ); ?>
+                            array(
+                                'controller' => 'watches',
+                                'action' => 'remove', $watch['Watch']['id'],
+                            ), array(
+                                'escape' => false,
+                                'class' => 'launch-tooltip',
+                                'data-toggle' => 'tooltip',
+                                'data-placement' => 'top',
+                                'title' => 'Remove from Cart',
+                            )); ?>
                     </div>
                     <div class="image col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxs-7">
                         <?php echo $this->Html->thumbPrimary($watch, array(
@@ -72,6 +76,61 @@
                         <?php echo h($this->Number->currency($watch['Watch']['price'], 'USD')); ?>
                     </div>
                 </div>
+            <?php endforeach; ?>
+            <?php foreach($items as $item): ?>
+                <div class="row hidden-xs visible-xxs">
+                    <div class="col-xxs-8">
+                        <strong>
+                            <?php echo h($item['Item']['description']); ?>
+                        </strong>
+                    </div>
+                    <div class="hidden-xs visible-xxs col-xxs-4">
+
+                    </div>
+                </div>
+                <div class="row watch">
+                    <div class="text-center col-lg-1 col-md-1 col-sm-1 col-xs-1 col-xxs-1">
+                        <?php echo $this->Html->link('<i class="glyphicon glyphicon-trash"></i>',
+                            array(
+                                'controller' => 'invoices',
+                                'action' => 'remove', $item['Item']['id'],
+                            ), array(
+                                'escape' => false,
+                                'class' => 'launch-tooltip',
+                                'data-toggle' => 'tooltip',
+                                'data-placement' => 'top',
+                                'title' => 'Remove from Cart',
+                            )); ?>
+                    </div>
+                    <div class="image col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxs-7">
+                        <?php echo $this->Html->image('bookcovermall.jpg', ['width' => 100, 'height' => 100]); ?>
+                    </div>
+                    <div class="text-center col-lg-2 col-md-2 col-sm-2 col-xs-2 hidden-xxs">
+                        <?php //echo h($watch['Watch']['stockId']); ?>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 hidden-xxs">
+                        <?= $item['Item']['ordered'] ?> - <?= h($item['Item']['description']) ?>
+                    </div>
+                    <div class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-2 col-xxs-4">
+                        <?= h($this->Number->currency($item['Item']['subtotal'], 'USD')); ?>
+                    </div>
+                </div>
+                <?php if (empty($watches)): ?>
+                    <div class="row watch">
+                        <div class="text-center col-lg-1 col-md-1 col-sm-1 col-xs-1 col-xxs-1">
+                        </div>
+                        <div class="image col-lg-5 col-md-4 col-sm-4 col-xs-4 col-xxs-7">
+                            Choose Shipping Option:
+                        </div>
+                        <div class="text-right col-lg-6 col-md-2 col-sm-2 col-xs-2 col-xxs-4">
+                            <?= $this->Form->input('shipping', [
+                                'options' => Hash::combine($item, 'Shipping.{n}.id', 'Shipping.{n}.option'),
+                                'label' => false,
+                                'class' => 'form-control',
+                            ]); ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
             <?php endforeach; ?>
             <div class="row choose-ship">
                 <div class="text-right col-lg-10 col-md-10 col-sm-10 col-xs-10 col-xxs-8">
