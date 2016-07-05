@@ -18,11 +18,13 @@
 			<span class="table-head"><?php echo $this->Paginator->sort('active'); ?></span>
 			<span class="table-head"><?php echo $this->Paginator->sort('description'); ?></span>
 			<span class="table-head"><?php echo $this->Paginator->sort('quantity'); ?></span>
+			<span class="table-head"><?php echo $this->Paginator->sort('price'); ?></span>
         </div>
         <?php foreach ($items as $item): ?>
             <?php $row = $this->Html->tag('span', $item['Item']['active']==true ? '<span class="glyphicon glyphicon-ok green"></span>' : '', array('class' => 'table-cell text-center')); ?>
             <?php $row .= $this->Html->tag('span', h($item['Item']['description']), array('class' => 'table-cell')); ?>
             <?php $row .= $this->Html->tag('span', h($item['Item']['quantity']), array('class' => 'table-cell')); ?>
+            <?php $row .= $this->Html->tag('span', h($item['Item']['price']), array('class' => 'table-cell')); ?>
             <?php echo $this->Html->link($row, array('action' => 'admin_edit', $item['Item']['id'], 'admin' => true), array('class' => 'table-row', 'escape' => false)); ?>
         <?php endforeach; ?>
     </div>
