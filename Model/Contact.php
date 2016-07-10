@@ -29,8 +29,8 @@ class Contact extends AppModel {
  */
 	public $validate = array(
 		'name' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
+			'notBlank' => array(
+				'rule' => array('notBlank'),
 				'message' => 'Please enter your name.',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -47,8 +47,8 @@ class Contact extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-			'notempty' => array(
-				'rule' => array('notempty'),
+			'notBlank' => array(
+				'rule' => array('notBlank'),
 				'message' => 'Please enter your email',
 				//'allowEmpty' => false,
 				//'required' => false,

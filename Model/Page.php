@@ -21,8 +21,8 @@ class Page extends AppModel {
  */
 	public $validate = array(
 		'name' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
+			'notBlank' => array(
+				'rule' => array('notBlank'),
 				'message' => 'Page name is required.',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -31,8 +31,8 @@ class Page extends AppModel {
 			),
 		),
 		'slug' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
+			'notBlank' => array(
+				'rule' => array('notBlank'),
 				//'message' => 'Your custom message here',
 				'allowEmpty' => false,
 				'required' => false,

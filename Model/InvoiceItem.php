@@ -14,8 +14,8 @@ class InvoiceItem extends AppModel {
  */
 	public $validate = array(
 		'invoice_id' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+			'notBlank' => array(
+				'rule' => array('notBlank'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -32,8 +32,8 @@ class InvoiceItem extends AppModel {
 			),
 		),
 		'description' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+			'notBlank' => array(
+				'rule' => array('notBlank'),
 				'message' => 'Please enter the item description.',
 				//'allowEmpty' => false,
 				//'required' => false,

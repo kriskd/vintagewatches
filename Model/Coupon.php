@@ -30,8 +30,8 @@ class Coupon extends AppModel {
  */
 	public $validate = array(
 		'code' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+			'notBlank' => array(
+				'rule' => array('notBlank'),
 				'message' => 'Enter a coupon code.',
 				'allowEmpty' => false,
 				'required' => true,
@@ -52,8 +52,8 @@ class Coupon extends AppModel {
             )
         ),*/
 		'type' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+			'notBlank' => array(
+				'rule' => array('notBlank'),
 				'message' => 'Please choose a coupon type.',
 				'allowEmpty' => false,
 				'required' => true,
@@ -66,8 +66,8 @@ class Coupon extends AppModel {
             ),
 		),
 		'amount' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+			'notBlank' => array(
+				'rule' => array('notBlank'),
 				'message' => 'Enter coupon amount.',
 				'allowEmpty' => false,
 				'required' => true,
@@ -84,8 +84,8 @@ class Coupon extends AppModel {
             ),
 		),
         'total' => array(
-            'notEmpty' => array(
-                'rule' => array('notEmpty'),
+            'notBlank' => array(
+                'rule' => array('notBlank'),
                 'message' => 'Enter the total number of coupons available.',
                 'allowEmpty' => false,
                 'required' => true,
