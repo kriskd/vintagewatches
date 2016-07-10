@@ -676,7 +676,7 @@ class OrdersControllerTest extends ControllerTestCase {
  */
 	public function testAdd() {
         $this->testAction('/orders/add/3', ['method' => 'get', 'return' => 'vars']);
-        $session = $this->Session->read('Cart.items');
+        $session = $this->Session->read('Cart.watches');
         $this->assertEquals(3, current($session));
         $this->assertContains('/orders/checkout', $this->headers['Location']);
 	}
@@ -693,17 +693,6 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->assertEquals('That item is already in your cart.', $message);
         $this->assertContains('/orders/checkout', $this->headers['Location']);
     }
-
-/**
- * testRemove method
- *
- * @return void
- */
-	public function testRemove() {
-        $this->Session->write('Cart.items', [3,5]);
-        $this->testAction('/orders/remove/3');
-        $this->assertEquals([5], $this->Session->read('Cart.items'));
-	}
 
 /**
  * testTotalCart method

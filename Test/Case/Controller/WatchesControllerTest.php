@@ -338,6 +338,17 @@ class WatchesControllerTest extends ControllerTestCase {
     }
 
     /**
+     * testRemove method
+     *
+     * @return void
+     */
+	public function testRemove() {
+        $this->Session->write('Cart.watches', [3,5]);
+        $this->testAction('/watches/remove/3');
+        $this->assertEquals([5], $this->Session->read('Cart.watches'));
+	}
+
+    /**
     * @expectedException        NotFoundException
     * @expectedExceptionMessage Invalid watch
     */
