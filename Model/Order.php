@@ -10,8 +10,8 @@ class Order extends AppModel {
 
     public $validate = array(
         'email' => array(
-            'notempty' => array(
-                'rule' => array('notempty'),
+            'notBlank' => array(
+                'rule' => array('notBlank'),
                 'message' => 'Please enter your email.'),
             'email' => array(
                 'rule' => array('email'),
