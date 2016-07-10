@@ -269,7 +269,7 @@ class CartComponent extends Component {
 		    $cartItemIds = Hash::extract($cartWatches, '{n}.Watch.id');
 			$remove = array_diff($cartItemIds, $activeIds);
 			foreach ($remove as $id) {
-				$this->remove($id);
+				$this->remove('Watch', $id);
 			}
 			return false;
 		}
