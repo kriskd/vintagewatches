@@ -104,11 +104,20 @@ class CartComponent extends Component {
      * Compute the shipping on the Order for Watches and Items
      *
      * @param string $country The shipping Country the user has selected.
+     * @param bool $upgradeShipping Upgrade to priority shipping when only Items in cart.
      * @return float
      */
-    public function getShippingAmount($country = '', $items = array()) {
+    public function getShippingAmount($country = '', $upgradeShipping = false) {
         if (empty($this->watches)) {
+            if (strcasecmp($country, 'us') == 0) {
+                if ($upgradeShipping) {
+                    return 6;
+                }
 
+                return 3;
+            }
+
+            return 25;
         }
 
         switch($country) {
@@ -255,7 +264,7 @@ class CartComponent extends Component {
 		$activeWatches = array_filter($cartWatches, function($item) {
 			return $item['Watch']['active'] == 1;
 		});
-		if (count($activeWatches) != $this->cartItemCount()) {
+		if (count($activeWatches) != $this->cartWatchCount()) {
 			$activeIds = Hash::extract($activeWatches, '{n}.Watch.id');
 		    $cartItemIds = Hash::extract($cartWatches, '{n}.Watch.id');
 			$remove = array_diff($cartItemIds, $activeIds);
