@@ -94,12 +94,12 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testEmptyCart() {
-        $this->Controller->Session->write('Cart.items', [3,5]);
+        $this->Controller->Session->write('Cart.watches', [3,5]);
         $this->Cart->initialize($this->Controller);
-        $this->assertEquals([3,5], $this->Cart->items);
-        $this->assertEquals([3,5], $this->Controller->Session->read('Cart.items'));
+        $this->assertEquals([3,5], $this->Cart->watches);
+        $this->assertEquals([3,5], $this->Controller->Session->read('Cart.watches'));
         $this->Cart->emptyCart();
-        $this->assertEmpty($this->Cart->items);
+        $this->assertEmpty($this->Cart->watches);
         $this->assertEmpty($this->Controller->Session->read('Cart'));
 	}
 
@@ -109,47 +109,47 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testCartNotEmpty() {
-        $this->Controller->Session->write('Cart.items', [3,5]);
+        $this->Controller->Session->write('Cart.watches', [3,5]);
         $this->Cart->initialize($this->Controller);
         $result = $this->Cart->cartEmpty();
         $this->assertFalse($result);
 	}
 
 	public function testCartEmpty() {
-        $this->Controller->Session->write('Cart.items', []);
+        $this->Controller->Session->write('Cart.watches', []);
         $this->Cart->initialize($this->Controller);
         $result = $this->Cart->cartEmpty();
         $this->assertTrue($result);
 	}
 
 /**
- * testCartItemCount method
+ * testCartWatchCount method
  *
  * @return void
  */
-	public function testCartItemCount() {
-        $this->Controller->Session->write('Cart.items', [3,5]);
+	public function testCartWatchCount() {
+        $this->Controller->Session->write('Cart.watches', [3,5]);
         $this->Cart->initialize($this->Controller);
-        $result = $this->Cart->cartItemCount();
+        $result = $this->Cart->cartWatchCount();
         $this->assertEquals(2, $result);
 	}
 
-	public function testCartItemCountEmpty() {
-        $this->Controller->Session->write('Cart.items', null);
+	public function testCartWatchCountEmpty() {
+        $this->Controller->Session->write('Cart.watches', null);
         $this->Cart->initialize($this->Controller);
-        $result = $this->Cart->cartItemCount();
+        $result = $this->Cart->cartWatchCount();
         $this->assertEmpty($result);
 	}
 
 /**
- * testCartItemIds method
+ * testCartWatchIds method
  *
  * @return void
  */
-	public function testCartItemIds() {
-        $this->Controller->Session->write('Cart.items', [3,5]);
+	public function testCartWatchIds() {
+        $this->Controller->Session->write('Cart.watches', [3,5]);
         $this->Cart->initialize($this->Controller);
-        $result = $this->Cart->cartItemIds();
+        $result = $this->Cart->cartWatchIds();
         $this->assertEquals([3,5], $result);
 	}
 
@@ -160,7 +160,7 @@ class CartComponentTest extends CakeTestCase {
  */
 	public function testAdd() {
 	    $this->Cart->add(3);
-        $this->assertEquals([3], $this->Controller->Session->read('Cart.items'));
+        $this->assertEquals([3], $this->Controller->Session->read('Cart.watches'));
 	}
 
 /**
@@ -169,16 +169,17 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testRemove() {
-        $this->Controller->Session->write('Cart.items', [3,5]);
+        $this->Controller->Session->write('Cart.watches', [3,5]);
         $this->Cart->initialize($this->Controller);
-        $this->Cart->remove(3);
-        $this->assertEquals([5], $this->Controller->Session->read('Cart.items'));
+        $this->Cart->remove('Watch', 3);
+        $this->assertEquals([5], $this->Controller->Session->read('Cart.watches'));
 	}
 
     public function testRemoveFail() {
+        $this->Controller->Session->destroy('Cart');
         $this->Cart->initialize($this->Controller);
-        $this->Cart->remove(3);
-        $this->assertEmpty($this->Controller->Session->read('Cart.items'));
+        $this->Cart->remove('Watch', 3);
+        $this->assertEmpty($this->Controller->Session->read('Cart.watches'));
     }
 
 /**
@@ -188,7 +189,7 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testInCart() {
-        $this->Controller->Session->write('Cart.items', [3,5]);
+        $this->Controller->Session->write('Cart.watches', [3,5]);
         $this->Cart->initialize($this->Controller);
         $result = $this->Cart->inCart(3);
         $this->assertTrue($result);
@@ -200,6 +201,8 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testGetShippingAmount() {
+        $this->Controller->Session->write('Cart.watches', [3,5]);
+        $this->Cart->initialize($this->Controller);
 	    $result = $this->Cart->getShippingAmount('us');
         $this->assertEquals(8, $result);
 	    $result = $this->Cart->getShippingAmount('ca');
