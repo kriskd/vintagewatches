@@ -201,11 +201,11 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->assertContains('/orders', $this->headers['Location']);
     }
 
-/**
- * testCheckout method
- *
- * @return void
- */
+    /**
+     * testCheckout method
+     *
+     * @return void
+     */
 	public function testCheckout() {
         $order = array(
             'stripeToken' => 'tok_5dC2WijiayVQOK',
@@ -260,9 +260,9 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->testAction(
             '/orders/checkout',
             array(
-                'data' => $order, 
+                'data' => $order,
                 'method' => 'post',
-                'return' => 'vars', 
+                'return' => 'vars',
             )
         );
 
@@ -273,9 +273,91 @@ class OrdersControllerTest extends ControllerTestCase {
         ));
 
         $this->assertEquals($order['Order']['email'], 'SandraPIrvin@armyspy.com');
+        $this->assertEquals($order['Order']['shippingAmount'], 8);
         $this->assertEquals($order['Address'][0]['country'], 'US');
         $this->assertEquals($order['Payment']['stripe_id'], 'ch_5dBkC3pJMgqjkD');
         $this->assertEquals($order['Watch'][0]['id'], 3);
+	}
+
+    /**
+     * Test checkout with an item.
+     */
+	public function testCheckoutItem() {
+        $order = array(
+            'stripeToken' => 'tok_5dC2WijiayVQOK',
+            'Address' => array(
+                'select-country' => 'us',
+                'billing' => $this->address,
+            ),
+            'Coupon' => array(
+                'email' => '',
+                'code' => ''
+            ),
+            'Shipping' => array(
+                'option' => 'billing'
+            ),
+            'Order' => array(
+                'email' => 'SandraPIrvin@armyspy.com',
+                'phone' => '503-326-9436',
+                'notes' => ''
+            )
+        );
+        $Orders = $this->generate('Orders', array(
+            'components' => array(
+                'Session',
+                'Cart' => array('cartEmpty', 'cartItemCount', 'cartItemIds', 'cartWatchIds'),
+                'Stripe.Stripe' => array('charge'),
+                'Emailer' => array('order'),
+            )
+        ));
+        $Orders->Cart->expects($this->any())
+            ->method('cartEmpty')
+            ->will($this->returnValue(false));
+        $Orders->Cart->expects($this->any())
+            ->method('cartItemCount')
+            ->will($this->returnValue(1));
+        $Orders->Cart->expects($this->any())
+            ->method('cartItemIds')
+            ->will($this->returnValue(array(1)));
+        $Orders->Cart->expects($this->any())
+            ->method('cartWatchIds')
+            ->will($this->returnValue([]));
+        $Orders->Stripe->expects($this->any())
+            ->method('charge')
+            ->will($this->returnValue(array(
+                'stripe_paid' => 1,
+                'stripe_id' => 'ch_5dBkC3pJMgqjkD',
+                'stripe_last4' => '4242',
+                'stripe_zip_check' => 'pass',
+                'stripe_cvc_check' => 'pass',
+                'stripe_amount' => '18300',
+            )));
+        $Orders->Emailer->expects($this->any())
+            ->method('order')
+            ->will($this->returnValue(true));
+
+        $this->testAction(
+            '/orders/checkout',
+            array(
+                'data' => $order,
+                'method' => 'post',
+                'return' => 'vars',
+            )
+        );
+
+        $order = $this->Order->find('first', array(
+            'order' => array(
+                'Order.created' => 'DESC',
+            )
+        ));
+
+        $this->assertEquals($order['Order']['email'], 'SandraPIrvin@armyspy.com');
+        $this->assertEquals($order['Order']['shippingAmount'], 3);
+        $this->assertEquals($order['Order']['id'], $order['OrderExtra'][0]['order_id']);
+        $this->assertEquals(1, $order['OrderExtra'][0]['item_id']);
+        $this->assertEquals($order['Address'][0]['country'], 'US');
+        $this->assertEquals($order['Payment']['stripe_id'], 'ch_5dBkC3pJMgqjkD');
+        $this->assertEmpty($order['Watch']);
 	}
 
 	public function testCheckoutNoState() {

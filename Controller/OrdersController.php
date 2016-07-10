@@ -174,6 +174,14 @@ class OrdersController extends AppController {
 
                     //Add the results of stripe to the data array
                     $data['Payment'] = $result;
+
+                    // Set OrderExtra if this is an Item
+                    if ($this->cartItems) {
+                        foreach ($this->cartItems as $item) {
+                            $data['OrderExtra'] = $item['OrderExtra'];
+                        }
+                    }
+
                     $this->Order->saveAssociated($data);
 
                     //Get the order_id
