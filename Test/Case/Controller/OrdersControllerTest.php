@@ -481,7 +481,7 @@ class OrdersControllerTest extends ControllerTestCase {
             ->method('cartEmpty')
             ->will($this->returnValue(false));
 
-        $this->Session->write('Cart.items', [3,4]);
+        $this->Session->write('Cart.watches', [3,4]);
 
         $result = $this->testAction(
             '/orders/checkout',
@@ -492,7 +492,7 @@ class OrdersControllerTest extends ControllerTestCase {
             )
         );
         $this->assertEquals('One or more of the items in your cart is no longer available.', $this->Session->read('Message.flash.message'));
-        $this->assertEquals($this->Session->read('Cart.items'), [3]);
+        $this->assertEquals($this->Session->read('Cart.watches'), [3]);
         $this->assertContains('/orders/checkout', $this->headers['Location']);
     }
 
