@@ -8409,6 +8409,12 @@ body.hide-fat-footer .container .content {
   font-size: 13px;
   line-height: 17px;
 }
+.container .content .orders .cart-details .upgrade-shipping .checkbox {
+  padding-top: 0;
+}
+.container .content .orders .cart-details .upgrade-shipping .checkbox input[type=checkbox] {
+  margin-left: 0;
+}
 .container .content .orders .cart-details .coupon-fields .coupon-amount {
   margin-top: 33px;
 }
