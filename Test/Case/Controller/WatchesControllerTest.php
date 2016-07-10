@@ -78,6 +78,7 @@ class WatchesControllerTest extends ControllerTestCase {
     }
 
     public function testOrderNoEmailZip() {
+        $this->Session->delete('Watch');
         $results = $this->testAction('/watches/order/1', array(
             'method' => 'GET',
             'return' => 'vars',
