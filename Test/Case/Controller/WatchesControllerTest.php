@@ -336,4 +336,14 @@ class WatchesControllerTest extends ControllerTestCase {
         $medium->delete();
         $thumb->delete();
     }
+
+    /**
+    * @expectedException        NotFoundException
+    * @expectedExceptionMessage Invalid watch
+    */
+    public function testRemoveException() {
+        $this->Session->write('Cart.items', [3,5]);
+        $result = $this->testAction('/watches/remove/11');
+        $this->assertFalse($result);
+    }
 }
