@@ -140,7 +140,8 @@ class OrdersController extends AppController {
 
             $data['Address'] = $this->Cart->formatAddresses($addresses);
             //Add shipping to the order
-            $shipping = $this->Cart->getShippingAmount($country);
+            $upgradeShipping = isset($query['data']['Order']['upgrade_shipping']) ? $query['data']['Order']['upgrade_shipping'] : null;
+            $shipping = $this->Cart->getShippingAmount($country, $upgradeShipping);
 
             $data['Order']['shippingAmount'] = $shipping;
             $couponCode = isset($data['Coupon']['code']) ? $data['Coupon']['code'] : null;
@@ -267,21 +268,6 @@ class OrdersController extends AppController {
         ));
     }
 
-    /**
-     * Create an Order for an Item.
-     *
-     * @param int $id The ID of the Item.
-     * @return void
-     */
-    /*public function item($id = null) {
-		if (!$this->Item->exists($id)) {
-			throw new NotFoundException(__('Invalid item'));
-		}
-
-		$options = array('conditions' => array('Item.' . $this->Item->primaryKey => $id));
-		$this->set('item', $this->Item->find('first', $options));
-    }*/
-
     public function add($id = null) {
         if (!$this->Watch->sellable($id)) {
             return $this->redirect(array('controller' => 'watches', 'action' => 'index'));
@@ -305,7 +291,8 @@ class OrdersController extends AppController {
         if ($this->request->is('ajax')){
             $query = $this->request->query;
             $country = $query['data']['Address']['select-country'];
-            $shipping = $this->Cart->getShippingAmount($country, $this->cartItems);
+            $upgradeShipping = isset($query['data']['Order']['upgrade_shipping']) ? $query['data']['Order']['upgrade_shipping'] : null;
+            $shipping = $this->Cart->getShippingAmount($country, $upgradeShipping);
             $watchesSubTotal = $this->Cart->getSubTotal($this->cartWatches);
             $itemsSubTotal = $this->Cart->getItemsSubTotal($this->cartItems);
             $subTotal = $watchesSubTotal + $itemsSubTotal;
@@ -335,7 +322,7 @@ class OrdersController extends AppController {
      *
      * @return void
      */
-    public function totalItems() {
+    /*public function totalItems() {
         if ($this->request->is('ajax')){
             $query = $this->request->query;
             $country = $query['data']['Address']['select-country'];
@@ -349,7 +336,7 @@ class OrdersController extends AppController {
         }
 
         $this->layout = 'ajax';
-    }
+    }*/
 
     /**
      * Get address form based on country
@@ -420,6 +407,23 @@ class OrdersController extends AppController {
                 'country' => $country,
             )));
             $this->layout = 'ajax';
+        }
+    }
+
+    /**
+     * Show priority shipping upgrade option if cart only has Items in it and no Watches
+     */
+    public function priorityUpgrade() {
+		try {
+			$this->request->allowMethod('ajax');
+		} catch (MethodNotAllowedException $e) {
+			$this->redirect('/');
+		}
+
+        $this->layout = 'ajax';
+        $country = $this->request->query['country'];
+        if ($this->Cart->watches || strcasecmp($country, 'us')!=0) {
+            $this->autoRender = false;
         }
     }
 
@@ -607,9 +611,9 @@ class OrdersController extends AppController {
 
         $options = array('conditions' => array('Order.' . $this->Order->primaryKey => $id));
         $this->request->data = $this->Order->find('first', $options);
-        $order = $this->Order->find('first', $options); 
+        $order = $this->Order->find('first', $options);
 
-        $this->set('order', $order); 
+        $this->set('order', $order);
 
         $addressFields = array('firstName', 'lastName', 'company', 'address1', 'address2', 'city', 'state',
             'postalCode', 'country');
@@ -627,8 +631,7 @@ class OrdersController extends AppController {
     /**
      * Resend an order to a customer
      */
-    public function admin_resend($id = null)
-    {
+    public function admin_resend($id = null) {
         $this->autoRender = $this->layout = false;
         $this->Order->id = $id;
         if (!$this->Order->exists()) {

@@ -92,7 +92,7 @@
                     <div class="text-center col-lg-1 col-md-1 col-sm-1 col-xs-1 col-xxs-1">
                         <?php echo $this->Html->link('<i class="glyphicon glyphicon-trash"></i>',
                             array(
-                                'controller' => 'invoices',
+                                'controller' => 'items',
                                 'action' => 'remove', $item['Item']['id'],
                             ), array(
                                 'escape' => false,
@@ -115,6 +115,7 @@
                         <?= h($this->Number->currency($item['Item']['subtotal'], 'USD')); ?>
                     </div>
                 </div>
+<?php /*
                 <?php if (empty($watches)): ?>
                     <div class="row watch">
                         <div class="text-center col-lg-1 col-md-1 col-sm-1 col-xs-1 col-xxs-1">
@@ -131,6 +132,7 @@
                         </div>
                     </div>
                 <?php endif; ?>
+*/ ?>
             <?php endforeach; ?>
             <div class="row choose-ship">
                 <div class="text-right col-lg-10 col-md-10 col-sm-10 col-xs-10 col-xxs-8">
@@ -166,7 +168,7 @@
                     </div>
                 </div>
                 <div class="shipping-amount text-right col-lg-2 col-md-2 col-sm-2 col-xs-2 col-xxs-4">
-                    
+
                 </div>
             </div>
             <div class="row">
