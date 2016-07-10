@@ -108,7 +108,7 @@ class CartComponent extends Component {
      * @return float
      */
     public function getShippingAmount($country = '', $upgradeShipping = false) {
-        if (empty($this->watches)) {
+        if (empty($this->cartWatchIds())) {
             if (strcasecmp($country, 'us') == 0) {
                 if ($upgradeShipping) {
                     return 6;
