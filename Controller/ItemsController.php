@@ -21,7 +21,11 @@ class ItemsController extends AppController {
      */
     public function add($id = null) {
         $this->Cart->addItem($id);
-        return $this->redirect($this->referer());
+
+        return$this->redirect(array(
+            'controller' => 'orders',
+            'action' => 'checkout',
+        ));
     }
 
     /**
