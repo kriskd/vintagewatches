@@ -35,7 +35,6 @@ class ItemsController extends AppController {
         }
 
 		if ($this->request->is('post')) {
-            debug($this->request->data);
             $this->Cart->addItem($id, $this->request->data['Item']['quantity']);
 
             return $this->redirect(array(
