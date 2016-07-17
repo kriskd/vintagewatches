@@ -356,7 +356,7 @@ class CartComponentTest extends CakeTestCase {
     }
 
     public function testStripeDescription() {
-        $result = $this->Cart->stripeDescription($this->items);
+        $result = $this->Cart->stripeDescription($this->items, []);
         $this->assertEquals('foo,bar', $result);
     }
 
