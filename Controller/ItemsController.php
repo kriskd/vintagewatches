@@ -17,15 +17,35 @@ class ItemsController extends AppController {
 	public $components = array('Paginator', 'Session', 'Cart');
 
     /**
-     * Add an Item to the cart
+     * View an Item and add to cart.
+     *
+     * @param $int The Item ID.
+     * @return void
      */
     public function add($id = null) {
-        $this->Cart->addItem($id);
+        if (empty($id)) {
+			return $this->redirect(array('controller' => 'pages', 'action' => 'home', 'display'));
+        }
 
-        return$this->redirect(array(
-            'controller' => 'orders',
-            'action' => 'checkout',
-        ));
+        $item = $this->Item->findById($id);
+
+        if (!$item) {
+            $this->Session->setFlash('This item is not available.', 'info');
+			return $this->redirect(array('controller' => 'pages', 'action' => 'home', 'display'));
+        }
+
+		if ($this->request->is('post')) {
+            debug($this->request->data);
+            $this->Cart->addItem($id, $this->request->data['Item']['quantity']);
+
+            return $this->redirect(array(
+                'controller' => 'orders',
+                'action' => 'checkout',
+            ));
+        }
+
+		$this->set('item', $item);
+		$this->set(array('title' => $item['Item']['name']));
     }
 
     /**
