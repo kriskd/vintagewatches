@@ -167,8 +167,7 @@ class Order extends AppModel {
 		)
 	);
 
-    public function getOrder($id)
-    {
+    public function getOrder($id) {
         $options = array('conditions' => array('Order.' . $this->primaryKey => $id));
 
         $options['contain'] = array(
@@ -185,7 +184,11 @@ class Order extends AppModel {
                     'Coupon.code', 'Coupon.type', 'Coupon.amount', 'Coupon.brand_id',
                 ),
             ),
+            'OrderExtra' => [
+                'Item',
+            ],
         );
+
         return $this->find('first', $options);
     }
 
@@ -193,8 +196,7 @@ class Order extends AppModel {
      * Retrieve orders for a given $email and $postalCode
      * Optional $id to get specific order for the matching email & postalCode
      */
-    public function getCustomerOrderOptions($email, $postalCode, $id = null)
-    {
+    public function getCustomerOrderOptions($email, $postalCode, $id = null) {
         $conditionsSubQuery = array(
             'Address.postalCode' => $postalCode,
             'Address.type' => 'billing'
