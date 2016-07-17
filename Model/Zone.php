@@ -8,13 +8,6 @@ App::uses('AppModel', 'Model');
 class Zone extends AppModel {
 
 /**
- * Use database config
- *
- * @var string
- */
-	public $useDbConfig = 'development';
-
-/**
  * Display field
  *
  * @var string

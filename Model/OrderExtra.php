@@ -9,13 +9,6 @@ App::uses('AppModel', 'Model');
 class OrderExtra extends AppModel {
 
 /**
- * Use database config
- *
- * @var string
- */
-	public $useDbConfig = 'development';
-
-/**
  * Use table
  *
  * @var mixed False or table name
