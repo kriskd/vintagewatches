@@ -71,9 +71,13 @@ class CartComponent extends Component {
      * Add an item to the cart.
      *
      * @param int $id The Id of the Item.
+     * @param int $quantity The number of Items to add to the cart.
      */
-    public function addItem($id) {
-        $this->items[] = $id;
+    public function addItem($id, $quantity = 1) {
+        for ($i = 1; $i <= $quantity; $i++) {
+            $this->items[] = $id;
+        }
+
         return $this->Session->write('Cart.items', $this->items);
     }
 
