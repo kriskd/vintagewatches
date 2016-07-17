@@ -140,9 +140,8 @@ class OrdersController extends AppController {
 
             $data['Address'] = $this->Cart->formatAddresses($addresses);
             //Add shipping to the order
-            $upgradeShipping = isset($query['data']['Order']['upgrade_shipping']) ? $query['data']['Order']['upgrade_shipping'] : null;
+            $upgradeShipping = isset($data['Order']['upgrade_shipping']) ? $data['Order']['upgrade_shipping'] : null;
             $shipping = $this->Cart->getShippingAmount($country, $upgradeShipping);
-
             $data['Order']['shippingAmount'] = $shipping;
             $couponCode = isset($data['Coupon']['code']) ? $data['Coupon']['code'] : null;
             $couponEmail = isset($data['Coupon']['email']) ? $data['Coupon']['email'] : null;
@@ -156,16 +155,18 @@ class OrdersController extends AppController {
                     $couponAmount = $this->Cart->couponAmount($this->cartWatches, $shipping, $coupon);
                 }
 
-                $subTotal = $this->Cart->getSubTotal($this->cartWatches);
+                $watchesSubTotal = $this->Cart->getSubTotal($this->cartWatches);
+                $itemsSubTotal = $this->Cart->getItemsSubTotal($this->cartItems);
+                $subTotal = $watchesSubTotal + $itemsSubTotal;
                 $stripeData = array(
                     'amount' => $this->Cart->totalCart($subTotal, $shipping, $couponAmount),
                     'stripeToken' => $this->request->data['stripeToken'],
-                    'description' => $this->Cart->stripeDescription($this->cartWatches),
+                    'description' => $this->Cart->stripeDescription($this->cartWatches, $this->cartItems),
                 );
 
                 $result = $this->Stripe->charge($stripeData);
 
-                if(is_array($result) && $result['stripe_paid'] == true){
+                if (is_array($result) && $result['stripe_paid'] == true){
                     unset($this->Order->Address->validate['foreign_id']);
 
                     if ($couponAmount > 0) {
@@ -178,7 +179,10 @@ class OrdersController extends AppController {
                     // Set OrderExtra if this is an Item
                     if ($this->cartItems) {
                         foreach ($this->cartItems as $item) {
-                            $data['OrderExtra'] = $item['OrderExtra'];
+                            $data['OrderExtra'][] = [
+                                'item_id' => $item['Item']['id'],
+                                'quantity' => $item['Item']['ordered']
+                            ];
                         }
                     }
 
@@ -557,15 +561,15 @@ class OrdersController extends AppController {
      * @param string $id
      * @return void
      */
-    public function admin_edit($id = null) { 
+    public function admin_edit($id = null) {
         if (!$this->Order->exists($id)) {
             throw new NotFoundException(__('Invalid order'));
         }
 
-        if ($this->request->is('post') || $this->request->is('put')) { 
+        if ($this->request->is('post') || $this->request->is('put')) {
             //Create an empty shipping address record with same country as billing
             if (isset($this->request->data['Order']['add_shipping_address'])
-                && $this->request->data['Order']['add_shipping_address'] == 1) { 
+                && $this->request->data['Order']['add_shipping_address'] == 1) {
                     $billingCountry = $this->request->data['Address'][0]['country'];
                     $this->Order->Address->create();
                     $this->Order->Address->save(array(

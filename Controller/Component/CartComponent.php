@@ -208,20 +208,28 @@ class CartComponent extends Component {
     }
 
     /**
-     * Create string of watch brands to send to Stripe as description
+     * Create string of watch brands and item descriptions to send to Stripe as description
+     *
      * @param array $watches
+     * @param array $items
      * @return string
      */
-    public function stripeDescription($watches) {
-        $brands = array();
+    public function stripeDescription($watches, $items) {
+        $description = [];
+
         foreach($watches as $watch) {
-            $brands[] = $watch['Brand']['name'];
+            $description[] = $watch['Brand']['name'];
         }
-        return implode(',', $brands);
+
+        foreach($items as $item) {
+            $description[] = $item['Item']['description'];
+        }
+
+        return implode(',', $description);
     }
 
     /**
-     * Reformat addresses in request data from array('type' => $address) 
+     * Reformat addresses in request data from array('type' => $address)
      * to array(0 => $addressWithType)
      * @param array $addresses from request
      * @return array
