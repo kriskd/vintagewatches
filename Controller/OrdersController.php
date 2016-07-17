@@ -198,12 +198,14 @@ class OrdersController extends AppController {
 
                     //Get the purchased items from the Session, add the order_id and
                     //update the items with the order_id
-                    $purchasedWatches = array_map(function($item) use ($order_id){
-                        $item['Watch']['order_id'] = $order_id;
-                        $item['Watch']['active'] = 0;
-                        return $item;
-                    } , $this->cartWatches);
-                    $this->Watch->saveMany($purchasedWatches);
+                    if ($this->cartWatches) {
+                        $purchasedWatches = array_map(function($item) use ($order_id){
+                            $item['Watch']['order_id'] = $order_id;
+                            $item['Watch']['active'] = 0;
+                            return $item;
+                        } , $this->cartWatches);
+                        $this->Watch->saveMany($purchasedWatches);
+                    }
 
                     // If mobile or tablet, get device details
                     if ($this->MobileDetect->detect('isMobile') || $this->MobileDetect->detect('isTablet')) {
