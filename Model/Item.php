@@ -55,6 +55,12 @@ class Item extends AppModel {
 	);
 
     public $actsAs = array(
+        'HtmlPurifier.HtmlPurifier' => array(
+            'config' => 'MyPurifier',
+            'fields' => array(
+                'description'
+            )
+        ),
         'Uploader.Attachment' => array(
             'filename' => array(
                 //'nameCallback' => 'filename',
