@@ -29,7 +29,7 @@ class ItemsController extends AppController {
 
         $item = $this->Item->findById($id);
 
-        if (!$item) {
+        if (!$item || $item['Item']['active'] == 0) {
             $this->Session->setFlash('This item is not available.', 'info');
 			return $this->redirect(array('controller' => 'pages', 'action' => 'home', 'display'));
         }
