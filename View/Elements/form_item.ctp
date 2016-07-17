@@ -6,7 +6,6 @@
 	<fieldset>
 		<legend><?= $action ?> <?php echo __('Item'); ?></legend>
 	<?php
-		echo $this->Form->input('active');
 		echo $this->Form->input('name');
 		echo $this->Form->input('description');
         echo $this->Form->input('active', ['class' => 'checkbox-inline']);
