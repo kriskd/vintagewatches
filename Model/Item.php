@@ -107,7 +107,14 @@ class Item extends AppModel {
      * @return array
      */
     public function getCartItems($cartItemIds) {
-        $items = $this->findAllById($cartItemIds);
+        $items = $this->find('all', [
+            'conditions' => [
+                'id' => $cartItemIds,
+            ],
+            'contain' => [
+                'Shipping',
+            ],
+        ]);
         $counts = array_count_values($cartItemIds);
         foreach ($items as $key => $item) {
             $items[$key]['Item']['ordered'] = $counts[$item['Item']['id']];
