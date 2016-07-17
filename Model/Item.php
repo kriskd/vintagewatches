@@ -1,18 +1,15 @@
 <?php
 App::uses('AppModel', 'Model');
+App::uses('Folder', 'Utility');
+App::uses('File', 'Utility');
+App::uses('AttachmentBehavior', 'Uploader.Model/Behavior');
+
 /**
  * Item Model
  *
  * @property Shipping $Shipping
  */
 class Item extends AppModel {
-
-/**
- * Use database config
- *
- * @var string
- */
-	public $useDbConfig = 'development';
 
 /**
  * Display field
@@ -57,6 +54,60 @@ class Item extends AppModel {
 		),
 	);
 
+    public $actsAs = array(
+        'Uploader.Attachment' => array(
+            'filename' => array(
+                //'nameCallback' => 'filename',
+                'append' => '',
+                'prepend' => '',
+                'tempDir' => TMP,
+                'uploadDir' => 'items',
+                'transportDir' => '',
+                'finalPath' => 'items',
+                'dbColumn' => '',
+                'metaColumns' => array(),
+                'defaultPath' => '',
+                'overwrite' => false,
+                'stopSave' => true,
+                'allowEmpty' => true,
+                'transforms' => array(
+                    'filenameLarge' => array(
+                        'method' => AttachmentBehavior::FIT,
+                        'width' => 700,
+                        'height' => 525,
+                        'fill' => array(255, 255, 255),
+                        'vertical' => 'center',
+                        'horizontal' => 'center',
+                        'nameCallback' => 'fitName',
+                        'append' => '-lg'
+                    ),
+                    'filenameMedium' => array(
+                        'method' => AttachmentBehavior::FIT,
+                        'width' => 500,
+                        'height' => 375,
+                        'fill' => array(255, 255, 255),
+                        'vertical' => 'center',
+                        'horizontal' => 'center',
+                        'nameCallback' => 'fitName',
+                        'append' => '-md'
+                    ),
+                    'filenameThumb' => array(
+                        'method' => AttachmentBehavior::FIT,
+                        'width' => 100,
+                        'height' => 100,
+                        'fill' => array(255, 255, 255),
+                        'vertical' => 'center',
+                        'horizontal' => 'center',
+                        'nameCallback' => 'fitName',
+                        'append' => '-thumb'
+                    )
+                ),
+                'transport' => array(),
+                'curl' => array()
+            )
+        )
+    );
+
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
     /**
@@ -100,6 +151,35 @@ class Item extends AppModel {
 			'finderQuery' => '',
 		)
 	);
+
+    public function beforeUpload($options) {
+        $options = $this->setUploadDir($options);
+
+        return $options;
+    }
+
+    public function beforeTransform($options) {
+        $options = $this->setUploadDir($options);
+        return $options;
+    }
+
+    public function setUploadDir($options) {
+        if (!empty($this->data['Item']['id'])) {
+            $itemId = $this->data['Item']['id'];
+            $options['finalPath'] = DS . 'items' . DS . $itemId . DS;
+            $options['uploadDir'] = WWW_ROOT . $options['finalPath'];
+
+            if (!file_exists($options['uploadDir'])) {
+                new Folder($options['uploadDir'], true);
+            }
+        }
+
+        return $options;
+    }
+
+    public function fitName($name, $file){
+        return $this->getUploadedFile()->name();
+    }
 
     /**
      * Get an array of Items in the Cart with `quantity` of each item.
