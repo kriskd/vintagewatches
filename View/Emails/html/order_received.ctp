@@ -46,7 +46,7 @@
         <tr style="padding: 5px">
             <td></td>
             <td></td>
-            <td><?php echo $extra['quantity']; ?> <?php echo $extra['Item']['description'] ?></td>
+            <td><?php echo $extra['quantity']; ?> <?php echo $extra['Item']['name'] ?></td>
             <td style="text-align: right"><?php echo $this->Number->currency($extra['quantity'] * $extra['Item']['price'], 'USD'); ?></td>
         </tr>
     <?php endforeach; ?>
