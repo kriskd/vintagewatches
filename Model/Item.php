@@ -24,7 +24,7 @@ class Item extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'description' => array(
+		'name' => array(
 			'notBlank' => array(
 				'rule' => array('notBlank'),
 				//'message' => 'Your custom message here',
