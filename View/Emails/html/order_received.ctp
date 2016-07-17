@@ -6,7 +6,7 @@
         </td>
         <td>
             <p style="font-weight: bold; margin-left: 20px; width: 150px">
-                In business since 1989 and offering medium- to high-grade watches with an unconditional seven-day money back guarantee. 
+                In business since 1989 and offering medium- to high-grade watches with an unconditional seven-day money back guarantee.
             </p>
         </td>
     </tr>
@@ -42,6 +42,14 @@
             <td style="text-align: right"><?php echo $this->Number->currency($watch['price'], 'USD'); ?></td>
         </tr>
     <?php endforeach; ?>
+    <?php foreach($order['OrderExtra'] as $extra): ?>
+        <tr style="padding: 5px">
+            <td></td>
+            <td></td>
+            <td><?php echo $extra['quantity']; ?> <?php echo $extra['Item']['description'] ?></td>
+            <td style="text-align: right"><?php echo $this->Number->currency($extra['quantity'] * $extra['Item']['price'], 'USD'); ?></td>
+        </tr>
+    <?php endforeach; ?>
     <tr style="padding: 5px">
         <td></td>
         <td></td>
@@ -53,7 +61,7 @@
             <td></td>
             <td></td>
             <td style="text-align: right">
-                Coupon code <?php echo strtoupper($order['Coupon']['code']); ?> 
+                Coupon code <?php echo strtoupper($order['Coupon']['code']); ?>
             </td>
             <td style="text-align: right">
                 <?php echo $this->Number->couponValue($order); ?>

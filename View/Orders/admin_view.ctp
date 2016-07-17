@@ -42,10 +42,18 @@
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <?php echo $this->Html->link('Close', '#', array('data-dismiss' => 'modal',
-                                                                     'class' => 'btn btn-default btn-lg')); ?>
-                    <?php echo $this->Form->postLink('Delete', array('action' => 'delete', $order['Order']['id'], 'admin' => true),
-                                                            array('class' => 'btn btn-danger btn-lg')); ?>                                    
+                    <?php echo $this->Html->link('Close', '#', array(
+                        'data-dismiss' => 'modal',
+                        'class' => 'btn btn-default btn-lg',
+                    )); ?>
+                    <?php echo $this->Form->postLink('Delete', array(
+                            'action' => 'delete', $order['Order']['id'],
+                            'admin' => true
+                        ),
+                        array(
+                            'class' => 'btn btn-danger btn-lg',
+                        )
+                    ); ?>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -68,6 +76,18 @@
                 <td><?php echo $watch['stockId']; ?></td>
                 <td><?php echo $watch['name']; ?></td>
                 <td class="text-right"><?php echo $this->Number->currency($watch['price'], 'USD'); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        <?php foreach($order['OrderExtra'] as $extra): ?>
+            <tr>
+                <td>
+                </td>
+                <td>
+                    <?php //echo $this->Html->thumbPrimary($watch); ?>
+                </td>
+                <td></td>
+                <td><?php echo $extra['quantity']; ?> <?php echo $extra['Item']['description'] ?></td>
+                <td class="text-right"><?php echo $this->Number->currency($extra['quantity'] * $extra['Item']['price'], 'USD'); ?></td>
             </tr>
         <?php endforeach; ?>
         <tr class="total-row">
