@@ -50,8 +50,10 @@ class NavigationHelper extends AppHelper
                 array('controller' => 'sources', 'action' => 'index', 'admin' => true),
             '<span class="glyphicon glyphicon-sunglasses"></span> Owners' =>
                 array('controller' => 'owners', 'action' => 'index', 'admin' => true),
+            /*
             '<span class="glyphicon glyphicon-flash"></span> Shipping Options' =>
                 array('controller' => 'shippings', 'action' => 'index', 'admin' => true),
+            */
             '<span class="glyphicon glyphicon-book"></span> Pages' =>
                 array('controller' => 'pages', 'action' => 'index', 'admin' => true),
             '<span class="glyphicon glyphicon-envelope"></span> Contacts' =>
