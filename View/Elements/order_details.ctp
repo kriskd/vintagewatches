@@ -40,18 +40,21 @@
             </div>
         </div>
     <?php endforeach; ?>
-        <?php foreach($order['OrderExtra'] as $extra): ?>
+    <?php foreach($order['OrderExtra'] as $extra): ?>
         <div class="row watch">
             <div class="image col-lg-6 col-md-6 col-sm-6 col-xs-4">
+                <?php if (!empty($extra['Item']['filenameThumb'])): ?>
+                    <?php echo $this->Html->image($extra['Item']['filenameThumb']); ?>
+                <?php endif; ?>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
-                <?php echo $extra['quantity']; ?> <?php echo $extra['Item']['name'] ?>
+                <?php echo $extra['quantity']; ?> - <?php echo $extra['Item']['name'] ?>
             </div>
             <div class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-3">
                 <?php echo $this->Number->currency($extra['quantity'] * $extra['Item']['price'], 'USD'); ?>
             </div>
         </div>
-        <?php endforeach; ?>
+    <?php endforeach; ?>
     <div class="row choose-ship">
         <div class="text-right col-lg-10 col-md-10 col-sm-10 col-xs-9">
             Shipping
