@@ -183,6 +183,11 @@ class OrdersController extends AppController {
                                 'item_id' => $item['Item']['id'],
                                 'quantity' => $item['Item']['ordered']
                             ];
+
+                            $newItemQuantity = $item['Item']['quantity'] - $item['Item']['ordered'];
+                            $this->Order->OrderExtra->Item->id = $item['Item']['id'];
+                            $this->Order->OrderExtra->Item->saveField('quantity', $newItemQuantity);
+                            $this->Order->OrderExtra->Item->clear();
                         }
                     }
 

@@ -283,6 +283,7 @@ class OrdersControllerTest extends ControllerTestCase {
      * Test checkout with an item.
      */
 	public function testCheckoutItem() {
+        $itemId = 1;
         $order = array(
             'stripeToken' => 'tok_5dC2WijiayVQOK',
             'Address' => array(
@@ -315,7 +316,7 @@ class OrdersControllerTest extends ControllerTestCase {
             ->will($this->returnValue(false));
         $Orders->Cart->expects($this->any())
             ->method('cartItemCount')
-            ->will($this->returnValue(1));
+            ->will($this->returnValue($itemId));
         $Orders->Cart->expects($this->any())
             ->method('cartItemIds')
             ->will($this->returnValue(array(1)));
@@ -336,6 +337,7 @@ class OrdersControllerTest extends ControllerTestCase {
             ->method('order')
             ->will($this->returnValue(true));
 
+        $itemBefore = $this->Order->OrderExtra->Item->findById($itemId);
         $this->testAction(
             '/orders/checkout',
             array(
@@ -350,7 +352,9 @@ class OrdersControllerTest extends ControllerTestCase {
                 'Order.created' => 'DESC',
             )
         ));
+        $itemAfter = $this->Order->OrderExtra->Item->findById($itemId);
 
+        $this->assertEquals($itemAfter['Item']['quantity'], --$itemBefore['Item']['quantity']);
         $this->assertEquals($order['Order']['email'], 'SandraPIrvin@armyspy.com');
         $this->assertEquals($order['Order']['shippingAmount'], 3);
         $this->assertEquals($order['Order']['id'], $order['OrderExtra'][0]['order_id']);
