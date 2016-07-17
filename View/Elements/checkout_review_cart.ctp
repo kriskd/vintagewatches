@@ -81,7 +81,7 @@
                 <div class="row hidden-xs visible-xxs">
                     <div class="col-xxs-8">
                         <strong>
-                            <?php echo h($item['Item']['description']); ?>
+                            <?php echo h($item['Item']['name']); ?>
                         </strong>
                     </div>
                     <div class="hidden-xs visible-xxs col-xxs-4">
@@ -109,7 +109,7 @@
                         <?php //echo h($watch['Watch']['stockId']); ?>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 hidden-xxs">
-                        <?= $item['Item']['ordered'] ?> - <?= h($item['Item']['description']) ?>
+                        <?= $item['Item']['ordered'] ?> - <?= h($item['Item']['name']) ?>
                     </div>
                     <div class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-2 col-xxs-4">
                         <?= h($this->Number->currency($item['Item']['subtotal'], 'USD')); ?>

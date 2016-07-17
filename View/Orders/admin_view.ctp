@@ -86,7 +86,7 @@
                     <?php //echo $this->Html->thumbPrimary($watch); ?>
                 </td>
                 <td></td>
-                <td><?php echo $extra['quantity']; ?> <?php echo $extra['Item']['description'] ?></td>
+                <td><?php echo $extra['quantity']; ?> <?php echo $extra['Item']['name'] ?></td>
                 <td class="text-right"><?php echo $this->Number->currency($extra['quantity'] * $extra['Item']['price'], 'USD'); ?></td>
             </tr>
         <?php endforeach; ?>
