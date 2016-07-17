@@ -42,10 +42,12 @@
     <?php endforeach; ?>
     <?php foreach($order['OrderExtra'] as $extra): ?>
         <div class="row watch">
-            <div class="image col-lg-6 col-md-6 col-sm-6 col-xs-4">
+            <div class="image col-lg-4 col-md-4 col-sm-4 col-xs-4">
                 <?php if (!empty($extra['Item']['filenameThumb'])): ?>
                     <?php echo $this->Html->image($extra['Item']['filenameThumb']); ?>
                 <?php endif; ?>
+            </div>
+            <div class="text-center col-lg-2 col-md-2 col-sm-2 hidden-xs">
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-5">
                 <?php echo $extra['quantity']; ?> - <?php echo $extra['Item']['name'] ?>
