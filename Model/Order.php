@@ -238,6 +238,9 @@ class Order extends AppModel {
                     )
                 ),
                 'Coupon',
+                'OrderExtra' => [
+                    'Item',
+                ],
             ),
             'order' => array(
                 'created' => 'DESC'
