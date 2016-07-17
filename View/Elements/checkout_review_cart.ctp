@@ -103,7 +103,9 @@
                             )); ?>
                     </div>
                     <div class="image col-lg-4 col-md-4 col-sm-4 col-xs-4 col-xxs-7">
-                        <?php echo $this->Html->image('bookcovermall.jpg', ['width' => 100, 'height' => 100]); ?>
+                        <?php if (!empty($item['Item']['filenameThumb'])): ?>
+                            <?php echo $this->Html->image($item['Item']['filenameThumb']); ?>
+                        <?php endif; ?>
                     </div>
                     <div class="text-center col-lg-2 col-md-2 col-sm-2 col-xs-2 hidden-xxs">
                         <?php //echo h($watch['Watch']['stockId']); ?>
