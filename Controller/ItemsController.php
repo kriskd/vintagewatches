@@ -85,10 +85,12 @@ class ItemsController extends AppController {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Item->save($this->request->data)) {
-				$this->Session->setFlash(__('The item has been saved.'), 'success');
+				$this->Session->setFlash(__('The item has been saved.'),
+                        'default', array('class' => 'alert alert-success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The item could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The item could not be saved. Please, try again.'),
+                        'default', array('class' => 'alert alert-danger'));
 			}
 		} else {
 			$options = array('conditions' => array('Item.' . $this->Item->primaryKey => $id));
