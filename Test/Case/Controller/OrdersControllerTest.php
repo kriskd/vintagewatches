@@ -331,7 +331,7 @@ class OrdersControllerTest extends ControllerTestCase {
                 'stripe_last4' => '4242',
                 'stripe_zip_check' => 'pass',
                 'stripe_cvc_check' => 'pass',
-                'stripe_amount' => '18300',
+                'stripe_amount' => '5295',
             )));
         $Orders->Emailer->expects($this->any())
             ->method('order')
@@ -359,6 +359,8 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->assertEquals($order['Order']['shippingAmount'], 3);
         $this->assertEquals($order['Order']['id'], $order['OrderExtra'][0]['order_id']);
         $this->assertEquals(1, $order['OrderExtra'][0]['item_id']);
+        $this->assertEquals(7, $order['OrderExtra'][0]['order_id']);
+        $this->assertEquals(49.95, $order['OrderExtra'][0]['price']);
         $this->assertEquals($order['Address'][0]['country'], 'US');
         $this->assertEquals($order['Payment']['stripe_id'], 'ch_5dBkC3pJMgqjkD');
         $this->assertEmpty($order['Watch']);
