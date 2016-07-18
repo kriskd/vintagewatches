@@ -38,8 +38,8 @@ class Item extends AppModel {
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
+				'allowEmpty' => true,
+				'required' => true,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
@@ -70,7 +70,7 @@ class Item extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
             'price' => array(
-                'rule' => array('comparison', 'greater', 0),
+                'rule' => array('comparison', '>', 0),
                 'message' => 'Price must be greater than 0.'
             )
 		),
