@@ -52,6 +52,28 @@ class Item extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+		'price' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+				'message' => 'Please enter a valid number.',
+				'allowEmpty' => false,
+				'required' => true,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+			'notBlank' => array(
+				'rule' => array('notBlank'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
+            'price' => array(
+                'rule' => array('comparison', 'greater', 0),
+                'message' => 'Price must be greater than 0.'
+            )
+		),
 	);
 
     public $actsAs = array(
