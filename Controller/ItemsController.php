@@ -29,7 +29,7 @@ class ItemsController extends AppController {
 
         $item = $this->Item->findById($id);
 
-        if (!$item || $item['Item']['active'] == 0) {
+        if (!$item || $item['Item']['active'] == 0 || $item['Item']['quantity'] < 1) {
             $this->Session->setFlash('This item is not available.', 'info');
 			return $this->redirect(array('controller' => 'pages', 'action' => 'home', 'display'));
         }
@@ -43,7 +43,15 @@ class ItemsController extends AppController {
             ));
         }
 
-		$this->set('item', $item);
+        if ($item['Item']['quantity'] < 10) {
+            for ($i = 1; $i <= $item['Item']['quantity']; $i++) {
+                $options[$i] = $i;
+            }
+        } else {
+            $options = array_combine(range(1, 10), range(1, 10));
+        }
+
+		$this->set(compact('item', 'options'));
 		$this->set(array('title' => $item['Item']['name']));
     }
 

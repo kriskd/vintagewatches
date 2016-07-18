@@ -15,17 +15,15 @@
                 </div>
                 <div class="row">
                     <p class="text-center bottom">
-                        <?php if ($item['Item']['active'] == 1 && $item['Item']['quantity'] > 0): ?>
-                            <?= $this->Form->create('Item'); ?>
-                            <?= $this->Form->input('quantity', [
-                                'class' => 'form-control',
-                                'options' => array_combine(range(1, 10), range(1, 10)),
-                            ]) ?>
-                            <?= $this->Form->submit('Add to Cart', [
-                                    'class' => 'btn btn-gold btn-lg',
-                                ]
-                            ); ?>
-                        <?php endif; ?>
+                        <?= $this->Form->create('Item'); ?>
+                        <?= $this->Form->input('quantity', [
+                            'class' => 'form-control',
+                            'options' => $options,
+                        ]) ?>
+                        <?= $this->Form->submit('Add to Cart', [
+                                'class' => 'btn btn-gold btn-lg',
+                            ]
+                        ); ?>
                     </p>
                 </div>
             </div>
