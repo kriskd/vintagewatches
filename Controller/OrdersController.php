@@ -181,7 +181,8 @@ class OrdersController extends AppController {
                         foreach ($this->cartItems as $item) {
                             $data['OrderExtra'][] = [
                                 'item_id' => $item['Item']['id'],
-                                'quantity' => $item['Item']['ordered']
+                                'quantity' => $item['Item']['ordered'],
+                                'price' => $item['Item']['price'],
                             ];
 
                             $newItemQuantity = $item['Item']['quantity'] - $item['Item']['ordered'];
