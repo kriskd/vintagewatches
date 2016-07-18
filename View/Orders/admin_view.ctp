@@ -83,11 +83,13 @@
                 <td>
                 </td>
                 <td>
-                    <?php //echo $this->Html->thumbPrimary($watch); ?>
+                    <?php if (!empty($extra['Item']['filenameThumb'])): ?>
+                        <?php echo $this->Html->image($extra['Item']['filenameThumb']); ?>
+                    <?php endif; ?>
                 </td>
                 <td></td>
                 <td><?php echo $extra['quantity']; ?> <?php echo $extra['Item']['name'] ?></td>
-                <td class="text-right"><?php echo $this->Number->currency($extra['quantity'] * $extra['Item']['price'], 'USD'); ?></td>
+                <td class="text-right"><?php echo $this->Number->currency($extra['quantity'] * $extra['price'], 'USD'); ?></td>
             </tr>
         <?php endforeach; ?>
         <tr class="total-row">

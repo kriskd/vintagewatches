@@ -44,10 +44,14 @@
     <?php endforeach; ?>
     <?php foreach($order['OrderExtra'] as $extra): ?>
         <tr style="padding: 5px">
-            <td></td>
+            <td>
+                <?php if (!empty($extra['Item']['filenameThumb'])): ?>
+                    <?php echo $this->Html->image($extra['Item']['filenameThumb']); ?>
+                <?php endif; ?>
+            </td>
             <td></td>
             <td><?php echo $extra['quantity']; ?> <?php echo $extra['Item']['name'] ?></td>
-            <td style="text-align: right"><?php echo $this->Number->currency($extra['quantity'] * $extra['Item']['price'], 'USD'); ?></td>
+            <td style="text-align: right"><?php echo $this->Number->currency($extra['quantity'] * $extra['price'], 'USD'); ?></td>
         </tr>
     <?php endforeach; ?>
     <tr style="padding: 5px">

@@ -53,7 +53,7 @@
                 <?php echo $extra['quantity']; ?> - <?php echo $extra['Item']['name'] ?>
             </div>
             <div class="text-right col-lg-2 col-md-2 col-sm-2 col-xs-3">
-                <?php echo $this->Number->currency($extra['quantity'] * $extra['Item']['price'], 'USD'); ?>
+                <?php echo $this->Number->currency($extra['quantity'] * $extra['price'], 'USD'); ?>
             </div>
         </div>
     <?php endforeach; ?>
