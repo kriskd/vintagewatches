@@ -310,7 +310,7 @@ class Coupon extends AppModel {
 		if (!empty($brand_id)) {
 			$prices = Hash::extract($watches, '{n}.Watch[brand_id='.$brand_id.'].price');
 		} else {
-            $itemPrices = Hash::extract($items, '{n}.Item.price');
+            $itemPrices = Hash::extract($items, '{n}.Item.subtotal');
 			$prices = array_merge($itemPrices, Hash::extract($watches, '{n}.Watch.price'));
 		}
 
