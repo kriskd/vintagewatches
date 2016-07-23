@@ -321,8 +321,8 @@ class OrdersController extends AppController {
             $couponEmail = $query['data']['Coupon']['email'];
             $couponCode = $query['data']['Coupon']['code'];
             if (!empty($couponEmail) && !empty($couponCode)) {
-                $coupon = $this->Order->Coupon->valid($couponCode, $couponEmail, $shipping, $this->cartWatches);
-                $couponAmount = $this->Cart->couponAmount($this->cartWatches, $shipping, $coupon);
+                $coupon = $this->Order->Coupon->valid($couponCode, $couponEmail, $shipping, $this->cartWatches, $this->cartItems);
+                $couponAmount = $this->Cart->couponAmount($this->cartWatches, $this->cartItems, $shipping, $coupon);
                 $this->set(array(
                     'couponAmount' => $couponAmount,
                     'coupon' => $coupon, // Contains error message if any
