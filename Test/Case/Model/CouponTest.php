@@ -26,6 +26,9 @@ class CouponTest extends CakeTestCase {
 		//'app.detects_order'
 	);
 
+    public $items = [];
+
+
 /**
  * setUp method
  *
@@ -35,6 +38,14 @@ class CouponTest extends CakeTestCase {
 		parent::setUp();
 		$this->Coupon = ClassRegistry::init('Coupon');
 		$this->Watch = ClassRegistry::init('Watch');
+        $this->items = [
+            [
+                'Item' => [
+                    'price' => '20.00',
+                    'subtotal' => '40.00'
+                ],
+            ],
+        ];
 	}
 
 /**
@@ -53,7 +64,12 @@ class CouponTest extends CakeTestCase {
         $result = $this->Coupon->valid('fixedgood', 'ClarenceAMartinez@teleworm.us', 8, $watches);
         $this->assertArrayHasKey('Coupon', $result);
     }
-    
+
+    public function testValidFixedItems() {
+        $result = $this->Coupon->valid('fixedgood', 'ClarenceAMartinez@teleworm.us', 3, [], $this->items);
+        $this->assertArrayHasKey('Coupon', $result);
+    }
+
     public function testValidPercentage() {
 		$watches = $this->Watch->getCartWatches([3,5]);
         $result = $this->Coupon->valid('percentagegood', 'ClarenceAMartinez@teleworm.us', 8, $watches);
@@ -74,27 +90,27 @@ class CouponTest extends CakeTestCase {
         $result = $this->Coupon->valid('assigned', 'ClarenceAMartinez@teleworm.us', 8, array(3,5));
         $this->assertEquals('This coupon is not valid.', $result['message']);
     }
-    
+
     public function testValidAssigned() {
         $result = $this->Coupon->valid('assigned', 'PhilipAShrum@jourrapide.com', 8, array(3,5));
         $this->assertArrayHasKey('Coupon', $result);
     }
-    
+
     public function testValidNotAvailable() {
         $result = $this->Coupon->valid('notavailable', 'ClarenceAMartinez@teleworm.us', 8, array(3,5));
         $this->assertEquals('This coupon is not valid.', $result['message']);
     }
-    
+
     public function testValidAvailable() {
         $result = $this->Coupon->valid('notavailable', 'PeterRHarris@teleworm.us', 8, array(3,5));
         $this->assertEquals('This coupon is not valid.', $result['message']);
     }
-    
+
     public function testValidExpired() {
         $result = $this->Coupon->valid('expired', 'ClarenceAMartinez@teleworm.us', 8, array(3,5));
         $this->assertEquals('This coupon is expired.', $result['message']);
     }
-    
+
     public function testValidBrand() {
 		$watches = $this->Watch->getCartWatches([3,5]);
         $result = $this->Coupon->valid('brand', 'ClarenceAMartinez@teleworm.us', 8, $watches);
@@ -129,5 +145,4 @@ class CouponTest extends CakeTestCase {
         $result = $this->Coupon->sumPrices($watches, []);
         $this->assertEquals(970, $result);
 	}
-
 }
