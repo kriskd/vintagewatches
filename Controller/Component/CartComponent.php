@@ -201,7 +201,7 @@ class CartComponent extends Component {
             return 0;
         }
         // Total eligible for coupon
-        $itemSubTotal = $this->getItemsSubTotal($items);
+        $itemSubTotal = empty($coupon['Coupon']['brand_id']) ? $this->getItemsSubTotal($items) : 0;
         $couponSubTotal = $itemSubTotal + $this->getSubTotal($watches, $coupon['Coupon']['brand_id']);
         switch ($coupon['Coupon']['type']) {
             case 'fixed':

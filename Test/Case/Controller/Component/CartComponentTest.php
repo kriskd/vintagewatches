@@ -348,6 +348,18 @@ class CartComponentTest extends CakeTestCase {
         $this->assertEquals($result, 10);
     }
 
+    public function testCouponAmountPercentageBrandItems() {
+        $coupon = array(
+            'Coupon' => array(
+                'type' => 'percentage',
+                'amount' => .1,
+                'brand_id' => 1,
+            )
+        );
+        $result = $this->Cart->couponAmount([], $this->items, 6, $coupon);
+        $this->assertEquals($result, 0);
+    }
+
     public function testCouponAmountFixedBrand1() {
         $coupon = array(
             'Coupon' => array(
