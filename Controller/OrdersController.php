@@ -112,7 +112,7 @@ class OrdersController extends AppController {
      */
     public function checkout() {
         if ($this->Cart->cartEmpty() == true){
-            $this->redirect(array('controller' => 'watches', 'action' => 'index'));
+            return $this->redirect(array('controller' => 'watches', 'action' => 'index'));
         }
 
         //Form submitted
@@ -151,8 +151,8 @@ class OrdersController extends AppController {
             if ($valid == true){
                 $couponAmount = 0;
                 if (!empty($couponCode) && !empty($couponEmail)) {
-                    $coupon = $this->Order->Coupon->valid($couponCode, $couponEmail, $shipping, $this->cartWatches);
-                    $couponAmount = $this->Cart->couponAmount($this->cartWatches, $shipping, $coupon);
+                    $coupon = $this->Order->Coupon->valid($couponCode, $couponEmail, $shipping, $this->cartWatches, $this->cartItems);
+                    $couponAmount = $this->Cart->couponAmount($this->cartWatches, $this->cartItems, $shipping, $coupon);
                 }
 
                 $watchesSubTotal = $this->Cart->getSubTotal($this->cartWatches);
