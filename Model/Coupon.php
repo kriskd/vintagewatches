@@ -222,7 +222,7 @@ class Coupon extends AppModel {
      * Is coupon valid for the user
      * @return bool
      */
-    public function valid($code, $email, $shipping, $cart) {
+    public function valid($code, $email, $shipping, $watches = [], $items = []) {
         if (empty($code) || empty($email)) return false;
 
         $coupon = $this->find('first', array(
@@ -260,7 +260,7 @@ class Coupon extends AppModel {
             );
         }
 
-        $subTotal = $this->sumWatchPrices($cart, $coupon['Coupon']['brand_id']);
+        $subTotal = $this->sumPrices($watches, $items, $coupon['Coupon']['brand_id']);
 
         // Coupon not for right brand
         if (!empty($coupon['Coupon']['brand_id'])) {
@@ -306,11 +306,12 @@ class Coupon extends AppModel {
      * @param array $cart The watch objects in the cart
      * @param int $brand_id
      */
-    public function sumWatchPrices($cart, $brand_id = null) {
+    public function sumPrices($watches, $items, $brand_id = null) {
 		if (!empty($brand_id)) {
-			$prices = Hash::extract($cart, '{n}.Watch[brand_id='.$brand_id.'].price');
+			$prices = Hash::extract($watches, '{n}.Watch[brand_id='.$brand_id.'].price');
 		} else {
-			$prices = Hash::extract($cart, '{n}.Watch.price');
+            $itemPrices = Hash::extract($items, '{n}.Item.price');
+			$prices = array_merge($itemPrices, Hash::extract($watches, '{n}.Watch.price'));
 		}
 
 		return array_sum($prices);
