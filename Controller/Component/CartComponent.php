@@ -164,9 +164,9 @@ class CartComponent extends Component {
      * $brand_id int Optional brand_id
      */
     public function getSubTotal($watches = array(), $brand_id = null) {
-        if(!empty($watches)){
+        if (!empty($watches)){
             return  array_reduce($watches, function($return, $item) use ($brand_id) {
-                if(isset($item['Watch']['price'])){
+                if (isset($item['Watch']['price'])){
                     if (empty($brand_id) || $brand_id == $item['Watch']['brand_id']) {
                         $return += $item['Watch']['price'];
                     }
@@ -174,7 +174,8 @@ class CartComponent extends Component {
                 }
             });
         }
-        return null;
+
+        return 0;
     }
 
     /**
@@ -188,16 +189,20 @@ class CartComponent extends Component {
     }
 
     /**
-     * $watches array Array of Watch objects
-     * $shipping int Shipping amount
-     * $coupon object
+     * Computes the value of the coupon.
+     *
+     * @param array $watches array Array of Watches
+     * @param array $items Array of Items
+     * @param int $shipping Shipping amount
+     * @param array $coupon The Coupon Array
      */
-    public function couponAmount($watches, $shipping, $coupon = array()) {
+    public function couponAmount($watches, $items, $shipping, $coupon = array()) {
         if (empty($coupon['Coupon'])) {
             return 0;
         }
         // Total eligible for coupon
-        $couponSubTotal = $this->getSubTotal($watches, $coupon['Coupon']['brand_id']);
+        $itemSubTotal = array_sum(Hash::extract($items, '{n}.Item.price'));
+        $couponSubTotal = $itemSubTotal + $this->getSubTotal($watches, $coupon['Coupon']['brand_id']);
         switch ($coupon['Coupon']['type']) {
             case 'fixed':
                 $couponAmount = $couponSubTotal + $shipping > $coupon['Coupon']['amount'] ? $coupon['Coupon']['amount'] : $couponSubTotal + $shipping;
@@ -208,6 +213,7 @@ class CartComponent extends Component {
             default:
                 $couponAmount = 0;
         }
+
         return $couponAmount;
     }
 
