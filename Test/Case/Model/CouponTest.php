@@ -119,14 +119,14 @@ class CouponTest extends CakeTestCase {
         $this->assertContains('Order total must be at least', $result['message']);
     }
 
-/**
- * testSumWatchPrices method
- *
- * @return void
- */
-	public function testSumWatchPrices() {
+    /**
+     * testSumPrices method
+     *
+     * @return void
+     */
+	public function testSumPrices() {
 		$watches = $this->Watch->getCartWatches([3,5]);
-        $result = $this->Coupon->sumWatchPrices($watches);
+        $result = $this->Coupon->sumPrices($watches, []);
         $this->assertEquals(970, $result);
 	}
 
