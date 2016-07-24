@@ -1,11 +1,18 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Detect Model
+ * Zone Model
  *
- * @property Order $Order
+ * @property Shipping $Shipping
  */
-class Detect extends AppModel {
+class Zone extends AppModel {
+
+/**
+ * Display field
+ *
+ * @var string
+ */
+	public $displayField = 'name';
 
 /**
  * Validation rules
@@ -13,7 +20,7 @@ class Detect extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'id' => array(
+		'code' => array(
 			'notBlank' => array(
 				'rule' => array('notBlank'),
 				//'message' => 'Your custom message here',
@@ -23,7 +30,7 @@ class Detect extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'method' => array(
+		'name' => array(
 			'notBlank' => array(
 				'rule' => array('notBlank'),
 				//'message' => 'Your custom message here',
@@ -43,11 +50,11 @@ class Detect extends AppModel {
  * @var array
  */
 	public $hasAndBelongsToMany = array(
-		'Order' => array(
-			'className' => 'Order',
-			'joinTable' => 'detects_orders',
-			'foreignKey' => 'detect_id',
-			'associationForeignKey' => 'order_id',
+		'Shipping' => array(
+			'className' => 'Shipping',
+			'joinTable' => 'shippings_zones',
+			'foreignKey' => 'zone_id',
+			'associationForeignKey' => 'shipping_id',
 			'unique' => 'keepExisting',
 			'conditions' => '',
 			'fields' => '',

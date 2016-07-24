@@ -49,8 +49,8 @@ class Watch extends AppModel {
             ),
         ),
         'brand_id' => array(
-            'notempty' => array(
-                'rule' => array('notempty'),
+            'notBlank' => array(
+                'rule' => array('notBlank'),
                 'allowEmpty' => false,
                 'message' => 'Please choose a brand.'
             ),
@@ -66,8 +66,8 @@ class Watch extends AppModel {
             ),
         ),
         'name' => array(
-            'notempty' => array(
-                'rule' => array('notempty'),
+            'notBlank' => array(
+                'rule' => array('notBlank'),
                 'message' => 'Please enter a watch name.'
             ),
         ),
@@ -256,8 +256,7 @@ class Watch extends AppModel {
     /**
      * $ids array Array of watch Ids
      */
-    public function getCartWatches($ids)
-    {
+    public function getCartWatches($ids) {
         return $this->find('all', array(
             'conditions' => array('Watch.id' => $ids),
             'fields' => array('id', 'brand_id', 'stockId', 'price', 'name', 'active'),

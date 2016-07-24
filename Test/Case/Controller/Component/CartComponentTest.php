@@ -39,7 +39,7 @@ class CartComponentTest extends CakeTestCase {
         'app.cake_session',
     );
 
-    public $items = array(
+    public $watches = array(
         0 => array(
             'Watch' => array(
                 'price' => 100,
@@ -60,6 +60,8 @@ class CartComponentTest extends CakeTestCase {
         ),
     );
 
+    public $items = [];
+
 /**
  * setUp method
  *
@@ -75,6 +77,14 @@ class CartComponentTest extends CakeTestCase {
         $this->Controller->Components->init($this->Controller);
         $this->Cart->startup($this->Controller);
         //$this->Controller->Session = new SessionComponent($Collection);
+        $this->items = [
+            [
+                'Item' => [
+                    'price' => '20.00',
+                    'subtotal' => '40.00'
+                ],
+            ],
+        ];
 	}
 
 /**
@@ -94,12 +104,12 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testEmptyCart() {
-        $this->Controller->Session->write('Cart.items', [3,5]);
+        $this->Controller->Session->write('Cart.watches', [3,5]);
         $this->Cart->initialize($this->Controller);
-        $this->assertEquals([3,5], $this->Cart->items);
-        $this->assertEquals([3,5], $this->Controller->Session->read('Cart.items'));
+        $this->assertEquals([3,5], $this->Cart->watches);
+        $this->assertEquals([3,5], $this->Controller->Session->read('Cart.watches'));
         $this->Cart->emptyCart();
-        $this->assertEmpty($this->Cart->items);
+        $this->assertEmpty($this->Cart->watches);
         $this->assertEmpty($this->Controller->Session->read('Cart'));
 	}
 
@@ -109,47 +119,47 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testCartNotEmpty() {
-        $this->Controller->Session->write('Cart.items', [3,5]);
+        $this->Controller->Session->write('Cart.watches', [3,5]);
         $this->Cart->initialize($this->Controller);
         $result = $this->Cart->cartEmpty();
         $this->assertFalse($result);
 	}
 
 	public function testCartEmpty() {
-        $this->Controller->Session->write('Cart.items', []);
+        $this->Controller->Session->write('Cart.watches', []);
         $this->Cart->initialize($this->Controller);
         $result = $this->Cart->cartEmpty();
         $this->assertTrue($result);
 	}
 
 /**
- * testCartItemCount method
+ * testCartWatchCount method
  *
  * @return void
  */
-	public function testCartItemCount() {
-        $this->Controller->Session->write('Cart.items', [3,5]);
+	public function testCartWatchCount() {
+        $this->Controller->Session->write('Cart.watches', [3,5]);
         $this->Cart->initialize($this->Controller);
-        $result = $this->Cart->cartItemCount();
+        $result = $this->Cart->cartWatchCount();
         $this->assertEquals(2, $result);
 	}
 
-	public function testCartItemCountEmpty() {
-        $this->Controller->Session->write('Cart.items', null);
+	public function testCartWatchCountEmpty() {
+        $this->Controller->Session->write('Cart.watches', null);
         $this->Cart->initialize($this->Controller);
-        $result = $this->Cart->cartItemCount();
+        $result = $this->Cart->cartWatchCount();
         $this->assertEmpty($result);
 	}
 
 /**
- * testCartItemIds method
+ * testCartWatchIds method
  *
  * @return void
  */
-	public function testCartItemIds() {
-        $this->Controller->Session->write('Cart.items', [3,5]);
+	public function testCartWatchIds() {
+        $this->Controller->Session->write('Cart.watches', [3,5]);
         $this->Cart->initialize($this->Controller);
-        $result = $this->Cart->cartItemIds();
+        $result = $this->Cart->cartWatchIds();
         $this->assertEquals([3,5], $result);
 	}
 
@@ -160,7 +170,7 @@ class CartComponentTest extends CakeTestCase {
  */
 	public function testAdd() {
 	    $this->Cart->add(3);
-        $this->assertEquals([3], $this->Controller->Session->read('Cart.items'));
+        $this->assertEquals([3], $this->Controller->Session->read('Cart.watches'));
 	}
 
 /**
@@ -169,16 +179,17 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testRemove() {
-        $this->Controller->Session->write('Cart.items', [3,5]);
+        $this->Controller->Session->write('Cart.watches', [3,5]);
         $this->Cart->initialize($this->Controller);
-        $this->Cart->remove(3);
-        $this->assertEquals([5], $this->Controller->Session->read('Cart.items'));
+        $this->Cart->remove('Watch', 3);
+        $this->assertEquals([5], $this->Controller->Session->read('Cart.watches'));
 	}
 
     public function testRemoveFail() {
+        $this->Controller->Session->destroy('Cart');
         $this->Cart->initialize($this->Controller);
-        $this->Cart->remove(3);
-        $this->assertEmpty($this->Controller->Session->read('Cart.items'));
+        $this->Cart->remove('Watch', 3);
+        $this->assertEmpty($this->Controller->Session->read('Cart.watches'));
     }
 
 /**
@@ -188,7 +199,7 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testInCart() {
-        $this->Controller->Session->write('Cart.items', [3,5]);
+        $this->Controller->Session->write('Cart.watches', [3,5]);
         $this->Cart->initialize($this->Controller);
         $result = $this->Cart->inCart(3);
         $this->assertTrue($result);
@@ -200,6 +211,8 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testGetShippingAmount() {
+        $this->Controller->Session->write('Cart.watches', [3,5]);
+        $this->Cart->initialize($this->Controller);
 	    $result = $this->Cart->getShippingAmount('us');
         $this->assertEquals(8, $result);
 	    $result = $this->Cart->getShippingAmount('ca');
@@ -237,12 +250,12 @@ class CartComponentTest extends CakeTestCase {
  * @return void
  */
 	public function testGetSubTotal() {
-        $result = $this->Cart->getSubTotal($this->items);
+        $result = $this->Cart->getSubTotal($this->watches);
         $this->assertEqual($result, 225);
 	}
 
     public function testGetSubTotalBrand() {
-        $result = $this->Cart->getSubTotal($this->items, 1);
+        $result = $this->Cart->getSubTotal($this->watches, 1);
         $expected = 100;
         $this->assertEquals($result, $expected);
     }
@@ -254,7 +267,7 @@ class CartComponentTest extends CakeTestCase {
  */
 	public function testCouponAmount() {
         $shipping = 8;
-        $result = $this->Cart->couponAmount($this->items, $shipping);
+        $result = $this->Cart->couponAmount($this->watches, $this->items, $shipping);
         $this->assertEquals($result, 0);
 	}
 
@@ -267,8 +280,21 @@ class CartComponentTest extends CakeTestCase {
             )
         );
         $shipping = 8;
-        $result = $this->Cart->couponAmount($this->items, $shipping, $coupon);
+        $result = $this->Cart->couponAmount($this->watches, [], $shipping, $coupon);
         $this->assertEquals($result, 10);
+    }
+
+    public function testCouponAmountFixedItems() {
+        $couponAmount = 30;
+        $coupon = array(
+            'Coupon' => array(
+                'type' => 'fixed',
+                'amount' => $couponAmount,
+                'brand_id' => null,
+            )
+        );
+        $result = $this->Cart->couponAmount([], $this->items, 3, $coupon);
+        $this->assertEquals($result, $couponAmount);
     }
 
     public function testCouponAmountBigFixed() {
@@ -280,7 +306,7 @@ class CartComponentTest extends CakeTestCase {
             )
         );
         $shipping = 8;
-        $result = $this->Cart->couponAmount($this->items, $shipping, $coupon);
+        $result = $this->Cart->couponAmount($this->watches, [], $shipping, $coupon);
         $this->assertEquals($result, 233);
     }
 
@@ -293,10 +319,22 @@ class CartComponentTest extends CakeTestCase {
             )
         );
         $shipping = 8;
-        $result = $this->Cart->couponAmount($this->items, $shipping, $coupon);
+        $result = $this->Cart->couponAmount($this->watches, [], $shipping, $coupon);
         $this->assertEquals($result, 22.5);
     }
-    
+
+    public function testCouponAmountPercentageItems() {
+        $coupon = array(
+            'Coupon' => array(
+                'type' => 'percentage',
+                'amount' => .1,
+                'brand_id' => null,
+            )
+        );
+        $result = $this->Cart->couponAmount([], $this->items, 6, $coupon);
+        $this->assertEquals($result, 4);
+    }
+
     public function testCouponAmountPercentageBrand() {
         $coupon = array(
             'Coupon' => array(
@@ -306,10 +344,22 @@ class CartComponentTest extends CakeTestCase {
             )
         );
         $shipping = 8;
-        $result = $this->Cart->couponAmount($this->items, $shipping, $coupon);
+        $result = $this->Cart->couponAmount($this->watches, [], $shipping, $coupon);
         $this->assertEquals($result, 10);
     }
-    
+
+    public function testCouponAmountPercentageBrandItems() {
+        $coupon = array(
+            'Coupon' => array(
+                'type' => 'percentage',
+                'amount' => .1,
+                'brand_id' => 1,
+            )
+        );
+        $result = $this->Cart->couponAmount([], $this->items, 6, $coupon);
+        $this->assertEquals($result, 0);
+    }
+
     public function testCouponAmountFixedBrand1() {
         $coupon = array(
             'Coupon' => array(
@@ -319,10 +369,10 @@ class CartComponentTest extends CakeTestCase {
             )
         );
         $shipping = 8;
-        $result = $this->Cart->couponAmount($this->items, $shipping, $coupon);
+        $result = $this->Cart->couponAmount($this->watches, [], $shipping, $coupon);
         $this->assertEquals($result, 108);
     }
-    
+
     public function testCouponAmountFixedBrand2() {
         $coupon = array(
             'Coupon' => array(
@@ -332,10 +382,10 @@ class CartComponentTest extends CakeTestCase {
             )
         );
         $shipping = 8;
-        $result = $this->Cart->couponAmount($this->items, $shipping, $coupon);
+        $result = $this->Cart->couponAmount($this->watches, [], $shipping, $coupon);
         $this->assertEquals($result, 110);
     }
-    
+
     /**
      * Test bad coupon type
      */
@@ -348,12 +398,12 @@ class CartComponentTest extends CakeTestCase {
             )
         );
         $shipping = 8;
-        $result = $this->Cart->couponAmount($this->items, $shipping, $coupon);
+        $result = $this->Cart->couponAmount($this->watches, [], $shipping, $coupon);
         $this->assertEmpty($result);
     }
 
     public function testStripeDescription() {
-        $result = $this->Cart->stripeDescription($this->items);
+        $result = $this->Cart->stripeDescription($this->watches, []);
         $this->assertEquals('foo,bar', $result);
     }
 

@@ -29,8 +29,8 @@ class Address extends AppModel {
  */
 	public $validate = array(
 		'id' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
+			'notBlank' => array(
+				'rule' => array('notBlank'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -55,8 +55,8 @@ class Address extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-			'notempty' => array(
-				'rule' => array('notempty'),
+			'notBlank' => array(
+				'rule' => array('notBlank'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -65,8 +65,8 @@ class Address extends AppModel {
 			),
 		),
                 'foreign_id' => array(
-                        'notempty' => array(
-				'rule' => array('notempty'),
+                        'notBlank' => array(
+				'rule' => array('notBlank'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -91,8 +91,8 @@ class Address extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-			'notempty' => array(
-				'rule' => array('notempty'),
+			'notBlank' => array(
+				'rule' => array('notBlank'),
 				//'message' => 'Your custom message here',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -101,8 +101,8 @@ class Address extends AppModel {
 			),
 		),
 		'firstName' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
+			'notBlank' => array(
+				'rule' => array('notBlank'),
 				'message' => 'Please enter your first name.',
 				//'allowEmpty' => false,
 				//'required' => true,
@@ -111,8 +111,8 @@ class Address extends AppModel {
 			),
 		),
 		'lastName' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
+			'notBlank' => array(
+				'rule' => array('notBlank'),
 				'message' => 'Please enter your last name.',
 				//'allowEmpty' => false,
 				//'required' => true,
@@ -121,8 +121,8 @@ class Address extends AppModel {
 			),
 		),
 		'address1' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
+			'notBlank' => array(
+				'rule' => array('notBlank'),
 				'message' => 'Please enter your address.',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -131,8 +131,8 @@ class Address extends AppModel {
 			),
 		),
 		'city' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
+			'notBlank' => array(
+				'rule' => array('notBlank'),
 				'message' => 'Please enter a city.',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -142,8 +142,8 @@ class Address extends AppModel {
 		),
         //Set required to false since country doesn't have a state
         'state' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
+			'notBlank' => array(
+				'rule' => array('notBlank'),
 				'message' => 'Please select your state or province.',
 				//'allowEmpty' => false,
 				'required' => false,
@@ -152,8 +152,8 @@ class Address extends AppModel {
 			),
 		),
 		'postalCode' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
+			'notBlank' => array(
+				'rule' => array('notBlank'),
 				'message' => 'Please enter a postal code.',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -162,8 +162,8 @@ class Address extends AppModel {
 			),
 		),
 		'country' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
+			'notBlank' => array(
+				'rule' => array('notBlank'),
 				'message' => 'Country must be selected from dropdown options. Type any portion of the country name and choose your country from the options that appear.',
 				//'allowEmpty' => false,
 				//'required' => false,
@@ -172,8 +172,8 @@ class Address extends AppModel {
 			),
 		),
                 'countryName' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
+			'notBlank' => array(
+				'rule' => array('notBlank'),
 				'message' => 'Please enter a country.',
 				//'allowEmpty' => false,
 				//'required' => false,

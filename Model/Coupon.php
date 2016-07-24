@@ -30,8 +30,8 @@ class Coupon extends AppModel {
  */
 	public $validate = array(
 		'code' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+			'notBlank' => array(
+				'rule' => array('notBlank'),
 				'message' => 'Enter a coupon code.',
 				'allowEmpty' => false,
 				'required' => true,
@@ -52,8 +52,8 @@ class Coupon extends AppModel {
             )
         ),*/
 		'type' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+			'notBlank' => array(
+				'rule' => array('notBlank'),
 				'message' => 'Please choose a coupon type.',
 				'allowEmpty' => false,
 				'required' => true,
@@ -66,8 +66,8 @@ class Coupon extends AppModel {
             ),
 		),
 		'amount' => array(
-			'notEmpty' => array(
-				'rule' => array('notEmpty'),
+			'notBlank' => array(
+				'rule' => array('notBlank'),
 				'message' => 'Enter coupon amount.',
 				'allowEmpty' => false,
 				'required' => true,
@@ -84,8 +84,8 @@ class Coupon extends AppModel {
             ),
 		),
         'total' => array(
-            'notEmpty' => array(
-                'rule' => array('notEmpty'),
+            'notBlank' => array(
+                'rule' => array('notBlank'),
                 'message' => 'Enter the total number of coupons available.',
                 'allowEmpty' => false,
                 'required' => true,
@@ -222,7 +222,7 @@ class Coupon extends AppModel {
      * Is coupon valid for the user
      * @return bool
      */
-    public function valid($code, $email, $shipping, $cart) {
+    public function valid($code, $email, $shipping, $watches = [], $items = []) {
         if (empty($code) || empty($email)) return false;
 
         $coupon = $this->find('first', array(
@@ -260,7 +260,7 @@ class Coupon extends AppModel {
             );
         }
 
-        $subTotal = $this->sumWatchPrices($cart, $coupon['Coupon']['brand_id']);
+        $subTotal = $this->sumPrices($watches, $items, $coupon['Coupon']['brand_id']);
 
         // Coupon not for right brand
         if (!empty($coupon['Coupon']['brand_id'])) {
@@ -306,11 +306,12 @@ class Coupon extends AppModel {
      * @param array $cart The watch objects in the cart
      * @param int $brand_id
      */
-    public function sumWatchPrices($cart, $brand_id = null) {
+    public function sumPrices($watches, $items, $brand_id = null) {
 		if (!empty($brand_id)) {
-			$prices = Hash::extract($cart, '{n}.Watch[brand_id='.$brand_id.'].price');
+			$prices = Hash::extract($watches, '{n}.Watch[brand_id='.$brand_id.'].price');
 		} else {
-			$prices = Hash::extract($cart, '{n}.Watch.price');
+            $itemPrices = Hash::extract($items, '{n}.Item.subtotal');
+			$prices = array_merge($itemPrices, Hash::extract($watches, '{n}.Watch.price'));
 		}
 
 		return array_sum($prices);

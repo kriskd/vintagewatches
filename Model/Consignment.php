@@ -15,8 +15,8 @@ class Consignment extends AppModel {
  */
 	public $validate = array(
         'owner_id' => array(
-            'notempty' => array(
-                'rule' => array('notempty'),
+            'notBlank' => array(
+                'rule' => array('notBlank'),
                 'allowEmpty' => false,
                 'message' => 'Please choose an owner.'
             ),

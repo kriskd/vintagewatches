@@ -42,12 +42,18 @@ class NavigationHelper extends AppHelper
                 array('controller' => 'ebays', 'action' => 'index', 'admin' => true),
             '<span class="glyphicon glyphicon-cog"></span> Watches' =>
                 array('controller' => 'watches', 'action' => 'index', 'admin' => true),
+            '<span class="glyphicon glyphicon-list-alt"></span> Items' =>
+                array('controller' => 'items', 'action' => 'index', 'admin' => true),
             '<span class="glyphicon glyphicon-star"></span> Brands' =>
                 array('controller' => 'brands', 'action' => 'index', 'admin' => true),
             '<span class="glyphicon glyphicon-road"></span> Sources' =>
                 array('controller' => 'sources', 'action' => 'index', 'admin' => true),
             '<span class="glyphicon glyphicon-sunglasses"></span> Owners' =>
                 array('controller' => 'owners', 'action' => 'index', 'admin' => true),
+            /*
+            '<span class="glyphicon glyphicon-flash"></span> Shipping Options' =>
+                array('controller' => 'shippings', 'action' => 'index', 'admin' => true),
+            */
             '<span class="glyphicon glyphicon-book"></span> Pages' =>
                 array('controller' => 'pages', 'action' => 'index', 'admin' => true),
             '<span class="glyphicon glyphicon-envelope"></span> Contacts' =>

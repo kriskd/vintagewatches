@@ -5,7 +5,7 @@
                                                         'action' => 'add', 'admin' => 'true'
                                                     ),
                                                         array(
-                                                        'class' => 'btn btn-primary add-invoice'
+                                                        'class' => 'btn btn-primary admin-add'
                                                     )
                                         ); ?>
         </div>

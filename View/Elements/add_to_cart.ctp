@@ -1,4 +1,4 @@
-<?php if(in_array($watch['Watch']['id'], $cartItemIds)): ?>
+<?php if(in_array($watch['Watch']['id'], $cartWatchIds)): ?>
     <span class="label label-warning">This item is in your cart</span>
 <?php else: ?>
     <?php echo $this->Html->link('Add to Cart',

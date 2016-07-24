@@ -217,7 +217,7 @@ $(document).ready(function(){
             $('#Address' + addressId + 'State').attr('required', 'required').parent('.input').show();
         }
     });
-    
+
     /**
      * Check if a country is selected
      * Enable/disable submit button
@@ -226,20 +226,22 @@ $(document).ready(function(){
     if ($('.select-country input:radio').is(':checked')) {
         var country = $('.select-country input:radio:checked').val();
         computeTotal();
+        priorityUpgrade();
         getShippingChoice();
     }
-    
+
     /**
      * Action for selecting a country
      */
     $('.select-country input').change(function(){
+        priorityUpgrade();
         //Uncheck the shipping option radios
         $('.shipping .radio input').prop('checked', false);
         //Remove shipping forms
         $('.address-forms').empty();
         //Hide special order instructions
         $('.shipping-instructions').hide();
-        //Disable submit 
+        //Disable submit
         $('.submit-payment').attr('disabled', 'disabled');
         //Show shipping block
         if ($('.checkout .shipping .shipping-inner').length < 1) {
@@ -249,6 +251,34 @@ $(document).ready(function(){
         $('.address').removeClass('show').addClass('hide');
         $('.credit-card-order').removeClass('show').addClass('hide');
     });
+
+    // Handle upgrade shipping checkbox
+    $(document).on('change', '#OrderUpgradeShipping', function() {
+      if ($(this).is(':checked')) {
+        $('.upgrade-amount').removeClass('hidden');
+      } else {
+        $('.upgrade-amount').addClass('hidden');
+      }
+    });
+
+    // Show priority shipping upgrade option if cart only has Items in it and no Watches
+    function priorityUpgrade() {
+      var country = $('.select-country input:radio:checked').val();
+      $.ajax({
+        url: '/orders/priorityUpgrade',
+        data: {'country' : country},
+        type: 'get',
+        dataType: 'html',
+        beforeSend: function() {
+          $('.upgrade-shipping').remove();
+        },
+        success: function(html) {
+          if (html.length > 0 && $('.upgrade-shipping').length == 0) {
+            $('.choose-ship').append(html);
+          }
+        }
+      });
+    }
 
     function getShippingChoice() {
       $.ajax({
@@ -265,7 +295,7 @@ $(document).ready(function(){
         success: function(data) {
           $('.checkout .shipping .progress').hide();
           $('.checkout .shipping').append(data).find('.launch-tooltip').tooltip();
-          if ($('.shipping .radio input').is(':checked')) { 
+          if ($('.shipping .radio input').is(':checked')) {
             showAddressAndPayment();
           }
         }
@@ -284,7 +314,7 @@ $(document).ready(function(){
     $('#CouponEmail').on('keyup', function() {
       var couponEmail = $(this).val();
       if (couponEmail.length > 0) {
-        $('#OrderEmail').val(couponEmail); 
+        $('#OrderEmail').val(couponEmail);
       }
     });
     // Only set Coupon email based on order email if Coupon email not empty
@@ -328,25 +358,24 @@ $(document).ready(function(){
         }
       });
     }
-   
+
     // Show address fields on shipping option select
     $(document).on('change', '.shipping .radio input', function(){
       //Enable the submit button
       $('.submit-payment').prop('disabled', false);
       var country = $('.select-country input:radio:checked').val();
-      var shippingOption = $(this).val(); 
+      var shippingOption = $(this).val();
       getAddressForm(country, shippingOption);
       //Show address and credit card blocks
       $('.address').removeClass('hide').addClass('show');
       $('.credit-card-order').removeClass('hide').addClass('show');
     });
-    
+
     // Only for checkout page
     if ($('.shipping .radio input').length>1) {
-      if ($('.shipping .radio input').is(':checked')) { 
+      if ($('.shipping .radio input').is(':checked')) {
         showAddressAndPayment();
-      }
-      else { 
+      } else {
         //Hide special order instructions
         $('.shipping-instructions').hide();
         //Disable submit if no shipping option selected

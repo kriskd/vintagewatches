@@ -21,6 +21,7 @@ class OrdersControllerTest extends ControllerTestCase {
 	public $fixtures = array(
 		'app.watch',
 		'app.order',
+        'app.order_extra',
 		'app.coupon',
 		'app.brand',
 		'app.payment',
@@ -36,6 +37,9 @@ class OrdersControllerTest extends ControllerTestCase {
 		'app.page',
         //'app.content',
         'app.region',
+        'app.item',
+        'app.shipping',
+        'app.items_shipping',
         'app.cake_session',
 	);
 
@@ -197,11 +201,11 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->assertContains('/orders', $this->headers['Location']);
     }
 
-/**
- * testCheckout method
- *
- * @return void
- */
+    /**
+     * testCheckout method
+     *
+     * @return void
+     */
 	public function testCheckout() {
         $order = array(
             'stripeToken' => 'tok_5dC2WijiayVQOK',
@@ -225,7 +229,7 @@ class OrdersControllerTest extends ControllerTestCase {
         $Orders = $this->generate('Orders', array(
             'components' => array(
                 'Session',
-                'Cart' => array('cartEmpty', 'cartItemCount', 'cartItemIds'),
+                'Cart' => array('cartEmpty', 'cartWatchCount', 'cartWatchIds'),
                 'Stripe.Stripe' => array('charge'),
                 'Emailer' => array('order'),
             )
@@ -234,10 +238,10 @@ class OrdersControllerTest extends ControllerTestCase {
             ->method('cartEmpty')
             ->will($this->returnValue(false));
         $Orders->Cart->expects($this->any())
-            ->method('cartItemCount')
+            ->method('cartWatchCount')
             ->will($this->returnValue(1));
         $Orders->Cart->expects($this->any())
-            ->method('cartItemIds')
+            ->method('cartWatchIds')
             ->will($this->returnValue(array(3)));
         $Orders->Stripe->expects($this->any())
             ->method('charge')
@@ -256,9 +260,9 @@ class OrdersControllerTest extends ControllerTestCase {
         $this->testAction(
             '/orders/checkout',
             array(
-                'data' => $order, 
+                'data' => $order,
                 'method' => 'post',
-                'return' => 'vars', 
+                'return' => 'vars',
             )
         );
 
@@ -269,9 +273,97 @@ class OrdersControllerTest extends ControllerTestCase {
         ));
 
         $this->assertEquals($order['Order']['email'], 'SandraPIrvin@armyspy.com');
+        $this->assertEquals($order['Order']['shippingAmount'], 8);
         $this->assertEquals($order['Address'][0]['country'], 'US');
         $this->assertEquals($order['Payment']['stripe_id'], 'ch_5dBkC3pJMgqjkD');
         $this->assertEquals($order['Watch'][0]['id'], 3);
+	}
+
+    /**
+     * Test checkout with an item.
+     */
+	public function testCheckoutItem() {
+        $itemId = 1;
+        $order = array(
+            'stripeToken' => 'tok_5dC2WijiayVQOK',
+            'Address' => array(
+                'select-country' => 'us',
+                'billing' => $this->address,
+            ),
+            'Coupon' => array(
+                'email' => '',
+                'code' => ''
+            ),
+            'Shipping' => array(
+                'option' => 'billing'
+            ),
+            'Order' => array(
+                'email' => 'SandraPIrvin@armyspy.com',
+                'phone' => '503-326-9436',
+                'notes' => ''
+            )
+        );
+        $Orders = $this->generate('Orders', array(
+            'components' => array(
+                'Session',
+                'Cart' => array('cartEmpty', 'cartItemCount', 'cartItemIds', 'cartWatchIds'),
+                'Stripe.Stripe' => array('charge'),
+                'Emailer' => array('order'),
+            )
+        ));
+        $Orders->Cart->expects($this->any())
+            ->method('cartEmpty')
+            ->will($this->returnValue(false));
+        $Orders->Cart->expects($this->any())
+            ->method('cartItemCount')
+            ->will($this->returnValue($itemId));
+        $Orders->Cart->expects($this->any())
+            ->method('cartItemIds')
+            ->will($this->returnValue(array(1)));
+        $Orders->Cart->expects($this->any())
+            ->method('cartWatchIds')
+            ->will($this->returnValue([]));
+        $Orders->Stripe->expects($this->any())
+            ->method('charge')
+            ->will($this->returnValue(array(
+                'stripe_paid' => 1,
+                'stripe_id' => 'ch_5dBkC3pJMgqjkD',
+                'stripe_last4' => '4242',
+                'stripe_zip_check' => 'pass',
+                'stripe_cvc_check' => 'pass',
+                'stripe_amount' => '5295',
+            )));
+        $Orders->Emailer->expects($this->any())
+            ->method('order')
+            ->will($this->returnValue(true));
+
+        $itemBefore = $this->Order->OrderExtra->Item->findById($itemId);
+        $this->testAction(
+            '/orders/checkout',
+            array(
+                'data' => $order,
+                'method' => 'post',
+                'return' => 'vars',
+            )
+        );
+
+        $order = $this->Order->find('first', array(
+            'order' => array(
+                'Order.created' => 'DESC',
+            )
+        ));
+        $itemAfter = $this->Order->OrderExtra->Item->findById($itemId);
+
+        $this->assertEquals($itemAfter['Item']['quantity'], --$itemBefore['Item']['quantity']);
+        $this->assertEquals($order['Order']['email'], 'SandraPIrvin@armyspy.com');
+        $this->assertEquals($order['Order']['shippingAmount'], 3);
+        $this->assertEquals($order['Order']['id'], $order['OrderExtra'][0]['order_id']);
+        $this->assertEquals(1, $order['OrderExtra'][0]['item_id']);
+        $this->assertEquals(7, $order['OrderExtra'][0]['order_id']);
+        $this->assertEquals(49.95, $order['OrderExtra'][0]['price']);
+        $this->assertEquals($order['Address'][0]['country'], 'US');
+        $this->assertEquals($order['Payment']['stripe_id'], 'ch_5dBkC3pJMgqjkD');
+        $this->assertEmpty($order['Watch']);
 	}
 
 	public function testCheckoutNoState() {
@@ -298,7 +390,7 @@ class OrdersControllerTest extends ControllerTestCase {
         $Orders = $this->generate('Orders', array(
             'components' => array(
                 'Session',
-                'Cart' => array('cartEmpty', 'cartItemCount', 'cartItemIds'),
+                'Cart' => array('cartEmpty', 'cartWatchCount', 'cartWatchIds'),
                 'Stripe.Stripe' => array('charge'),
             )
         ));
@@ -306,10 +398,10 @@ class OrdersControllerTest extends ControllerTestCase {
             ->method('cartEmpty')
             ->will($this->returnValue(false));
         $Orders->Cart->expects($this->any())
-            ->method('cartItemCount')
+            ->method('cartWatchCount')
             ->will($this->returnValue(1));
         $Orders->Cart->expects($this->any())
-            ->method('cartItemIds')
+            ->method('cartWatchIds')
             ->will($this->returnValue(array(3)));
 
         $results = $this->testAction(
@@ -355,7 +447,7 @@ class OrdersControllerTest extends ControllerTestCase {
         $Orders = $this->generate('Orders', array(
             'components' => array(
                 'Session',
-                'Cart' => array('cartEmpty', 'cartItemCount', 'cartItemIds'),
+                'Cart' => array('cartEmpty', 'cartWatchCount', 'cartWatchIds'),
                 'Stripe.Stripe' => array('charge'),
                 'Emailer' => array('order'),
             )
@@ -364,10 +456,10 @@ class OrdersControllerTest extends ControllerTestCase {
             ->method('cartEmpty')
             ->will($this->returnValue(false));
         $Orders->Cart->expects($this->any())
-            ->method('cartItemCount')
+            ->method('cartWatchCount')
             ->will($this->returnValue(1));
         $Orders->Cart->expects($this->any())
-            ->method('cartItemIds')
+            ->method('cartWatchIds')
             ->will($this->returnValue(array(3)));
         $Orders->Stripe->expects($this->any())
             ->method('charge')
@@ -477,7 +569,7 @@ class OrdersControllerTest extends ControllerTestCase {
             ->method('cartEmpty')
             ->will($this->returnValue(false));
 
-        $this->Session->write('Cart.items', [3,4]);
+        $this->Session->write('Cart.watches', [3,4]);
 
         $result = $this->testAction(
             '/orders/checkout',
@@ -488,7 +580,7 @@ class OrdersControllerTest extends ControllerTestCase {
             )
         );
         $this->assertEquals('One or more of the items in your cart is no longer available.', $this->Session->read('Message.flash.message'));
-        $this->assertEquals($this->Session->read('Cart.items'), [3]);
+        $this->assertEquals($this->Session->read('Cart.watches'), [3]);
         $this->assertContains('/orders/checkout', $this->headers['Location']);
     }
 
@@ -516,7 +608,7 @@ class OrdersControllerTest extends ControllerTestCase {
             'components' => array(
                 'MobileDetect.MobileDetect' => array('detect'),
                 'Session',
-                'Cart' => array('cartEmpty', 'cartItemCount', 'cartItemIds'),
+                'Cart' => array('cartEmpty', 'cartWatchCount', 'cartWatchIds'),
                 'Stripe.Stripe' => array('charge'),
                 'Emailer' => array('order'),
             )
@@ -525,10 +617,10 @@ class OrdersControllerTest extends ControllerTestCase {
             ->method('cartEmpty')
             ->will($this->returnValue(false));
         $Orders->Cart->expects($this->any())
-            ->method('cartItemCount')
+            ->method('cartWatchCount')
             ->will($this->returnValue(1));
         $Orders->Cart->expects($this->any())
-            ->method('cartItemIds')
+            ->method('cartWatchIds')
             ->will($this->returnValue(array(3)));
         $Orders->Stripe->expects($this->any())
             ->method('charge')
@@ -589,7 +681,7 @@ class OrdersControllerTest extends ControllerTestCase {
         );
         $Orders = $this->generate('Orders', array(
             'components' => array(
-                'Cart' => array('cartEmpty', 'cartItemCount', 'cartItemIds'),
+                'Cart' => array('cartEmpty', 'cartWatchCount', 'cartWatchIds'),
                 'Stripe.Stripe' => array('charge'),
             )
         ));
@@ -597,10 +689,10 @@ class OrdersControllerTest extends ControllerTestCase {
             ->method('cartEmpty')
             ->will($this->returnValue(false));
         $Orders->Cart->expects($this->any())
-            ->method('cartItemCount')
+            ->method('cartWatchCount')
             ->will($this->returnValue(1));
         $Orders->Cart->expects($this->any())
-            ->method('cartItemIds')
+            ->method('cartWatchIds')
             ->will($this->returnValue(array(3)));
         $Orders->Stripe->expects($this->any())
             ->method('charge')
@@ -614,6 +706,7 @@ class OrdersControllerTest extends ControllerTestCase {
                 'return' => 'contents',
             )
         );
+
         $this->assertContains('Your card was declined.', $this->contents);
     }
 
@@ -630,17 +723,17 @@ class OrdersControllerTest extends ControllerTestCase {
         );
         $Orders = $this->generate('Orders', array(
             'components' => array(
-                'Cart' => array('cartEmpty', 'cartItemCount', 'cartItemIds'),
+                'Cart' => array('cartEmpty', 'cartWatchCount', 'cartWatchIds'),
             )
         ));
         $Orders->Cart->expects($this->any())
             ->method('cartEmpty')
             ->will($this->returnValue(false));
         $Orders->Cart->expects($this->any())
-            ->method('cartItemCount')
+            ->method('cartWatchCount')
             ->will($this->returnValue(1));
         $Orders->Cart->expects($this->any())
-            ->method('cartItemIds')
+            ->method('cartWatchIds')
             ->will($this->returnValue(array(3)));
 
         $this->Session->write('Order', $order['Order']);
@@ -671,7 +764,7 @@ class OrdersControllerTest extends ControllerTestCase {
  */
 	public function testAdd() {
         $this->testAction('/orders/add/3', ['method' => 'get', 'return' => 'vars']);
-        $session = $this->Session->read('Cart.items');
+        $session = $this->Session->read('Cart.watches');
         $this->assertEquals(3, current($session));
         $this->assertContains('/orders/checkout', $this->headers['Location']);
 	}
@@ -687,27 +780,6 @@ class OrdersControllerTest extends ControllerTestCase {
         $message = $this->Session->read('Message.flash.message');
         $this->assertEquals('That item is already in your cart.', $message);
         $this->assertContains('/orders/checkout', $this->headers['Location']);
-    }
-
-/**
- * testRemove method
- *
- * @return void
- */
-	public function testRemove() {
-        $this->Session->write('Cart.items', [3,5]);
-        $this->testAction('/orders/remove/3');
-        $this->assertEquals([5], $this->Session->read('Cart.items'));
-	}
-
-/**
-* @expectedException        NotFoundException 
-* @expectedExceptionMessage Invalid watch 
-*/
-    public function testRemoveException() {
-        $this->Session->write('Cart.items', [3,5]);
-        $result = $this->testAction('/orders/remove/11');
-        $this->assertFalse($result);
     }
 
 /**

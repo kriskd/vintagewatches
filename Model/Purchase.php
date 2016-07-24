@@ -15,8 +15,8 @@ class Purchase extends AppModel {
  */
 	public $validate = array(
         'source_id' => array(
-            'notempty' => array(
-                'rule' => array('notempty'),
+            'notBlank' => array(
+                'rule' => array('notBlank'),
                 'allowEmpty' => false,
                 'message' => 'Please choose a source.'
             ),

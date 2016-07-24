@@ -78,6 +78,7 @@ class WatchesControllerTest extends ControllerTestCase {
     }
 
     public function testOrderNoEmailZip() {
+        $this->Session->delete('Watch');
         $results = $this->testAction('/watches/order/1', array(
             'method' => 'GET',
             'return' => 'vars',
@@ -335,5 +336,26 @@ class WatchesControllerTest extends ControllerTestCase {
         $large->delete();
         $medium->delete();
         $thumb->delete();
+    }
+
+    /**
+     * testRemove method
+     *
+     * @return void
+     */
+	public function testRemove() {
+        $this->Session->write('Cart.watches', [3,5]);
+        $this->testAction('/watches/remove/3');
+        $this->assertEquals([5], $this->Session->read('Cart.watches'));
+	}
+
+    /**
+    * @expectedException        NotFoundException
+    * @expectedExceptionMessage Invalid watch
+    */
+    public function testRemoveException() {
+        $this->Session->write('Cart.items', [3,5]);
+        $result = $this->testAction('/watches/remove/11');
+        $this->assertFalse($result);
     }
 }

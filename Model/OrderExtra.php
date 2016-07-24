@@ -1,12 +1,19 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Payment Model
+ * OrderExtra Model
  *
  * @property Order $Order
- * @property Invoice $Invoice
+ * @property Item $Item
  */
-class Payment extends AppModel {
+class OrderExtra extends AppModel {
+
+/**
+ * Use table
+ *
+ * @var mixed False or table name
+ */
+	public $useTable = 'order_extra';
 
 /**
  * Validation rules
@@ -14,17 +21,7 @@ class Payment extends AppModel {
  * @var array
  */
 	public $validate = array(
-		'class' => array(
-			'notBlank' => array(
-				'rule' => array('notBlank'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'foreign_id' => array(
+		'order_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
@@ -42,7 +39,15 @@ class Payment extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'stripe_id' => array(
+		'item_id' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
 			'notBlank' => array(
 				'rule' => array('notBlank'),
 				//'message' => 'Your custom message here',
@@ -52,7 +57,15 @@ class Payment extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'stripe_last4' => array(
+		'quantity' => array(
+			'numeric' => array(
+				'rule' => array('numeric'),
+				//'message' => 'Your custom message here',
+				//'allowEmpty' => false,
+				//'required' => false,
+				//'last' => false, // Stop validation after this rule
+				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+			),
 			'notBlank' => array(
 				'rule' => array('notBlank'),
 				//'message' => 'Your custom message here',
@@ -62,47 +75,7 @@ class Payment extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'stripe_address_check' => array(
-			'notBlank' => array(
-				'rule' => array('notBlank'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'stripe_zip_check' => array(
-			'notBlank' => array(
-				'rule' => array('notBlank'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'stripe_cvc_check' => array(
-			'notBlank' => array(
-				'rule' => array('notBlank'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'stripe_paid' => array(
-			'notBlank' => array(
-				'rule' => array('notBlank'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-		'stripe_amount' => array(
+		'price' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
 				//'message' => 'Your custom message here',
@@ -122,7 +95,7 @@ class Payment extends AppModel {
 		),
 	);
 
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
+	// The Associations below have been created with all possible keys, those that are not needed can be removed
 
 /**
  * belongsTo associations
@@ -132,15 +105,15 @@ class Payment extends AppModel {
 	public $belongsTo = array(
 		'Order' => array(
 			'className' => 'Order',
-			'foreignKey' => 'foreign_id',
-			'conditions' => array('Payment.class' => 'Order'),
+			'foreignKey' => 'order_id',
+			'conditions' => '',
 			'fields' => '',
 			'order' => ''
 		),
-		'Invoice' => array(
-			'className' => 'Invoice',
-			'foreignKey' => 'foreign_id',
-			'conditions' => array('Payment.class' => 'Invoice'),
+		'Item' => array(
+			'className' => 'Item',
+			'foreignKey' => 'item_id',
+			'conditions' => '',
 			'fields' => '',
 			'order' => ''
 		)
