@@ -1,5 +1,5 @@
 <div class="items view">
-	<h2><?php  echo h($item['Item']['name']); ?></h2>
+    <h2><?= h($item['Item']['name']) ?> - <?= h($this->Number->currency($item['Item']['price'])) ?></h2>
     <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
             <?php if (!empty($item['Item']['filenameLarge'])): ?>
