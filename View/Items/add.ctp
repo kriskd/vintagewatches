@@ -24,6 +24,7 @@
                                 'class' => 'btn btn-gold btn-lg',
                             ]
                         ); ?>
+                        <?= $this->Form->end(); ?>
                     </p>
                 </div>
             </div>
