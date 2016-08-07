@@ -3,7 +3,9 @@
     <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
             <?php if (!empty($item['Item']['filenameLarge'])): ?>
-                <?php echo $this->Html->image($item['Item']['filenameLarge']); ?>
+                <?php echo $this->Html->image($item['Item']['filenameLarge'], [
+                    'class' => 'img-responsive',
+                ]); ?>
             <?php endif; ?>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 info">
@@ -14,18 +16,20 @@
                     </div>
                 </div>
                 <div class="row">
-                    <p class="text-center bottom">
-                        <?= $this->Form->create('Item'); ?>
-                        <?= $this->Form->input('quantity', [
-                            'class' => 'form-control',
-                            'options' => $options,
-                        ]) ?>
-                        <?= $this->Form->submit('Add to Cart', [
-                                'class' => 'btn btn-gold btn-lg',
-                            ]
-                        ); ?>
-                        <?= $this->Form->end(); ?>
-                    </p>
+                    <div class="col-xs-12">
+                        <p class="text-center bottom">
+                            <?= $this->Form->create('Item'); ?>
+                            <?= $this->Form->input('quantity', [
+                                'class' => 'form-control',
+                                'options' => $options,
+                            ]) ?>
+                            <?= $this->Form->submit('Add to Cart', [
+                                    'class' => 'btn btn-gold btn-lg',
+                                ]
+                            ); ?>
+                            <?= $this->Form->end(); ?>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
