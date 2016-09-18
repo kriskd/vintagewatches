@@ -8669,3 +8669,9 @@ body.hide-fat-footer .container .content {
 .container .blogs .img-responsive {
   margin: 0 auto;
 }
+.container .book img {
+  float: left;
+}
+.container .book p {
+  margin-bottom: 10px;
+}
