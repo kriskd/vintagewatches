@@ -5,7 +5,7 @@
             <?php foreach ($page['Content'] as $content): ?>
                 <?php echo $content['value']; ?>
             <?php endforeach; ?>
-            <?php echo $this->Element('ebay'); ?>
+            <?php echo $this->Element('book'); ?>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
             <?php echo $this->Element('recent_watches'); ?>

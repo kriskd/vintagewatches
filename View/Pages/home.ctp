@@ -9,7 +9,7 @@
                 <?php echo $this->Text->truncate($content['value'], 800, array('exact' => false, 'html' => true)); ?>
                 <?php echo $this->Html->link('<strong>More...</strong>', array('controller' => 'pages', 'action' => 'display', 'welcome'), array('escape' => false)); ?>
             <?php endforeach; ?>
-            <?php echo $this->Element('ebay'); ?>
+            <?php echo $this->Element('book'); ?>
         </div>
     </div>
 </div>
