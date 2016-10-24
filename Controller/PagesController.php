@@ -47,7 +47,7 @@ class PagesController extends AppController {
 			'recursive' => -1
 		);
     
-	public $uses = array('Page', 'Content', 'Watch');
+	public $uses = array('Page', 'Content', 'Watch', 'Item');
 	
 
 /**
@@ -62,6 +62,9 @@ class PagesController extends AppController {
 			$this->redirect('/');
 		}
 		$slug = current($path);
+        $this->Item->id = 1;
+        $itemActive = $this->Item->field('active');
+        $this->set('itemActive', $itemActive);
 
 		//The router passes in the slug "home" for the homepage
 		if (strcasecmp($slug, 'home')==0) {
