@@ -7885,8 +7885,11 @@ body.hide-fat-footer .container .content {
   margin-bottom: 20px;
 }
 .container .content #carousel-home .carousel-inner .watch-details .see-all {
-  position: absolute;
+  background: white;
   bottom: 0px;
+  margin-bottom: -1px;
+  padding-top: 10px;
+  position: absolute;
   width: 100%;
 }
 .container .content .recent-watches {
