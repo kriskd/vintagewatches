@@ -1,5 +1,5 @@
 <div class="watches view">
-	<h2><?php  echo h($watch['Watch']['name']); ?></h2>
+	<h2><?php echo $this->Watch->name($watch); ?></h2>
     <div class="row">
         <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 carousel">
             <?php echo $this->Element('carousel', compact('watch')); ?>
