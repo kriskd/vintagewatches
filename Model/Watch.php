@@ -234,7 +234,7 @@ class Watch extends AppModel {
                     ]
                 ]
             ];
-            $fields[] = 'Order.email'; 
+            $fields[] = 'Order.email';
         }
         $watch = $this->find('first', array(
             'conditions' => [
@@ -244,11 +244,10 @@ class Watch extends AppModel {
             'fields' => $fields,
         ));
 
-        if (!$watch) return false;
-
-        if ($watch['Watch']['active'] == 1 && !$watch['Watch']['order_id']) return $watch;
-
-        if (isset($watch['Order']['email']) && $watch['Order']['email'] == $email && isset($watch['Order']['Address']) && $watch['Order']['Address'][0]['postalCode'] == $postalCode) return $watch;
+        // Sold watches are now viewable. Return if sold if active and unsold.
+        if ($watch && ($watch['Watch']['order_id'] || ($watch['Watch']['active'] && !$watch['Watch']['order_id']))) {
+            return $watch;
+        }
 
         return false;
     }
@@ -268,18 +267,20 @@ class Watch extends AppModel {
     );
     }
 
-    public function getWatchesConditions($active = null, $sold = null)
-    {   
+    /**
+     *
+     */
+    public function getWatchesConditions($active = null, $sold = null) {
         $conditions = array();
-        if($active !== null){
+        if ($active !== null){
             $conditions['Watch.active'] = $active;
         }
 
-        if($sold !== null){
-            if($sold === 1){
+        if ($sold !== null){
+            if ($sold === 1){
                 $conditions['NOT']['order_id'] = null;
             }
-            if($sold === 0){ 
+            if ($sold === 0){
                 $conditions['order_id'] = null;
             }
         }
@@ -313,7 +314,7 @@ class Watch extends AppModel {
                 'Watch.' . $this->primaryKey => $id,
             ),
             'contain' => array(
-                'Order'	
+                'Order'
             )
         );
         return (bool) $this->find('first', $options);
@@ -323,8 +324,7 @@ class Watch extends AppModel {
      * $count Number of watches to return
      * $image If watch image is required to exist
      */
-    public function getWatches($count = null, $image = false)
-    {
+    public function getWatches($count = null, $image = false) {
         $options = array('conditions' => array(
             'active' => 1
         ),
