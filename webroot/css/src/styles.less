@@ -660,6 +660,9 @@ body.hide-fat-footer {
 			.form-inline {
 				margin-top: 25px;
 			}
+            .sold-watch {
+                color: @goldLight;
+            }
             //This fixes the watch "boxes" from overflowing into L & R margins
             .row {
                 margin-left: 0;
@@ -837,7 +840,17 @@ body.hide-fat-footer {
                 }
             }
         }
+        .watches {
+            .sold-watch {
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+        }
+
         .watches.view {
+            .sold-watch {
+                color: @goldDark;
+            }
             .carousel {
                 #carousel-watch {
                     margin: auto;

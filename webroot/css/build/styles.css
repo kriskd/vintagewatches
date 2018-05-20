@@ -7919,6 +7919,9 @@ body.hide-fat-footer .container .content {
 .container .content .watches.index .form-inline {
   margin-top: 25px;
 }
+.container .content .watches.index .sold-watch {
+  color: #ccac00;
+}
 .container .content .watches.index .row {
   margin-left: 0;
   margin-right: 0;
@@ -8125,6 +8128,13 @@ body.hide-fat-footer .container .content {
 }
 .container .content .watches.form .watch-images .image-thumb .modal a {
   display: inline;
+}
+.container .content .watches .sold-watch {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.container .content .watches.view .sold-watch {
+  color: #665600;
 }
 .container .content .watches.view .carousel #carousel-watch {
   margin: auto;
