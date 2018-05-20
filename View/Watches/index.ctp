@@ -94,7 +94,7 @@
                 <div class="watch">
                     <div class="row watch-attrs">
                         <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 name">
-                            <?php echo $this->Html->link(h($watch['Watch']['name']), array('action' => 'view', $watch['Watch']['id']), array('escape' => false)); ?>
+                            <?php echo $this->Html->link($this->Watch->name($watch), array('action' => 'view', $watch['Watch']['id']), array('escape' => false)); ?>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4 stockid">
                             Stock Number <?php echo h($watch['Watch']['stockId']); ?>
@@ -116,7 +116,9 @@
                                                             ); ?>
                         </div>
                         <div class="watch-cart-button">
-                            <?php echo $this->Element('add_to_cart', compact('watch', 'controller') + array('class' => 'btn btn-gold')); ?>
+                            <?php if ($watch['Watch']['active'] == 1 && !$watch['Watch']['order_id']): ?>
+                                <?php echo $this->Element('add_to_cart', compact('watch', 'controller') + array('class' => 'btn btn-gold')); ?>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
