@@ -7,6 +7,8 @@ App::uses('AppController', 'Controller');
  */
 class WatchesController extends AppController {
 
+    public $uses = ['Watch', 'Page'];
+
     public $components = [
         'Cart',
     ];
@@ -51,6 +53,7 @@ class WatchesController extends AppController {
 		//Get only active and unsold watches
 		$this->paginate['conditions'] = $this->Watch->getWatchesConditions(1, 0);
         $this->watches($brand_slug);
+        $this->set('intro', $this->Page->findBySlug('watch-intro'));
 	}
 
     /**
@@ -61,6 +64,7 @@ class WatchesController extends AppController {
 	public function sold($brand_slug = null) {
 		$this->paginate['conditions'] = $this->Watch->getWatchesConditions(null, 1);
         $this->watches($brand_slug);
+        $this->set('intro', $this->Page->findBySlug('sold-watches-intro'));
         $this->view = 'index';
     }
 

@@ -64,11 +64,7 @@
                                                        'escape' => false
                                                     )
                                      ); ?>
-        <?php if ($this->request->params['action'] == 'sold'): ?>
-            <?= $this->element('intro_text_sold') ?>
-        <?php else: ?>
-            <?= $this->element('intro_text') ?>
-        <?php endif; ?>
+        <?= $intro['Content'][0]['value'] ?>
     </div>
     <?php if (!empty($watches)): ?>
         <?php foreach ($watches as $watch): ?>
