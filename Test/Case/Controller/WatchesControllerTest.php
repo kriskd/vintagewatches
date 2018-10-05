@@ -29,7 +29,7 @@ class WatchesControllerTest extends ControllerTestCase {
 		'app.province',
 		'app.country',
 		'app.page',
-		//'app.content'
+		'app.content',
         'app.cake_session',
 	);
 
