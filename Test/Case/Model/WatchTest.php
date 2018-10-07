@@ -71,11 +71,6 @@ class WatchTest extends CakeTestCase {
         $this->assertEquals('61602', $watch['Order']['Address'][0]['postalCode']);
 	}
 
-	public function testGetWatchBadOrder() {
-        $watch = $this->Watch->getWatch(1, 'foo@bar.com', '12345');
-        $this->assertFalse($watch);
-    }
-
 /**
  * testGetCartWatches method
  *

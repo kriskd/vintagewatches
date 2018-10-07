@@ -36,4 +36,20 @@ class WatchHelper extends AppHelper
     public function date($date) {
         return empty($date) ? '' : date_create($date)->format('F j, Y');
     }
+
+    /**
+     * Returns the watch name appending with SOLD label if sold.
+     *
+     * @param array The Watch array.
+     * @return string
+     */
+    public function name($watch) {
+        $name = h($watch['Watch']['name']);
+
+        if ($watch['Watch']['order_id']) {
+            $name .= '<span class="sold-watch"> - sold</span>';
+        }
+
+        return $name;
+    }
 }

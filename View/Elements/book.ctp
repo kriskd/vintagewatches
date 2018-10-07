@@ -9,7 +9,7 @@
             'alt' => 'Elgin Wristwatches: A Collector\'s Guide',
         ]); ?>
         <p>
-            Just off the presses: Elgin Wristwatches: A Collector's Guide. First reference devoted exclusively to Elgin, with nearly 600 models from 1932 to 1962 identified. Get your copy today.
+            Just off the presses: Elgin Wristwatches: A Collector's Guide. First reference devoted exclusively to Elgin, with nearly 900 models from 1932 to 1962 identified. Get your copy today.
         </p>
             <?= $this->Html->link('Order the book now!', [
                 'controller' => 'items',

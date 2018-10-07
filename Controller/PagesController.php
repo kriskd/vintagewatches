@@ -70,7 +70,12 @@ class PagesController extends AppController {
 		if (strcasecmp($slug, 'home')==0) {
 			$this->set('title', 'Fine timepieces at reasonable prices from a name you trust.');
 			//Get the hompeage content and send to view
-			$page = $this->Page->find('first', array('conditions' => array('homepage' => 1)));
+            $page = $this->Page->find('first', array(
+                'conditions' => array(
+                    'homepage' => 1,
+                    'active' => 1,
+                ),
+            ));
 			$this->set(compact('page'));
 			//Get all active watches that have images
 			$watches = $this->Watch->getWatches(null, true);
@@ -84,11 +89,18 @@ class PagesController extends AppController {
 			}
 		} else {
 			//Standard content page
-			$page = $this->Page->find('first', array('conditions' => array('slug' => $slug)));
-			if (!empty($page)) {
-				$title = $page['Page']['name'];
-				$this->set(compact('page', 'title'));
+            $page = $this->Page->find('first', array(
+                'conditions' => array(
+                    'slug' => $slug,
+                    'active' => 1,
+                ),
+            ));
+			if (empty($page)) {
+                return $this->redirect('/');
 			}
+
+            $title = $page['Page']['name'];
+            $this->set(compact('page', 'title'));
 			$this->render('page');
 		}
 		/*$count = count($path);

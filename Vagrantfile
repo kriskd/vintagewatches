@@ -75,6 +75,8 @@ Vagrant.configure(2) do |config|
 
   # VMware-specific configs.
   config.vm.provider 'vmware_fusion' do |vm|
+    vm.vmx["ethernet0.pcislotnumber"] = "32"
+    vm.vmx["ethernet1.pcislotnumber"] = "33"
     vm.vmx['numvcpus'] = conf.fetch('cpus', defaults['cpus']).to_i
     vm.vmx["memsize"] = conf.fetch('memory', defaults['memory']).to_i
     vm.vmx["displayName"] = conf.fetch('hostname', defaults['hostname']).to_s

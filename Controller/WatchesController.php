@@ -7,6 +7,8 @@ App::uses('AppController', 'Controller');
  */
 class WatchesController extends AppController {
 
+    public $uses = ['Watch', 'Page'];
+
     public $components = [
         'Cart',
     ];
@@ -42,14 +44,34 @@ class WatchesController extends AppController {
 		parent::beforeFilter();
 	}
 
-/**
- * index method
- *
- * @return void
- */
+    /**
+     * index method
+     *
+     * @return void
+     */
 	public function index($brand_slug = null) {
 		//Get only active and unsold watches
 		$this->paginate['conditions'] = $this->Watch->getWatchesConditions(1, 0);
+        $this->watches($brand_slug);
+        $this->set('intro', $this->Page->findBySlug('watch-intro'));
+	}
+
+    /**
+     * sold method
+     *
+     * @return void
+     */
+	public function sold($brand_slug = null) {
+		$this->paginate['conditions'] = $this->Watch->getWatchesConditions(null, 1);
+        $this->watches($brand_slug);
+        $this->set('intro', $this->Page->findBySlug('sold-watches-intro'));
+        $this->view = 'index';
+    }
+
+    /**
+     *
+     */
+    protected function watches($brand_slug = null) {
 		if (!empty($brand_slug)) {
 			$brand = array_filter($this->brandsWithWatches, function($item) use ($brand_slug) {
 				return strcasecmp(Inflector::slug($item, '-'), $brand_slug)==0;
@@ -63,7 +85,7 @@ class WatchesController extends AppController {
 				}
 			}
 		}
-		$this->paginate['fields'] = array('id', 'stockId', 'price', 'name', 'description');
+		$this->paginate['fields'] = array('id', 'order_id', 'active', 'stockId', 'price', 'name', 'description');
 		if (!empty($this->request->query['sortby'])) {
 			$this->request->data['Watch']['sortby'] = $this->request->query['sortby'];
 			list($field, $direction) = explode('-', $this->request->query['sortby']);
@@ -82,15 +104,15 @@ class WatchesController extends AppController {
 		}
 		$title = empty($brand) ? 'Store' : $brand . ' Watches';
 		$this->set('title', $title);
-	}
+    }
 
-/**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
+    /**
+     * view method
+     *
+     * @throws NotFoundException
+     * @param string $id
+     * @return void
+     */
 	public function view($id = null) {
         if (empty($id)) {
 			$this->redirect(array('controller' => 'pages', 'action' => 'home', 'display'));

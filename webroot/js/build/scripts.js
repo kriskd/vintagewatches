@@ -6507,7 +6507,7 @@ var datepicker = $.datepicker;
         setCookie('hideWatchIntro', 0, 90);
     });
 
-    $(document).on('change', '#WatchAdminIndexForm, #WatchIndexForm', function(){
+    $(document).on('change', '#WatchAdminIndexForm, #WatchIndexForm, #WatchSoldForm', function(){
         $(this).submit();
     });
 
