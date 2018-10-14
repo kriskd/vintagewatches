@@ -1,4 +1,5 @@
 <?php
+App::uses('CakeNumber', 'Utility');
 App::uses('Component', 'Controller');
 
 class CartComponent extends Component {
@@ -208,7 +209,7 @@ class CartComponent extends Component {
                 $couponAmount = $couponSubTotal + $shipping > $coupon['Coupon']['amount'] ? $coupon['Coupon']['amount'] : $couponSubTotal + $shipping;
                 break;
             case 'percentage':
-                $couponAmount = $couponSubTotal * $coupon['Coupon']['amount'];
+                $couponAmount = CakeNumber::precision($couponSubTotal * $coupon['Coupon']['amount'], 2);
                 break;
             default:
                 $couponAmount = 0;
