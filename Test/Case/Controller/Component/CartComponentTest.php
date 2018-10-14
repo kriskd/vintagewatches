@@ -80,8 +80,8 @@ class CartComponentTest extends CakeTestCase {
         $this->items = [
             [
                 'Item' => [
-                    'price' => '20.00',
-                    'subtotal' => '40.00'
+                    'price' => '29.95',
+                    'subtotal' => '29.95'
                 ],
             ],
         ];
@@ -327,12 +327,12 @@ class CartComponentTest extends CakeTestCase {
         $coupon = array(
             'Coupon' => array(
                 'type' => 'percentage',
-                'amount' => .1,
+                'amount' => .15,
                 'brand_id' => null,
             )
         );
         $result = $this->Cart->couponAmount([], $this->items, 6, $coupon);
-        $this->assertEquals($result, 4);
+        $this->assertEquals($result, 4.49);
     }
 
     public function testCouponAmountPercentageBrand() {
