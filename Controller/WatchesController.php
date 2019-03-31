@@ -121,8 +121,8 @@ class WatchesController extends AppController {
         $watch = $this->Watch->getWatch($id);
 
         if (!$watch) {
-            $this->Session->setFlash('This watch is not available.', 'info');
-			$this->redirect(array('controller' => 'pages', 'action' => 'home', 'display'));
+            $this->Flash->info('This watch is not available.');
+			return $this->redirect(array('controller' => 'pages', 'action' => 'home', 'display'));
         }
 
 		$this->set('watch', $watch);
@@ -142,14 +142,14 @@ class WatchesController extends AppController {
         $postalCode = $this->Session->check('Watch.Address.postalCode') ? $this->Session->read('Watch.Address.postalCode') : '';
 
         if (empty($email) || empty($postalCode)) {
-            $this->Session->setFlash('Please enter your email and billing postal code to view your orders.', 'info');
+            $this->Flash->info('Please enter your email and billing postal code to view your orders.');
 			return $this->redirect(array('controller' => 'orders'));
         }
 
         $watch = $this->Watch->getWatch($id, $email, $postalCode);
 
         if (!$watch) {
-            $this->Session->setFlash('This watch was not found on any of your orders.', 'info');
+            $this->Flash->info('This watch was not found on any of your orders.');
 			return $this->redirect(array('controller' => 'orders'));
         }
 
@@ -298,10 +298,10 @@ class WatchesController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Watch->create();
 			if ($this->Watch->saveAssociated($this->request->data)) {
-				$this->Session->setFlash('Watch ' . $this->Watch->getInsertID() . ' has been created', 'success');
+				$this->Flash->success('Watch ' . $this->Watch->getInsertID() . ' has been created');
 				$this->redirect(array('action' => 'edit', $this->Watch->getInsertID(), 'admin' => true));
 			} else {
-				$this->Session->setFlash(__('The watch could not be saved. Please, try again.'), 'danger');
+				$this->Flash->danger(__('The watch could not be saved. Please, try again.'));
 			}
 		}
         $this->set([
@@ -318,7 +318,7 @@ class WatchesController extends AppController {
  */
 	public function admin_edit($id = null) {
 		if (!$this->Watch->exists($id)) {
-            $this->Session->setFlash('Invalid Watch', 'danger');
+            $this->Flash->danger('Invalid Watch');
             return $this->redirect(['action' => 'index']);
 		}
         $this->set([
@@ -353,10 +353,10 @@ class WatchesController extends AppController {
 		if ($this->request->is('post') || $this->request->is('put')) {
 			$this->request->data['Watch']['id'] = $id;
             if ($this->Watch->saveAssociated($this->request->data, ['fieldList' => $fieldList])) {
-				$this->Session->setFlash(__('The watch has been saved'), 'success');
+				$this->Flash->success(__('The watch has been saved'));
         	    return $this->redirect(array('action' => 'view', $id));
 			} else {
-				$this->Session->setFlash(__('The watch could not be saved. Please, try again.'), 'danger');
+				$this->Flash->danger(__('The watch could not be saved. Please, try again.'));
 			}
 		} else {
             $this->request->data = $watch;
@@ -376,27 +376,27 @@ class WatchesController extends AppController {
 		if (!$this->Watch->exists()) {
 			throw new NotFoundException(__('Invalid watch'));
 		}
+
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Watch->delete()) {
-			$this->Session->setFlash(__('Watch deleted'), 'success');
-			$this->redirect(array('action' => 'index'));
+			$this->Flash->success(__('Watch deleted'));
+			return $this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('Watch was not deleted'), 'danger');
-		$this->redirect(array('action' => 'index'));
+
+		$this->Flash->danger(__('Watch was not deleted'));
+		return $this->redirect(array('action' => 'index'));
 	}
 
-	public function admin_close()
-	{
+	public function admin_close() {
 		$this->Watch->updateAll(array('active' => 0));
-		$this->Session->setFlash(__('The store is closed.'), 'success');
+		$this->Flash->success(__('The store is closed.'));
 		$this->redirect(array('action' => 'index', 'admin' => true));
 	}
 
-	public function admin_open()
-	{
+	public function admin_open() {
 		$this->Watch->updateAll(array('active' => 1),
 					array('order_id' => null));
-		$this->Session->setFlash(__('The store is open.'), 'success');
+		$this->Flash->success(__('The store is open.'));
 		$this->redirect(array('action' => 'index', 'admin' => true));
 	}
 

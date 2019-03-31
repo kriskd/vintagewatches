@@ -48,23 +48,23 @@ class BrandsController extends AppController {
  * @return void
  */
 	public function admin_index() {
-		if ($this->request->is('post')) { 
-			$data = $this->request->data; 
-			$newBrand['Brand']['name'] = array_pop($data['Brand']); 
-			if (!empty($newBrand['Brand']['name'])) { 
-				$this->Brand->create(); 
+		if ($this->request->is('post')) {
+			$data = $this->request->data;
+			$newBrand['Brand']['name'] = array_pop($data['Brand']);
+			if (!empty($newBrand['Brand']['name'])) {
+				$this->Brand->create();
 				if ($this->Brand->save($newBrand)) {
-					$this->Session->setFlash(__('The brand has been saved.'), 'success');
+					$this->Flash->success(__('The brand has been saved.'));
 				} else {
-					$this->Session->setFlash(__('The brand could not be saved. Please, try again.'), 'danger');
+					$this->Flash->danger(__('The brand could not be saved. Please, try again.'));
 				}
 			}
-			
+
             if (!empty($data['Brand'])) {
                 foreach($data['Brand'] as $id => $item ) {
                     $saveMany[$id] = array('id' => $id, 'name' => $item['name']);
                 }
-                
+
                 $this->Brand->saveMany($saveMany);
             }
 		}

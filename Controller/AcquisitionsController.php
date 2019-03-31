@@ -50,10 +50,10 @@ class AcquisitionsController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Acquisition->create();
 			if ($this->Acquisition->save($this->request->data)) {
-				$this->Session->setFlash(__('The acquisition has been saved.'));
+				$this->Flash->success(__('The acquisition has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The acquisition could not be saved. Please, try again.'));
+				$this->Flash->danger(__('The acquisition could not be saved. Please, try again.'));
 			}
 		}
 	}
@@ -71,10 +71,10 @@ class AcquisitionsController extends AppController {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Acquisition->save($this->request->data)) {
-				$this->Session->setFlash(__('The acquisition has been saved.'));
+				$this->Flash->success(__('The acquisition has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The acquisition could not be saved. Please, try again.'));
+				$this->Flash->danger(__('The acquisition could not be saved. Please, try again.'));
 			}
 		} else {
 			$options = array('conditions' => array('Acquisition.' . $this->Acquisition->primaryKey => $id));
@@ -96,10 +96,11 @@ class AcquisitionsController extends AppController {
 		}
 		$this->request->allowMethod('post', 'delete');
 		if ($this->Acquisition->delete()) {
-			$this->Session->setFlash(__('The acquisition has been deleted.'));
+			$this->Flash->success(__('The acquisition has been deleted.'));
 		} else {
-			$this->Session->setFlash(__('The acquisition could not be deleted. Please, try again.'));
+			$this->Flash->danger(__('The acquisition could not be deleted. Please, try again.'));
 		}
+
 		return $this->redirect(array('action' => 'index'));
 	}
 }

@@ -28,9 +28,9 @@ class SourcesController extends AppController {
 			if (!empty($newSource['Source']['name'])) {
 				$this->Source->create();
 				if ($this->Source->save($newSource)) {
-					$this->Session->setFlash(__('The source has been saved.'), 'success');
+					$this->Flash->success(__('The source has been saved.'));
 				} else {
-					$this->Session->setFlash(__('The source could not be saved. Please, try again.'), 'danger');
+					$this->Flash->danger(__('The source could not be saved. Please, try again.'));
 				}
 			}
 

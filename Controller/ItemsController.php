@@ -30,7 +30,7 @@ class ItemsController extends AppController {
         $item = $this->Item->findById($id);
 
         if (!$item || $item['Item']['active'] == 0 || $item['Item']['quantity'] < 1) {
-            $this->Session->setFlash('This item is not available.', 'info');
+            $this->Flash->info('This item is not available.');
 			return $this->redirect(array('controller' => 'pages', 'action' => 'home', 'display'));
         }
 
@@ -89,12 +89,13 @@ class ItemsController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Item->create();
 			if ($this->Item->save($this->request->data)) {
-				$this->Session->setFlash(__('The item has been saved.'), 'success');
+				$this->Flash->success(__('The item has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The item could not be saved. Please, try again.'));
+				$this->Flash->danger(__('The item could not be saved. Please, try again.'));
 			}
 		}
+
 		$shippings = $this->Item->Shipping->find('list');
 		$this->set(compact('shippings'));
 	}
@@ -112,12 +113,11 @@ class ItemsController extends AppController {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Item->save($this->request->data)) {
-				$this->Session->setFlash(__('The item has been saved.'),
-                        'default', array('class' => 'alert alert-success'));
+				$this->Flash->success(__('The item has been saved.'));
+
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The item could not be saved. Please, try again.'),
-                        'default', array('class' => 'alert alert-danger'));
+				$this->Flash->danger(__('The item could not be saved. Please, try again.'));
 			}
 		} else {
 			$options = array('conditions' => array('Item.' . $this->Item->primaryKey => $id));
@@ -141,10 +141,11 @@ class ItemsController extends AppController {
 		}
 		$this->request->allowMethod('post', 'delete');
 		if ($this->Item->delete()) {
-			$this->Session->setFlash(__('The item has been deleted.'));
+			$this->Flash->success(__('The item has been deleted.'));
 		} else {
-			$this->Session->setFlash(__('The item could not be deleted. Please, try again.'));
+			$this->Flash->danger(__('The item could not be deleted. Please, try again.'));
 		}
+
 		return $this->redirect(array('action' => 'index'));
 	}
 

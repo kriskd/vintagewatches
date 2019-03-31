@@ -51,10 +51,11 @@ class ShippingsController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Shipping->create();
 			if ($this->Shipping->save($this->request->data)) {
-                $this->Session->setFlash(__('The shipping option has been saved.'), 'success');
+                $this->Flash->success(__('The shipping option has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			}
 		}
+
 		$zones = $this->Shipping->Zone->find('list');
 		$items = $this->Shipping->Item->find('list');
 		$this->set(compact('zones', 'items'));
@@ -73,7 +74,7 @@ class ShippingsController extends AppController {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Shipping->save($this->request->data)) {
-                $this->Session->setFlash(__('The shipping option has been saved.'), 'success');
+                $this->Flash->success(__('The shipping option has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			}
 		} else {

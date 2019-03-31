@@ -37,13 +37,14 @@ class BlogsController extends AppController {
             $blogRetryCount = $this->Session->check('BlogRetryCount') ? $this->Session->read('BlogRetryCount') : 0;
             ++$blogRetryCount;
             $this->log($blogRetryCount, 'error');
-            $this->Session->write('BlogRetryCount', $blogRetryCount); 
+            $this->Session->write('BlogRetryCount', $blogRetryCount);
             if ($blogRetryCount > 5) {
-                $this->Session->setFlash('Blog temporarily unavailable.', 'info');
+                $this->Flash->info('Blog temporarily unavailable.');
                 $this->Session->delete('BlogRetryCount');
-                $this->redirect('/');
+                return $this->redirect('/');
             }
-            $this->redirect($this->here);
+
+            return $this->redirect($this->here);
         }
         $this->set('title', $blog['Blog']['title']);
         $this->set(compact('blog', 'blogIndex'));

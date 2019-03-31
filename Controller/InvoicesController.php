@@ -75,70 +75,67 @@ class InvoicesController extends AppController {
  * @return void
  */
 	public function pay($slug = null) {
-		
 		$invoice = $this->Invoice->find('first', array(
 								'conditions' => compact('slug'),
 								'contain' => array('InvoiceItem', 'Address')
 							)
-						); 
+						);
 		if (empty($invoice) || !$invoice['Invoice']['active']) {
 			$this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));
 		}
 		$this->set('invoice', $invoice);
 		$this->Invoice->Address->removeCountryValidation();
-		if ($this->request->is(array('post', 'put'))) { 
+		if ($this->request->is(array('post', 'put'))) {
 			$this->request->data = $this->array_merge_recursive_distinct($invoice, $this->request->data);
-			$data = $this->request->data; 
+			$data = $this->request->data;
 			if ($this->Invoice->validateAssociated($data)) {
-				
-				$amount = $this->total($invoice); 
+
+				$amount = $this->total($invoice);
 				$stripeToken = $this->request->data['stripeToken'];
-				
+
 				//Invoice number for Stripe description
 				$description = 'Invoice No. ' . $data['Invoice']['id'];
-				
+
 				$stripeData = array(
 						'amount' => $amount,
 						'stripeToken' => $stripeToken,
 						'description' => $description
 					    );
 				$result = $this->Stripe->charge($stripeData);
-				
+
 				if (is_array($result) && $result['stripe_paid'] == true) {
 					//Add the results of stripe to the data array
 					$data['Payment'] = $result;
 					$data['Invoice']['active'] = 0;
-					$this->Invoice->saveAssociated($data); 
-					$this->Session->setFlash(__('<span class="glyphicon glyphicon-ok"></span> Thank you for your payment.'),
-								 'default', array('class' => 'alert alert-success'));
-					
+					$this->Invoice->saveAssociated($data);
+					$this->Flash->success('<span class="glyphicon glyphicon-ok"></span>' . __('Thank you for your payment.'));
+
 					// Get a brand new invoice to ensure up to date info
 					$invoice = $this->Invoice->find('first', array(
 							'conditions' => compact('slug'),
 							'contain' => array('InvoiceItem', 'Address')
 						)
 					);
-					
+
                     $this->Emailer->invoice($invoice);
-					
+
 					$hideFatFooter = false;
 					$this->set(compact('invoice', 'hideFatFooter'));
-					
+
 					$this->render('view');
 				} else {
 					$this->Invoice->saveAssociated($data);
-					$this->Session->setFlash('<span class="glyphicon glyphicon-warning-sign"></span> ' . $result,
-								'default', array('class' => 'alert alert-danger'));
+					$this->Flash->danger('<span class="glyphicon glyphicon-warning-sign"></span> ' . h($result));
 					return $this->redirect(array('action' => 'pay', $slug));
-				}	
+				}
 			} else {
-				$this->Session->setFlash(__('Sorry, your invoice payment could not be completed because
+				$this->Flash->danger(__('Sorry, your invoice payment could not be completed because
 							    one or more required fields was not filled out. Please scroll
 							    down the form, complete the required fields, and then resubmit
-							    the form.'), 'danger');
+							    the form.'));
 			}
 		} else {
-			$this->request->data = $invoice; 
+			$this->request->data = $invoice;
 		}
 	}
 
@@ -156,10 +153,11 @@ class InvoicesController extends AppController {
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Invoice->delete()) {
-			$this->Session->setFlash(__('The invoice has been deleted.'));
+			$this->Flash->success(__('The invoice has been deleted.'));
 		} else {
-			$this->Session->setFlash(__('The invoice could not be deleted. Please, try again.'));
+			$this->Flash->danger(__('The invoice could not be deleted. Please, try again.'));
 		}
+
 		return $this->redirect(array('action' => 'index'));
 	}
 
@@ -201,12 +199,12 @@ class InvoicesController extends AppController {
 		$this->Invoice->Address->removeAllButCountry();
 		if ($this->request->is('post')) {
 			$this->Invoice->create();
-			$this->request->data['Address'][0]['type'] = 'billing'; 
+			$this->request->data['Address'][0]['type'] = 'billing';
 			if ($this->Invoice->saveAssociated($this->request->data)) {
-				$this->Session->setFlash(__('The invoice has been saved.'), 'success');
+				$this->Flash->success(__('The invoice has been saved.'));
 				return $this->redirect(array('action' => 'view', $this->Invoice->getInsertID()));
 			} else {
-				$this->Session->setFlash(__('The invoice could not be saved. Please, try again.'), 'danger');
+				$this->Flash->danger(__('The invoice could not be saved. Please, try again.'));
 			}
         } else {
             $this->request->data['Invoice']['expiration'] = date('Y-m-d', strtotime('+30 day'));
@@ -215,7 +213,7 @@ class InvoicesController extends AppController {
 		$i=0;
 		$this->set('i', $i);
 	}
-	
+
 	/**
 	 * Add eBay invoice
 	 * ebayItemID is received via GET form submitted with JS
@@ -223,25 +221,27 @@ class InvoicesController extends AppController {
 	 */
 	public function admin_ebay() {
 		if (!$this->Ebay->checkToken($this->Auth->user())) {
-			$this->redirect(array('controller' => 'users', 'action' => 'ebay', 'admin' => true));
+			return $this->redirect(array('controller' => 'users', 'action' => 'ebay', 'admin' => true));
 		}
-	
-		$ebayItemID = $this->request->query['ebayItemId']; 
+
+		$ebayItemID = $this->request->query['ebayItemId'];
 		$itemIds = $this->Invoice->InvoiceItem->find('list', array('fields' => 'itemid'));
-		if (in_array($ebayItemID, $itemIds)) { 
+		if (in_array($ebayItemID, $itemIds)) {
 			$this->redirect(array('action' => 'index', 'admin' => true));
 		}
 		$ebayItem = $this->Ebay->getItem($this->token, $ebayItemID);
-		
-		if (strcasecmp($ebayItem->Ack, 'Failure')==0) { 
-			$this->Session->setFlash((string)$ebayItem->Errors->ShortMessage, 'danger');
+
+		if (strcasecmp($ebayItem->Ack, 'Failure')==0) {
+			$this->Flash->danger((string)$ebayItem->Errors->ShortMessage);
 			$this->redirect(array('action' => 'index', 'admin' => true));
 		}
+
 		$email = (string)$ebayItem->Item->SellingStatus->HighBidder->Email;
 		if (stristr($email, '@')==false) {
-			$this->Session->setFlash('No valid email.', 'danger');
+			$this->Flash->danger('No valid email.');
 			$this->redirect(array('action' => 'index', 'admin' => true));
-		} 
+		}
+
 		$title = (string)$ebayItem->Item->Title;
 		$url = (string)$ebayItem->Item->ListingDetails->ViewItemURL;
 		$userID = (string)$ebayItem->Item->SellingStatus->HighBidder->UserID;
@@ -249,7 +249,7 @@ class InvoicesController extends AppController {
 		$postalCode = (string)$ebayItem->Item->SellingStatus->HighBidder->BuyerInfo->ShippingAddress->PostalCode;
 		$price = (string)$ebayItem->Item->SellingStatus->CurrentPrice;
 		$shipping = (string)$ebayItem->Item->ShippingDetails->ShippingServiceOptions->ShippingServiceCost;
-		
+
 		$formattedShipping = number_format($shipping, 2);
 		$discountShipping = number_format($shipping/2, 2);
 		$link = '<a target="_blank" href="' . $url . '">' . $url . '</a>';
@@ -298,17 +298,17 @@ NOTES;
 		}
 		//$this->Invoice->removeRequiredEmail();
 		$this->Invoice->Address->removeAllButCountry();
-		if ($this->request->is(array('post', 'put'))) { 
-			if ($this->Invoice->saveAssociated($this->request->data)) { 
-				$this->Session->setFlash(__('The invoice has been saved.'), 'success');
+		if ($this->request->is(array('post', 'put'))) {
+			if ($this->Invoice->saveAssociated($this->request->data)) {
+				$this->Flash->success(__('The invoice has been saved.'));
 				return $this->redirect(array('action' => 'view', $id));
 			} else {
-				$this->Session->setFlash(__('The invoice could not be saved. Please, try again.'), 'danger');
+				$this->Flash->danger(__('The invoice could not be saved. Please, try again.'));
 			}
 		} else {
 			$options = array('conditions' => array('Invoice.' . $this->Invoice->primaryKey => $id));
-			$this->request->data = $this->Invoice->find('first', $options); 
-		} 
+			$this->request->data = $this->Invoice->find('first', $options);
+		}
 	}
 
 /**
@@ -319,20 +319,20 @@ NOTES;
  * @return void
  */
 	public function admin_delete($id = null) {
-		$this->Invoice->id = $id; 
+		$this->Invoice->id = $id;
 		if (!$this->Invoice->exists()) {
 			throw new NotFoundException(__('Invalid invoice'));
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Invoice->delete()) {
-			$this->Session->setFlash(__('The invoice has been deleted.'), 'success');
+			$this->Flash->success(__('The invoice has been deleted.'));
 		} else {
-			$this->Session->setFlash(__('The invoice could not be deleted. Please, try again.'), 'danger');
+			$this->Flash->danger(__('The invoice could not be deleted. Please, try again.'));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
-	
-	public function admin_delete_item($invoice_id = null, $id = null) { 
+
+	public function admin_delete_item($invoice_id = null, $id = null) {
 		$this->Invoice->InvoiceItem->id = $id;
 		$this->Invoice->InvoiceItem->invoice_id = $invoice_id;
 		if (!$this->Invoice->InvoiceItem->exists()) {
@@ -343,27 +343,26 @@ NOTES;
 		// Had to move here from beforeDelete because it interfered with full invoice delete
 		$count = $this->Invoice->InvoiceItem->find('count', array('conditions' => compact('invoice_id')));
 		if ($count > 1 && $this->Invoice->InvoiceItem->delete()) {
-			$this->Session->setFlash(__('The invoice item has been deleted.'), 'success');
+			$this->Flash->success(__('The invoice item has been deleted.'));
 		} else {
-			$this->Session->setFlash(__('The invoice item could not be deleted, invoices must have at least one line item.'), 'danger');
+			$this->Flash->danger(__('The invoice item could not be deleted, invoices must have at least one line item.'));
 		}
 		return $this->redirect(array('action' => 'edit', $invoice_id));
 	}
-	
-	public function getLineItem($count = 0)
-	{
+
+	public function getLineItem($count = 0) {
 		if(!$this->request->is('ajax')){
-			$this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));	
+			return $this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));
 		}
+
 		$this->set(array('i' => $count, 'action' => 'add'));
 		$this->layout = 'ajax';
 	}
-	
+
 	/**
 	 * Build the delete line item modal and append to the body so the postLink isn't inside another form
 	 */
-	public function deleteModal()
-	{
+	public function deleteModal() {
 		if($this->request->is('ajax')){
 			$data = $this->request->data;
 			$this->set(array('description' => $data['description'],

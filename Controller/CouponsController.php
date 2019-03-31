@@ -58,17 +58,17 @@ class CouponsController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Coupon->create();
 			if ($this->Coupon->save($this->request->data)) {
-				$this->Session->setFlash(__('The coupon has been saved.'), 'success');
+				$this->Flash->success(__('The coupon has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The coupon could not be saved. Please, try again.'), 'danger');
+				$this->Flash->danger(__('The coupon could not be saved. Please, try again.'));
 			}
 		} else {
             $this->request->data['Coupon']['total'] = 1;
         }
         $select = array(
-            '' => 'Choose One', 
-            'fixed' => 'Fixed', 
+            '' => 'Choose One',
+            'fixed' => 'Fixed',
             'percentage' => 'Percentage'
         );
         $this->set('select', $select);
@@ -93,19 +93,19 @@ class CouponsController extends AppController {
             if ($hasOrders) {
                 $this->request->data['Coupon']['type'] = $coupon['Coupon']['type'];
                 $this->request->data['Coupon']['amount'] = $coupon['Coupon']['amount'];
-            } 
+            }
 			if ($this->Coupon->save($this->request->data)) {
-				$this->Session->setFlash(__('The coupon has been saved.'), 'success');
+				$this->Flash->success(__('The coupon has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The coupon could not be saved. Please, try again.'), 'danger');
+				$this->Flash->danger(__('The coupon could not be saved. Please, try again.'));
 			}
 		} else {
 			$this->request->data = $coupon;
 		}
         $select = array(
-            '' => 'Choose One', 
-            'fixed' => 'Fixed', 
+            '' => 'Choose One',
+            'fixed' => 'Fixed',
             'percentage' => 'Percentage'
         );
         $this->set(compact('select', 'hasOrders'));
@@ -125,15 +125,14 @@ class CouponsController extends AppController {
 		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Coupon->delete()) {
-			$this->Session->setFlash(__('The coupon has been deleted.'), 'success');
+			$this->Flash->success(__('The coupon has been deleted.'));
 		} else {
-			$this->Session->setFlash(__('The coupon could not be deleted. Please, try again.'), 'danger');
+			$this->Flash->danger(__('The coupon could not be deleted. Please, try again.'));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
-    
-    public function deleteModal()
-	{
+
+    public function deleteModal() {
 		if($this->request->is('ajax')){
 			$data = $this->request->data;
             $this->set(array(
