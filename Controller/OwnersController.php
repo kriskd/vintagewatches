@@ -28,9 +28,9 @@ class OwnersController extends AppController {
 			if (!empty($newOwner['Owner']['name'])) {
 				$this->Owner->create();
 				if ($this->Owner->save($newOwner)) {
-					$this->Session->setFlash(__('The owner has been saved.'), 'success');
+					$this->Flash->success(__('The owner has been saved.'));
 				} else {
-					$this->Session->setFlash(__('The owner could not be saved. Please, try again.'), 'danger');
+					$this->Flash->danger(__('The owner could not be saved. Please, try again.'));
 				}
 			}
 

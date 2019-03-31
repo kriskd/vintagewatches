@@ -50,8 +50,8 @@ class OrdersController extends AppController {
             if (empty($email) || empty($postalCode)) {
                 $this->request->data['Order']['email'] = $email;
                 $this->request->data['Address']['postalCode'] = $postalCode;
-                return $this->Session->setFlash('Email and postal code are required to search for orders.',
-                    'danger', array('class' => 'alert alert-error'));
+
+                return $this->Flash->danger('Email and postal code are required to search for orders.');
             }
         }
 
@@ -70,9 +70,8 @@ class OrdersController extends AppController {
         }
 
         //Set flash message if we have an email and postalCode but no orders
-        if ((!(empty($email)) && !empty($postalCode)) && empty($orders)) { 
-            return $this->Session->setFlash('No orders found for this email and postal code.',
-                'danger', array('class' => 'alert alert-error'));
+        if ((!(empty($email)) && !empty($postalCode)) && empty($orders)) {
+            return $this->Flash->danger('No orders found for this email and postal code.');
         }
 
         $this->set('email', $email);
@@ -90,7 +89,7 @@ class OrdersController extends AppController {
         $order = $this->Order->find('first', $options);
 
         if (empty($order)) {
-            $this->Session->setFlash('Invalid Order', 'danger', array('class' => 'alert alert-error'));
+            $this->Flash->danger('Invalid Order');
             $this->redirect(array('action' => 'index'));
         }
 
@@ -114,13 +113,15 @@ class OrdersController extends AppController {
             if ($this->Cart->cartEmpty()){
                 //There is no data to checkout with
                 $this->Cart->setCheckoutData($this->request->data);
-                $this->Session->setFlash('There was a problem with your cart, please add your items again.', 'warning');
+                $this->Flash->warning('There was a problem with your cart, please add your items again.');
+
                 return $this->redirect(array('controller' => 'watches', 'action' => 'index'));
             }
 
             // Check that watches are still active
 			if (!$this->Cart->checkActive($this->cartWatches)) {
-                $this->Session->setFlash('One or more of the items in your cart is no longer available.', 'warning');
+                $this->Flash->warning('One or more of the items in your cart is no longer available.');
+
                 return $this->redirect(array('action' => 'checkout'));
             }
 
@@ -233,16 +234,14 @@ class OrdersController extends AppController {
                     $this->Emailer->order($order);
                     $title = 'Thank You For Your Order';
                     $this->set(compact('order', 'title'));
-                    $this->Session->setFlash('<span class="glyphicon glyphicon-ok"></span> Thank you for your order.',
-                        'default', array('class' => 'alert alert-success'));
+                    $this->Flash->success('<span class="glyphicon glyphicon-ok"></span> Thank you for your order.');
                     $hideFatFooter = false;
                     $this->set(compact('invoice', 'hideFatFooter'));
                     $this->render('confirm');
                 } else {
                     //Decline
                     $this->Cart->setCheckoutData($this->request->data);
-                    $this->Session->setFlash('<span class="glyphicon glyphicon-warning-sign"></span> ' . $result,
-                        'default', array('class' => 'alert alert-danger'));
+                    $this->Flash->danger('<span class="glyphicon glyphicon-warning-sign"></span> ' . h($result));
                 }
             } else {
                 //Get Address errors if any
@@ -287,9 +286,8 @@ class OrdersController extends AppController {
             return $this->redirect(array('controller' => 'watches', 'action' => 'index'));
         }
 
-        if($this->Cart->inCart($id)){
-            $this->Session->setFlash('That item is already in your cart.',
-                'info', array('class' => 'alert alert-info'));
+        if ($this->Cart->inCart($id)){
+            $this->Flash->info('That item is already in your cart.');
             $this->redirect(array('action' => 'checkout'));
         }
 
@@ -615,11 +613,11 @@ class OrdersController extends AppController {
             unset($address);
 
             $this->request->data['Order']['id'] = $id;
-            if ($this->Order->saveAssociated($this->request->data)) { 
-                $this->Session->setFlash(__('The order has been saved'), 'success');
+            if ($this->Order->saveAssociated($this->request->data)) {
+                $this->Flash->success(__('The order has been saved'));
                 $this->redirect(array('action' => 'edit', $id));
             } else {
-                $this->Session->setFlash(__('The order could not be saved. Please, try again.'));
+                $this->Flash->danger(__('The order could not be saved. Please, try again.'));
             }
         }
 
@@ -654,8 +652,9 @@ class OrdersController extends AppController {
 
         $order = $this->Order->getOrder($id);
         $this->Emailer->order($order);
-        $this->Session->setFlash('Order Confirmation Resent', 'success');
-        $this->redirect($this->referer());
+        $this->Flash->success('Order Confirmation Resent', 'success');
+
+        return $this->redirect($this->referer());
     }
 
     /**
@@ -672,11 +671,13 @@ class OrdersController extends AppController {
         }
         $this->request->onlyAllow('post', 'delete');
         if ($this->Order->delete()) {
-            $this->Session->setFlash(__('Order deleted'), 'success');
-            $this->redirect(array('action' => 'index'));
-        }
-        $this->Session->setFlash(__('Order was not deleted'), 'danger');
-        $this->redirect(array('action' => 'index'));
-    }
+            $this->Flash->success(__('Order deleted'));
 
+            return $this->redirect(array('action' => 'index'));
+        }
+
+        $this->Flash->danger(__('Order was not deleted'));
+
+        return $this->redirect(array('action' => 'index'));
+    }
 }

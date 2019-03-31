@@ -1,0 +1,35 @@
+version: '3'
+services:
+
+  php:
+    build:
+      context: ./docker/php
+      args:
+        - APP_ENV=docker
+        - APP_DOMAIN=vintagewatches.local
+    environment:
+      APP_ENV: docker
+    depends_on:
+      - mysql
+    restart: always
+    volumes:
+      - "./:/var/www"
+    ports:
+      - "8088:80"
+
+  mysql:
+    build:
+      context: ./docker/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker
+      MYSQL_DATABASE: docker
+    restart: always
+    ports:
+      - "3388:3306"
+
+  mail:
+    image: mailhog/mailhog
+    ports:
+      - "8089:8025"

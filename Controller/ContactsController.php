@@ -14,7 +14,7 @@ class ContactsController extends AppController {
  * @var array
  */
 	public $components = array('Paginator', 'Captcha', 'Emailer');
-	
+
 	public $paginate = array(
 		'order' => array(
 			'id' => 'desc'
@@ -26,21 +26,21 @@ class ContactsController extends AppController {
  *
  * @return void
  */
-	public function index() { 
+	public function index() {
 		if ($this->request->is('post')) {
 			$this->Contact->set($this->request->data);
-			if(!$this->Captcha->verify()) { 
+			if(!$this->Captcha->verify()) {
 				$this->Contact->invalidate('s3captcha-error');
 			}
-			if ($this->Contact->validates()){ 
+			if ($this->Contact->validates()){
 				$this->Contact->create();
 				if ($this->Contact->save($this->request->data)) {
 					$contact = $this->request->data;
-					$this->Session->setFlash(__('Thank you for contacting us.'), 'success');
+					$this->Flash->success(__('Thank you for contacting us.'));
                     $this->Emailer->contact($contact);
 					return $this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));
 				} else {
-					$this->Session->setFlash(__('Message could not be saved. Please, try again.'), 'danger');
+					$this->Flash->danger(__('Message could not be saved. Please, try again.'));
 				}
 			}
 		}
@@ -56,11 +56,11 @@ class ContactsController extends AppController {
  *
  * @return void
  */
-	public function admin_index() { 
-		$this->paginate['paramType'] = 'querystring'; 
+	public function admin_index() {
+		$this->paginate['paramType'] = 'querystring';
 		$this->Contact->recursive = 0;
 		$this->Paginator->settings = $this->paginate;
-		
+
 		try {
 			$contacts = $this->Paginator->paginate();
 		} catch (NotFoundException $e) {
@@ -109,10 +109,10 @@ class ContactsController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Contact->create();
 			if ($this->Contact->save($this->request->data)) {
-				$this->Session->setFlash(__('The contact has been saved.'));
+				$this->Flash->success(__('The contact has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The contact could not be saved. Please, try again.'));
+				$this->Flash->danger(__('The contact could not be saved. Please, try again.'));
 			}
 		}
 	}
@@ -130,10 +130,10 @@ class ContactsController extends AppController {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Contact->save($this->request->data)) {
-				$this->Session->setFlash(__('The contact has been saved.'));
+				$this->Flash->success(__('The contact has been saved.'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The contact could not be saved. Please, try again.'));
+				$this->Flash->danger(__('The contact could not be saved. Please, try again.'));
 			}
 		} else {
 			$options = array('conditions' => array('Contact.' . $this->Contact->primaryKey => $id));
@@ -153,12 +153,14 @@ class ContactsController extends AppController {
 		$this->Contact->id = $id;
 		if (!$this->Contact->exists()) {
 			throw new NotFoundException(__('Invalid contact'));
-		} 
+		}
 		$this->request->onlyAllow('post', 'delete');
 		if ($this->Contact->delete()) {
-			$this->Session->setFlash(__('The contact has been deleted.'), 'success');
+			$this->Flash->success(__('The contact has been deleted.'));
 		} else {
-			$this->Session->setFlash(__('The contact could not be deleted. Please, try again.'), 'danger');
+			$this->Flash->danger(__('The contact could not be deleted. Please, try again.'));
 		}
+
 		return $this->redirect(array_merge(array('action' => 'index'), array('?' => $query)));
-	}}
+    }
+}

@@ -121,39 +121,39 @@ class PagesController extends AppController {
 		$this->set(compact('page', 'subpage', 'title_for_layout'));
 		$this->render(implode('/', $path));*/
 	}
-	
+
 	public function admin_index() {
 		$pages = $this->Paginator->paginate('Page');
 		$this->set('pages', $pages);
 	}
-	
+
 	public function admin_edit($id = null) {
 		if (!$this->Page->exists($id)) {
 			throw new NotFoundException(__('Invalid page'));
 		}
-        
-		if ($this->request->is('post') || $this->request->is('put')) { 
+
+		if ($this->request->is('post') || $this->request->is('put')) {
 		    if ($this->Page->saveAssociated($this->request->data)) {
-			$this->Session->setFlash(__('The page has been saved'), 'success');
+			$this->Flash->success(__('The page has been saved'));
 			$this->redirect(array('action' => 'edit', $id));
 		    } else {
-			$this->Session->setFlash(__('The page could not be saved. Please, try again.'), 'danger');
+			$this->Flash->danger(__('The page could not be saved. Please, try again.'));
 		    }
 		}
-        
+
 		$options = array('conditions' => array('Page.' . $this->Page->primaryKey => $id));
 		$this->request->data = $this->Page->find('first', $options);
 		$this->set('page', $this->Page->find('first', $options));
 	}
-    
+
 	public function admin_add() {
 		if ($this->request->is('post')) {
 			$this->Page->create();
 			if ($this->Page->saveAssociated($this->request->data)) {
-				$this->Session->setFlash('Page ' . $this->Page->getInsertID() . ' has been created', 'success');
+				$this->Flash->success('Page ' . $this->Page->getInsertID() . ' has been created');
 				$this->redirect(array('action' => 'edit', $this->Page->getInsertID(), 'admin' => true));
 			} else {
-				$this->Session->setFlash(__('The page could not be saved. Please, try again.'), 'danger');
+				$this->Flash->danger(__('The page could not be saved. Please, try again.'));
 			}
 		}
 	}
@@ -229,10 +229,11 @@ class PagesController extends AppController {
         }
         $this->layout = 'ajax';
     }
-    
+
     public function admin_clear() {
         Cache::clear();
-        $this->Session->setFlash('Cache cleared.', 'success');
-        $this->redirect($this->referer());
+        $this->Flash->success('Cache cleared.');
+
+        return $this->redirect($this->referer());
     }
 }
