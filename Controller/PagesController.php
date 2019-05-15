@@ -61,10 +61,17 @@ class PagesController extends AppController {
 		if (empty($path)) {
 			$this->redirect('/');
 		}
+
 		$slug = current($path);
-        $this->Item->id = 1;
-        $itemActive = $this->Item->field('active');
-        $this->set('itemActive', $itemActive);
+        $items = $this->Item->find('all', [
+            'conditions' => [
+                'Item.active' => 1,
+            ],
+            'order' => [
+                'Item.sequence' => 'ASC',
+            ],
+        ]);
+        $this->set('items', $items);
 
 		//The router passes in the slug "home" for the homepage
 		if (strcasecmp($slug, 'home')==0) {
