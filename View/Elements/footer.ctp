@@ -97,7 +97,7 @@
     <?php endif; ?>
     <nav class="navbar navbar-inverse" role="navigation">
         <div class="container">
-            <p class="navbar-text">Bruce's Vintage Watches &bull; P.O. Box 2002 &bull; Janesville, WI 53547</p>
+            <p class="navbar-text">Bruce's Vintage Watches &bull; P.O. Box 165 &bull; Cottage Grove, WI 53527</p>
         </div>
     </nav>
 </div>
