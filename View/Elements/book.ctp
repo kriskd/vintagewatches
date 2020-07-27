@@ -12,7 +12,7 @@
             <p>
                 <?= $item['Item']['summary'] ?>
             </p>
-                <?= $this->Html->link('Order the book now!', [
+                <?= $this->Html->link($item['Item']['quantity'] > 0 ? 'Order the book now!' : 'More Information', [
                     'controller' => 'items',
                     'action' => 'add', $item['Item']['id'],
                 ], [

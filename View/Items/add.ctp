@@ -18,16 +18,21 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <p class="text-center bottom">
-                            <?= $this->Form->create('Item'); ?>
-                            <?= $this->Form->input('quantity', [
-                                'class' => 'form-control',
-                                'options' => $options,
-                            ]) ?>
-                            <?= $this->Form->submit('Add to Cart', [
-                                    'class' => 'btn btn-gold btn-lg',
-                                ]
-                            ); ?>
-                            <?= $this->Form->end(); ?>
+                            <?php if ($item['Item']['quantity'] > 0): ?>
+                                <?= $this->Form->create('Item'); ?>
+                                <?= $this->Form->input('quantity', [
+                                    'class' => 'form-control',
+                                    'options' => $options,
+                                ]) ?>
+                                <?= $this->Form->submit('Add to Cart', [
+                                        'class' => 'btn btn-gold btn-lg',
+                                    ]
+                                ); ?>
+                                <?= $this->Form->end(); ?>
+                            <?php else: ?>
+                                <br>
+                                <?= $this->Html->link('Return to Homepage', ['controller' => 'pages', 'action' => 'display', 'home'], ['class' => 'btn btn-gold btn-lg']) ?>
+                            <?php endif ?>
                         </p>
                     </div>
                 </div>
