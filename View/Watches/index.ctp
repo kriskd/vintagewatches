@@ -64,7 +64,7 @@
                                                        'escape' => false
                                                     )
                                      ); ?>
-        <?= $intro['Content'][0]['value'] ?>
+    <?= empty($intro['Content']) ? '' : $intro['Content'][0]['value'] ?>
     </div>
     <?php if (!empty($watches)): ?>
         <?php foreach ($watches as $watch): ?>
