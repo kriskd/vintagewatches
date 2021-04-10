@@ -4,7 +4,7 @@
     The item(s) below will remain in your cart. If you are done shopping,
     begin the checkout process by choosing the country where you want your
     order shipped.</p>
-    <?php echo $this->Element('checkout_review_cart', compact('watch')); ?>
+    <?php echo $this->Element('checkout_review_cart'); ?>
     <?php echo $this->Element('checkout_shipping'); ?>
     <?php echo $this->Element('checkout_address'); ?>
     <section class="credit-card credit-card-order hide">

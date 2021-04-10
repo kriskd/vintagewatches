@@ -64,7 +64,7 @@
                                                        'escape' => false
                                                     )
                                      ); ?>
-        <?= $intro['Content'][0]['value'] ?>
+    <?= empty($intro['Content']) ? '' : $intro['Content'][0]['value'] ?>
     </div>
     <?php if (!empty($watches)): ?>
         <?php foreach ($watches as $watch): ?>
@@ -95,7 +95,7 @@
                         </div>
                         <div class="watch-cart-button">
                             <?php if ($watch['Watch']['active'] == 1 && !$watch['Watch']['order_id']): ?>
-                                <?php echo $this->Element('add_to_cart', compact('watch', 'controller') + array('class' => 'btn btn-gold')); ?>
+                                <?php echo $this->Element('add_to_cart', compact('watch') + array('class' => 'btn btn-gold')); ?>
                             <?php endif; ?>
                         </div>
                     </div>
