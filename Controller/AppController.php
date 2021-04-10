@@ -88,7 +88,7 @@ class AppController extends Controller {
         //Recent watches
         $recentWatches = $this->Watch->getWatches(3);
 
-        $vars = compact('loggedIn', 'navigation', 'storeOpen', 'cartEmpty', 'cartCount', 'cartWatchIds',
+        $vars = compact('navigation', 'storeOpen', 'cartEmpty', 'cartCount', 'cartWatchIds',
                         'allBrands', 'recentWatches');
 
         $this->set(array('name' => $this->name, 'brandsWithWatches' => $this->brandsWithWatches) + $vars);

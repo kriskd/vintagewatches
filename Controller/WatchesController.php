@@ -252,7 +252,7 @@ class WatchesController extends AppController {
 			return $this->redirect(array_merge(Router::parse($this->request->here), array('?' => $query)));
 		}
 
-		$this->set(compact('watches', 'buttons', 'brands', 'brand_id', 'acquisitions', 'type', 'sources', 'source_id', 'owner_id'));
+		$this->set(compact('watches', 'buttons', 'brands', 'brand_id', 'type', 'source_id', 'owner_id'));
 	}
 
 /**
