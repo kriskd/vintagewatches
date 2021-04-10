@@ -1,4 +1,4 @@
-FROM php:7.2-apache
+FROM php:7.4-apache AS base
 
 ARG APP_ENV
 ARG APP_DOMAIN
@@ -13,10 +13,10 @@ RUN apt-get update && apt-get install -y \
 		libc-client-dev                                 `# imap` \
 		libkrb5-dev                                     `# imap` \
 		libicu-dev                                      `# intl` \
+        libzip-dev                                      `# zip`  \
 	&& docker-php-ext-configure gd \
-		--with-freetype-dir=/usr/include/ \
-		--with-jpeg-dir=/usr/include/ \
-		--with-png-dir=/usr/include/ \
+		--with-freetype \
+		--with-jpeg \
 	&& docker-php-ext-configure imap \
 		--with-kerberos \
 		--with-imap-ssl \
@@ -35,9 +35,10 @@ RUN apt-get update && apt-get install -y \
 		libjpeg-dev \
 		libc-client-dev \
 		libkrb5-dev \
+        libzip-dev \
 		libicu-dev
 
-RUN pecl install xdebug-2.6.0 && docker-php-ext-enable xdebug
+#RUN pecl install xdebug-2.7.0 && docker-php-ext-enable xdebug
 
 COPY ./php-site.ini /usr/local/etc/php/conf.d/local.ini
 
