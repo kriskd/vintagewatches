@@ -28,7 +28,7 @@
     ],
     "require": {
         "composer/installers": "dev-master",
-        "cakephp/cakephp": "2.10.*",
+        "cakephp/cakephp": "3.10.*",
         "cakephp/debug_kit": "2.2.*",
         "mjohnson/uploader": "4.*",
         "Datasources": "dev-master",
